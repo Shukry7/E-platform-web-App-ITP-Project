@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const ProductRoute = require("./Routes/ProductRoute");
+const SupplierRoute = require("./Routes/SupplierRoute");
 
 
 const app = express();
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/product", ProductRoute);
+app.use("/supplier", SupplierRoute);
 
 
 const PORT = process.env.PORT || 5000;
