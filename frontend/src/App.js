@@ -8,6 +8,7 @@ import Products from "./Product/Pages/Products";
 import Updateproduct from "./Product/Pages/Updateproduct";
 import Suppliers from "./Supplier/Pages/Suppliers";
 import DeleteSupplier from "./Supplier/Pages/DeleteSupplier";
+import CreateSupplier from "./Supplier/Pages/CreateSupplier";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/Product/new" exact element={<AddProduct/>}/>
         <Route path="/Supplier" exact element={<Suppliers/>}/>
         <Route path="/Supplier/delete/:id" exact element={<DeleteSupplier/>}/>
+        <Route path="/Supplier/create" exact element={<CreateSupplier/>}/>
       </Routes >
     </Router>
   );
