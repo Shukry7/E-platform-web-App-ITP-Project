@@ -16,6 +16,35 @@ import { useForm } from "../../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 
+const City = [
+  { value: "...." },
+  { value: "Ampara" },
+  { value: "Anuradhapura" },
+  { value: "Badulla" },
+  { value: "Batticaloa" },
+  { value: "Colombo" },
+  { value: "Galle" },
+  { value: "Gampaha" },
+  { value: "Hambantota" },
+  { value: "Jaffna" },
+  { value: "Kalutara" },
+  { value: "Kandy" },
+  { value: "Kegalle" },
+  { value: "Kilinochchi" },
+  { value: "Kurunegala" },
+  { value: "Mannar" },
+  { value: "Matale" },
+  { value: "Matara" },
+  { value: "Monaragala" },
+  { value: "Mullaitivu" },
+  { value: "Nuwara Eliya" },
+  { value: "Polonnaruwa" },
+  { value: "Puttalam" },
+  { value: "Ratnapura" },
+  { value: "Trincomalee" },
+  { value: "Vavuniya" },
+];
+
 
 const SupplierForm = () => {
   const navigate = useNavigate();
@@ -56,7 +85,7 @@ const SupplierForm = () => {
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,
         mail: formState.inputs.mail.value,
-        address: formState.inputs.address.value,
+        address: formState.inputs.address.value+", "+formState.inputs.city.value,
       })
       .then((res) => {
         setLoading(false);
@@ -113,9 +142,16 @@ const SupplierForm = () => {
             type="text"
             placeholder="Enter Address"
             label="Address :"
-            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-            errorText="Please Enter a Address."
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please Enter an Address."
             onInput={inputHandler}
+          />
+          <Dropdown
+            id="city"
+            options={City}
+            onInput={inputHandler}
+            Display=""
+            label="City:"
           />
           <Button
             type="submit"
