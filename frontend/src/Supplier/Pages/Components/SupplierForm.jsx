@@ -5,9 +5,6 @@ import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
 import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
-  VALIDATOR_MAXLENGTH,
-  VALIDATOR_MIN,
-  VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
   VALIDATOR_PHONE,
   VALIDATOR_EMAIL,
@@ -122,8 +119,8 @@ const SupplierForm = () => {
             type="number"
             placeholder="Enter Telephone Number"
             label="Telephone :"
-            validators={[VALIDATOR_PHONE]}
-            errorText="Please Enter a Phone Number (10 numbers)"
+            validators={[VALIDATOR_PHONE()]}
+            errorText="Please Enter a valid Phone Number (10 numbers)"
             onInput={inputHandler}
           />
           <Input
@@ -132,8 +129,8 @@ const SupplierForm = () => {
             type="text"
             placeholder="Enter Mail"
             label="Email :"
-            validators={[VALIDATOR_EMAIL]}
-            errorText="Please Enter a mail."
+            validators={[VALIDATOR_EMAIL()]}
+            errorText="Please Enter a valid mail."
             onInput={inputHandler}
           />
           <Input
@@ -141,7 +138,7 @@ const SupplierForm = () => {
             id="address"
             type="text"
             placeholder="Enter Address"
-            label="Address :"
+            label="Street :"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please Enter an Address."
             onInput={inputHandler}
