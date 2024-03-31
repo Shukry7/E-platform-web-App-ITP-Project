@@ -8,6 +8,7 @@ import Button from "../../../Shared/Components/FormElements/Button";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import { Link } from "react-router-dom";
 
 const SupplierTable = (props) => {
   const deleteHandle = (id) => {
@@ -74,12 +75,9 @@ const SupplierTable = (props) => {
                     <td class="px-6 py-4">{item.address}</td>
                     <td class="px-6 py-4">{item.credit}</td>
                     <td class="px-6 py-4">
-                      <a
-                        href="#"
-                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                      >
-                        Edit
-                      </a>
+                      <Link to={'/Supplier/delete/'+item._id}>
+                        delete
+                      </Link>
                     </td>
                   </tr>
                 );
