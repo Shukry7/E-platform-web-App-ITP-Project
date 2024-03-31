@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import "./EmployeeTable.css";
+import "./employeeTable.css";
 import Button from "../../../Shared/Components/FormElements/Button";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
@@ -81,6 +81,7 @@ const EmployeeTable = (props) => {
                         Edit
                       </a>
                     </td>
+                    
                   </tr>
                 );
               })
@@ -92,4 +93,4 @@ const EmployeeTable = (props) => {
   );
 };
 
-export default ProductTable;
+export default EmployeeTable;

@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProductTable from "./Components/EmployeeTable";
+import EmployeeTable from "./Components/EmployeeTable";
 import Card from "../../Shared/Components/UiElements/Card"
-import { Category } from "./Components/employeeform";
+import { Type } from "./Components/employeeform";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
 
-const Products = () => {
+const Employee = () => {
 
-  const [products , setproducts] = useState([]);
+  const [employee , setemployee] = useState([]);
   const [loading , setLoading] = useState(false)
   
   useEffect(() =>{
     setLoading(true)
     axios
-    .get("http://localhost:5000/product")
+    .get("http://localhost:5000/employee")
     .then(res => {
-      setproducts(res.data)
+      setemployee(res.data)
       setLoading(false)
     })
     .catch(err => {
@@ -27,10 +27,10 @@ const Products = () => {
     <>
     <Navbar/>
     <Card style={{width: "50%"}}>
-      <ProductTable Product={products} loading={loading} setloading={setLoading}/>
+      <EmployeeTable Employee={employee} loading={loading} setloading={setLoading}/>
       </Card>
     </>
   );
 };
 
-export default Products;
+export default Employee;

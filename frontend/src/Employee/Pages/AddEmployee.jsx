@@ -11,4 +11,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddProduct;
+export default AddEmployee;

@@ -63,8 +63,8 @@ const EmployeeForm = () => {
       .post("http://localhost:5000/employee/new", {
         id: 1,
         name: formState.inputs.name.value,
-        telephone: formState.inputs.telephone.value,
         address: formState.inputs.address.value,
+        telephone: formState.inputs.telephone.value,
         type: formState.inputs.type.value,
         hourlywage: formState.inputs.hourlywage.value,
         

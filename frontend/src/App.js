@@ -12,6 +12,10 @@ import CreateSupplier from "./Supplier/Pages/CreateSupplier";
 import Delivery from "./Delivery/Pages/Delivery";
 import DeleteDelivery from "./Delivery/Pages/DeleteDelivery";
 import CreateDelivery from "./Delivery/Pages/CreateDelivery";
+import AddEmployee from "./Employee/Pages/AddEmployee";
+import Employee from "./Employee/Pages/Employee";
+import Updateemployee from "./Employee/Pages/Updateemployee";
+
 
 const App = () => {
   return (
@@ -27,6 +31,10 @@ const App = () => {
         <Route path="/Delivery" exact element={<Delivery/>}/>
         <Route path="/Delivery/delete/:id" exact element={<DeleteDelivery/>}/>
         <Route path="/Delivery/create" exact element={<CreateDelivery/>}/>
+        <Route path="/Employee" exact element={<Employee/>}/>
+        <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
+        <Route path="/Employee/new" exact element={<AddEmployee/>}/>
+        
       </Routes >
     </Router>
   );

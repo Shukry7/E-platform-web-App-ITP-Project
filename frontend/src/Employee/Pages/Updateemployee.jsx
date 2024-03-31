@@ -2,7 +2,7 @@ import React from "react";
 import Card from "../../Shared/Components/UiElements/Card";
 import ProductformUpdate from "./Components/employeeformUpdate";
 
-const Updateproduct = () => {
+const Updateemployee = () => {
   return (
     <>
       <Card>
@@ -12,4 +12,4 @@ const Updateproduct = () => {
   );
 };
 
-export default Updateproduct;
+export default Updateemployee;

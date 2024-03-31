@@ -1,1 +1,4 @@
-chater eh
+<Route path="/Employee" exact element={<Employee/>}/>
+        <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
+        <Route path="/Employee/new" exact element={<AddEmployee/>}/>
+        <Route path="/Employee/delete/:id" exact element={<DeleteEmployee/>}/>
