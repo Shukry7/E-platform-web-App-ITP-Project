@@ -27,6 +27,7 @@ app.get("/", (req, res) => {
 
 app.use("/product", ProductRoute);
 app.use("/supplier", SupplierRoute);
+app.use("/employee", EmployeeRoute);
 
 
 const PORT = process.env.PORT || 5000;
