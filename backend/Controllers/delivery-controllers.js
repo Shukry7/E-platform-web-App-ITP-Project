@@ -1,0 +1,85 @@
+const HttpError = require("../Models/http-error");
+const Delivery  = require("../Models/DeliveryModel");
+const uuid = require("uuid");
+
+const createDelivery = async (req, res, next) => {
+  const { id, name, telephone, mail, address , license, numberplate , type , capacity } = req.body;
+
+  const newDelivery = {
+    ID: id,
+    name: name,
+    telephone: telephone,
+    mail: mail,
+    address: address,
+    license: license,
+    numberplate: numberplate,
+    type: type,
+    capacity: capacity,
+  };
+
+  const delivery = await Delivery.create(newDelivery);
+  return res.status(201).send(delivery);
+};
+
+const listDelivery= async (req, res) => {
+  try {
+    const delivery = await Delivery.find({});
+    return res.status(200).json(delivery);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+const listDeliveryById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const delivery = await Delivery.findById(id);
+
+    return res.status(200).json(delivery);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+const UpdateDelivery= async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Delivery.findByIdAndUpdate(id, req.body);
+
+    if (!result) {
+      return res.status(404).send({ message: "Delivery Person Not Found !" });
+    }
+
+    return res.status(200).send({ message: "Delivery Person Updated Successfully!" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+const DeleteDelivery=  async (req,res) => {
+
+  try{
+      const {id} = req.params;
+      const result = await Delivery.findByIdAndDelete(id);
+
+      if(!result){
+          return res.status(404).send({ message: 'Delivery Person Not Found !' });
+      }
+
+      return res.status(200).send({ message: 'Delivery Person Deleted Successfully!' });
+
+
+  } catch (error) {
+      console.log(error.message);
+      res.status(500).send({message: error.message});
+  }
+
+};
+
+exports.createDelivery = createDelivery;
+exports.listDelivery = listDelivery;
+exports.UpdateDelivery = UpdateDelivery;
+exports.listDeliveryById = listDeliveryById;
+exports.DeleteDelivery = DeleteDelivery;

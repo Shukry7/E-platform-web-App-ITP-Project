@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const ProductRoute = require("./Routes/ProductRoute");
 const SupplierRoute = require("./Routes/SupplierRoute");
+const DeliveryRoute = require("./Routes/DeliveryRoute");
 
 
 const app = express();
@@ -27,7 +28,10 @@ app.get("/", (req, res) => {
 
 app.use("/product", ProductRoute);
 app.use("/supplier", SupplierRoute);
-app.use("/employee", EmployeeRoute);
+app.use("/employee",EmployeeRoute);
+
+app.use("/delivery", DeliveryRoute);
+
 
 
 const PORT = process.env.PORT || 5000;
