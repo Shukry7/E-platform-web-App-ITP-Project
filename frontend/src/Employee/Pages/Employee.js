@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProductTable from "./Components/ProductTable";
-import Card from "../../../Shared/Components/UiElements/Card"
-import { Category } from "./Components/productform";
-import Navbar from "../../../Shared/Components/UiElements/Navbar";
+import ProductTable from "./Components/EmployeeTable";
+import Card from "../../Shared/Components/UiElements/Card"
+import { Category } from "./Components/employeeform";
+import Navbar from "../../Shared/Components/UiElements/Navbar";
 
 const Products = () => {
 

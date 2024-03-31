@@ -14,7 +14,8 @@ const EmployeeSchema = mongoose.Schema(
     },
     telephone: {
       type: Number,
-      required: [true, "Please Enter telephone No"]
+      required: [true, "Please Enter telephone No"],
+      trim:true,
     },
     address: {
       type: String,
@@ -26,7 +27,7 @@ const EmployeeSchema = mongoose.Schema(
       default: 0,
     },
     hourlyWage: {
-      type: number,
+      type: Number,
       default: {},
     },
   },

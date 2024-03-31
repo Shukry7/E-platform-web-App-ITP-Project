@@ -6,6 +6,7 @@ const cors = require("cors");
 const ProductRoute = require("./Routes/ProductRoute");
 const SupplierRoute = require("./Routes/SupplierRoute");
 const DeliveryRoute = require("./Routes/DeliveryRoute");
+const EmployeeRoute = require("./Routes/EmployeeRoute");
 
 
 const app = express();
