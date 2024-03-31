@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer } from "react";
-import "./input.css";
 import { validate } from "../util/validate";
 
 const inputReducer = (state, action) => {
@@ -47,7 +46,7 @@ const Input = (props) => {
 
   const element =
     props.element === "Input" ? (
-      <input
+      <input class={props.class}
         id={props.id}
         type={props.type}
         placeholder={props.placeholder}
@@ -56,7 +55,7 @@ const Input = (props) => {
         value={inputState.value}
       />
     ) : (
-      <textarea
+      <textarea class={props.class}
         id={props.id}
         rows={props.rows || 3}
         placeholder={props.placeholder}
@@ -73,7 +72,7 @@ const Input = (props) => {
           !inputState.isValid && inputState.isTouched && "form-control--invalid"
         }`}
       >
-        <label htmlFor={props.id}>{props.label}</label>
+        <label htmlFor={props.id}  >{props.label}</label>
         {element}
         {!inputState.isValid && inputState.isTouched && (
           <p>{props.errorText}</p>

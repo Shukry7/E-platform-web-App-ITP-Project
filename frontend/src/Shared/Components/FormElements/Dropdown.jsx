@@ -22,12 +22,9 @@ const Dropdown = (props) => {
 
   return (
     <>
-      <div
-        className={`form-control `}
-        style={{ display: "flex", alignItems: "center" }}
-      >
-        <label htmlFor={props.id}>{props.label}</label>&emsp;
-        <select id={props.id} onChange={changeHandler}>
+      
+        <label htmlFor={props.id} >{props.label}</label>&emsp;
+        <select id={props.id} onChange={changeHandler} class={props.class}>
           {props.options.map((option) => {
             if (option.value === initialValue) {
               return <option selected >{option.value}</option>;
@@ -36,7 +33,7 @@ const Dropdown = (props) => {
             }
           })}
         </select>
-      </div>
+      
     </>
   );
 };
