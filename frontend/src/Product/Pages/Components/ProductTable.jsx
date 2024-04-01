@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
-import Popup from "./Popup";
+
 
 const ProductTable = (props) => {
   const deleteHandle = (id) => {

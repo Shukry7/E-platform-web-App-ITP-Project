@@ -25,25 +25,23 @@ const Suppliers = () => {
   }, []);
   return (
     <>
-      <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/4">
-          <Navbar />
-        </div>
-        <div className="lg:w-3/4 p-4">
-          <Card style={{ width: "90%" }}>
-            <div className="flex justify-between items-center">
-              <h1 className="text-3xl my-8">Supplier List</h1>
-              <Link to="/Supplier/create">
-                <MdOutlineAddBox className="text-sky-800 text-4xl" />
-              </Link>
-            </div>
-            <SupplierTable
-              Suppliers={suppliers}
-              loading={loading}
-              setloading={setLoading}
-            />
-          </Card>
-        </div>
+      <div>
+        <Navbar />
+        
+            <Card className="flex" style={{ width: "100%" }}>
+              <div className="flex justify-between items-center">
+                <h1 className="text-3xl my-8">Supplier List</h1>
+                <Link to="/Supplier/create">
+                  <MdOutlineAddBox className="text-sky-800 text-4xl" />
+                </Link>
+              </div>
+              <SupplierTable
+                Suppliers={suppliers}
+                loading={loading}
+                setloading={setLoading}
+              />
+            </Card>
+          
       </div>
     </>
   );

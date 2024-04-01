@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
@@ -44,6 +44,22 @@ const City = [
 
 
 const SupplierForm = () => {
+
+  const [lastSupplier, setLastsupplier] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/supplier")
+      .then((res) => {
+        setLastsupplier(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  console.log(lastSupplier);
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -98,65 +114,102 @@ const SupplierForm = () => {
   return (
     <form onSubmit={submitHandler}>
       {loading ? (
-        <Loader/>
+        <Loader />
       ) : (
         <>
-          <h2 style={{ textAlign: "center" }}>Add Supplier</h2>
-          <ImageUpload center id="image" onInput={inputHandler} />
-          <Input
-            element="Input"
-            id="name"
-            type="text"
-            placeholder="Enter Supplier Name"
-            label="Name :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a Name."
-            onInput={inputHandler}
-          />
-          <Input
-            element="Input"
-            id="telephone"
-            type="number"
-            placeholder="Enter Telephone Number"
-            label="Telephone :"
-            validators={[VALIDATOR_PHONE()]}
-            errorText="Please Enter a valid Phone Number (10 numbers)"
-            onInput={inputHandler}
-          />
-          <Input
-            element="Input"
-            id="mail"
-            type="text"
-            placeholder="Enter Mail"
-            label="Email :"
-            validators={[VALIDATOR_EMAIL()]}
-            errorText="Please Enter a valid mail."
-            onInput={inputHandler}
-          />
-          <Input
-            element="Input"
-            id="address"
-            type="text"
-            placeholder="Enter Address"
-            label="Street :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter an Address."
-            onInput={inputHandler}
-          />
-          <Dropdown
-            id="city"
-            options={City}
-            onInput={inputHandler}
-            Display=""
-            label="City:"
-          />
-          <Button
-            type="submit"
-            style={{ left: "76%", position: "relative" }}
-            disabled={!formState.isValid}
-          >
-            Add
-          </Button>
+          <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
+            <div class="container mx-auto">
+              <div>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Supplier</h2>
+                <p class="text-gray-500 mb-6 text-center">Enter Supplier details below !!</p>
+                <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+                  <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                    <div class="text-gray-600 flex justify-center items-center">
+                      <ImageUpload center id="image" onInput={inputHandler} />
+                    </div>
+                    <div class="lg:col-span-2">
+                      
+                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="name"
+                            type="text"
+                            placeholder="Enter Supplier Name"
+                            label="Name :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a Name."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="telephone"
+                            type="number"
+                            placeholder="Enter Telephone Number"
+                            label="Telephone :"
+                            validators={[VALIDATOR_PHONE()]}
+                            errorText="Please Enter a valid Phone Number (10 numbers)"
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-3">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="mail"
+                            type="text"
+                            placeholder="Enter Mail"
+                            label="Email :"
+                            validators={[VALIDATOR_EMAIL()]}
+                            errorText="Please Enter a valid mail."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="address"
+                            type="text"
+                            placeholder="Enter Address"
+                            label="Street :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter an Address."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Dropdown
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            id="city"
+                            options={City}
+                            onInput={inputHandler}
+                            Display=""
+                            label="City:"
+                          />
+                        </div>
+                        <div class="md:col-span-5 text-right">
+                          <div class="inline-flex items-end">
+                            <Button
+                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                              type="submit"
+                              disabled={!formState.isValid}
+                            >
+                              Submit
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </form>

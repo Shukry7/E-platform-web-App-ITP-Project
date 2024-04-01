@@ -1,12 +1,15 @@
 import React from "react";
 import Card from "../../Shared/Components/UiElements/Card";
 import SupplierForm from "./Components/SupplierForm";
+import Navbar from "../../Shared/Components/UiElements/Navbar";
 
 const CreateSupplier = () => {
   return (
-    <><Card>
-      <SupplierForm/>
-      </Card>
+    <>
+      <div>
+        <Navbar />
+        <SupplierForm />
+      </div>
     </>
   );
 };

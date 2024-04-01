@@ -76,7 +76,7 @@ const Input = (props) => {
         <label className={props.divLabel} htmlFor={props.id}  >{props.label}</label>
         {element}
         {!inputState.isValid && inputState.isTouched && (
-          <p>{props.errorText}</p>
+          <p className="text-red-800">{props.errorText}</p>
         )}
       </div>
     </>
