@@ -3,10 +3,12 @@ const Delivery  = require("../Models/DeliveryModel");
 const uuid = require("uuid");
 
 const createDelivery = async (req, res, next) => {
-  const { id, name, telephone, mail, address , license, numberplate , type , capacity } = req.body;
+  const { name, telephone, mail, address , license, numberplate , type , capacity } = req.body;
 
+  const id = await Delivery.find().sort({ _id: -1 }).limit(1);
   const newDelivery = {
-    ID: id,
+    ID: parseInt(id[0].ID) + 1,
+    //ID: id,
     name: name,
     telephone: telephone,
     mail: mail,

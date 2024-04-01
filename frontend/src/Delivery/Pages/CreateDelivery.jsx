@@ -1,12 +1,16 @@
 import React from "react";
 import Card from "../../Shared/Components/UiElements/Card";
 import DeliveryForm from "./Components/DeliveryForm";
+import Navbar from "../../Shared/Components/UiElements/Navbar";
+
 
 const CreateDelivery = () => {
   return (
-    <><Card>
-      <DeliveryForm/>
-      </Card>
+    <>
+      <div>
+        <Navbar />
+        <DeliveryForm />
+      </div>
     </>
   );
 };

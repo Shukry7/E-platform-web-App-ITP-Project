@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
@@ -42,8 +42,8 @@ const City = [
   { value: "Vavuniya" },
 ];
 
-
 const DeliveryForm = () => {
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -118,105 +118,152 @@ const DeliveryForm = () => {
   return (
     <form onSubmit={submitHandler}>
       {loading ? (
-        <Loader/>
+        <Loader />
       ) : (
         <>
-          <h2 style={{ textAlign: "center" }}>Add Delivery</h2>
-          <ImageUpload center id="image" onInput={inputHandler} />
-          <Input
-            element="Input"
-            id="name"
-            type="text"
-            placeholder="Enter Delivery Person Name"
-            label="Name :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a Name."
-            onInput={inputHandler}
-          />
-          <Input
-            element="Input"
-            id="telephone"
-            type="number"
-            placeholder="Enter Telephone Number"
-            label="Telephone :"
-            validators={[VALIDATOR_PHONE()]}
-            errorText="Please Enter a valid Phone Number (10 numbers)"
-            onInput={inputHandler}
-          />
-          <Input
-            element="Input"
-            id="mail"
-            type="text"
-            placeholder="Enter Mail"
-            label="Email :"
-            validators={[VALIDATOR_EMAIL()]}
-            errorText="Please Enter a valid mail."
-            onInput={inputHandler}
-          />
-          <Input
-            element="Input"
-            id="address"
-            type="text"
-            placeholder="Enter Address"
-            label="Street :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter an Address."
-            onInput={inputHandler}
-          />
-          <Dropdown
-            id="city"
-            options={City}
-            onInput={inputHandler}
-            Display=""
-            label="City:"
-          />
-          <Input
-            element="Input"
-            id="license"
-            type="text"
-            placeholder="Enter License Number"
-            label="License Number: :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a valid License Number"
-            onInput={inputHandler}
-          />
-           <Input
-            element="Input"
-            id="numberplate"
-            type="text"
-            placeholder="Enter Number Plate"
-            label="Number Plate: :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a valid Number Plate"
-            onInput={inputHandler}
-          />
-            <Input
-            element="Type"
-            id="type"
-            type="text"
-            placeholder="Enter Type of the Vehicle"
-            label="Type of Vehicle: :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a valid type of Vehicle"
-            onInput={inputHandler}
-          />
-           <Input
-            element="Capacity"
-            id="capacity"
-            type="text"
-            placeholder="Enter Capacity of your vehicle"
-            label="Capacity of Vehicle: :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a valid capacity of your Vehicle"
-            onInput={inputHandler}
-          />
-          <Button
-            type="submit"
-            style={{ left: "76%", position: "relative" }}
-            disabled={!formState.isValid}
-          >
-            Add
-          </Button>
+          <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
+            <div class="container mx-auto">
+              <div>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Delivery Person</h2>
+                <p class="text-gray-500 mb-6 text-center">Enter the Delivery Person details below!</p>
+                <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+                  <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                    <div class="text-gray-600 flex justify-center items-center">
+                      <ImageUpload center id="image" onInput={inputHandler} />
+                    </div>
+                    <div class="lg:col-span-2">
+                      
+                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="name"
+                            type="text"
+                            placeholder="Enter Delivery Person Name"
+                            label="Name :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a Name."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-5">
+                          <Input
+                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                             element="Input"
+                              id="telephone"
+                              type="number"
+                              placeholder="Enter Telephone Number"
+                              label="Telephone :"
+                              validators={[VALIDATOR_PHONE()]}
+                              errorText="Please Enter a valid Phone Number (10 numbers)"
+                              onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-3">
+                          <Input
+                              class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                              element="Input"
+                              id="mail"
+                              type="text"
+                              placeholder="Enter Mail"
+                              label="Email :"
+                              validators={[VALIDATOR_EMAIL()]}
+                              errorText="Please Enter a valid mail."
+                              onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                element="Input"
+                                id="address"
+                                type="text"
+                                placeholder="Enter Address"
+                                label="Street :"
+                                validators={[VALIDATOR_REQUIRE()]}
+                                errorText="Please Enter an Address."
+                                onInput={inputHandler}
+                          />
+                        </div>
+                      <Dropdown
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            id="city"
+                            options={City}
+                            onInput={inputHandler}
+                            Display=""
+                            label="City:"
+                        />
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="license"
+                            type="text"
+                            placeholder="Enter License Number"
+                            label="License Number: "
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a valid License Number"
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="numberplate"
+                            type="text"
+                            placeholder="Enter Number Plate"
+                            label="Number Plate: "
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a valid Number Plate"
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Type"
+                            id="type"
+                            type="text"
+                            placeholder="Enter the type of the vehicle"
+                            label="Type of the Vehicle: "
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a valid type of Vehicle"
+                            onInput={inputHandler}
+                            />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Capacity"
+                            id="capacity"
+                            type="text"
+                            placeholder="Enter the capacity of the vehicle"
+                            label="Capacity of the Vehicle: "
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a valid capacity of the Vehicle"
+                            onInput={inputHandler}
+                            />
+                        </div>
+                        <div class="md:col-span-5 text-right">
+                          <div class="inline-flex items-end">
+                            <Button
+                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                              type="submit"
+                              disabled={!formState.isValid}
+                            >
+                              Add
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </form>
@@ -224,3 +271,5 @@ const DeliveryForm = () => {
 };
 
 export default DeliveryForm;
+
+
