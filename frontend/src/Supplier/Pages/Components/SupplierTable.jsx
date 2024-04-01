@@ -55,12 +55,12 @@ const SupplierTable = (props) => {
                   </th>
                   <td class="px-6 py-4">{item.telephone}</td>
                   <td class="px-6 py-4">{item.mail}</td>
-                  <td class="px-6 py-4">{item.address}</td>
+                  <td class="px-6 py-4">{item.address}, {item.city}</td>
                   <td class="px-6 py-4">{item.credit}</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
                     link1=""
-                    link2={`/Supplier/update/` + item._id}
+                    link2={`/Supplier/update/`+ item._id}
                     deletelink={`http://localhost:5000/supplier/${item._id}`}
                     />
                   </td>

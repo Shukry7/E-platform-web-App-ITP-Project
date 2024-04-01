@@ -3,7 +3,7 @@ const Supplier = require("../Models/SupplierModel");
 const uuid = require("uuid");
 
 const createSupplier = async (req, res, next) => {
-  const { name, telephone, mail, address} = req.body;
+  const { name, telephone, mail, address, city} = req.body;
 
   const id = await Supplier.find().sort({ _id: -1 }).limit(1);
   const newSupplier = {
@@ -12,6 +12,7 @@ const createSupplier = async (req, res, next) => {
     telephone: telephone,
     mail: mail,
     address: address,
+    city: city,
   };
   
 
