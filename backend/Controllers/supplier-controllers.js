@@ -3,18 +3,21 @@ const Supplier = require("../Models/SupplierModel");
 const uuid = require("uuid");
 
 const createSupplier = async (req, res, next) => {
-  const { id, name, telephone, mail, address} = req.body;
+  const { name, telephone, mail, address} = req.body;
 
+  const id = await Supplier.find().sort({ _id: -1 }).limit(1);
   const newSupplier = {
-    ID: id,
+    ID: parseInt(id[0].ID) + 1,
     name: name,
     telephone: telephone,
     mail: mail,
     address: address,
   };
+  
 
   const supplier = await Supplier.create(newSupplier);
   return res.status(201).send(supplier);
+  
 };
 
 const listSupplier = async (req, res) => {
@@ -73,6 +76,7 @@ const DeleteSupplier =  async (req,res) => {
   }
 
 };
+
 
 exports.createSupplier = createSupplier;
 exports.listSupplier = listSupplier;

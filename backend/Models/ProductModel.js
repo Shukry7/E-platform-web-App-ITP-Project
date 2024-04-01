@@ -17,10 +17,13 @@ const productSchema = mongoose.Schema(
       required: [true, "Please Enter a Category"],
       trim: true,
     },
-    quantity: {
-      type: String,
+    Alert_quantity: {
+      type: Number,
       required: [true, "Please Enter a Quantity"],
-      trim: true,
+    },
+    Stock: {
+      type: Number,
+      required: [true, "Please Enter a Quantity"],
     },
     price: {
       type: String,
@@ -28,9 +31,8 @@ const productSchema = mongoose.Schema(
       trim: true,
     },
     weight: {
-      type: String,
+      type: Number,
       required: [true, "Please Enter a Weight"],
-      trim: true,
     },
     description: {
       type: String,
