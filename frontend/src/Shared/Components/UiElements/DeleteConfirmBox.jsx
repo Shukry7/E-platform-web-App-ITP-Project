@@ -16,7 +16,7 @@ const DeleteConfirmBox = (props) => {
     
     setLoading(true);
     axios
-      .delete(`http://localhost:5000/product/${props.id}`)
+      .delete(props.deletelink)
       .then((res) => {
         setLoading(false);
         navigate("/Product");

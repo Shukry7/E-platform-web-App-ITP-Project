@@ -52,7 +52,7 @@ const ProductTable = (props) => {
                   <ThreeDotDropdown
                     link1=""
                     link2={`/Product/update/` + item._id}
-                    id={item._id}
+                    deletelink={`http://localhost:5000/product/${item._id}`}
                   />
                 </td>
               </TableRow>
