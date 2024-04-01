@@ -6,8 +6,7 @@ import { Navigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
-import { Link } from "react-router-dom";
-import { MdDeleteForever } from "react-icons/md";
+import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
 
 const SupplierTable = (props) => {
   const deleteHandle = (id) => {
@@ -58,13 +57,12 @@ const SupplierTable = (props) => {
                   <td class="px-6 py-4">{item.mail}</td>
                   <td class="px-6 py-4">{item.address}</td>
                   <td class="px-6 py-4">{item.credit}</td>
-                  <td class="px-6 py-4 flex justify-center gap-2">
-                    <Link to={'/Supplier/delete/'+item._id}>
-                      <MdDeleteForever />
-                    </Link>
-                    <Link to={'/Supplier/delete/'+item._id}>
-                      <MdDeleteForever />
-                    </Link>
+                  <td class="px-6 py-4">
+                    <ThreeDotDropdown
+                    link1=""
+                    link2={`/Supplier/update/` + item._id}
+                    deletelink={`http://localhost:5000/supplier/${item._id}`}
+                    />
                   </td>
                 </TableRow>
               );
