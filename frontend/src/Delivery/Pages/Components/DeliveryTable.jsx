@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
-import { Link } from "react-router-dom";
+import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
 
 const DeliveryTable = (props) => {
   const deleteHandle = (id) => {
@@ -58,15 +58,17 @@ const DeliveryTable = (props) => {
                   </th>
                   <td class="px-6 py-4">{item.telephone}</td>
                   <td class="px-6 py-4">{item.mail}</td>
-                  <td class="px-6 py-4">{item.address}</td>
+                  <td class="px-6 py-4">{item.address}, {item.city}</td>
                   <td class="px-6 py-4">{item.license}</td>
                   <td class="px-6 py-4">{item.numberplate}</td>
                   <td class="px-6 py-4">{item.type}</td>
                   <td class="px-6 py-4">{item.capacity}</td>
                   <td class="px-6 py-4">
-                  <Link to={'/Delivery/delete/'+item._id}>
-                      Delete
-                    </Link>
+                    <ThreeDotDropdown
+                    link1=""
+                    link2={`/Delivery/update/` + item._id}
+                    deletelink={`http://localhost:5000/delivery/${item._id}`}
+                    />
                   </td>
                 </TableRow>
               );

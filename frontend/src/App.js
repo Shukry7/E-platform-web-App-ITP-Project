@@ -10,8 +10,8 @@ import Suppliers from "./Supplier/Pages/Suppliers";
 import CreateSupplier from "./Supplier/Pages/CreateSupplier";
 import Updatesupplier from "./Supplier/Pages/Updatesupplier";
 import Delivery from "./Delivery/Pages/Delivery";
-import DeleteDelivery from "./Delivery/Pages/DeleteDelivery";
 import CreateDelivery from "./Delivery/Pages/CreateDelivery";
+import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
 import AddEmployee from "./Employee/Pages/AddEmployee";
 import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
@@ -29,8 +29,8 @@ const App = () => {
         <Route path="/Supplier/create" exact element={<CreateSupplier/>}/>
         <Route path="/Supplier/update/:id" exact element={<Updatesupplier/>}/>
         <Route path="/Delivery" exact element={<Delivery/>}/>
-        <Route path="/Delivery/delete/:id" exact element={<DeleteDelivery/>}/>
         <Route path="/Delivery/create" exact element={<CreateDelivery/>}/>
+        <Route path="/Delivery/update/:id" exact element={<UpdateDelivery/>}/>
         <Route path="/Employee" exact element={<Employee/>}/>
         <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
         <Route path="/Employee/new" exact element={<AddEmployee/>}/>

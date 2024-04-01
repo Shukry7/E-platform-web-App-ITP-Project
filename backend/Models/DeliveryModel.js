@@ -26,6 +26,11 @@ const deliverySchema = mongoose.Schema(
       required: [true, "Please Enter Address"],
       trim: true,
     },
+    city: {
+      type: String,
+      required: [true, "Please Enter City"],
+      trim: true,
+    },
     license: {
         type: String,
         required: [true, "Please Enter License No"]
