@@ -3,13 +3,15 @@ const Product = require("../Models/ProductModel");
 const uuid = require("uuid");
 
 const createProduct = async (req, res, next) => {
-  const { id, name, category, quantity, price, weight, description } = req.body;
+  const { name, category, Alert_quantity, price, weight, description } = req.body;
 
+  const id = await Product.find().sort({ _id: -1 }).limit(1);
   const newProduct = {
-    ID: id,
+    ID: parseInt(id[0].ID) + 1,
     name: name,
     category: category,
-    quantity: quantity,
+    Stock: 0,
+    Alert_quantity: Alert_quantity,
     price: price,
     weight: weight,
     description: description,
@@ -30,8 +32,8 @@ const listProduct = async (req, res) => {
 };
 const listProductById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const product = await Product.findById(id);
+    
+    const product = await Product.findById(req.params.id);
 
     return res.status(200).json(product);
   } catch (error) {
@@ -56,24 +58,20 @@ const UpdateProduct = async (req, res) => {
   }
 };
 
-const DeleteProduct =  async (req,res) => {
+const DeleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Product.findByIdAndDelete(id);
 
-  try{
-      const {id} = req.params;
-      const result = await Product.findByIdAndDelete(id);
+    if (!result) {
+      return res.status(404).send({ message: "Product Not Find !" });
+    }
 
-      if(!result){
-          return res.status(404).send({ message: 'Product Not Find !' });
-      }
-
-      return res.status(200).send({ message: 'Product Deleted Successfully!' });
-
-
+    return res.status(200).send({ message: "Product Deleted Successfully!" });
   } catch (error) {
-      console.log(error.message);
-      res.status(500).send({message: error.message});
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
   }
-
 };
 
 exports.createProduct = createProduct;

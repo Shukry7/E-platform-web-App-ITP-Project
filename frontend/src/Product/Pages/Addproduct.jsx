@@ -1,12 +1,15 @@
 import React from "react";
 import Card from "../../Shared/Components/UiElements/Card";
 import ProductForm from "./Components/productform";
+import Navbar from "../../Shared/Components/UiElements/Navbar";
 
 const AddProduct = () => {
   return (
-    <><Card>
-      <ProductForm/>
-      </Card>
+    <>
+      <div>
+        <Navbar />
+        <ProductForm />
+      </div>
     </>
   );
 };

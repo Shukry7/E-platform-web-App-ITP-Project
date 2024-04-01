@@ -1,6 +1,6 @@
 const HttpError = require("../Models/http-error");
-const Product = require("../Models/EmployeeModel");
 const uuid = require("uuid");
+const Employee = require("../Models/EmployeeModel");
 
 // get details from body and assigned to variables
 const createEmployee = async (req, res, next) => {

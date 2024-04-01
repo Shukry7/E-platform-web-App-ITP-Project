@@ -28,7 +28,7 @@ const EmployeeSchema = mongoose.Schema(
     },
     hourlyWage: {
       type: Number,
-      default: {},
+      default: 0,
     },
   },
   {
