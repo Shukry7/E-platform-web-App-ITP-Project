@@ -86,68 +86,103 @@ const EmployeeForm = () => {
         <Loader/>
       ) : (
         <>
-          <h2 style={{ textAlign: "center" }}>Add Employee</h2>
-          
-          <Input
-            element="Input"
-            id="name"
-            type="text"
-            placeholder="Enter Employee Name"
-            label="Name :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a Name."
-            onInput={inputHandler}
-          />
-          <Input
-            element="Input"
-            id="address"
-            type="text"
-            placeholder="Enter address"
-            label="Address :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a address."
-            onInput={inputHandler}
-          />
-        
-          <Input
-            id="telephone"
-            type="number"
-            placeholder="Enter phone number"
-            label="Phone Number :"
-            validators={[VALIDATOR_PHONE()]}
-            errorText="Please Enter a valid Phone Number (10 numbers)"
-            onInput={inputHandler}
-          />
-          
-          <Dropdown
-            id="type"
-            options={Type}
-            onInput={inputHandler}
-            Display=""
-            label="Employee Type:"
-          />
-          <Input
-            element="Input"
-            id="hourlywage"
-            type="number"
-            placeholder="Enter hourlywage"
-            label="Hourly Wage :"
-            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-            errorText="Please Enter Hourly Wage."
-            onInput={inputHandler}
-          />
-          <Button
-            type="submit"
-            style={{ left: "76%", position: "relative" }}
-            disabled={!formState.isValid}
-          >
-            Add
-          </Button>
+        <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
+            <div class="container mx-auto">
+              <div>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Emmployee</h2>
+                <p class="text-gray-500 mb-6 text-center">Enter Employee details below !!</p>
+                <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+                  <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                    
+                    <div class="lg:col-span-2">
+                      
+                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="name"
+                            type="text"
+                            placeholder="Enter Employee Name"
+                            label="Name :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a Name."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="telephone"
+                            type="number"
+                            placeholder="Enter Telephone Number"
+                            label="Telephone :"
+                            validators={[VALIDATOR_PHONE()]}
+                            errorText="Please Enter a valid Phone Number (10 numbers)"
+                            onInput={inputHandler}
+                          />
+                        </div>
+                      
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="address"
+                            type="text"
+                            placeholder="Enter Address"
+                            label="Address :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter an Address."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Dropdown
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            id="type"
+                            options={Type}
+                            onInput={inputHandler}
+                            Display=""
+                            label="Type:"
+                          />
+                        </div>
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="hourlywage"
+                            type="number"
+                            placeholder="Enter Hourly Wage"
+                            label="Hourly Wage :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter wage."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-5 text-right">
+                          <div class="inline-flex items-end">
+                            <Button
+                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                              type="submit"
+                              disabled={!formState.isValid}
+                            >
+                              Submit
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
         </>
       )}
     </form>
   );
 };
-
 export default EmployeeForm;
-export { Type };
+
