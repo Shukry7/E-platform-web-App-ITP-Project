@@ -7,6 +7,7 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import { Link } from "react-router-dom";
+import { MdDeleteForever } from "react-icons/md";
 
 const SupplierTable = (props) => {
   const deleteHandle = (id) => {
@@ -57,9 +58,12 @@ const SupplierTable = (props) => {
                   <td class="px-6 py-4">{item.mail}</td>
                   <td class="px-6 py-4">{item.address}</td>
                   <td class="px-6 py-4">{item.credit}</td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 flex justify-center gap-2">
                     <Link to={'/Supplier/delete/'+item._id}>
-                      delete
+                      <MdDeleteForever />
+                    </Link>
+                    <Link to={'/Supplier/delete/'+item._id}>
+                      <MdDeleteForever />
                     </Link>
                   </td>
                 </TableRow>
