@@ -13,11 +13,13 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "../../../Shared/hooks/form-hook";
+import Loader from "../../../Shared/Components/UiElements/Loader";
 
 const ProductformUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const Category = [
+    { value: "...." },
     { value: "Aluminium Bars" },
     { value: "Aluminium Accessories" },
     { value: "Boards" },
@@ -41,18 +43,12 @@ const ProductformUpdate = () => {
         value: "",
         isValid: true,
       },
-      price: {
-        value: "",
-        isValid: false,
-      },
+
       weight: {
         value: "",
         isValid: false,
       },
-      quantity: {
-        value: "",
-        isValid: false,
-      },
+
       image: {
         value: null,
         isValid: true,
@@ -80,16 +76,8 @@ const ProductformUpdate = () => {
               value: res.data.category,
               isValid: true,
             },
-            price: {
-              value: res.data.price,
-              isValid: true,
-            },
             weight: {
               value: res.data.weight,
-              isValid: true,
-            },
-            quantity: {
-              value: res.data.quantity,
               isValid: true,
             },
             image: {
@@ -115,9 +103,7 @@ const ProductformUpdate = () => {
         name: formState.inputs.name.value,
         description: formState.inputs.description.value,
         category: formState.inputs.category.value,
-        price: formState.inputs.price.value,
-        weight: formState.inputs.weight.value,
-        quantity: formState.inputs.quantity.value,
+        weight: formState.inputs.weight.value
       })
       .then((res) => {
         setLoading(false);
@@ -133,79 +119,100 @@ const ProductformUpdate = () => {
   return (
     <form onSubmit={submitHandler}>
       {loading ? (
-        <h1> LOADING...</h1>
+        <Loader />
       ) : (
         <>
-          <ImageUpload center id="image" onInput={inputHandler} />
-          <Input
-            element="Input"
-            id="name"
-            type="text"
-            placeholder="Enter Product Name"
-            label="Name :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a Name."
-            onInput={inputHandler}
-            initialValue={formState.inputs.name.value}
-          />
-          <Dropdown
-            id="category"
-            options={Category}
-            onInput={inputHandler}
-            Display=""
-            label="Category:"
-            initialValue={formState.inputs.category.value}
-          />
-          <Input
-            id="description"
-            type="text"
-            placeholder="Enter Description"
-            label="Description :"
-            validators={[VALIDATOR_MINLENGTH(5), VALIDATOR_MAXLENGTH(250)]}
-            errorText="Please Enter a Description (5 - 250 words)"
-            onInput={inputHandler}
-            initialValue={formState.inputs.description.value}
-          />
-          <Input
-            element="Input"
-            id="price"
-            type="number"
-            placeholder="Enter Price"
-            label="Price :"
-            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-            errorText="Please Enter a price."
-            onInput={inputHandler}
-            initialValue={formState.inputs.price.value}
-          />
-          <Input
-            element="Input"
-            id="weight"
-            type="number"
-            placeholder="Enter Weight of product"
-            label="Weight :"
-            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-            errorText="Please Enter a Weight."
-            onInput={inputHandler}
-            initialValue={formState.inputs.weight.value}
-          />
-          <Input
-            element="Input"
-            id="quantity"
-            type="number"
-            placeholder="Enter Quantity"
-            label="Quantity :"
-            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-            errorText="Please Enter a Quantity."
-            onInput={inputHandler}
-            initialValue={formState.inputs.quantity.value}
-          />
-          <Button
-            type="submit"
-            style={{ left: "76%", position: "relative" }}
-            disabled={!formState.isValid}
-          >
-            Add
-          </Button>
+          <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
+            <div class="container mx-auto">
+              <div>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">
+                  Update Product
+                </h2>
+                <p class="text-gray-500 mb-6 text-center">
+                  Enter Product details below !!
+                </p>
+                <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+                  <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                    <div class="text-gray-600 flex justify-center items-center">
+                      <ImageUpload center id="image" onInput={inputHandler} />
+                    </div>
+                    <div class="lg:col-span-2">
+                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="name"
+                            initialValue={formState.inputs.name.value}
+                            type="text"
+                            placeholder="Enter Product Name"
+                            label="Product Name :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a Name."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            id="description"
+                            type="text"
+                            initialValue={formState.inputs.description.value}
+                            placeholder="Enter Description"
+                            label="Description :"
+                            validators={[
+                              VALIDATOR_MINLENGTH(5),
+                              VALIDATOR_MAXLENGTH(250),
+                            ]}
+                            errorText="Please Enter a Description (5 - 250 words)"
+                            onInput={inputHandler}
+                          />
+                        </div>
+
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="weight"
+                            initialValue={formState.inputs.weight.value}
+                            type="number"
+                            placeholder="Enter Weight of product"
+                            label="Weight :"
+                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
+                            errorText="Please Enter a Weight."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Dropdown
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            id="category"
+                            options={Category}
+                            onInput={inputHandler}
+                            Display=""
+                            label="Category:"
+                            initialValue={formState.inputs.category.value}
+                          />
+                        </div>
+
+                        <div class="md:col-span-5 text-right">
+                          <div class="inline-flex items-end">
+                            <Button
+                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                              type="submit"
+                              disabled={!formState.isValid}
+                            >
+                              Submit
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </form>
