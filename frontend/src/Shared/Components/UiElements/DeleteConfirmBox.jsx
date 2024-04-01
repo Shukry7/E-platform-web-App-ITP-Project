@@ -19,7 +19,8 @@ const DeleteConfirmBox = (props) => {
       .delete(props.deletelink)
       .then((res) => {
         setLoading(false);
-        navigate("/Product");
+        setisClick(!isclick);
+        window.location.reload(); 
       })
       .catch((err) => {
         console.error(err);
