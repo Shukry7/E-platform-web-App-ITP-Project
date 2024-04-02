@@ -9,19 +9,6 @@ import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
 
 const SupplierTable = (props) => {
-  const deleteHandle = (id) => {
-    props.setloading(true);
-    axios
-      .delete(`http://localhost:5000/supplier/${id}`)
-      .then((res) => {
-        props.setloading(false);
-        Navigate("/Supplier");
-      })
-      .catch((err) => {
-        console.error(err);
-        props.setloading(false);
-      });
-  };
 
   const Headings = [
     "#",
@@ -59,7 +46,7 @@ const SupplierTable = (props) => {
                   <td class="px-6 py-4">{item.credit}</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
-                    link1=""
+                    link1={`/Supplier/view/`+ item._id}
                     link2={`/Supplier/update/`+ item._id}
                     deletelink={`http://localhost:5000/supplier/${item._id}`}
                     />
