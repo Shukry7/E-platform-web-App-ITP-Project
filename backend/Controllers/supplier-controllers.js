@@ -5,9 +5,18 @@ const uuid = require("uuid");
 const createSupplier = async (req, res, next) => {
   const { name, telephone, mail, address, city} = req.body;
 
-  const id = await Supplier.find().sort({ _id: -1 }).limit(1);
+  const latestSupplier = await Supplier.find().sort({ _id: -1 }).limit(1);
+  let id;
+
+  if (latestSupplier.length !==0) {
+    const latestId = parseInt(latestSupplier[0].ID.slice(1)); 
+    id = "S" + String(latestId + 1).padStart(4, "0"); 
+  } else {
+    id = "S0001"; 
+  }
+
   const newSupplier = {
-    ID: parseInt(id[0].ID) + 1,
+    ID: id,
     name: name,
     telephone: telephone,
     mail: mail,
