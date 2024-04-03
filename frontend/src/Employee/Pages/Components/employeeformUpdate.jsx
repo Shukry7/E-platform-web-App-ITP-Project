@@ -8,7 +8,7 @@ import {
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MIN,
   VALIDATOR_PHONE,
-  VALIDATOR_MINLENGTH,
+  VALIDATOR_EMAIL,
   VALIDATOR_REQUIRE,
 } from "../../../Shared/Components/util/validate";
 import { useNavigate, useParams } from "react-router-dom";
