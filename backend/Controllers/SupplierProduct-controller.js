@@ -21,13 +21,14 @@ const createSupplierProduct = async (req, res, next) => {
 const listProductBySupplierId = async (req, res) => {
   try {
     const { id } = req.params;
-    const supplierProduct = await SupplierProduct.find({ supplier: id });
+    const supplierProduct = await SupplierProduct.find({ supplier: id }).populate('supplier').populate('product');;
 
     return res.status(200).json(supplierProduct);
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
   }
+
 };
 
 const UpdateSupplierProduct = async (req, res) => {
