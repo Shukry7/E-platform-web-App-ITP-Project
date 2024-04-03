@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+/* eslint-disable react-hooks/rules-of-hooks */
 import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
@@ -9,45 +9,45 @@ import {
   VALIDATOR_PHONE,
   VALIDATOR_EMAIL,
 } from "../../../Shared/Components/util/validate";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useForm } from "../../../Shared/hooks/form-hook";
-import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 
-const City = [
-  { value: "...." },
-  { value: "Ampara" },
-  { value: "Anuradhapura" },
-  { value: "Badulla" },
-  { value: "Batticaloa" },
-  { value: "Colombo" },
-  { value: "Galle" },
-  { value: "Gampaha" },
-  { value: "Hambantota" },
-  { value: "Jaffna" },
-  { value: "Kalutara" },
-  { value: "Kandy" },
-  { value: "Kegalle" },
-  { value: "Kilinochchi" },
-  { value: "Kurunegala" },
-  { value: "Mannar" },
-  { value: "Matale" },
-  { value: "Matara" },
-  { value: "Monaragala" },
-  { value: "Mullaitivu" },
-  { value: "Nuwara Eliya" },
-  { value: "Polonnaruwa" },
-  { value: "Puttalam" },
-  { value: "Ratnapura" },
-  { value: "Trincomalee" },
-  { value: "Vavuniya" },
-];
-
-const DeliveryForm = () => {
-
+const DeliveryFormUpdate  = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-
+  const City = [
+    { value: "...." },
+    { value: "Ampara" },
+    { value: "Anuradhapura" },
+    { value: "Badulla" },
+    { value: "Batticaloa" },
+    { value: "Colombo" },
+    { value: "Galle" },
+    { value: "Gampaha" },
+    { value: "Hambantota" },
+    { value: "Jaffna" },
+    { value: "Kalutara" },
+    { value: "Kandy" },
+    { value: "Kegalle" },
+    { value: "Kilinochchi" },
+    { value: "Kurunegala" },
+    { value: "Mannar" },
+    { value: "Matale" },
+    { value: "Matara" },
+    { value: "Monaragala" },
+    { value: "Mullaitivu" },
+    { value: "Nuwara Eliya" },
+    { value: "Polonnaruwa" },
+    { value: "Puttalam" },
+    { value: "Ratnapura" },
+    { value: "Trincomalee" },
+    { value: "Vavuniya" },
+  ];
+  
   const [loading, setLoading] = useState(false);
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler , setFormData] = useForm(
     {
       name: {
         value: "",
@@ -68,7 +68,7 @@ const DeliveryForm = () => {
       city: {
         value: "",
         isValid: false,
-      },
+    },
       license: {
         value: "",
         isValid: false,
@@ -93,18 +93,75 @@ const DeliveryForm = () => {
     false
   );
 
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`http://localhost:5000/delivery/${id}`)
+      .then((res) => {
+        setFormData(
+          {
+            name: {
+                value: res.data.name,
+                isValid: true,
+              },
+              telephone: {
+                value: res.data.telephone,
+                isValid: true,
+              },
+              mail: {
+                value: res.data.mail,
+                isValid: true,
+              },
+              address: {
+                value: res.data.address,
+                isValid: true,
+              },
+              city: {
+                value: res.data.city,
+                isValid: true,
+              },
+              license: {
+                value: res.data.license,
+                isValid: true,
+              },
+              numberplate: {
+                value: res.data.numberplate,
+                isValid: true,
+              },
+              type: {
+                value: res.data.type,
+                isValid: true,
+              },
+              capacity: {
+                value: res.data.capacity,
+                isValid: true,
+              },
+              image: {
+                value: null,
+                isValid: true,
+              },
+          },
+          true
+        );
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [id, setFormData]);
+
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
     axios
-      .post("http://localhost:5000/delivery/", {
-        id: 1,
+    .put(`http://localhost:5000/delivery/${id}`, {
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,
         mail: formState.inputs.mail.value,
         address: formState.inputs.address.value,
-        license: formState.inputs.license.value,
         city: formState.inputs.city.value,
+        license: formState.inputs.license.value,
         numberplate: formState.inputs.numberplate.value,
         type: formState.inputs.type.value,
         capacity: formState.inputs.capacity.value,
@@ -129,7 +186,7 @@ const DeliveryForm = () => {
           <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
             <div class="container mx-auto">
               <div>
-                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Delivery Person</h2>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">Update Delivery Person</h2>
                 <p class="text-gray-500 mb-6 text-center">Enter the Delivery Person details below!</p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
@@ -144,6 +201,7 @@ const DeliveryForm = () => {
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
                             id="name"
+                            initialValue={formState.inputs.name.value}
                             type="text"
                             placeholder="Enter Delivery Person Name"
                             label="Name :"
@@ -157,6 +215,7 @@ const DeliveryForm = () => {
                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                              element="Input"
                               id="telephone"
+                              initialValue={formState.inputs.telephone.value}
                               type="number"
                               placeholder="Enter Telephone Number"
                               label="Telephone :"
@@ -169,8 +228,9 @@ const DeliveryForm = () => {
                           <Input
                               class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                               element="Input"
-                              id="mail"
+                              id="mail"  
                               type="text"
+                              initialValue={formState.inputs.mail.value}
                               placeholder="Enter Mail"
                               label="Email :"
                               validators={[VALIDATOR_EMAIL()]}
@@ -184,6 +244,7 @@ const DeliveryForm = () => {
                                 element="Input"
                                 id="address"
                                 type="text"
+                                initialValue={formState.inputs.address.value}
                                 placeholder="Enter Address"
                                 label="Street :"
                                 validators={[VALIDATOR_REQUIRE()]}
@@ -195,18 +256,21 @@ const DeliveryForm = () => {
                           <Dropdown
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             id="city"
+                            initialValue={formState.inputs.city.value}
                             options={City}
                             onInput={inputHandler}
                             Display=""
                             label="City:"
                           />
-                          </div>
+                        </div>
+                      
                         <div class="md:col-span-2">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
                             id="license"
                             type="text"
+                            initialValue={formState.inputs.license.value}
                             placeholder="Enter License Number"
                             label="License Number: "
                             validators={[VALIDATOR_REQUIRE()]}
@@ -220,6 +284,7 @@ const DeliveryForm = () => {
                             element="Input"
                             id="numberplate"
                             type="text"
+                            initialValue={formState.inputs.numberplate.value}
                             placeholder="Enter Number Plate"
                             label="Number Plate: "
                             validators={[VALIDATOR_REQUIRE()]}
@@ -233,6 +298,7 @@ const DeliveryForm = () => {
                             element="Type"
                             id="type"
                             type="text"
+                            initialValue={formState.inputs.type.value}
                             placeholder="Enter the type of the vehicle"
                             label="Type of the Vehicle: "
                             validators={[VALIDATOR_REQUIRE()]}
@@ -246,6 +312,7 @@ const DeliveryForm = () => {
                             element="Capacity"
                             id="capacity"
                             type="text"
+                            initialValue={formState.inputs.capacity.value}
                             placeholder="Enter the capacity of the vehicle"
                             label="Capacity of the Vehicle: "
                             validators={[VALIDATOR_REQUIRE()]}
@@ -260,7 +327,7 @@ const DeliveryForm = () => {
                               type="submit"
                               disabled={!formState.isValid}
                             >
-                              Add
+                              Update
                             </Button>
                           </div>
                         </div>
@@ -277,6 +344,6 @@ const DeliveryForm = () => {
   );
 };
 
-export default DeliveryForm;
+export default DeliveryFormUpdate ;
 
 

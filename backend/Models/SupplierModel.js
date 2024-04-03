@@ -26,6 +26,11 @@ const supplierSchema = mongoose.Schema(
       required: [true, "Please Enter Address"],
       trim: true,
     },
+    city: {
+      type: String,
+      required: [true, "Please Enter City"],
+      trim: true,
+    },
     credit: {
       type: Number,
       default: 0,
