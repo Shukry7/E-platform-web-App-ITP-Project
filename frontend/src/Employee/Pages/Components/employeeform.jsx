@@ -6,6 +6,7 @@ import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
   
+  VALIDATOR_EMAIL,
   VALIDATOR_MIN,
   VALIDATOR_PHONE,
   VALIDATOR_REQUIRE,
@@ -43,6 +44,11 @@ const EmployeeForm = () => {
         value: "",
         isValid: false,
       },
+      mail:{
+        value:"",
+        isValid:false,
+
+      },
       type: {
         value: "",
         isValid: false,
@@ -65,6 +71,7 @@ const EmployeeForm = () => {
         name: formState.inputs.name.value,
         address: formState.inputs.address.value,
         telephone: formState.inputs.telephone.value,
+        mail:formState.inputs.mail.value,
         type: formState.inputs.type.value,
         hourlywage: formState.inputs.hourlywage.value,
         
@@ -120,6 +127,19 @@ const EmployeeForm = () => {
                             label="Telephone :"
                             validators={[VALIDATOR_PHONE()]}
                             errorText="Please Enter a valid Phone Number (10 numbers)"
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="mail"
+                            type="text"
+                            placeholder="Enter email address"
+                            label="Email Address :"
+                            validators={[VALIDATOR_EMAIL()]}
+                            errorText="Please Enter a valid EMail address"
                             onInput={inputHandler}
                           />
                         </div>

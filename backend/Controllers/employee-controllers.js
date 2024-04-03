@@ -4,13 +4,25 @@ const Employee = require("../Models/EmployeeModel");
 
 // get details from body and assigned to variables
 const createEmployee = async (req, res, next) => {
-  const { id, name, address, telephone, type, wage } = req.body;
+  const { name, address, telephone, mail,type,wage  } = req.body;
+
+  const latestEmployee = await Employee.find().sort({ _id: -1 }).limit(1);
+  let id;
+
+  if (latestEmployee.length !== 0) {
+    const latestId = parseInt(latestEmployee[0].ID.slice(1));
+    id = "E" + String(latestId + 1).padStart(4, "0");
+  } else {
+    id = "E0001";
+  }
+
 
   const newEmployee = {
     ID: id,
     name: name,
     address: address,
     telephone: telephone,
+    mail:mail,
     type: type,
     hourlywage: wage,
   };

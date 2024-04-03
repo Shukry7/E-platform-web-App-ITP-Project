@@ -29,6 +29,7 @@ const EmployeeTable = (props) => {
     "Employee name",
     "Address",
     "Telephone",
+    "Email",
     "Type",
     "Hourly Wage",
     "Action",
@@ -55,6 +56,7 @@ const EmployeeTable = (props) => {
                   </th>
                   <td class="px-6 py-4">{item.address}</td>
                   <td class="px-6 py-4">{item.telephone}</td>
+                  <td class="px-6 py-4">{item.mail}</td>
                   <td class="px-6 py-4">{item.type}</td>
                   <td class="px-6 py-4">{item.hourlywage}</td>
                   <td class="px-6 py-4 flex justify-center gap-2">
