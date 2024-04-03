@@ -39,12 +39,13 @@ body.tailwind-dark .e-custom-card .e-avatar,
 }
 
 .e-custom-card :nth-child(2) .e-card-header-title.name {
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .sample_container p.avatar-content {
     line-height: 20px;
     font-family: inherit;
+    padding-left: 10px; /* Adjust the padding as needed */
 }
 
 .sample_container.card_sample .e-custom-card .e-card-header {
@@ -59,7 +60,7 @@ body.tailwind-dark .e-custom-card .e-avatar,
     box-shadow: 0 16px 28px -8px rgba(0, 0, 0, .36), 0 4px 15px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2);
 }
 
-.sample_container.card_sample .e-card.e-custom-card :nth-child(3) {
+.sample_container.card_sample .e-card.e-custom-card :nth-child() {
     padding: 12px 0px 20px 0px;
     height: 130px;
 }
@@ -70,6 +71,7 @@ body.tailwind-dark .e-custom-card .e-avatar,
     line-height: normal;
     color: rgba(83, 101, 132, 0.65);
     text-shadow: 0 0 0.1px;
+    padding-bottom: 20px;
 }
 
 .sample_container.card_sample .e-custom-card.e-card .e-card-header .e-card-header-caption .e-card-sub-title {
@@ -90,11 +92,13 @@ body.tailwind-dark .e-custom-card .e-avatar,
 .sample_container.card_sample .avatar-content {
     color: rgba(250, 200, 130, 0.6);
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
     color: rgb(94, 94, 94);
     border: none;
     padding: 0;
     font-size: 14px;
+    padding-left: 20px;
+    padding-top: 10px;
 }
 
 .avatar-content {
@@ -137,3 +141,5 @@ body.tailwind-dark .e-custom-card .e-avatar,
 .bootstrap5-dark .sample_container.card_sample .e-custom-card.e-card .e-card-header .e-card-header-caption .e-card-header-title {
     color: rgba(255, 255, 255, 0.84);
 }
+
+
