@@ -15,8 +15,7 @@ import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
 import AddEmployee from "./Employee/Pages/AddEmployee";
 import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
-import UpdateProduct from "./Product/Pages/UpdateProduct";
-import ViewProduct from "./Product/Pages/ViewProduct";
+import Updateproduct from "./Product/Pages/Updateproduct";
 
 
 const App = () => {
@@ -25,9 +24,8 @@ const App = () => {
     <Router>
       <Routes >
         <Route path="/Product" exact element={<Products/>}/>
-        <Route path="/Product/update/:id" exact element={<UpdateProduct/>}/> 
+        <Route path="/Product/update/:id" exact element={<Updateproduct/>}/> 
         <Route path="/Product/new" exact element={<AddProduct/>}/>
-        <Route path="/Product/Details/:id" exact element={<ViewProduct/>}/>
         <Route path="/Supplier" exact element={<Suppliers/>}/>
         <Route path="/Supplier/create" exact element={<CreateSupplier/>}/>
         <Route path="/Supplier/update/:id" exact element={<Updatesupplier/>}/>
