@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const ProductRoute = require("./Routes/ProductRoute");
 const SupplierRoute = require("./Routes/SupplierRoute");
+const SupplierProductRoute = require("./Routes/SupplierProductRoute")
 const DeliveryRoute = require("./Routes/DeliveryRoute");
 const EmployeeRoute = require("./Routes/EmployeeRoute");
 
@@ -30,6 +31,7 @@ app.get("/", (req, res) => {
 app.use("/product", ProductRoute);
 app.use("/supplier", SupplierRoute);
 app.use("/employee",EmployeeRoute);
+app.use("/supplierproduct", SupplierProductRoute)
 
 app.use("/delivery", DeliveryRoute);
 
