@@ -6,6 +6,7 @@ const VALIDATOR_TYPE_MAX = 'MAX';
 const VALIDATOR_TYPE_EMAIL = 'EMAIL';
 const VALIDATOR_TYPE_FILE = 'FILE';
 const VALIDATOR_TYPE_PHONE = 'PHONE'; 
+const VALIDATOR_TYPE_DATE = 'DATE';
 
 export const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
 export const VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
@@ -21,6 +22,7 @@ export const VALIDATOR_MIN = val => ({ type: VALIDATOR_TYPE_MIN, val: val });
 export const VALIDATOR_MAX = val => ({ type: VALIDATOR_TYPE_MAX, val: val });
 export const VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
 export const VALIDATOR_PHONE = () => ({ type: VALIDATOR_TYPE_PHONE });
+export const VALIDATOR_DATE = () => ({ type: VALIDATOR_TYPE_DATE });
 
 export const validate = (value, validators) => {
   let isValid = true;
@@ -46,6 +48,13 @@ export const validate = (value, validators) => {
     if (validator.type === VALIDATOR_TYPE_PHONE) { 
       isValid = isValid && /^\d{10}$/.test(value);
     }
+    if (validator.type === VALIDATOR_TYPE_DATE) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set the time to 00:00:00.000
+      const inputDate = new Date(value);
+      isValid = isValid && inputDate > today;
+    }
+    
   }
   return isValid;
 };
