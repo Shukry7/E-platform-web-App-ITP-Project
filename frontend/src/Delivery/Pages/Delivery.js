@@ -22,23 +22,30 @@ const Delivery = () => {
     .catch(err => {
       console.error(err)
       setLoading(false)});
-
-  },[])
+  },[]);
   return (
     <>
+    <div>
     <Navbar/>
    
-    <Card style={{width: "50%"}}>
-    <div className='flex justify-between items-center'>
-      <h1 className='text-3xl my-8'>Delivery List</h1>
+    <Card style={{width: "100%"}}>
+    <div className="flex justify-between items-center">
+      <h1 className="text-3xl my-8">Delivery Person Lists</h1>
       <Link to='/Delivery/create'>
         <MdOutlineAddBox className='text-sky-800 text-4xl'/>
       </Link>
     </div>
-      <DeliveryTable Delivery={delivery} loading={loading} setloading={setLoading}/>
+      <DeliveryTable 
+        Delivery={delivery}
+        loading={loading} 
+        setloading={setLoading}
+
+        />
       </Card>
+      
+    </div>
     </>
   );
-};
+  };       
 
 export default Delivery;

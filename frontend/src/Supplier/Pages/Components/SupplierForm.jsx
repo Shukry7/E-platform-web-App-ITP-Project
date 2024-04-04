@@ -45,21 +45,6 @@ const City = [
 
 const SupplierForm = () => {
 
-  const [lastSupplier, setLastsupplier] = useState(null);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/supplier")
-      .then((res) => {
-        setLastsupplier(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-
-  console.log(lastSupplier);
-
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -81,6 +66,10 @@ const SupplierForm = () => {
         value: "",
         isValid: false,
       },
+      city: {
+        value: "",
+        isValid: false,
+      },
       image: {
         value: null,
         isValid: true,
@@ -98,7 +87,8 @@ const SupplierForm = () => {
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,
         mail: formState.inputs.mail.value,
-        address: formState.inputs.address.value+", "+formState.inputs.city.value,
+        address: formState.inputs.address.value,
+        city: formState.inputs.city.value,
       })
       .then((res) => {
         setLoading(false);

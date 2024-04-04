@@ -1,18 +1,17 @@
 import React from "react";
 import Card from "../../Shared/Components/UiElements/Card";
-import DeliveryForm from "./Components/DeliveryForm";
+import DeliveryFormUpdate from "./Components/DeliveryFormUpdate";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
 
-
-const CreateDelivery = () => {
+const UpdateDelivery = () => {
   return (
     <>
       <div>
         <Navbar />
-        <DeliveryForm />
+        <DeliveryFormUpdate />
       </div>
     </>
   );
 };
 
-export default CreateDelivery;
+export default UpdateDelivery;

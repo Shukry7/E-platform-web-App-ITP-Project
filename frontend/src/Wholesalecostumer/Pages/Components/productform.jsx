@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useState } from "react";
 import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
@@ -10,26 +10,26 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from "../../../Shared/Components/util/validate";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useForm } from "../../../Shared/hooks/form-hook";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 
-const ProductformUpdate = () => {
-  const { id } = useParams();
+const Category = [
+  { value: "...." },
+  { value: "Aluminium Bars" },
+  { value: "Aluminium Accessories" },
+  { value: "Boards" },
+  { value: "House Accessories" },
+  { value: "Pentry Accessories" },
+  { value: "Locks" },
+  { value: "Other" },
+];
+
+const ProductForm = () => {
   const navigate = useNavigate();
-  const Category = [
-    { value: "...." },
-    { value: "Aluminium Bars" },
-    { value: "Aluminium Accessories" },
-    { value: "Boards" },
-    { value: "House Accessories" },
-    { value: "Pentry Accessories" },
-    { value: "Locks" },
-    { value: "Other" },
-  ];
+
   const [loading, setLoading] = useState(false);
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     {
       name: {
         value: "",
@@ -41,14 +41,20 @@ const ProductformUpdate = () => {
       },
       category: {
         value: "",
-        isValid: true,
+        isValid: false,
       },
-
+      price: {
+        value: "",
+        isValid: false,
+      },
       weight: {
         value: "",
         isValid: false,
       },
-
+      Alert_quantity: {
+        value: "",
+        isValid: false,
+      },
       image: {
         value: null,
         isValid: true,
@@ -57,53 +63,17 @@ const ProductformUpdate = () => {
     false
   );
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`http://localhost:5000/product/update/${id}`)
-      .then((res) => {
-        setFormData(
-          {
-            name: {
-              value: res.data.name,
-              isValid: true,
-            },
-            description: {
-              value: res.data.description,
-              isValid: true,
-            },
-            category: {
-              value: res.data.category,
-              isValid: true,
-            },
-            weight: {
-              value: res.data.weight,
-              isValid: true,
-            },
-            image: {
-              value: null,
-              isValid: true,
-            },
-          },
-          true
-        );
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, [id, setFormData]);
-
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
     axios
-      .put(`http://localhost:5000/product/update/${id}`, {
+      .post("http://localhost:5000/product/new", {
         name: formState.inputs.name.value,
         description: formState.inputs.description.value,
         category: formState.inputs.category.value,
-        weight: formState.inputs.weight.value
+        price: formState.inputs.price.value,
+        weight: formState.inputs.weight.value,
+        Alert_quantity: formState.inputs.Alert_quantity.value,
       })
       .then((res) => {
         setLoading(false);
@@ -125,25 +95,21 @@ const ProductformUpdate = () => {
           <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
             <div class="container mx-auto">
               <div>
-                <h2 class="font-semibold text-xl text-gray-600 text-center">
-                  Update Product
-                </h2>
-                <p class="text-gray-500 mb-6 text-center">
-                  Enter Product details below !!
-                </p>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Product</h2>
+                <p class="text-gray-500 mb-6 text-center">Enter Product details below !!</p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                     <div class="text-gray-600 flex justify-center items-center">
                       <ImageUpload center id="image" onInput={inputHandler} />
                     </div>
                     <div class="lg:col-span-2">
+                      
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                         <div class="md:col-span-5">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
                             id="name"
-                            initialValue={formState.inputs.name.value}
                             type="text"
                             placeholder="Enter Product Name"
                             label="Product Name :"
@@ -157,7 +123,6 @@ const ProductformUpdate = () => {
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             id="description"
                             type="text"
-                            initialValue={formState.inputs.description.value}
                             placeholder="Enter Description"
                             label="Description :"
                             validators={[
@@ -168,13 +133,24 @@ const ProductformUpdate = () => {
                             onInput={inputHandler}
                           />
                         </div>
-
+                        <div class="md:col-span-3">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="price"
+                            type="number"
+                            placeholder="Enter Price"
+                            label="Selling Price :"
+                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
+                            errorText="Please Enter a price."
+                            onInput={inputHandler}
+                          />
+                        </div>
                         <div class="md:col-span-2">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
                             id="weight"
-                            initialValue={formState.inputs.weight.value}
                             type="number"
                             placeholder="Enter Weight of product"
                             label="Weight :"
@@ -191,7 +167,19 @@ const ProductformUpdate = () => {
                             onInput={inputHandler}
                             Display=""
                             label="Category:"
-                            initialValue={formState.inputs.category.value}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="Alert_quantity"
+                            type="number"
+                            placeholder="Enter Quantity"
+                            label="Alert Quantity :"
+                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
+                            errorText="Please Enter a Quantity."
+                            onInput={inputHandler}
                           />
                         </div>
 
@@ -219,4 +207,5 @@ const ProductformUpdate = () => {
   );
 };
 
-export default ProductformUpdate;
+export default ProductForm;
+export { Category };

@@ -8,17 +8,13 @@ import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
 
-const SupplierTable = (props) => {
+const SupplierProductTable = (props) => {
 
   const Headings = [
     "#",
-    "Supplier ID",
-    "Supplier name",
-    "Telephone",
-    "Email",
-    "Address",
-    "Credit",
-    "Action",
+    "Product id",
+    "Product name",
+    "Unit Price",
   ];
 
   return (
@@ -29,28 +25,18 @@ const SupplierTable = (props) => {
               <Loader />
             </center>
           ) : (
-            props.Suppliers.map((item, index) => {
+            props.supplierProducts.map((item, index) => {
               return (
                 <TableRow>
                   <td class="px-6 py-4">{index + 1}</td>
-                  <td class="px-6 py-4">{item.ID}</td>
+                  <td class="px-6 py-4">{item.product.ID}</td>
                   <th
                     scope="row"
                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {item.name}
+                    {item.product.name}
                   </th>
-                  <td class="px-6 py-4">{item.telephone}</td>
-                  <td class="px-6 py-4">{item.mail}</td>
-                  <td class="px-6 py-4">{item.address}, {item.city}</td>
-                  <td class="px-6 py-4">{item.credit}</td>
-                  <td class="px-6 py-4">
-                    <ThreeDotDropdown
-                    link1={`/Supplier/view/`+ item._id}
-                    link2={`/Supplier/update/`+ item._id}
-                    deletelink={`http://localhost:5000/supplier/${item._id}`}
-                    />
-                  </td>
+                  <td class="px-6 py-4">{item.unitPrice}</td>
                 </TableRow>
               );
             })
@@ -60,4 +46,4 @@ const SupplierTable = (props) => {
   );
 };
 
-export default SupplierTable;
+export default SupplierProductTable;

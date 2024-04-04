@@ -1,39 +1,27 @@
 const HttpError = require("../Models/http-error");
 const uuid = require("uuid");
-const Employee = require("../Models/EmployeeModel");
+const Wholesalecostumer = require("../Models/WholesalecostumerModel");
 
 // get details from body and assigned to variables
-const createEmployee = async (req, res, next) => {
-  const { name, address, telephone, mail,type,wage  } = req.body;
+const createWholesalecostumer = async (req, res, next) => {
+  const { id, name, address, telephone, email, creditlimit } = req.body;
 
-  const latestEmployee = await Employee.find().sort({ _id: -1 }).limit(1);
-  let id;
-
-  if (latestEmployee.length !== 0) {
-    const latestId = parseInt(latestEmployee[0].ID.slice(1));
-    id = "E" + String(latestId + 1).padStart(4, "0");
-  } else {
-    id = "E0001";
-  }
-
-
-  const newEmployee = {
+  const newWholesalecostumer = {
     ID: id,
     name: name,
     address: address,
     telephone: telephone,
-    mail:mail,
-    type: type,
-    hourlywage: wage,
+    email: email,
+    creditlimit: creditlimit,
   };
 
 // new employee is created
-  const employee = await Employee.create(newEmployee);
-  return res.status(201).send(employee);
+  const wholesalecostumer = await Wholesalecostumer.create(newWholesalecostumer);
+  return res.status(201).send(wholesalecostumer);
 };
 
 // responding employees
-const listEmployee = async (req, res) => {
+const listWholesalecostumer = async (req, res) => {
   try {
     const employee = await Employee.find({});
     return res.status(200).json(employee);

@@ -5,9 +5,8 @@ import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
 import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
-  VALIDATOR_MAXLENGTH,
-  VALIDATOR_MIN,
-  VALIDATOR_MINLENGTH,
+  VALIDATOR_EMAIL,
+  VALIDATOR_PHONE,
   VALIDATOR_REQUIRE,
 } from "../../../Shared/Components/util/validate";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,44 +14,65 @@ import { useEffect, useState } from "react";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 
-const ProductformUpdate = () => {
+const SupplierformUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const Category = [
+  const City = [
     { value: "...." },
-    { value: "Aluminium Bars" },
-    { value: "Aluminium Accessories" },
-    { value: "Boards" },
-    { value: "House Accessories" },
-    { value: "Pentry Accessories" },
-    { value: "Locks" },
-    { value: "Other" },
+    { value: "Ampara" },
+    { value: "Anuradhapura" },
+    { value: "Badulla" },
+    { value: "Batticaloa" },
+    { value: "Colombo" },
+    { value: "Galle" },
+    { value: "Gampaha" },
+    { value: "Hambantota" },
+    { value: "Jaffna" },
+    { value: "Kalutara" },
+    { value: "Kandy" },
+    { value: "Kegalle" },
+    { value: "Kilinochchi" },
+    { value: "Kurunegala" },
+    { value: "Mannar" },
+    { value: "Matale" },
+    { value: "Matara" },
+    { value: "Monaragala" },
+    { value: "Mullaitivu" },
+    { value: "Nuwara Eliya" },
+    { value: "Polonnaruwa" },
+    { value: "Puttalam" },
+    { value: "Ratnapura" },
+    { value: "Trincomalee" },
+    { value: "Vavuniya" },
   ];
+  
   const [loading, setLoading] = useState(false);
   const [formState, inputHandler, setFormData] = useForm(
     {
-      name: {
-        value: "",
-        isValid: false,
-      },
-      description: {
-        value: "",
-        isValid: false,
-      },
-      category: {
-        value: "",
-        isValid: true,
-      },
-
-      weight: {
-        value: "",
-        isValid: false,
-      },
-
-      image: {
-        value: null,
-        isValid: true,
-      },
+        name: {
+            value: "",
+            isValid: false,
+        },
+        telephone: {
+            value: "",
+            isValid: false,
+        },
+        mail: {
+            value: "",
+            isValid: false,
+        },
+        address: {
+            value: "",
+            isValid: false,
+        },
+        city: {
+            value: "",
+            isValid: false,
+        },
+        image: {
+            value: null,
+            isValid: true,
+        },
     },
     false
   );
@@ -60,7 +80,7 @@ const ProductformUpdate = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5000/product/update/${id}`)
+      .get(`http://localhost:5000/supplier/${id}`)
       .then((res) => {
         setFormData(
           {
@@ -68,18 +88,22 @@ const ProductformUpdate = () => {
               value: res.data.name,
               isValid: true,
             },
-            description: {
-              value: res.data.description,
+            telephone: {
+              value: res.data.telephone,
               isValid: true,
             },
-            category: {
-              value: res.data.category,
+            mail: {
+              value: res.data.mail,
               isValid: true,
             },
-            weight: {
-              value: res.data.weight,
+            address: {
+              value: res.data.address,
               isValid: true,
             },
+            city: {
+                value: res.data.city,
+                isValid: true,
+              },
             image: {
               value: null,
               isValid: true,
@@ -99,15 +123,16 @@ const ProductformUpdate = () => {
     event.preventDefault();
     setLoading(true);
     axios
-      .put(`http://localhost:5000/product/update/${id}`, {
+      .put(`http://localhost:5000/supplier/${id}`, {
         name: formState.inputs.name.value,
-        description: formState.inputs.description.value,
-        category: formState.inputs.category.value,
-        weight: formState.inputs.weight.value
+        telephone: formState.inputs.telephone.value,
+        mail: formState.inputs.mail.value,
+        address: formState.inputs.address.value,
+        city: formState.inputs.city.value,
       })
       .then((res) => {
         setLoading(false);
-        navigate("/Product/");
+        navigate("/Supplier/");
       })
       .catch((err) => {
         console.error(err);
@@ -126,10 +151,10 @@ const ProductformUpdate = () => {
             <div class="container mx-auto">
               <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center">
-                  Update Product
+                  Update Supplier
                 </h2>
                 <p class="text-gray-500 mb-6 text-center">
-                  Enter Product details below !!
+                  Enter Supplier details below !!
                 </p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
@@ -139,14 +164,14 @@ const ProductformUpdate = () => {
                     <div class="lg:col-span-2">
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                         <div class="md:col-span-5">
-                          <Input
+                        <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
                             id="name"
-                            initialValue={formState.inputs.name.value}
                             type="text"
-                            placeholder="Enter Product Name"
-                            label="Product Name :"
+                            initialValue={formState.inputs.name.value}
+                            placeholder="Enter Supplier Name"
+                            label="Name :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Name."
                             onInput={inputHandler}
@@ -155,43 +180,54 @@ const ProductformUpdate = () => {
                         <div class="md:col-span-5">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            id="description"
-                            type="text"
-                            initialValue={formState.inputs.description.value}
-                            placeholder="Enter Description"
-                            label="Description :"
-                            validators={[
-                              VALIDATOR_MINLENGTH(5),
-                              VALIDATOR_MAXLENGTH(250),
-                            ]}
-                            errorText="Please Enter a Description (5 - 250 words)"
+                            element="Input"
+                            id="telephone"
+                            type="number"
+                            initialValue={formState.inputs.telephone.value}
+                            placeholder="Enter Telephone Number"
+                            label="Telephone :"
+                            validators={[VALIDATOR_PHONE()]}
+                            errorText="Please Enter a valid Phone Number (10 numbers)"
                             onInput={inputHandler}
                           />
                         </div>
-
+                        <div class="md:col-span-3">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="mail"
+                            type="text"
+                            initialValue={formState.inputs.mail.value}
+                            placeholder="Enter Mail"
+                            label="Email :"
+                            validators={[VALIDATOR_EMAIL()]}
+                            errorText="Please Enter a valid mail."
+                            onInput={inputHandler}
+                          />
+                        </div>
                         <div class="md:col-span-2">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
-                            id="weight"
-                            initialValue={formState.inputs.weight.value}
-                            type="number"
-                            placeholder="Enter Weight of product"
-                            label="Weight :"
-                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-                            errorText="Please Enter a Weight."
+                            id="address"
+                            type="text"
+                            initialValue={formState.inputs.address.value}
+                            placeholder="Enter Address"
+                            label="Street :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter an Address."
                             onInput={inputHandler}
                           />
                         </div>
                         <div class="md:col-span-2">
                           <Dropdown
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            id="category"
-                            options={Category}
+                            id="city"
+                            initialValue={formState.inputs.city.value}
+                            options={City}
                             onInput={inputHandler}
                             Display=""
-                            label="Category:"
-                            initialValue={formState.inputs.category.value}
+                            label="City:"
                           />
                         </div>
 
@@ -219,4 +255,4 @@ const ProductformUpdate = () => {
   );
 };
 
-export default ProductformUpdate;
+export default SupplierformUpdate;

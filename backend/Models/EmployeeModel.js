@@ -12,14 +12,19 @@ const EmployeeSchema = mongoose.Schema(
       required: [true, "Please Enter a Name"],
       trim: true,
     },
-    telephone: {
+    address: {
       type: Number,
-      required: [true, "Please Enter telephone No"],
+      required: [true, "Please Enter address No"],
       trim:true,
     },
-    address: {
+    telephone: {
       type: String,
-      required: [true, "Please Enter Address"],
+      required: [true, "Please Enter telephone"],
+      trim: true,
+    },
+    mail: {
+      type: String,
+      required: [true, "Please Enter email"],
       trim: true,
     },
     type: {

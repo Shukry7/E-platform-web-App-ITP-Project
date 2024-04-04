@@ -8,7 +8,7 @@ import {
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MIN,
   VALIDATOR_PHONE,
-  VALIDATOR_MINLENGTH,
+  VALIDATOR_EMAIL,
   VALIDATOR_REQUIRE,
 } from "../../../Shared/Components/util/validate";
 import { useNavigate, useParams } from "react-router-dom";
@@ -102,6 +102,7 @@ const EmployeeformUpdate = () => {
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,
         address: formState.inputs.address.value,
+        mail: formState.inputs.mail.value,
         type: formState.inputs.type.value,
         hourlywage: formState.inputs.hourlywage.value,
        
@@ -157,6 +158,19 @@ const EmployeeformUpdate = () => {
             onInput={inputHandler}
             initialValue={formState.inputs.telephone.value}
           />
+          
+                  <Input
+                            
+                            id="mail"
+                            type="text"
+                            placeholder="Enter email address"
+                            label="Email Address :"
+                            validators={[VALIDATOR_EMAIL()]}
+                            errorText="Please Enter a valid EMail address"
+                            onInput={inputHandler}
+                            initialValue={formState.inputs.mail.value}
+                          />
+                        
          
          <Dropdown
             id="type"
