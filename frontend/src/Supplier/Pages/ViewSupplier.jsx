@@ -8,6 +8,7 @@ import { MdOutlineAddBox } from 'react-icons/md';
 import Card from '../../Shared/Components/UiElements/Card';
 import SupplierProductTable from './Components/SupplierProductTable';
 import ViewCard from './Components/ViewCard';
+import PopUp from './Components/PopUp';
 
 const ViewSupplier = () => {
     const { id } = useParams();
@@ -56,9 +57,9 @@ const ViewSupplier = () => {
             <Card className="" style={{ width: "90%"}}>
                 <div className="flex justify-between items-center">
                   <h1 className="text-3xl my-8">Products</h1>
-                  <Link to="">
-                    <MdOutlineAddBox className="text-sky-800 text-4xl" />
-                  </Link>
+                  <div>
+                    <PopUp id= {id}/>
+                  </div>
                 </div>
                 <SupplierProductTable
                   supplierProducts={supplierProduct}
