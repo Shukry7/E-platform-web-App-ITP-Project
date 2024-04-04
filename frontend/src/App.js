@@ -16,6 +16,7 @@ import AddEmployee from "./Employee/Pages/AddEmployee";
 import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
 import UpdateProduct from "./Product/Pages/UpdateProduct";
+import ViewProduct from "./Product/Pages/ViewProduct";
 
 
 const App = () => {
@@ -24,7 +25,7 @@ const App = () => {
     <Router>
       <Routes >
         <Route path="/Product" exact element={<Products/>}/>
-        <Route path="/Product/update/:id" exact element={<UpdateProduct/>}/> 
+        <Route path="/Product/update/:id" exact element={<Updateproduct/>}/> 
         <Route path="/Product/new" exact element={<AddProduct/>}/>
         <Route path="/Supplier" exact element={<Suppliers/>}/>
         <Route path="/Supplier/create" exact element={<CreateSupplier/>}/>
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/Employee" exact element={<Employee/>}/>
         <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
         <Route path="/Employee/new" exact element={<AddEmployee/>}/>
+        <Route path="/CC/new" exact element={<CCForm/>}/>
         
       </Routes >
     </Router>

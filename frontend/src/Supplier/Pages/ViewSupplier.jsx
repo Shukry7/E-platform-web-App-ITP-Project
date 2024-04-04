@@ -7,11 +7,12 @@ import { Link } from 'react-router-dom';
 import { MdOutlineAddBox } from 'react-icons/md';
 import Card from '../../Shared/Components/UiElements/Card';
 import SupplierProductTable from './Components/SupplierProductTable';
-import ViewCard from '../../Shared/Components/UiElements/ViewCard';
+import ViewCard from './Components/ViewCard';
 
 const ViewSupplier = () => {
     const { id } = useParams();
     const[loading, setLoading] = useState(false);
+    const[loading1, setLoading1] = useState(false);
     const [supplier, setsupplier] = useState({});
     const [supplierProduct, setsupplierProduct] = useState([]);
 
@@ -21,11 +22,11 @@ const ViewSupplier = () => {
             .get(`http://localhost:5000/supplier/${id}`)
             .then((res)=> {
                 setsupplier(res.data);
-                setLoading(false);
+                setLoading1(false);
             })
             .catch((err)=> {
                 console.log(err);
-                setLoading(false);
+                setLoading1(false);
             });
     }, [id] );
 
@@ -43,7 +44,7 @@ const ViewSupplier = () => {
         });
     }, [id]);
 
-    console.log(supplierProduct)
+    console.log(supplier)
 
     return (
       <>
@@ -67,7 +68,11 @@ const ViewSupplier = () => {
             </Card>
           </div>
           <div className=" bg-gray-100 p-4 flex-initial w-96 ...">
-          <ViewCard/>
+          <ViewCard
+            supplier = {supplier}
+            loading1 = {loading1}
+            setloading1 = {setLoading1}
+          />
         </div>  
         </div>
       </>
