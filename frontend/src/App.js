@@ -15,7 +15,7 @@ import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
 import AddEmployee from "./Employee/Pages/AddEmployee";
 import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
-import Updateproduct from "./Product/Pages/UpdateProduct";
+import Updateproduct from "./Product/Pages/Updateproduct";
 import CCForm from "./Payment/Pages/Components/CreditCardForm";
 
 

@@ -6,7 +6,7 @@ import Navbar from "../../Shared/Components/UiElements/Navbar";
 const CreateEmployee = () => {
   return (
     <>
-      <div>
+       <div>
         <Navbar />
         <EmployeeForm />
       </div>
