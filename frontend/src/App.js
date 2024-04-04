@@ -15,8 +15,13 @@ import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
 import AddEmployee from "./Employee/Pages/AddEmployee";
 import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
+<<<<<<< Updated upstream
 import Updateproduct from "./Product/Pages/UpdateProduct";
 import CCForm from "./Payment/Pages/Components/CreditCardForm";
+=======
+import UpdateProduct from "./Product/Pages/Updateproduct";
+
+>>>>>>> Stashed changes
 
 
 const App = () => {
