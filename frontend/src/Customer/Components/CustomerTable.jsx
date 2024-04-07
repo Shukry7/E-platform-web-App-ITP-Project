@@ -17,7 +17,7 @@ const CustomerTable = (props) => {
     "Telephone",
     "Email",
     "Address",
-    "Credit",
+    "Password",
     "Action",
   ];
 
@@ -43,7 +43,6 @@ const CustomerTable = (props) => {
                   <td class="px-6 py-4">{item.telephone}</td>
                   <td class="px-6 py-4">{item.mail}</td>
                   <td class="px-6 py-4">{item.address}, {item.city}</td>
-                  <td class="px-6 py-4">{item.credit}</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
                     link1={`/Customer/view/`+ item._id}

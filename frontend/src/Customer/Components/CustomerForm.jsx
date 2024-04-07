@@ -74,6 +74,10 @@ const CustomerForm = () => {
         value: null,
         isValid: true,
       },
+      password: {
+        value: "",
+        isValid: false,
+      }
     },
     false
   );
@@ -89,6 +93,7 @@ const CustomerForm = () => {
         mail: formState.inputs.mail.value,
         address: formState.inputs.address.value,
         city: formState.inputs.city.value,
+        password: formState.inputs.password.value,
       })
       .then((res) => {
         setLoading(false);
@@ -169,6 +174,19 @@ const CustomerForm = () => {
                             label="Address :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter an Address."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-3">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="password"
+                            type="password"
+                            placeholder="Enter Password"
+                            label="Password :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a Password."
                             onInput={inputHandler}
                           />
                         </div>

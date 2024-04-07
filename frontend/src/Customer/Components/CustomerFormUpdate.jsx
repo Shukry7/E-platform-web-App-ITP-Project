@@ -219,6 +219,19 @@ const CustomerFormUpdate = () => {
                             onInput={inputHandler}
                           />
                         </div>
+                        <div class="md:col-span-3">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="password"
+                            type="password"
+                            placeholder="Enter Password"
+                            label="Password :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a Password."
+                            onInput={inputHandler}
+                          />
+                        </div>
                         <div class="md:col-span-2">
                           <Dropdown
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"

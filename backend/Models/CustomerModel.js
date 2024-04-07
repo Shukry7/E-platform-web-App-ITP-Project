@@ -31,14 +31,15 @@ const customerSchema = mongoose.Schema(
       required: [true, "Please Enter City"],
       trim: true,
     },
-    credit: {
-      type: Number,
-      default: 0,
-    },
     image: {
       type: Object,
       default: {},
     },
+    password: {
+      type: String,
+      required: [true, "Please Enter Password"],
+      trim: true,
+    }
   },
   {
     timestamps: true,

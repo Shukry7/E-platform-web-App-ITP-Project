@@ -3,7 +3,7 @@ const Customer = require("../Models/CustomerModel");
 const uuid = require("uuid");
 
 const createCustomer = async (req, res, next) => {
-  const { name, telephone, mail, address, city} = req.body;
+  const { name, telephone, mail, address, city, password} = req.body;
 
   const latestCustomer = await Customer.find().sort({ _id: -1 }).limit(1);
   let id;
@@ -22,6 +22,7 @@ const createCustomer = async (req, res, next) => {
     mail: mail,
     address: address,
     city: city,
+    password: password,
   };
   
 
