@@ -17,6 +17,9 @@ import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
 import Updateproduct from "./Product/Pages/Updateproduct";
 import CCForm from "./Payment/Pages/Components/CreditCardForm";
+import Customers from "./Customer/Customers";
+import RegisterCustomer from "./Customer/RegisterCustomer";
+import UpdateCustomer from "./Customer/UpdateCustomer";
 
 
 const App = () => {
@@ -38,6 +41,9 @@ const App = () => {
         <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
         <Route path="/Employee/new" exact element={<AddEmployee/>}/>
         <Route path="/CC/new" exact element={<CCForm/>}/>
+        <Route path="/Customer" exact element={<Customers/>}/>
+        <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
+        <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
         
       </Routes >
     </Router>
