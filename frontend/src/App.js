@@ -12,7 +12,7 @@ import ViewSupplier from "./Supplier/Pages/ViewSupplier";
 import Delivery from "./Delivery/Pages/Delivery";
 import CreateDelivery from "./Delivery/Pages/CreateDelivery";
 import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
-import AddEmployee from "./Employee/Pages/AddEmployee";
+import CreateEmployee from "./Employee/Pages/CreateEmployee";
 import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
 import Updateproduct from "./Product/Pages/Updateproduct";
@@ -39,7 +39,7 @@ const App = () => {
         <Route path="/Delivery/update/:id" exact element={<UpdateDelivery/>}/>
         <Route path="/Employee" exact element={<Employee/>}/>
         <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
-        <Route path="/Employee/new" exact element={<AddEmployee/>}/>
+        <Route path="/Employee/new" exact element={<CreateEmployee/>}/>
         <Route path="/CC/new" exact element={<CCForm/>}/>
         <Route path="/Customer" exact element={<Customers/>}/>
         <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
