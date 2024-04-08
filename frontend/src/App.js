@@ -20,6 +20,7 @@ import CCForm from "./Payment/Pages/Components/CreditCardForm";
 import Customers from "./Customer/Customers";
 import RegisterCustomer from "./Customer/RegisterCustomer";
 import UpdateCustomer from "./Customer/UpdateCustomer";
+import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery"
 
 
 const App = () => {
@@ -44,7 +45,8 @@ const App = () => {
         <Route path="/Customer" exact element={<Customers/>}/>
         <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
         <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
-        
+        <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
+          
       </Routes >
     </Router>
   );

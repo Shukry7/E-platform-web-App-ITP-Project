@@ -5,10 +5,20 @@ const uuid = require("uuid");
 const createDelivery = async (req, res, next) => {
   const { name, telephone, mail, address , city , license, numberplate , type , capacity } = req.body;
 
-  const id = await Delivery.find().sort({ _id: -1 }).limit(1);
+  const latestDelivery= await Delivery.find().sort({ _id: -1 }).limit(1);
+  let id;
+
+
+  if (latestDelivery.length !==0) {
+    const latestId = parseInt(latestDelivery[0].ID.slice(1)); 
+    id = "D" + String(latestId + 1).padStart(4, "0"); 
+  } else {
+    id = "D0001"; 
+  }
+
+
   const newDelivery = {
-    ID: parseInt(id[0].ID) + 1,
-    //ID: id,
+    ID: id,
     name: name,
     telephone: telephone,
     mail: mail,
