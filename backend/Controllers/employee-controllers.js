@@ -1,6 +1,6 @@
-const HttpError = require("./backend/Models/http-error");
+const HttpError = require("../Models/http-error.js");
 const uuid = require("uuid");
-const Employee = require("./backend/Models/EmployeeModel");
+const Employee = require("../Models/EmployeeModel");
 
 // get details from body and assigned to variables
 const createEmployee = async (req, res, next) => {
