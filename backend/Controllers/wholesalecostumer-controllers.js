@@ -23,52 +23,52 @@ const createWholesalecostumer = async (req, res, next) => {
 // responding employees
 const listWholesalecostumer = async (req, res) => {
   try {
-    const employee = await Employee.find({});
+    const wholesalecostumer = await Wholesalecostumer.find({});
     return res.status(200).json(employee);
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
   }
 };
-const listEmployeeById = async (req, res) => {
+const listWholesalecostumerById = async (req, res) => {
   try {
     const { id } = req.params;
-    const employee = await Employee.findById(id);
+    const employee = await Wholesalecostumer.findById(id);
 
-    return res.status(200).json(employee);
+    return res.status(200).json(wholesalecostumer);
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
   }
 };
 
-const UpdateEmployee = async (req, res) => {
+const UpdateWholesalecostumer = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await Employee.findByIdAndUpdate(id, req.body);
 
     if (!result) {
-      return res.status(404).send({ message: "employee Not Find !" });
+      return res.status(404).send({ message: "wholesalecostumer Not Find !" });
     }
 
-    return res.status(200).send({ message: "employee Updated Successfully!" });
+    return res.status(200).send({ message: "wholesalecostumer Updated Successfully!" });
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
   }
 };
 
-const DeleteEmployee =  async (req,res) => {
+const DeleteWholesalecostumer =  async (req,res) => {
 
   try{
       const {id} = req.params;
       const result = await Employee.findByIdAndDelete(id);
 
       if(!result){
-          return res.status(404).send({ message: 'employee Not Find !' });
+          return res.status(404).send({ message: 'wholesalecostumer Not Find !' });
       }
 
-      return res.status(200).send({ message: 'employee Deleted Successfully!' });
+      return res.status(200).send({ message: 'wholesalecostumer Deleted Successfully!' });
 
 
   } catch (error) {
@@ -78,8 +78,8 @@ const DeleteEmployee =  async (req,res) => {
 
 };
 
-exports.createEmployee = createEmployee;
-exports.listEmployee = listEmployee;
-exports.UpdateEmployee = UpdateEmployee;
-exports.listEmployeeById = listEmployeeById;
-exports.DeleteEmployee = DeleteEmployee;
+exports.createWholesalecostumer = createWholesalecostumer;
+exports.listWholesalecostumer = listWholesalecostumer;
+exports.UpdateWholesalecostumer = UpdateWholesalecostumer;
+exports.listWholesalecostumerById = listWholesalecostumerById;
+exports.DeleteWholesalecostumer = DeleteWholesalecostumer;
