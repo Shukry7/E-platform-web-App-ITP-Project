@@ -30,7 +30,7 @@ const Employee = () => {
     <><div>
       <Navbar />
 
-      <Card className="flex" style={{ width: "100%"}}>
+      <Card className="flex" style={{ width: "100%" }}>
         <div className="flex justify-between items-center">
           <h1 className="text-3xl my-8">Employee List</h1>
           <Link to="/employee/new">
