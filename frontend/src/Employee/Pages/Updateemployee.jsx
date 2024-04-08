@@ -6,7 +6,7 @@ import EmployeeformUpdate from "./Components/employeeformUpdate";
 const Updateemployee = () => {
   return (
     <>
-      <Card>
+      <Card className="flex" style={{ width: "80%" }}>
         <EmployeeformUpdate />
       </Card>
     </>
