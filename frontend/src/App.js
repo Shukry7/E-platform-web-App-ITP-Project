@@ -4,7 +4,7 @@ import {
   Routes ,
 } from "react-router-dom";
 import AddProduct from "./Product/Pages/Addproduct";
-import Updateproduct from "./Product/Pages/UpdateProduct";
+import Updateproduct from "./Product/Pages/Updateproduct";
 import Products from "./Product/Pages/Products";
 import Suppliers from "./Supplier/Pages/Suppliers";
 import CreateSupplier from "./Supplier/Pages/CreateSupplier";
