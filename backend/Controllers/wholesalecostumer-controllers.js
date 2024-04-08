@@ -24,7 +24,7 @@ const createWholesalecostumer = async (req, res, next) => {
 const listWholesalecostumer = async (req, res) => {
   try {
     const wholesalecostumer = await Wholesalecostumer.find({});
-    return res.status(200).json(employee);
+    return res.status(200).json(wholesalecostumer);
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
@@ -33,7 +33,7 @@ const listWholesalecostumer = async (req, res) => {
 const listWholesalecostumerById = async (req, res) => {
   try {
     const { id } = req.params;
-    const employee = await Wholesalecostumer.findById(id);
+    const wholesalecostumer = await Wholesalecostumer.findById(id);
 
     return res.status(200).json(wholesalecostumer);
   } catch (error) {
