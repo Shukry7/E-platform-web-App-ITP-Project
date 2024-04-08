@@ -5,9 +5,19 @@ const uuid = require("uuid");
 const createProduct = async (req, res, next) => {
   const { name, category, Alert_quantity, price, weight, description } = req.body;
 
-  const id = await Product.find().sort({ _id: -1 }).limit(1);
+
+  const latestProduct = await Product.find().sort({ _id: -1 }).limit(1);
+  let id;
+
+  if (latestProduct.length !==0) {
+    const latestId = parseInt(latestProduct[0].ID.slice(1)); 
+    id = "P" + String(latestId + 1).padStart(4, "0"); 
+  } else {
+    id = "P0001"; 
+  }
+
   const newProduct = {
-    ID: parseInt(id[0].ID) + 1,
+    ID: id,
     name: name,
     category: category,
     Stock: 0,

@@ -13,10 +13,13 @@ import ViewSupplier from "./Supplier/Pages/ViewSupplier";
 import Delivery from "./Delivery/Pages/Delivery";
 import CreateDelivery from "./Delivery/Pages/CreateDelivery";
 import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
-import AddEmployee from "./Employee/Pages/AddEmployee";
+import CreateEmployee from "./Employee/Pages/CreateEmployee";
 import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
 import CCForm from "./Payment/Pages/Components/CreditCardForm";
+import Customers from "./Customer/Customers";
+import RegisterCustomer from "./Customer/RegisterCustomer";
+import UpdateCustomer from "./Customer/UpdateCustomer";
 
 
 const App = () => {
@@ -36,8 +39,11 @@ const App = () => {
         <Route path="/Delivery/update/:id" exact element={<UpdateDelivery/>}/>
         <Route path="/Employee" exact element={<Employee/>}/>
         <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
-        <Route path="/Employee/new" exact element={<AddEmployee/>}/>
+        <Route path="/Employee/new" exact element={<CreateEmployee/>}/>
         <Route path="/CC/new" exact element={<CCForm/>}/>
+        <Route path="/Customer" exact element={<Customers/>}/>
+        <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
+        <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
         
       </Routes >
     </Router>

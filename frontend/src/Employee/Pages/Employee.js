@@ -37,7 +37,11 @@ const Employee = () => {
             <MdOutlineAddBox className="text-sky-800 text-4xl" />
           </Link>
         </div>
-        <EmployeeTable Employee={employee} loading={loading} setloading={setLoading} />
+        <EmployeeTable
+        
+         Employee={employee} 
+        loading={loading} 
+        setloading={setLoading} />
       </Card>
 
     </div>
