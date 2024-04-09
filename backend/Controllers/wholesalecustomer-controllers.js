@@ -21,7 +21,7 @@ const createWholesalecustomer = async (req, res, next) => {
 };
 
 // responding employees
-const listWholesalecostumer = async (req, res) => {
+const listWholesalecustomer = async (req, res) => {
   try {
     const wholesalecustomer = await Wholesalecustomer.find({});
     return res.status(200).json(wholesalecustomer);
