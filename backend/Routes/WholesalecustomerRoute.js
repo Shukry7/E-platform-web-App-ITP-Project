@@ -1,12 +1,12 @@
 const express = require("express");
-const Wholesalecostumer = require("../Controllers/wholesalecostumer-controllers");
+const Wholesalecustomer = require("../Controllers/wholesalecustomer-controllers");
 const Router = express.Router();
 
-Router.post("/new", WholesalecostumerControllers.createWholesalecostumer);
-Router.get("/", WholesalecostumerControllers.listWholesalecostumer);
-Router.delete("/:id", WholesalecostumerControllers.DeleteWholesalecostumer);
-Router.get("/update/:id", WholesalecostumerControllers.listWholesalecostumerById);
-Router.put("/update/:id", WholesalecostumerControllers.UpdateWholesalecostumer);
+Router.post("/new", WholesalecustomerControllers.createWholesalecustomer);
+Router.get("/", WholesalecustomerControllers.listWholesalecustomer);
+Router.delete("/:id", WholesalecustomerControllers.DeleteWholesalecustomer);
+Router.get("/update/:id", WholesalecustomerControllers.listWholesalecustomerById);
+Router.put("/update/:id", WholesalecustomerControllers.UpdateWholesalecustomer);
 
 
 module.exports = Router;
