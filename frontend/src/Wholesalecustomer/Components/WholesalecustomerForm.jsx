@@ -43,7 +43,7 @@ const City = [
 ];
 
 
-const SupplierForm = () => {
+const WholesalecustomerForm = () => {
 
   const navigate = useNavigate();
 
@@ -66,13 +66,9 @@ const SupplierForm = () => {
         value: "",
         isValid: false,
       },
-      city: {
+      creditlimit: {
         value: "",
         isValid: false,
-      },
-      image: {
-        value: null,
-        isValid: true,
       },
     },
     false
@@ -82,17 +78,17 @@ const SupplierForm = () => {
     event.preventDefault();
     setLoading(true);
     axios
-      .post("http://localhost:5000/supplier/", {
+      .post("http://localhost:5000/wholesalecustomer/", {
         id: 1,
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,
         mail: formState.inputs.mail.value,
         address: formState.inputs.address.value,
-        city: formState.inputs.city.value,
+        creditlimit: formState.inputs.creditlimit.value,
       })
       .then((res) => {
         setLoading(false);
-        navigate("/Supplier/");
+        navigate("/Wholesalecustomer/");
       })
       .catch((err) => {
         console.error(err);
@@ -110,8 +106,8 @@ const SupplierForm = () => {
           <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
             <div class="container mx-auto">
               <div>
-                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Supplier</h2>
-                <p class="text-gray-500 mb-6 text-center">Enter Supplier details below !!</p>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Wholesalecustomer</h2>
+                <p class="text-gray-500 mb-6 text-center">Enter Wholesalecustomer details below !!</p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                     <div class="text-gray-600 flex justify-center items-center">
@@ -126,7 +122,7 @@ const SupplierForm = () => {
                             element="Input"
                             id="name"
                             type="text"
-                            placeholder="Enter Supplier Name"
+                            placeholder="Enter Wholesalecustomer Name"
                             label="Name :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Name."
@@ -173,13 +169,16 @@ const SupplierForm = () => {
                           />
                         </div>
                         <div class="md:col-span-2">
-                          <Dropdown
+                        <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            id="city"
-                            options={City}
+                            element="Input"
+                            id="tcreditlimit"
+                            type="number"
+                            placeholder="Enter Creditlimit"
+                            label="creditlimit :"
+                            validators={[VALIDATOR_PHONE()]}
+                            errorText="Please Enter a valid creditlimit (numbers)"
                             onInput={inputHandler}
-                            Display=""
-                            label="City:"
                           />
                         </div>
                         <div class="md:col-span-5 text-right">
@@ -206,4 +205,4 @@ const SupplierForm = () => {
   );
 };
 
-export default SupplierForm;
+export default WholesalecustomerForm;
