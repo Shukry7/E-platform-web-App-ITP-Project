@@ -66,15 +66,18 @@ const ProductForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+    console.log(formState.inputs)
+    const formData = new FormData();
+    formData.append('name',formState.inputs.name.value);
+    formData.append('description',formState.inputs.description.value);
+    formData.append('category',formState.inputs.category.value);
+    formData.append('price',formState.inputs.price.value);
+    formData.append('weight',formState.inputs.weight.value);
+    formData.append('Alert_quantity',formState.inputs.Alert_quantity.value);
+    formData.append('image',formState.inputs.image.value);
+
     axios
-      .post("http://localhost:5000/product/new", {
-        name: formState.inputs.name.value,
-        description: formState.inputs.description.value,
-        category: formState.inputs.category.value,
-        price: formState.inputs.price.value,
-        weight: formState.inputs.weight.value,
-        Alert_quantity: formState.inputs.Alert_quantity.value,
-      })
+      .post("http://localhost:5000/product/new", formData)
       .then((res) => {
         setLoading(false);
         navigate("/Product/");

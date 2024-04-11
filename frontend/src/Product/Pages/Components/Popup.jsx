@@ -202,7 +202,7 @@ const Popup = (props) => {
                       for="default-checkbox"
                       class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
-                      Change Alert Quantity (Old Alert Quantity{" "}
+                      Change Alert Quantity (Old Alert Quantity :
                       {oldQuantity})
                     </label>
                   </div>
@@ -248,7 +248,6 @@ const Popup = (props) => {
           </div>
         </div>
       )}
-      ;
     </>
   );
 };

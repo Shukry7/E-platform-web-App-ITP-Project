@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./ImageUpload.css";
 import Button from "./Button";
 
-const ImageUpload = props => {
+const ImageUpload = (props) => {
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState();
   const [isValid, setIsValid] = useState(false);
@@ -27,8 +27,8 @@ const ImageUpload = props => {
   const pickedHandler = (event) => {
     var pickedFile;
     let fileIsValid = isValid;
-    if (event.target.files || event.target.files.length === 1) {
-      const pickedFile = event.target.files[0];
+    if (event.target.files && event.target.files.length === 1) {
+      pickedFile = event.target.files[0];
       setFile(pickedFile);
       setIsValid(true);
       fileIsValid = true;
@@ -36,7 +36,7 @@ const ImageUpload = props => {
       setIsValid(false);
       fileIsValid = false;
     }
-    props.onInput(props.id , pickedFile, fileIsValid)
+    props.onInput(props.id, pickedFile, fileIsValid);
   };
 
   return (

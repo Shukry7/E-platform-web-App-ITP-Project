@@ -1,6 +1,5 @@
-const HttpError = require("../Models/http-error");
+const fs = require("fs")
 const Product = require("../Models/ProductModel");
-const uuid = require("uuid");
 
 const createProduct = async (req, res, next) => {
   const { name, category, Alert_quantity, price, weight, description } = req.body;
@@ -14,8 +13,11 @@ const createProduct = async (req, res, next) => {
     id = "P" + String(latestId + 1).padStart(4, "0"); 
   } else {
     id = "P0001"; 
-  }
-
+  } 
+  let path = 'uploads/images/No-Image-Placeholder.png' 
+  if(req.file && req.file.path )
+    path = req.file.path
+  
   const newProduct = {
     ID: id,
     name: name,
@@ -25,6 +27,7 @@ const createProduct = async (req, res, next) => {
     price: price,
     weight: weight,
     description: description,
+    image: path
   };
 
   const product = await Product.create(newProduct);
@@ -69,8 +72,18 @@ const UpdateProduct = async (req, res) => {
 };
 
 const DeleteProduct = async (req, res) => {
+
+
   try {
     const { id } = req.params;
+    const product = await Product.findById(id);
+
+    const path = product.image;
+    if(path !== 'uploads/images/No-Image-Placeholder.png'){
+      fs.unlink(path, err => {
+        console.log(err)
+      })
+    }
     const result = await Product.findByIdAndDelete(id);
 
     if (!result) {

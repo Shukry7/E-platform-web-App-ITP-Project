@@ -1,5 +1,6 @@
 const dotenv = require("dotenv").config();
 const express = require("express");
+const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -35,6 +36,7 @@ app.use("/supplierproduct", SupplierProductRoute)
 
 app.use("/delivery", DeliveryRoute);
 
+app.use('/uploads/images', express.static(path.join('uploads','images')))
 
 
 const PORT = process.env.PORT || 5000;
