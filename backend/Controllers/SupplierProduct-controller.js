@@ -31,6 +31,19 @@ const listProductBySupplierId = async (req, res) => {
 
 };
 
+const listSupplierByProductId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const supplierProduct = await SupplierProduct.find({ product: id }).populate('supplier').populate('product');;
+
+    return res.status(200).json(supplierProduct);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+
+};
+
 const UpdateSupplierProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -71,4 +84,5 @@ const DeleteSupplierProduct =  async (req,res) => {
 exports.createSupplierProduct = createSupplierProduct;
 exports.UpdateSupplierProduct = UpdateSupplierProduct;
 exports.listProductBySupplierId = listProductBySupplierId;
+exports.listSupplierByProductId = listSupplierByProductId;
 exports.DeleteSupplierProduct = DeleteSupplierProduct;
