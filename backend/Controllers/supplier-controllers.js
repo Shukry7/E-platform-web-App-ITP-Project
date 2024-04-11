@@ -80,7 +80,8 @@ const DeleteSupplier =  async (req,res) => {
       const supplier = await Supplier.findById(id);
 
       const path = supplier.image;
-      if(path !== 'uploads/images/No-Image-Placeholder.png'){
+      
+      if(typeof path === 'string' && path !== 'uploads/images/No-Image-Placeholder.png'){
         fs.unlink(path, err => {
           console.log(err)
         })
