@@ -1,9 +1,10 @@
-const HttpError = require("../Models/http-error");
 const Supplier = require("../Models/SupplierModel");
-const uuid = require("uuid");
+const fs = require("fs");
 
 const createSupplier = async (req, res, next) => {
   const { name, telephone, mail, address, city} = req.body;
+
+  console.log(name)
 
   const latestSupplier = await Supplier.find().sort({ _id: -1 }).limit(1);
   let id;
@@ -15,6 +16,10 @@ const createSupplier = async (req, res, next) => {
     id = "S0001"; 
   }
 
+  let path = 'uploads/images/No-Image-Placeholder.png' 
+  if(req.file && req.file.path )
+    path = req.file.path
+
   const newSupplier = {
     ID: id,
     name: name,
@@ -22,6 +27,7 @@ const createSupplier = async (req, res, next) => {
     mail: mail,
     address: address,
     city: city,
+    image: path,
   };
   
 
@@ -71,6 +77,14 @@ const DeleteSupplier =  async (req,res) => {
 
   try{
       const {id} = req.params;
+      const supplier = await Supplier.findById(id);
+
+      const path = supplier.image;
+      if(path !== 'uploads/images/No-Image-Placeholder.png'){
+        fs.unlink(path, err => {
+          console.log(err)
+        })
+      }
       const result = await Supplier.findByIdAndDelete(id);
 
       if(!result){
