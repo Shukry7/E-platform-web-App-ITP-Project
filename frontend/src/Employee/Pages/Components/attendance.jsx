@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "../../../Shared/Components/UiElements/Card";
+import "./employeeTable.css";
+import Table from "../../../Shared/Components/UiElements/Table";
+import TableRow from "../../../Shared/Components/UiElements/TableRow";
+
 
 const MarkAttendance = () => {
   const [employees, setEmployees] = useState([]);
@@ -19,6 +23,12 @@ const MarkAttendance = () => {
         setLoading(false);
       });
   }, []);
+  const Headings = [
+    
+    "Employee ID",
+    "Employee name",
+    "Status",
+  ];
 
   const handleAttendanceChange = (id, status) => {
     // Logic to mark attendance for the employee with the specified ID
@@ -27,12 +37,12 @@ const MarkAttendance = () => {
 
   return (
     <div>
-      <Card className="w-200 mx-auto p-4">
+      
         <h2 className="text-2xl mb-4">Mark Attendance</h2>
-        <table className="w-full">
+        <table Headings={Headings}  className="w-full">
           <thead>
             <tr>
-              <th className="border px-6 py-4">Employee ID</th>
+              <th className="border text-center px-6 py-4">Employee ID</th>
               <th className="border px-6 py-4">Employee Name</th>
               <th className="border px-6 py-4">Attendance</th>
             </tr>
@@ -70,7 +80,7 @@ const MarkAttendance = () => {
             )}
           </tbody>
         </table>
-      </Card>
+      
     </div>
   );
 };

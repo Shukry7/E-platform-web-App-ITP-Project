@@ -6,17 +6,19 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
-
+import {SnackbarProvider, useSnackbar} from 'notistack';
 import { Link } from "react-router-dom";
 import { MdDeleteForever,MdUpdate } from "react-icons/md";
 
 const EmployeeTable = (props) => {
+  const {enqueueSnackbar} = useSnackbar();
   const deleteHandle = (id) => {
     props.setloading(true);
     axios
       .delete(`http://localhost:5000/employee/${id}`)
       .then((res) => {
         props.setloading(false);
+        enqueueSnackbar('Employee deleted successfully',{variant:'success'});
         Navigate("/Employee");
       })
       .catch((err) => {
@@ -60,7 +62,7 @@ const EmployeeTable = (props) => {
                   <td class="px-6 py-4">{item.telephone}</td>
                   <td class="px-6 py-4">{item.mail}</td>
                   <td class="px-6 py-4">{item.type}</td>
-                  <td class="px-6 py-4">{item.hourlywage}</td>
+                  <td class="px-6 py-4">Rs.{item.hourlywage}/-</td>
                  
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
