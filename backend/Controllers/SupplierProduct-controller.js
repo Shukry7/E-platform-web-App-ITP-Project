@@ -34,7 +34,7 @@ const listProductBySupplierId = async (req, res) => {
 const listSupplierByProductId = async (req, res) => {
   try {
     const { id } = req.params;
-    const supplierProduct = await SupplierProduct.find({ product: id }).populate('supplier').populate('product');;
+    const supplierProduct = await SupplierProduct.find({ product: id }).populate('supplier').populate('product');
 
     return res.status(200).json(supplierProduct);
   } catch (error) {

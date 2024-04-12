@@ -1,5 +1,6 @@
 const fs = require("fs");
 const Product = require("../Models/ProductModel");
+const supplierproduct = require("../Models/SupplierProduct");
 
 const createProduct = async (req, res, next) => {
   const { name, category, Alert_quantity, price, weight, description } =
@@ -43,6 +44,17 @@ const listProduct = async (req, res) => {
   }
 };
 const listProductById = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+
+    return res.status(200).json(product);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+const listrestockProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
 
@@ -113,6 +125,8 @@ const DeleteProduct = async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
 
+    
+    await supplierproduct.deleteMany({ product: id });
     const path = product.image;
     if (path !== "uploads/images/No-Image-Placeholder.png") {
       fs.unlink(path, (err) => {
@@ -124,6 +138,7 @@ const DeleteProduct = async (req, res) => {
     if (!result) {
       return res.status(404).send({ message: "Product Not Find !" });
     }
+    
 
     return res.status(200).send({ message: "Product Deleted Successfully!" });
   } catch (error) {

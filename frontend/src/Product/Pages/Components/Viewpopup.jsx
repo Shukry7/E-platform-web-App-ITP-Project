@@ -1,7 +1,7 @@
-import axios from "axios"
-import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { GrView } from "react-icons/gr"
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { GrView } from "react-icons/gr";
 
 const ViewPopup = (props) => {
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,9 @@ const ViewPopup = (props) => {
       });
   }, [props.id]);
 
-  console.log(product.image);
+  console.log(props.id);
+  console.table(product);
+  console.table(supplierProduct);
   return (
     <>
       {props.click && (
@@ -202,7 +204,9 @@ const ViewPopup = (props) => {
                                 to={`/Supplier/view/` + item.supplier._id}
                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-center"
                               >
-                                <center><GrView /></center>
+                                <center>
+                                  <GrView />
+                                </center>
                               </Link>
                             </td>
                           </tr>
@@ -214,7 +218,6 @@ const ViewPopup = (props) => {
               </div>
             </div>
           </div>
-          
         </>
       )}
     </>
