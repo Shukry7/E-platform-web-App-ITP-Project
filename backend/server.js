@@ -9,7 +9,6 @@ const SupplierRoute = require("./Routes/SupplierRoute");
 const SupplierProductRoute = require("./Routes/SupplierProductRoute")
 const DeliveryRoute = require("./Routes/DeliveryRoute");
 const EmployeeRoute = require("./Routes/EmployeeRoute");
-const Cart = require("./Routes/CartRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
 
 
@@ -34,8 +33,8 @@ app.get("/", (req, res) => {
 app.use("/product", ProductRoute);
 app.use("/supplier", SupplierRoute);
 app.use("/employee",EmployeeRoute);
-app.use("/supplierproduct", SupplierProductRoute);
-app.use("/cart",Cart);
+app.use("/supplierproduct", SupplierProductRoute)
+
 app.use("/delivery", DeliveryRoute);
 app.use("/OffPay", OffPay);
 
