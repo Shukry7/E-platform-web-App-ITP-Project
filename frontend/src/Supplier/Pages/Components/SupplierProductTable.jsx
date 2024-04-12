@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
-import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
+import DeleteConfirmBox from "../../../Shared/Components/UiElements/DeleteConfirmBox";
 
 const SupplierProductTable = (props) => {
 
@@ -15,6 +15,7 @@ const SupplierProductTable = (props) => {
     "Product id",
     "Product name",
     "Unit Price",
+    "Action"
   ];
 
   return (
@@ -36,7 +37,8 @@ const SupplierProductTable = (props) => {
                   >
                     {item.product.name}
                   </th>
-                  <td class="px-6 py-4">{item.unitPrice}</td>
+                  <td class="px-6 py-4">Rs.{item.unitPrice}</td>
+                  <td className="px-6 py-4"><DeleteConfirmBox deletelink={`http://localhost:5000/supplierproduct/${item._id}`}/></td>
                 </TableRow>
               );
             })

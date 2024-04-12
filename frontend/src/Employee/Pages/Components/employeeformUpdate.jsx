@@ -3,6 +3,7 @@ import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
 import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
+import {SnackbarProvider, useSnackbar} from 'notistack';
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
   VALIDATOR_MAXLENGTH,
@@ -17,6 +18,7 @@ import { useForm } from "../../../Shared/hooks/form-hook";
 
 const EmployeeformUpdate = () => {
   const { id } = useParams();
+  const {enqueueSnackbar} = useSnackbar();
   const navigate = useNavigate();
   const Type = [
   { value: "...." },
@@ -79,8 +81,8 @@ const EmployeeformUpdate = () => {
               isValid: true,
             },
             mail: {
-              value: "",
-              isValid: false,
+              value: res.data.mail,
+              isValid: true,
             },
             type: {
               value: res.data.type,
@@ -111,16 +113,17 @@ const EmployeeformUpdate = () => {
         telephone: formState.inputs.telephone.value,
         address: formState.inputs.address.value,
         mail: formState.inputs.mail.value,
-        
         type: formState.inputs.type.value,
         hourlywage: formState.inputs.hourlywage.value,
        
       })
       .then((res) => {
         setLoading(false);
+        enqueueSnackbar('Employee updated successfully',{variant:'success'});
         navigate("/Employee/");
       })
       .catch((err) => {
+        enqueueSnackbar('Error',{variant:'Error'});
         console.error(err);
         setLoading(false);
       });
@@ -140,7 +143,7 @@ const EmployeeformUpdate = () => {
                   Update Employee
                 </h2>
                 <p class="text-gray-500 mb-6 text-center">
-                  Enter employee details below !!
+                  Update employee details below !!
                 </p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
@@ -208,12 +211,12 @@ const EmployeeformUpdate = () => {
                         <div class="md:col-span-2">
                           <Dropdown
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            id="city"
+                            id="type"
                             initialValue={formState.inputs.type.value}
                             options={Type}
                             onInput={inputHandler}
                             Display=""
-                            label="City:"
+                            label="Employee Type:"
                           />
                         </div>
                         <div class="md:col-span-2">

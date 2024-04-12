@@ -4,8 +4,6 @@ const fs = require("fs");
 const createSupplier = async (req, res, next) => {
   const { name, telephone, mail, address, city} = req.body;
 
-  console.log(name)
-
   const latestSupplier = await Supplier.find().sort({ _id: -1 }).limit(1);
   let id;
 
@@ -80,7 +78,8 @@ const DeleteSupplier =  async (req,res) => {
       const supplier = await Supplier.findById(id);
 
       const path = supplier.image;
-      if(path !== 'uploads/images/No-Image-Placeholder.png'){
+
+      if(typeof path === 'string' && path !== 'uploads/images/No-Image-Placeholder.png'){
         fs.unlink(path, err => {
           console.log(err)
         })

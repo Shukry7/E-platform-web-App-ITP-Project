@@ -16,6 +16,7 @@ function PopUp(props) {
 
     const [products, setproducts] = useState([]);
     const [product, setProduct] = useState();
+    const [productError, setProductError] = useState('');
   
 
   useEffect(() => {
@@ -37,20 +38,27 @@ function PopUp(props) {
         {
           unitPrice: {
             value: "",
-            isValid: true,
+            isValid: false,
           },
         },
         false
       );
 
+      console.log(formState)
+
       const submitHandler = async (event) => {
         event.preventDefault();
+        if (product == null || product==='') {
+          setProductError('Please select a product.');
+          return;
+      }
+      setProductError('');
         setLoading(true);
         axios
           .post("http://localhost:5000/supplierproduct/", {
             supplier: props.id,
             product: product,
-            unitPrice: formState.inputs.unitprice.value,
+            unitPrice: formState.inputs.unitPrice.value,
           })
           .then((res) => {
             setLoading(false);
@@ -116,7 +124,10 @@ function PopUp(props) {
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white mr-2">Select a product : </label>
                             <select
                                 value={product}
-                                onChange={(event) => setProduct(event.target.value)}
+                                onChange={(event) => {
+                                    setProduct(event.target.value);
+                                    setProductError('');
+                                }}
                                 id="product"
                                 className="flex-grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 style={{ padding: "0.5rem" }}
@@ -130,15 +141,16 @@ function PopUp(props) {
                             </select>
                             
                         </div>
+                        {productError && <p className="text-red-500">{productError}</p>}
                         <div class="flex items-center mt-4"> 
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white mr-2">Enter Unit Price : </label>
                             <Input
                                 class="ml-5 flex-grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" style={{padding: '0.5rem'}}
                                 element="Input"
-                                id="unitprice"
+                                id="unitPrice"
                                 type="number"
                                 placeholder="Enter unit price"
-                                validators={[[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]]}
+                                validators={[VALIDATOR_REQUIRE()]}
                                 errorText="Please Enter Unit Price"
                                 onInput={inputHandler}
                             />
@@ -149,6 +161,7 @@ function PopUp(props) {
                       <button
                         onClick={submitHandler}
                         type="submit"
+                        disabled={!formState.isValid}
                         class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
                       >
                         Add Product
