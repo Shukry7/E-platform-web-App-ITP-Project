@@ -17,6 +17,7 @@ const EmployeeTable = (props) => {
   const {enqueueSnackbar} = useSnackbar();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState([]);
+  
   useEffect(() => {
     setFilteredEmployees(props.Employee);
   }, [props.Employee]);

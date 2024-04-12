@@ -23,7 +23,7 @@ import UpdateCustomer from "./Customer/UpdateCustomer";
 import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery";
 import Dashboard from "./Dashboard/Dashboard";
 import ViewCustomer from "./Customer/ViewCustomer";
-import CreateWholesalecustomer from "./Wholesalecustomer/CreateWholesalecustomer"
+import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecustomer"
 
 
 const App = () => {

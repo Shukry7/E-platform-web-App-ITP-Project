@@ -12,6 +12,7 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
+      <Header/>
       <div className="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
         <div className="px-4 pt-6 w-full">
           <div className="grid w-full grid-cols-1 gap-4 mt-4 sm:grid-cols-4">
