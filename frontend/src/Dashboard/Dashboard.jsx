@@ -3,18 +3,12 @@ import Navbar from "../Shared/Components/UiElements/Navbar";
 import Header from "../Shared/Components/UiElements/header";
 import Table from "../Shared/Components/UiElements/Table";
 import TableRow from "../Shared/Components/UiElements/TableRow";
+import Restock from "./components/Restock";
 
 const Dashboard = () => {
-  const Headings = [
-    "#",
-    "Product ID",
-    "Product name",
-    "Alert Quantity",
-    "Stock",
-    "ReStock",
-  ];
-
   
+
+
   return (
     <>
       <Navbar />
@@ -139,46 +133,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="grid gap-4 xl:grid-cols-1 2xl:grid-cols-3 pt-5">
-            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-              <h3 class="flex items-center mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                Product That Need to Restock
-                <svg
-                  class="w-4 h-4 ml-2 text-gray-400 hover:text-gray-500"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </h3>
-              <div className="border-t border-gray-200 dark:border-gray-600">
-                <Table Headings={Headings}>
-                  <TableRow>
-                    <td class="px-6 py-4">9</td>
-                    <td class="px-6 py-4">9</td>
-                    <th
-                      scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      ii
-                    </th>
-                    <td class="px-6 py-4">k</td>
-                    <td
-                      class="px-6 py-4"
-                      style={{ display: "flex", alignItems: "center" }}
-                    >
-                      <span style={{ marginRight: "10px" }}>Rs.</span>
-                    </td>
-                    <td class="px-6 py-4">Hello</td>
-                  </TableRow>
-                </Table>
-              </div>
-            </div>
+            <Restock/>
           </div>
         </div>
       </div>

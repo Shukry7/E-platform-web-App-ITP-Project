@@ -54,10 +54,10 @@ const listProductById = async (req, res) => {
   }
 };
 
-const listrestockProduct = async (req, res) => {
+const listRestockProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
-
+    const product = await Product.find({$expr:{$lte:["$Stock", "$Alert_quantity"]}})
+    console.table(product)
     return res.status(200).json(product);
   } catch (error) {
     console.log(error.message);
@@ -125,7 +125,6 @@ const DeleteProduct = async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
 
-    
     await supplierproduct.deleteMany({ product: id });
     const path = product.image;
     if (path !== "uploads/images/No-Image-Placeholder.png") {
@@ -138,7 +137,6 @@ const DeleteProduct = async (req, res) => {
     if (!result) {
       return res.status(404).send({ message: "Product Not Find !" });
     }
-    
 
     return res.status(200).send({ message: "Product Deleted Successfully!" });
   } catch (error) {
@@ -152,4 +150,5 @@ exports.listProduct = listProduct;
 exports.UpdateProduct = UpdateProduct;
 exports.listProductById = listProductById;
 exports.DeleteProduct = DeleteProduct;
-exports.UpdateProductPriceAndQty = UpdateProductPriceAndQty; 
+exports.UpdateProductPriceAndQty = UpdateProductPriceAndQty;
+exports.listRestockProduct = listRestockProduct
