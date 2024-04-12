@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
-import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
   VALIDATOR_REQUIRE,
@@ -111,7 +110,6 @@ const WholesalecustomerForm = () => {
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                     <div class="text-gray-600 flex justify-center items-center">
-                      <ImageUpload center id="image" onInput={inputHandler} />
                     </div>
                     <div class="lg:col-span-2">
                       
@@ -162,7 +160,7 @@ const WholesalecustomerForm = () => {
                             id="address"
                             type="text"
                             placeholder="Enter Address"
-                            label="Street :"
+                            label="Address :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter an Address."
                             onInput={inputHandler}
@@ -172,11 +170,11 @@ const WholesalecustomerForm = () => {
                         <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
-                            id="tcreditlimit"
+                            id="creditlimit"
                             type="number"
                             placeholder="Enter Creditlimit"
                             label="creditlimit :"
-                            validators={[VALIDATOR_PHONE()]}
+                            validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a valid creditlimit (numbers)"
                             onInput={inputHandler}
                           />
