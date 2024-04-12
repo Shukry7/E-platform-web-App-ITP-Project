@@ -10,6 +10,10 @@ const ImageUpload = (props) => {
   const filePickerRef = useRef();
 
   useEffect(() => {
+    setPreviewUrl(`http://localhost:5000/${props.initialValue}`);
+  }, [props.initialValue]);
+
+  useEffect(() => {
     if (!file) {
       return;
     }

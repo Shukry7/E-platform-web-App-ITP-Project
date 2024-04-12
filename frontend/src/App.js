@@ -21,6 +21,7 @@ import Customers from "./Customer/Customers";
 import RegisterCustomer from "./Customer/RegisterCustomer";
 import UpdateCustomer from "./Customer/UpdateCustomer";
 import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery"
+import Dashboard from "./Dashboard/Dashboard";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
     
     <Router>
       <Routes >
+        <Route path="/Dashboard" exact element={<Dashboard/>}/>
         <Route path="/Product" exact element={<Products/>}/>
         <Route path="/Product/update/:id" exact element={<Updateproduct/>}/> 
         <Route path="/Product/new" exact element={<AddProduct/>}/>
