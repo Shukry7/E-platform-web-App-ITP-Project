@@ -50,6 +50,7 @@ const App = () => {
         <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
         <Route path="/Customer/view/:id" exact element={<ViewCustomer/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
+        <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
           
       </Routes >
     </Router>
