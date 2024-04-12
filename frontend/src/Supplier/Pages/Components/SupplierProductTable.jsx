@@ -37,7 +37,7 @@ const SupplierProductTable = (props) => {
                   >
                     {item.product.name}
                   </th>
-                  <td class="px-6 py-4">{item.unitPrice}</td>
+                  <td class="px-6 py-4">Rs.{item.unitPrice}</td>
                   <td className="px-6 py-4"><DeleteConfirmBox deletelink={`http://localhost:5000/supplierproduct/${item._id}`}/></td>
                 </TableRow>
               );
