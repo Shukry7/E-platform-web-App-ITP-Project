@@ -15,23 +15,7 @@ import { MdDeleteForever,MdUpdate } from "react-icons/md";
 
 const EmployeeTable = (props) => {
   const {enqueueSnackbar} = useSnackbar();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredEmployees, setFilteredEmployees] = useState([]);
   
-  useEffect(() => {
-    setFilteredEmployees(props.Employee);
-  }, [props.Employee]);
-
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-    const filtered = props.Employee.filter(employee =>
-      employee.name.toLowerCase().includes(e.target.value.toLowerCase())||
-    employee.ID.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setFilteredEmployees(filtered);
-  };
-
-
   const deleteHandle = (id) => {
     props.setloading(true);
     axios
@@ -66,13 +50,6 @@ const EmployeeTable = (props) => {
 
   return (
     <>
-    <input
-        type="text"
-        placeholder="🔍 Search Employee "
-        value={searchTerm}
-        onChange={handleSearch}
-        className="block w-full border-gray-300 mb-2 rounded-md shadow-sm p-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      />
       
       <Table Headings={Headings} style={{width:"100%"}}>
           {props.loading ? (
@@ -80,7 +57,7 @@ const EmployeeTable = (props) => {
               <Loader />
             </center>
           ) : (
-            filteredEmployees.map((item, index) => {
+            props.Employee.map((item, index) => {
               return (
                 <TableRow>
                   <td class="px-6 py-4">{index + 1}</td>
