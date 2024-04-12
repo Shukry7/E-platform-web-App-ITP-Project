@@ -41,7 +41,7 @@ const ProductformUpdate = () => {
       },
       category: {
         value: "",
-        isValid: true,
+        isValid: false,
       },
 
       weight: {
@@ -81,7 +81,7 @@ const ProductformUpdate = () => {
               isValid: true,
             },
             image: {
-              value: null,
+              value: res.data.image,
               isValid: true,
             },
           },
@@ -98,13 +98,14 @@ const ProductformUpdate = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+    const formData = new FormData();
+    formData.append('name',formState.inputs.name.value);
+    formData.append('description',formState.inputs.description.value);
+    formData.append('category',formState.inputs.category.value);
+    formData.append('weight',formState.inputs.weight.value);
+    formData.append('image',formState.inputs.image.value);
     axios
-      .put(`http://localhost:5000/product/update/${id}`, {
-        name: formState.inputs.name.value,
-        description: formState.inputs.description.value,
-        category: formState.inputs.category.value,
-        weight: formState.inputs.weight.value
-      })
+      .put(`http://localhost:5000/product/update/${id}`, formData)
       .then((res) => {
         setLoading(false);
         navigate("/Product/");
@@ -134,7 +135,7 @@ const ProductformUpdate = () => {
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                     <div class="text-gray-600 flex justify-center items-center">
-                      <ImageUpload center id="image" onInput={inputHandler} />
+                      <ImageUpload center id="image" onInput={inputHandler} initialValue={formState.inputs.image.value}/>
                     </div>
                     <div class="lg:col-span-2">
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">

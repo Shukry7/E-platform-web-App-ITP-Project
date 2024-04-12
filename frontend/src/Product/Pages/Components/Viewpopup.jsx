@@ -1,9 +1,12 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import axios from "axios"
+import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { GrView } from "react-icons/gr"
 
 const ViewPopup = (props) => {
   const [loading, setLoading] = useState(false);
   const [product, setproduct] = useState({});
+  const [supplierProduct, setsupplierProduct] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -15,6 +18,20 @@ const ViewPopup = (props) => {
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
+      });
+  }, [props.id]);
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`http://localhost:5000/supplierproduct/product/${props.id}`)
+      .then((res) => {
+        setsupplierProduct(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
         setLoading(false);
       });
   }, [props.id]);
@@ -54,7 +71,7 @@ const ViewPopup = (props) => {
                 />
               </svg>
             </button>
-            <div class="flex flex-col justify-center h-screen">
+            <div class="flex flex-col justify-center pt-2 pb-2 pl-20 w-5/6 ">
               <div class="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-5xl mx-auto border border-white bg-white">
                 <div class="w-full md:w-4/6 bg-white grid place-items-center ">
                   <img
@@ -63,12 +80,12 @@ const ViewPopup = (props) => {
                     class="rounded-xl w-full h-full object-cover"
                   />
                 </div>
-                <div class="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3">
-                  <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center my-2 ml-3 d dark:text-black ">
+                <div class="w-full md:w-2/3 bg-white flex flex-col space-y-1 p-2">
+                  <h2 class="text-lg font-bold text-gray-800 mb-2 text-center my-1 ml-1 d dark:text-black ">
                     Product Details
                   </h2>
                   <dl>
-                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">
                         Product Name
                       </dt>
@@ -76,13 +93,13 @@ const ViewPopup = (props) => {
                         {product.name}
                       </dd>
                     </div>
-                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-white px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">ID</dt>
                       <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                         {product.ID}
                       </dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">
                         Category
                       </dt>
@@ -90,7 +107,7 @@ const ViewPopup = (props) => {
                         {product.category}
                       </dd>
                     </div>
-                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-white px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">
                         Selling Price
                       </dt>
@@ -98,7 +115,7 @@ const ViewPopup = (props) => {
                         Rs {product.price}
                       </dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">
                         Description
                       </dt>
@@ -106,13 +123,13 @@ const ViewPopup = (props) => {
                         {product.description}
                       </dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">Weight</dt>
                       <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                         {product.weight}
                       </dd>
                     </div>
-                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-white px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">
                         Quantity In Stock
                       </dt>
@@ -120,7 +137,7 @@ const ViewPopup = (props) => {
                         {product.Stock}
                       </dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">
                         Alert Quantity
                       </dt>
@@ -128,7 +145,7 @@ const ViewPopup = (props) => {
                         {product.Alert_quantity}
                       </dd>
                     </div>
-                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-white px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">
                         Created At
                       </dt>
@@ -136,7 +153,7 @@ const ViewPopup = (props) => {
                         {new Date(product.createdAt).toString()}
                       </dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">
                         Updated At
                       </dt>
@@ -148,7 +165,7 @@ const ViewPopup = (props) => {
                 </div>
               </div>
             </div>
-            <div class="flex flex-col md:flex-row justify-center mt-5 space-y-3 md:space-y-0">
+            <div class="flex flex-col md:flex-row justify-center mt-5 space-y-3 md:space-y-0 pr-10">
               <div class="relative dark:text-black pl-11 mb-5">
                 <div class="relative p-6 pl-4 bg-white dark:bg-white-800 border-2 dark:border-gray-300 rounded-lg ">
                   <div class="flex items-center text-center">
@@ -166,7 +183,7 @@ const ViewPopup = (props) => {
                           ID
                         </th>
                         <th class="py-3 px-4 text-left columns-2 font-bold">
-                          Cost
+                          Unit Price
                         </th>
                         <th class="py-3 px-4 text-left columns-2 font-bold">
                           View
@@ -174,52 +191,30 @@ const ViewPopup = (props) => {
                       </tr>
                     </thead>
                     <tbody class="text-blue-gray-900">
-                      <tr class="border-b border-blue-gray-200">
-                        <td class="py-3 px-4">Mufeez</td>
-                        <td class="py-3 px-4 ">S0003</td>
-                        <td class="py-3 px-4">Rs 50</td>
-                        <td class="py-3 px-4">
-                          <a
-                            href="#"
-                            class="font-medium text-blue-600 hover:text-blue-800"
-                          >
-                            Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr class="border-b border-blue-gray-200">
-                        <td class="py-3 px-4">Mufeez</td>
-                        <td class="py-3 px-4">S0003</td>
-                        <td class="py-3 px-4">Rs 50</td>
-                        <td class="py-3 px-4">
-                          <a
-                            href="#"
-                            class="font-medium text-blue-600 hover:text-blue-800"
-                          >
-                            Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr class="border-b border-blue-gray-200">
-                        <td class="py-3 px-4">Mufeez</td>
-                        <td class="py-3 px-4">S0003</td>
-                        <td class="py-3 px-4">Rs 50</td>
-                        <td class="py-3 px-4">
-                          <a
-                            href="#"
-                            class="font-medium text-blue-600 hover:text-blue-800"
-                          >
-                            Edit
-                          </a>
-                        </td>
-                      </tr>
+                      {supplierProduct.map((item, index) => {
+                        return (
+                          <tr class="border-b border-blue-gray-200">
+                            <td class="py-3 px-4">{item.supplier.name}</td>
+                            <td class="py-3 px-4 ">{item.supplier.ID}</td>
+                            <td class="py-3 px-4">{item.unitPrice}</td>
+                            <td class="py-3 px-4">
+                              <Link
+                                to={`/Supplier/view/` + item.supplier._id}
+                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-center"
+                              >
+                                <center><GrView /></center>
+                              </Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
               </div>
-
             </div>
           </div>
+          
         </>
       )}
     </>
