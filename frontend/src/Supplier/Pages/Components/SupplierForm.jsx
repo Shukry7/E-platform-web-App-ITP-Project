@@ -90,6 +90,8 @@ const SupplierForm = () => {
     formData.append('city',formState.inputs.city.value);
     formData.append('image',formState.inputs.image.value);
 
+    
+
     axios
       .post("http://localhost:5000/supplier/", formData)
       .then((res) => {
@@ -100,7 +102,6 @@ const SupplierForm = () => {
         console.error(err);
         setLoading(false);
       });
-      console.log(Object.fromEntries(formData))
   };
 
   return (

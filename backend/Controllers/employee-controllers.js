@@ -1,7 +1,6 @@
 const HttpError = require("../Models/http-error.js");
 const uuid = require("uuid");
 const Employee = require("../Models/EmployeeModel");
-const { createEmployee } = require("./createEmployee.js");
 
 
 // get details from body and assigned to variables
