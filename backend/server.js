@@ -9,6 +9,7 @@ const SupplierRoute = require("./Routes/SupplierRoute");
 const SupplierProductRoute = require("./Routes/SupplierProductRoute")
 const DeliveryRoute = require("./Routes/DeliveryRoute");
 const EmployeeRoute = require("./Routes/EmployeeRoute");
+const OffPay = require("./Routes/OfflinePaymentRoute");
 
 
 const app = express();

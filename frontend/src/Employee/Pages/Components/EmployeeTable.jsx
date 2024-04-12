@@ -54,7 +54,7 @@ const EmployeeTable = (props) => {
     "Telephone",
     "Email",
     "Type",
-    "Hourly Wage",
+    "Daily Wage",
     "Action",
   ];
 

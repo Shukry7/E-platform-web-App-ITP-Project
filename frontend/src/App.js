@@ -20,7 +20,9 @@ import CCForm from "./Payment/Pages/Components/CreditCardForm";
 import Customers from "./Customer/Customers";
 import RegisterCustomer from "./Customer/RegisterCustomer";
 import UpdateCustomer from "./Customer/UpdateCustomer";
-import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery"
+import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery";
+import Dashboard from "./Dashboard/Dashboard";
+import ViewCustomer from "./Customer/ViewCustomer";
 
 
 const App = () => {
