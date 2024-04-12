@@ -3,6 +3,7 @@ import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
 import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
+import {SnackbarProvider, useSnackbar} from 'notistack';
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
   VALIDATOR_MAXLENGTH,
@@ -17,6 +18,7 @@ import { useForm } from "../../../Shared/hooks/form-hook";
 
 const EmployeeformUpdate = () => {
   const { id } = useParams();
+  const {enqueueSnackbar} = useSnackbar();
   const navigate = useNavigate();
   const Type = [
   { value: "...." },
@@ -117,9 +119,11 @@ const EmployeeformUpdate = () => {
       })
       .then((res) => {
         setLoading(false);
+        enqueueSnackbar('Employee updated successfully',{variant:'success'});
         navigate("/Employee/");
       })
       .catch((err) => {
+        enqueueSnackbar('Error',{variant:'Error'});
         console.error(err);
         setLoading(false);
       });

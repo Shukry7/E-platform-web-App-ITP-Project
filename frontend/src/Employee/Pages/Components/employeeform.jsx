@@ -3,6 +3,7 @@ import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
 import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
+import {SnackbarProvider, useSnackbar} from 'notistack';
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
   
@@ -27,6 +28,7 @@ const Type = [
 
 const EmployeeForm = () => {
   const navigate = useNavigate();
+  const {enqueueSnackbar} = useSnackbar();
 
   const [loading, setLoading] = useState(false);
   const [formState, inputHandler] = useForm(
@@ -78,9 +80,11 @@ const EmployeeForm = () => {
       })
       .then((res) => {
         setLoading(false);
-        navigate("/Employee/");
+        enqueueSnackbar('Employee created successfully',{variant:'success'});
+        navigate("/Employee");
       })
       .catch((err) => {
+        enqueueSnackbar('error',{variant:'Error'});
         console.error(err);
         setLoading(false);
       });
