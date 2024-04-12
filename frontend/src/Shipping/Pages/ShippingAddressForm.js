@@ -17,8 +17,15 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 
 const Category = [
   { value: "...." },
-  { value: "VISA" },
-  { value: "Mastercard" },
+  { value: "Central Province" },
+  { value: "Eastern Province" },
+  { value: "Northern Province" },
+  { value: "Southern Province " },
+  { value: "Western Province " },
+  { value: "North Western Province  " },
+  { value: "North Central Province" },
+  { value: "Uva Province" },
+  { value: "Sabaragamuwa Province" },
 ];
 
 const CCForm = () => {
@@ -27,11 +34,11 @@ const CCForm = () => {
   const [loading, setLoading] = useState(false);
   const [formState, inputHandler] = useForm(
     {
-      firstname: {
+      Address: {
         value: "",
         isValid: false,
       },
-      lastname: {
+      city: {
         value: "",
         isValid: false,
       },
@@ -39,11 +46,11 @@ const CCForm = () => {
         value: "",
         isValid: false,
       },
-      cvv: {
+      provinces: {
         value: "",
         isValid: false,
       },
-      expiredate: {
+      postal_code: {
         value: "",
         isValid: false,
       },
@@ -89,10 +96,10 @@ const CCForm = () => {
             <div class="container mx-auto">
               <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center">
-                  Add Credit Card Information
+                  Add Product
                 </h2>
                 <p class="text-gray-500 mb-6 text-center">
-                  Enter Credit card details below !!
+                  Enter Product details below !!
                 </p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
