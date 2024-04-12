@@ -33,11 +33,15 @@ const Employee = () => {
       <Card className="flex" style={{ width: "100%" }}>
         <div className="flex justify-between items-center">
           <h1 className="text-3xl my-8">Employee List</h1>
-          <Link to="/product/new">
+          <Link to="/employee/new">
             <MdOutlineAddBox className="text-sky-800 text-4xl" />
           </Link>
         </div>
-        <EmployeeTable Employee={employee} loading={loading} setloading={setLoading} />
+        <EmployeeTable
+        
+         Employee={employee} 
+        loading={loading} 
+        setloading={setLoading} />
       </Card>
 
     </div>

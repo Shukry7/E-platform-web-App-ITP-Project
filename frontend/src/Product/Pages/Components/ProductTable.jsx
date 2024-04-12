@@ -42,15 +42,16 @@ const ProductTable = (props) => {
                   {item.name}
                 </th>
                 <td class="px-6 py-4">{item.category}</td>
-                <td class="px-6 py-4">
-                  Rs.{item.price}
+                <td class="px-6 py-4" style={{display: 'flex', alignItems: 'center'}}>
+                <span style={{marginRight: '10px'}}>Rs.{item.price}</span>
                   <Popup id={item._id} />
                 </td>
                 <td class="px-6 py-4">{item.Stock}</td>
                 <td class="px-6 py-4">{item.Alert_quantity}</td>
                 <td class="px-6 py-4">
                   <ThreeDotDropdown
-                    link1=""
+                    popup
+                    id={item._id}
                     link2={`/Product/update/` + item._id}
                     deletelink={`http://localhost:5000/product/${item._id}`}
                   />

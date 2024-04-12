@@ -81,15 +81,19 @@ const SupplierForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    const formData = new FormData();
+    formData.append('name',formState.inputs.name.value);
+    formData.append('telephone',formState.inputs.telephone.value);
+    formData.append('mail',formState.inputs.mail.value);
+    formData.append('address',formState.inputs.address.value);
+    formData.append('city',formState.inputs.city.value);
+    formData.append('image',formState.inputs.image.value);
+
+    
+
     axios
-      .post("http://localhost:5000/supplier/", {
-        id: 1,
-        name: formState.inputs.name.value,
-        telephone: formState.inputs.telephone.value,
-        mail: formState.inputs.mail.value,
-        address: formState.inputs.address.value,
-        city: formState.inputs.city.value,
-      })
+      .post("http://localhost:5000/supplier/", formData)
       .then((res) => {
         setLoading(false);
         navigate("/Supplier/");
@@ -98,7 +102,6 @@ const SupplierForm = () => {
         console.error(err);
         setLoading(false);
       });
-    console.log(formState);
   };
 
   return (

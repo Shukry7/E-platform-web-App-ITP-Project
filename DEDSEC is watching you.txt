@@ -1,0 +1,75 @@
+
+          <Input
+            element="Input"
+            id="name"
+            type="text"
+            placeholder="Enter Employee Name"
+            label="Name :"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please Enter a Name."
+            onInput={inputHandler}
+            initialValue={formState.inputs.name.value}
+          />
+          <Input
+            element="Input"
+            id="address"
+            type="text"
+            placeholder="Enter Address"
+            label="Address :"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please Enter a address."
+            onInput={inputHandler}
+            initialValue={formState.inputs.address.value}
+          />
+          
+          <Input
+            id="telephone"
+            type="number"
+            placeholder="Enter Phone number"
+            label="Phone Number :"
+            validators={[VALIDATOR_PHONE()]}
+            errorText="Please Enter a phone number(10 numbers)"
+            onInput={inputHandler}
+            initialValue={formState.inputs.telephone.value}
+          />
+          
+                  <Input
+                            
+                            id="mail"
+                            type="text"
+                            placeholder="Enter email address"
+                            label="Email Address :"
+                            validators={[VALIDATOR_EMAIL()]}
+                            errorText="Please Enter a valid EMail address"
+                            onInput={inputHandler}
+                            initialValue={formState.inputs.mail.value}
+                          />
+                        
+         
+         <Dropdown
+            id="type"
+            options={Type}
+            onInput={inputHandler}
+            Display=""
+            label="Employee Type:"
+            initialValue={formState.inputs.type.value}
+          />
+          <Input
+            element="Input"
+            id="hourlywage"
+            type="number"
+            placeholder="Enter hourly wage"
+            label="Hourly Wage :"
+            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
+            errorText="Please Enter a wage."
+            onInput={inputHandler}
+            initialValue={formState.inputs.hourlywage.value}
+          />
+          <Button
+            type="submit"
+            style={{ left: "76%", position: "relative" }}
+            disabled={!formState.isValid}
+          >
+            Add
+          </Button>
+        </>

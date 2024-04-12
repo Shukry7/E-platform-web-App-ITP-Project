@@ -1,9 +1,8 @@
 import React from "react";
-import Card from "../../Shared/Components/UiElements/Card";
 import ProductformUpdate from "./Components/productformUpdate";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
 
-const Updateproduct = () => {
+const UpdateProduct = () => {
   return (
     <>
       <div>
@@ -14,4 +13,4 @@ const Updateproduct = () => {
   );
 };
 
-export default Updateproduct;
+export default UpdateProduct;

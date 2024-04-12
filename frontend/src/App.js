@@ -4,6 +4,7 @@ import {
   Routes ,
 } from "react-router-dom";
 import AddProduct from "./Product/Pages/Addproduct";
+import Updateproduct from "./Product/Pages/Updateproduct";
 import Products from "./Product/Pages/Products";
 import Suppliers from "./Supplier/Pages/Suppliers";
 import CreateSupplier from "./Supplier/Pages/CreateSupplier";
@@ -12,11 +13,15 @@ import ViewSupplier from "./Supplier/Pages/ViewSupplier";
 import Delivery from "./Delivery/Pages/Delivery";
 import CreateDelivery from "./Delivery/Pages/CreateDelivery";
 import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
-import AddEmployee from "./Employee/Pages/AddEmployee";
+import CreateEmployee from "./Employee/Pages/CreateEmployee";
 import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
 import CCForm from "./Payment/Pages/Components/CreditCardForm";
-import Updateproduct from "./Product/Pages/Updateproduct";
+import Customers from "./Customer/Customers";
+import RegisterCustomer from "./Customer/RegisterCustomer";
+import UpdateCustomer from "./Customer/UpdateCustomer";
+import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery"
+import Dashboard from "./Dashboard/Dashboard";
 import Cart from "./Cart/Pages/Cart";
 
 
@@ -25,6 +30,7 @@ const App = () => {
     
     <Router>
       <Routes >
+        <Route path="/Dashboard" exact element={<Dashboard/>}/>
         <Route path="/Product" exact element={<Products/>}/>
         <Route path="/Product/update/:id" exact element={<Updateproduct/>}/> 
         <Route path="/Product/new" exact element={<AddProduct/>}/>
@@ -37,9 +43,13 @@ const App = () => {
         <Route path="/Delivery/update/:id" exact element={<UpdateDelivery/>}/>
         <Route path="/Employee" exact element={<Employee/>}/>
         <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
-        <Route path="/Employee/new" exact element={<AddEmployee/>}/>
+        <Route path="/Employee/new" exact element={<CreateEmployee/>}/>
         <Route path="/CC/new" exact element={<CCForm/>}/>
-        <Route path="/Cart" exact element={<Cart/>}/>
+        <Route path="/Customer" exact element={<Customers/>}/>
+        <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
+        <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
+        <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
+          <Route path="/Cart" exact element={<Cart/>}/>
         
       </Routes >
     </Router>

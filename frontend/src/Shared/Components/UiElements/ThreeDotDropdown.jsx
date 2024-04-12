@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DeleteConfirmBox from "./DeleteConfirmBox";
+import ViewPopup from "../../../Product/Pages/Components/Viewpopup";
 
 const ThreeDotDropdown = (props) => {
   const [isclick, setisClick] = useState(false);
+  const [viewopen, setviewopen] = useState(false);
 
   const togglemodel = () => {
     setisClick(!isclick);
+  };
+
+  const toggleview = () => {
+    setviewopen(!viewopen);
   };
   return (
     <div className="relative">
@@ -36,13 +42,16 @@ const ThreeDotDropdown = (props) => {
             class="py-2 text-sm text-gray-700 dark:text-gray-200"
             aria-labelledby="dropdownMenuIconHorizontalButton"
           >
-            <li>
+            <li >
               <Link
+                onClick={toggleview}
                 to={props.link1}
                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 View
               </Link>
+              {props.popup && (
+              <ViewPopup id={props.id} click={viewopen} setclick={setviewopen}/>)}
             </li>
             <li>
               <Link

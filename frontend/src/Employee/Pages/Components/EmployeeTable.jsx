@@ -5,8 +5,10 @@ import { Navigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
+import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
+
 import { Link } from "react-router-dom";
-import { MdDeleteForever } from "react-icons/md";
+import { MdDeleteForever,MdUpdate } from "react-icons/md";
 
 const EmployeeTable = (props) => {
   const deleteHandle = (id) => {
@@ -37,7 +39,7 @@ const EmployeeTable = (props) => {
 
   return (
     <>
-      <Table Headings={Headings}>
+      <Table Headings={Headings} style={{width:"100%"}}>
           {props.loading ? (
             <center>
               <Loader />
@@ -59,13 +61,13 @@ const EmployeeTable = (props) => {
                   <td class="px-6 py-4">{item.mail}</td>
                   <td class="px-6 py-4">{item.type}</td>
                   <td class="px-6 py-4">{item.hourlywage}</td>
-                  <td class="px-6 py-4 flex justify-center gap-2">
-                    <Link to={'/Employee/delete/'+item._id}>
-                      <MdDeleteForever />
-                    </Link>
-                    <Link to={'/Employee/delete/'+item._id}>
-                      <MdDeleteForever />
-                    </Link>
+                 
+                  <td class="px-6 py-4">
+                    <ThreeDotDropdown
+                    
+                    link2={`/Employee/update/`+ item._id}
+                    deletelink={`http://localhost:5000/employee/${item._id}`}
+                    />
                   </td>
                 </TableRow>
               );

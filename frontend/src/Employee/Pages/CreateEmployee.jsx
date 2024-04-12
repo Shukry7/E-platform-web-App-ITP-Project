@@ -1,17 +1,17 @@
 import React from "react";
 import Card from "../../Shared/Components/UiElements/Card";
-import ProductformUpdate from "./Components/productformUpdate";
+import EmployeeForm from "./Components/employeeform";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
 
-const Updateproduct = () => {
+const CreateEmployee = () => {
   return (
     <>
-      <div>
+       <div>
         <Navbar />
-        <ProductformUpdate />
+        <EmployeeForm />
       </div>
     </>
   );
 };
 
-export default Updateproduct;
+export default CreateEmployee;

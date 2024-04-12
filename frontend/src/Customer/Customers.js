@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProductTable from "./Components/ProductTable";
-import Card from "../../Shared/Components/UiElements/Card";
-import { Category } from "./Components/productform";
-import Navbar from "../../Shared/Components/UiElements/Navbar";
-import { MdOutlineAddBox } from "react-icons/md";
+import CustomerTable from "./Components/CustomerTable";
+import Card from "../Shared/Components/UiElements/Card";
+import Navbar from "../Shared/Components/UiElements/Navbar";
 import { Link } from "react-router-dom";
+import { MdOutlineAddBox } from "react-icons/md";
 
-const Products = () => {
-  const [products, setproducts] = useState([]);
+const Customers = () => {
+  const [customers, setcustomer] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/product")
+      .get("http://localhost:5000/customer")
       .then((res) => {
-        setproducts(res.data);
+        setcustomer(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -31,13 +30,13 @@ const Products = () => {
         
             <Card className="flex" style={{ width: "100%" }}>
               <div className="flex justify-between items-center">
-                <h1 className="text-3xl my-8">Product List</h1>
-                <Link to="/Product/new">
+                <h1 className="text-3xl my-8">Customer List</h1>
+                <Link to="/Customer/create">
                   <MdOutlineAddBox className="text-sky-800 text-4xl" />
                 </Link>
               </div>
-              <ProductTable
-                Product={products}
+              <CustomerTable
+                Customers={customers}
                 loading={loading}
                 setloading={setLoading}
               />
@@ -48,4 +47,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Customers;

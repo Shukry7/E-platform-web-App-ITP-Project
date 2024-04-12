@@ -1,31 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
 import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
-  VALIDATOR_MAXLENGTH,
-  VALIDATOR_MIN,
-  VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
+  VALIDATOR_PHONE,
+  VALIDATOR_EMAIL,
 } from "../../../Shared/Components/util/validate";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 
-const Category = [
+const City = [
   { value: "...." },
-  { value: "Aluminium Bars" },
-  { value: "Aluminium Accessories" },
-  { value: "Boards" },
-  { value: "House Accessories" },
-  { value: "Pentry Accessories" },
-  { value: "Locks" },
-  { value: "Other" },
+  { value: "Ampara" },
+  { value: "Anuradhapura" },
+  { value: "Badulla" },
+  { value: "Batticaloa" },
+  { value: "Colombo" },
+  { value: "Galle" },
+  { value: "Gampaha" },
+  { value: "Hambantota" },
+  { value: "Jaffna" },
+  { value: "Kalutara" },
+  { value: "Kandy" },
+  { value: "Kegalle" },
+  { value: "Kilinochchi" },
+  { value: "Kurunegala" },
+  { value: "Mannar" },
+  { value: "Matale" },
+  { value: "Matara" },
+  { value: "Monaragala" },
+  { value: "Mullaitivu" },
+  { value: "Nuwara Eliya" },
+  { value: "Polonnaruwa" },
+  { value: "Puttalam" },
+  { value: "Ratnapura" },
+  { value: "Trincomalee" },
+  { value: "Vavuniya" },
 ];
 
-const ProductForm = () => {
+
+const WholesalecustomerForm = () => {
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -35,29 +54,21 @@ const ProductForm = () => {
         value: "",
         isValid: false,
       },
-      description: {
+      telephone: {
         value: "",
         isValid: false,
       },
-      category: {
+      mail: {
         value: "",
         isValid: false,
       },
-      price: {
+      address: {
         value: "",
         isValid: false,
       },
-      weight: {
+      creditlimit: {
         value: "",
         isValid: false,
-      },
-      Alert_quantity: {
-        value: "",
-        isValid: false,
-      },
-      image: {
-        value: null,
-        isValid: true,
       },
     },
     false
@@ -67,17 +78,17 @@ const ProductForm = () => {
     event.preventDefault();
     setLoading(true);
     axios
-      .post("http://localhost:5000/product/new", {
+      .post("http://localhost:5000/wholesalecustomer/", {
+        id: 1,
         name: formState.inputs.name.value,
-        description: formState.inputs.description.value,
-        category: formState.inputs.category.value,
-        price: formState.inputs.price.value,
-        weight: formState.inputs.weight.value,
-        Alert_quantity: formState.inputs.Alert_quantity.value,
+        telephone: formState.inputs.telephone.value,
+        mail: formState.inputs.mail.value,
+        address: formState.inputs.address.value,
+        creditlimit: formState.inputs.creditlimit.value,
       })
       .then((res) => {
         setLoading(false);
-        navigate("/Product/");
+        navigate("/Wholesalecustomer/");
       })
       .catch((err) => {
         console.error(err);
@@ -95,8 +106,8 @@ const ProductForm = () => {
           <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
             <div class="container mx-auto">
               <div>
-                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Product</h2>
-                <p class="text-gray-500 mb-6 text-center">Enter Product details below !!</p>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Wholesalecustomer</h2>
+                <p class="text-gray-500 mb-6 text-center">Enter Wholesalecustomer details below !!</p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                     <div class="text-gray-600 flex justify-center items-center">
@@ -111,8 +122,8 @@ const ProductForm = () => {
                             element="Input"
                             id="name"
                             type="text"
-                            placeholder="Enter Product Name"
-                            label="Product Name :"
+                            placeholder="Enter Wholesalecustomer Name"
+                            label="Name :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Name."
                             onInput={inputHandler}
@@ -121,15 +132,13 @@ const ProductForm = () => {
                         <div class="md:col-span-5">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            id="description"
-                            type="text"
-                            placeholder="Enter Description"
-                            label="Description :"
-                            validators={[
-                              VALIDATOR_MINLENGTH(5),
-                              VALIDATOR_MAXLENGTH(250),
-                            ]}
-                            errorText="Please Enter a Description (5 - 250 words)"
+                            element="Input"
+                            id="telephone"
+                            type="number"
+                            placeholder="Enter Telephone Number"
+                            label="Telephone :"
+                            validators={[VALIDATOR_PHONE()]}
+                            errorText="Please Enter a valid Phone Number (10 numbers)"
                             onInput={inputHandler}
                           />
                         </div>
@@ -137,12 +146,12 @@ const ProductForm = () => {
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
-                            id="price"
-                            type="number"
-                            placeholder="Enter Price"
-                            label="Selling Price :"
-                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-                            errorText="Please Enter a price."
+                            id="mail"
+                            type="text"
+                            placeholder="Enter Mail"
+                            label="Email :"
+                            validators={[VALIDATOR_EMAIL()]}
+                            errorText="Please Enter a valid mail."
                             onInput={inputHandler}
                           />
                         </div>
@@ -150,39 +159,28 @@ const ProductForm = () => {
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
-                            id="weight"
-                            type="number"
-                            placeholder="Enter Weight of product"
-                            label="Weight :"
-                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-                            errorText="Please Enter a Weight."
+                            id="address"
+                            type="text"
+                            placeholder="Enter Address"
+                            label="Street :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter an Address."
                             onInput={inputHandler}
                           />
                         </div>
                         <div class="md:col-span-2">
-                          <Dropdown
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            id="category"
-                            options={Category}
-                            onInput={inputHandler}
-                            Display=""
-                            label="Category:"
-                          />
-                        </div>
-                        <div class="md:col-span-2">
-                          <Input
+                        <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
-                            id="Alert_quantity"
+                            id="tcreditlimit"
                             type="number"
-                            placeholder="Enter Quantity"
-                            label="Alert Quantity :"
-                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-                            errorText="Please Enter a Quantity."
+                            placeholder="Enter Creditlimit"
+                            label="creditlimit :"
+                            validators={[VALIDATOR_PHONE()]}
+                            errorText="Please Enter a valid creditlimit (numbers)"
                             onInput={inputHandler}
                           />
                         </div>
-
                         <div class="md:col-span-5 text-right">
                           <div class="inline-flex items-end">
                             <Button
@@ -207,5 +205,4 @@ const ProductForm = () => {
   );
 };
 
-export default ProductForm;
-export { Category };
+export default WholesalecustomerForm;

@@ -19,7 +19,7 @@ const ViewCard = (props) => {
                 <div className="e-avatar-circle e-avatar-md flex items-center justify-center">
                   <img
                     className="rounded-full w-24 h-24"
-                    src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg"
+                    src={`http://localhost:5000/${props.supplier.image}`}
                     alt="profile_pic"
                   />
                 </div>

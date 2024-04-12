@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const WholesalecostumerSchema = mongoose.Schema(
+const WholesalecustomerSchema = mongoose.Schema(
   {
     ID: {
       type: String,
@@ -37,5 +37,5 @@ const WholesalecostumerSchema = mongoose.Schema(
   }
 );
 
-const wholesalecostumer = mongoose.model("Wholesalecostumer",WholesalecostumerSchema);
-module.exports = wholesalecostumer;
+const wholesalecustomer = mongoose.model("Wholesalecustomer",WholesalecustomerSchema);
+module.exports = wholesalecustomer;

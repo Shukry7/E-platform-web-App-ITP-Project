@@ -1,17 +1,18 @@
 import React from "react";
 import Card from "../../Shared/Components/UiElements/Card";
-import ProductForm from "./Components/productform";
+import AssignDelivery from "./Components/AssignDelivery";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
 
-const AddProduct = () => {
+
+const AssignmentDelivery = () => {
   return (
     <>
       <div>
         <Navbar />
-        <ProductForm />
+        <AssignDelivery />
       </div>
     </>
   );
 };
 
-export default AddProduct;
+export default AssignmentDelivery;
