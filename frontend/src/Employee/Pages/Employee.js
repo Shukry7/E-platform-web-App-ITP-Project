@@ -6,12 +6,28 @@ import { Type } from "./Components/employeeform";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
 import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
+import Search from "../../Shared/Components/UiElements/Search";
 
 
 const Employee = () => {
 
   const [employee, setemployee] = useState([]);
   const [loading, setLoading] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
+  
+  useEffect(() => {
+    setFilteredEmployees(employee);
+  }, [employee]);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    const filtered = employee.filter(employee =>
+      employee.name.toLowerCase().includes(e.target.value.toLowerCase())||
+    employee.ID.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredEmployees(filtered);
+  };
 
   useEffect(() => {
     setLoading(true)
@@ -34,14 +50,18 @@ const Employee = () => {
       <Card className="flex" style={{ width: "100%" }}>
         <div className="flex justify-between items-center">
           <h1 className="text-3xl my-8">Employee List</h1>
-          
+          <Search
+                  searchTerm={searchTerm}
+                  handleSearch={handleSearch}
+                  placeholder={"Search By ID / Name"}
+                />
           <Link to="/employee/new">
             <MdOutlineAddBox className="text-sky-800 text-4xl" />
           </Link>
         </div>
         <EmployeeTable
         
-         Employee={employee} 
+        Employee={filteredEmployees} 
         loading={loading} 
         setloading={setLoading} />
       </Card>
