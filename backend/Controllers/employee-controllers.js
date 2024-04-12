@@ -1,10 +1,12 @@
 const HttpError = require("../Models/http-error.js");
 const uuid = require("uuid");
 const Employee = require("../Models/EmployeeModel");
+const { createEmployee } = require("./createEmployee.js");
+
 
 // get details from body and assigned to variables
 const createEmployee = async (req, res, next) => {
-  const { name, address, telephone, mail,type,wage  } = req.body;
+  const { name, address, telephone, mail, type, hourlywage } = req.body;
 
   const latestEmployee = await Employee.find().sort({ _id: -1 }).limit(1);
   let id;
@@ -22,12 +24,12 @@ const createEmployee = async (req, res, next) => {
     name: name,
     address: address,
     telephone: telephone,
-    mail:mail,
+    mail: mail,
     type: type,
-    hourlywage: wage,
+    hourlywage: hourlywage,
   };
 
-// new employee is created
+  // new employee is created
   const employee = await Employee.create(newEmployee);
   return res.status(201).send(employee);
 };

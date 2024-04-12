@@ -39,7 +39,7 @@ const EmployeeTable = (props) => {
 
   return (
     <>
-      <Table Headings={Headings}>
+      <Table Headings={Headings} style={{width:"100%"}}>
           {props.loading ? (
             <center>
               <Loader />
