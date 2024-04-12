@@ -1,4 +1,4 @@
-const Attendance = require("../Models/AttendanceModel");
+const Attendance = require("../Models/AttendenceModel");
 
 const markAttendance = async (req, res) => {
   try {

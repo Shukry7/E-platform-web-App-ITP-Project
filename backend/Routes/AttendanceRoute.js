@@ -1,5 +1,5 @@
 const express = require("express");
-const AttendanceControllers = require("../Controllers/attendance-controllers");
+const AttendanceControllers = require("../Controllers/attendence-controllers");
 const Router = express.Router();
 
 Router.post("/mark", AttendanceControllers.markAttendance);

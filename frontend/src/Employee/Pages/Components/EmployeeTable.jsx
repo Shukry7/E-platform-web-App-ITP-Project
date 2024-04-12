@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./employeeTable.css";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
@@ -10,8 +10,27 @@ import {SnackbarProvider, useSnackbar} from 'notistack';
 import { Link } from "react-router-dom";
 import { MdDeleteForever,MdUpdate } from "react-icons/md";
 
+
+
+
 const EmployeeTable = (props) => {
   const {enqueueSnackbar} = useSnackbar();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
+  useEffect(() => {
+    setFilteredEmployees(props.Employee);
+  }, [props.Employee]);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    const filtered = props.Employee.filter(employee =>
+      employee.name.toLowerCase().includes(e.target.value.toLowerCase())||
+    employee.ID.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredEmployees(filtered);
+  };
+
+
   const deleteHandle = (id) => {
     props.setloading(true);
     axios
@@ -39,15 +58,28 @@ const EmployeeTable = (props) => {
     "Action",
   ];
 
+  
+
+   
+
+
   return (
     <>
+    <input
+        type="text"
+        placeholder="🔍 Search Employee "
+        value={searchTerm}
+        onChange={handleSearch}
+        className="block w-full border-gray-300 mb-2 rounded-md shadow-sm p-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      />
+      
       <Table Headings={Headings} style={{width:"100%"}}>
           {props.loading ? (
             <center>
               <Loader />
             </center>
           ) : (
-            props.Employee.map((item, index) => {
+            filteredEmployees.map((item, index) => {
               return (
                 <TableRow>
                   <td class="px-6 py-4">{index + 1}</td>
