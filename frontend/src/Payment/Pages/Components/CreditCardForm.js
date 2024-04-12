@@ -89,10 +89,10 @@ const CCForm = () => {
             <div class="container mx-auto">
               <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center">
-                  Add Product
+                  Add Credit Card Information
                 </h2>
                 <p class="text-gray-500 mb-6 text-center">
-                  Enter Product details below !!
+                  Enter Credit card details below !!
                 </p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">

@@ -20,8 +20,7 @@ import CCForm from "./Payment/Pages/Components/CreditCardForm";
 import Customers from "./Customer/Customers";
 import RegisterCustomer from "./Customer/RegisterCustomer";
 import UpdateCustomer from "./Customer/UpdateCustomer";
-import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery";
-import MarkAttendance from "./Employee/Pages/Attendance";
+import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery"
 
 
 const App = () => {
@@ -29,6 +28,7 @@ const App = () => {
     
     <Router>
       <Routes >
+        <Route path="/Dashboard" exact element={<Dashboard/>}/>
         <Route path="/Product" exact element={<Products/>}/>
         <Route path="/Product/update/:id" exact element={<Updateproduct/>}/> 
         <Route path="/Product/new" exact element={<AddProduct/>}/>
@@ -46,8 +46,8 @@ const App = () => {
         <Route path="/Customer" exact element={<Customers/>}/>
         <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
         <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
+        <Route path="/Customer/view/:id" exact element={<ViewCustomer/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
-        <Route path="/Employee/mark" exact element={<MarkAttendance />} />
           
       </Routes >
     </Router>

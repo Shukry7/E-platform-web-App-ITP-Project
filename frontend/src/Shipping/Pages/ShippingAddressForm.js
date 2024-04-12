@@ -1,41 +1,44 @@
-/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useState } from "react";
 import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
-import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MIN,
+  VALIDATOR_MAX,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
+  VALIDATOR_DATE
 } from "../../../Shared/Components/util/validate";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useForm } from "../../../Shared/hooks/form-hook";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 
-const ProductformUpdate = () => {
-  const { id } = useParams();
+const Category = [
+  { value: "...." },
+  { value: "Central Province" },
+  { value: "Eastern Province" },
+  { value: "Northern Province" },
+  { value: "Southern Province " },
+  { value: "Western Province " },
+  { value: "North Western Province  " },
+  { value: "North Central Province" },
+  { value: "Uva Province" },
+  { value: "Sabaragamuwa Province" },
+];
+
+const CCForm = () => {
   const navigate = useNavigate();
-  const Category = [
-    { value: "...." },
-    { value: "Aluminium Bars" },
-    { value: "Aluminium Accessories" },
-    { value: "Boards" },
-    { value: "House Accessories" },
-    { value: "Pentry Accessories" },
-    { value: "Locks" },
-    { value: "Other" },
-  ];
+
   const [loading, setLoading] = useState(false);
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     {
-      name: {
+      Address: {
         value: "",
         isValid: false,
       },
-      description: {
+      city: {
         value: "",
         isValid: false,
       },
@@ -43,72 +46,38 @@ const ProductformUpdate = () => {
         value: "",
         isValid: false,
       },
-
-      weight: {
+      provinces: {
         value: "",
         isValid: false,
       },
-
-      image: {
-        value: null,
-        isValid: true,
+      postal_code: {
+        value: "",
+        isValid: false,
+      },
+      number: {
+        value: "",
+        isValid: false,
       },
     },
     false
   );
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`http://localhost:5000/product/update/${id}`)
-      .then((res) => {
-        setFormData(
-          {
-            name: {
-              value: res.data.name,
-              isValid: true,
-            },
-            description: {
-              value: res.data.description,
-              isValid: true,
-            },
-            category: {
-              value: res.data.category,
-              isValid: true,
-            },
-            weight: {
-              value: res.data.weight,
-              isValid: true,
-            },
-            image: {
-              value: res.data.image,
-              isValid: true,
-            },
-          },
-          true
-        );
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, [id, setFormData]);
-
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
-    const formData = new FormData();
-    formData.append('name',formState.inputs.name.value);
-    formData.append('description',formState.inputs.description.value);
-    formData.append('category',formState.inputs.category.value);
-    formData.append('weight',formState.inputs.weight.value);
-    formData.append('image',formState.inputs.image.value);
     axios
-      .put(`http://localhost:5000/product/update/${id}`, formData)
+      .post("http://localhost:5000/credit/new", {
+        id: 1,
+        firstname: formState.inputs.firstname.value,
+        lastname: formState.inputs.lastname.value,
+        cvv: formState.inputs.cvv.value,
+        category: formState.inputs.category.value,
+        expiredate: formState.inputs.expiredate.value,
+        number: formState.inputs.number.value,
+      })
       .then((res) => {
         setLoading(false);
-        navigate("/Product/");
+        navigate("/Credit/");
       })
       .catch((err) => {
         console.error(err);
@@ -127,27 +96,23 @@ const ProductformUpdate = () => {
             <div class="container mx-auto">
               <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center">
-                  Update Product
+                  Add Product
                 </h2>
                 <p class="text-gray-500 mb-6 text-center">
                   Enter Product details below !!
                 </p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
-                    <div class="text-gray-600 flex justify-center items-center">
-                      <ImageUpload center id="image" onInput={inputHandler} initialValue={formState.inputs.image.value}/>
-                    </div>
                     <div class="lg:col-span-2">
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                         <div class="md:col-span-5">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
-                            id="name"
-                            initialValue={formState.inputs.name.value}
+                            id="fname"
                             type="text"
-                            placeholder="Enter Product Name"
-                            label="Product Name :"
+                            placeholder="Enter First Name"
+                            label="First Name :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Name."
                             onInput={inputHandler}
@@ -156,31 +121,45 @@ const ProductformUpdate = () => {
                         <div class="md:col-span-5">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            id="description"
+                            element="Input"
+                            id="lname"
                             type="text"
-                            initialValue={formState.inputs.description.value}
-                            placeholder="Enter Description"
-                            label="Description :"
-                            validators={[
-                              VALIDATOR_MINLENGTH(5),
-                              VALIDATOR_MAXLENGTH(250),
-                            ]}
-                            errorText="Please Enter a Description (5 - 250 words)"
+                            placeholder="Enter Last Name"
+                            label="Last Name :"
+                            validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(16)]}
+                            errorText="Please Enter a Name."
                             onInput={inputHandler}
                           />
                         </div>
-
+                        <div class="md:col-span-3">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="number"
+                            type="text"
+                            placeholder="Enter Card Number"
+                            label="Card Number :"
+                            validators={[
+                              VALIDATOR_MIN(16),
+                              VALIDATOR_MAX(16),
+                            ]}
+                            errorText="Please enter correct card number"
+                            onInput={inputHandler}
+                          />
+                        </div>
                         <div class="md:col-span-2">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
-                            id="weight"
-                            initialValue={formState.inputs.weight.value}
+                            id="cvv"
                             type="number"
-                            placeholder="Enter Weight of product"
-                            label="Weight :"
-                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-                            errorText="Please Enter a Weight."
+                            placeholder="Enter CVV"
+                            label="CVV :"
+                            validators={[
+                              VALIDATOR_MIN(3),
+                              VALIDATOR_MAX(4),
+                            ]}
+                            errorText="Please Enter your cvv"
                             onInput={inputHandler}
                           />
                         </div>
@@ -192,7 +171,19 @@ const ProductformUpdate = () => {
                             onInput={inputHandler}
                             Display=""
                             label="Category:"
-                            initialValue={formState.inputs.category.value}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="expdate"
+                            type="date"
+                            placeholder="Enter Expiry Date"
+                            label="Expiry Date :"
+                            validators={[VALIDATOR_REQUIRE(),VALIDATOR_DATE()]}
+                            errorText="Please Enter a Expiry date."
+                            onInput={inputHandler}
                           />
                         </div>
 
@@ -220,4 +211,5 @@ const ProductformUpdate = () => {
   );
 };
 
-export default ProductformUpdate;
+export default CCForm;
+export { Category };

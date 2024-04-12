@@ -8,7 +8,8 @@ Router.post("/new",fileupload.single('image'), ProductControllers.createProduct)
 Router.get("/", ProductControllers.listProduct);
 Router.delete("/:id", ProductControllers.DeleteProduct);
 Router.get("/update/:id", ProductControllers.listProductById);
-Router.put("/update/:id", ProductControllers.UpdateProduct);
+Router.put("/update/:id",fileupload.single('image'), ProductControllers.UpdateProduct);
+Router.put("/updatePriceAndQty/:id", ProductControllers.UpdateProductPriceAndQty);
 
 
 module.exports = Router;

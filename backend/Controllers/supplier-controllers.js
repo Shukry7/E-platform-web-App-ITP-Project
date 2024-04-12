@@ -1,5 +1,6 @@
 const Supplier = require("../Models/SupplierModel");
 const fs = require("fs");
+const supplierproduct = require("../Models/SupplierProduct");
 
 const createSupplier = async (req, res, next) => {
   const { name, telephone, mail, address, city} = req.body;
@@ -76,6 +77,8 @@ const DeleteSupplier =  async (req,res) => {
   try{
       const {id} = req.params;
       const supplier = await Supplier.findById(id);
+
+      await supplierproduct.deleteMany({ supplier: id });
 
       const path = supplier.image;
 

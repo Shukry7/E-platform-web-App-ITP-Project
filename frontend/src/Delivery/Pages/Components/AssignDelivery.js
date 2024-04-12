@@ -7,7 +7,7 @@ import Card from "../../../Shared/Components/UiElements/Card";
 
 const AssignDelivery = () => {
   const [deliveryPersons, setDeliveryPersons] = useState([]);
-  const [selectedPersons, setSelectedPersons] = useState({});
+  const [selectedOptions, setSelectedOptions] = useState({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -26,22 +26,35 @@ const AssignDelivery = () => {
 
   const handleSelectChange = (e, paymentId) => {
     const personId = e.target.value;
-    setSelectedPersons({
-      ...selectedPersons,
-      [paymentId]: personId,
-    });
+
+    // Update selected options
+    setSelectedOptions((prevSelectedOptions) => ({
+      ...prevSelectedOptions,
+      [paymentId]: personId
+    }));
   };
 
-  const getAvailablePersons = (paymentId) => {
-    const selectedId = selectedPersons[paymentId];
+  const Headings = [
+    "Payment ID",
+    "Customer Name",
+    "Assign Delivery Persons",
+    "Assigned Delivery Person"
+  ];
+
+  useEffect(() => {
+    console.log("Selected Options:", selectedOptions);
+  }, [selectedOptions]);
+
+  const getAvailablePersons = (currentPaymentId) => {
+    const selectedPersonIds = Object.values(selectedOptions).filter(
+      (personId) => personId !== "" && personId !== null
+    );
     return deliveryPersons.filter(
       (person) =>
-        !Object.values(selectedPersons).includes(person.id) ||
-        person.id === selectedId
+        !selectedPersonIds.includes(person.ID) ||
+        selectedOptions[currentPaymentId] === person.ID
     );
   };
-
-  const Headings = ["Payment ID", "Customer Name", "Assign Delivery Persons"];
 
   return (
     <Card style={{ width: "100%" }}>
@@ -52,7 +65,7 @@ const AssignDelivery = () => {
             <Table Headings={Headings}>
               {loading ? (
                 <tr>
-                  <td colSpan="3">
+                  <td colSpan="4">
                     <Loader />
                   </td>
                 </tr>
@@ -60,29 +73,44 @@ const AssignDelivery = () => {
                 [
                   { paymentId: "P0001", customerName: "Alice Johnson" },
                   { paymentId: "P0005", customerName: "David Smith" },
-                  { paymentId: "P0009", customerName: "Emily Brow" },
-                ].map(({ paymentId, customerName }) => (
-                  <TableRow key={paymentId}>
-                    <td className="px-6 py-4">{paymentId}</td>
-                    <td className="px-6 py-4">{customerName}</td>
-                    <td className="px-6 py-4">
-                      <select
-                        className="border border-gray-300 rounded px-4 py-2 mr-4"
-                        value={selectedPersons[paymentId] || ""}
-                        onChange={(e) => handleSelectChange(e, paymentId)}
-                      >
-                        <option key="" value="">
-                          Select a Delivery Person
-                        </option>
-                        {getAvailablePersons(paymentId).map((person) => (
-                          <option key={person.id} value={person.id}>
-                            {person.name}
+                  { paymentId: "P0008", customerName: "Emily Brow" },
+                  { paymentId: "P0009", customerName: "Carl Johnson" }
+                ].map(({ paymentId, customerName }) => {
+                  const selectedPersonId = selectedOptions[paymentId];
+                  const availablePersons = getAvailablePersons(paymentId);
+
+                  return (
+                    <TableRow key={paymentId}>
+                      <td className="px-6 py-4">{paymentId}</td>
+                      <td className="px-6 py-4">{customerName}</td>
+                      <td className="px-6 py-4">
+                        <select
+                          className="border border-gray-300 rounded px-4 py-2 mr-4"
+                          value={selectedPersonId || ""}
+                          onChange={(e) => handleSelectChange(e, paymentId)}
+                        >
+                          <option key="" value="">
+                            Select a Delivery Person
                           </option>
-                        ))}
-                      </select>
-                    </td>
-                  </TableRow>
-                ))
+                          {availablePersons.map((person) => (
+                            <option key={person.ID} value={person.ID}>
+                              {person.name}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                      <td className="px-6 py-4" style={{ color: availablePersons.length === 0 ? "red" : selectedPersonId ? "green" : "red" }}>
+                        {availablePersons.length === 0
+                          ? "No Delivery Person Available"
+                          : selectedPersonId
+                            ? deliveryPersons.find(
+                                (person) => person.ID === selectedPersonId
+                              )?.name || "Not Assigned"
+                            : "Not Assigned"}
+                      </td>
+                    </TableRow>
+                  );
+                })
               )}
             </Table>
           </div>
@@ -93,4 +121,3 @@ const AssignDelivery = () => {
 };
 
 export default AssignDelivery;
-

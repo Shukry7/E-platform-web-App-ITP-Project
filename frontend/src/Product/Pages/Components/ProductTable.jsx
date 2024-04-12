@@ -42,8 +42,8 @@ const ProductTable = (props) => {
                   {item.name}
                 </th>
                 <td class="px-6 py-4">{item.category}</td>
-                <td class="px-6 py-4">
-                  Rs.{item.price}
+                <td class="px-6 py-4" style={{display: 'flex', alignItems: 'center'}}>
+                <span style={{marginRight: '10px'}}>Rs.{item.price}</span>
                   <Popup id={item._id} />
                 </td>
                 <td class="px-6 py-4">{item.Stock}</td>
