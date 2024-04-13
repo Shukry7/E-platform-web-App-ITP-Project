@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 const ProductformUpdate = () => {
   const { id } = useParams();
@@ -111,6 +112,7 @@ const ProductformUpdate = () => {
       .put(`http://localhost:5000/product/update/${id}`, formData)
       .then((res) => {
         setLoading(false);
+        Toast("Product Updated Successfully!!","success")
         navigate("/Product/");
       })
       .catch((err) => {

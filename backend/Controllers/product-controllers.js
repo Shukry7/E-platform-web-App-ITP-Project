@@ -71,24 +71,28 @@ const UpdateProduct = async (req, res) => {
 
     const product = await Product.findById(id);
 
-    const path = product.image;
-    if (path !== "uploads/images/No-Image-Placeholder.png") {
-      fs.unlink(path, (err) => {
-        console.log(err);
-      });
+    let path = product.image;
+    if (req.file && req.file.path) {
+      
+      if (path !== "uploads/images/No-Image-Placeholder.png") {
+        fs.unlink(path, (err) => {
+          console.log(err);
+        });
+      }
+      path = req.file.path;
     }
+    
 
     const { name, category, weight, description } = req.body;
-
-    let path2 = "uploads/images/No-Image-Placeholder.png";
-    if (req.file && req.file.path) path2 = req.file.path;
+    
+    if (req.file && req.file.path) path = req.file.path;
 
     const Updateproduct = {
       name: name,
       category: category,
       weight: weight,
       description: description,
-      image: path2,
+      image: path,
     };
 
     const result = await Product.findByIdAndUpdate(id, Updateproduct);

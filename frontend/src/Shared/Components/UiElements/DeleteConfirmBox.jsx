@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "./Loader";
 import axios from "axios";
+import Toast from "./Toast/Toast";
 
 const DeleteConfirmBox = (props) => {
   const [isclick, setisClick] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const togglemodel = () => {
     setisClick(!isclick);
@@ -20,7 +20,8 @@ const DeleteConfirmBox = (props) => {
       .then((res) => {
         setLoading(false);
         setisClick(!isclick);
-        window.location.reload(); 
+        props.dlt(isclick)
+        Toast("Deleted Successfully!! 💔","success")
       })
       .catch((err) => {
         console.error(err);
