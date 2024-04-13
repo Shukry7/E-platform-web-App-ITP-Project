@@ -8,6 +8,8 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_PHONE,
   VALIDATOR_EMAIL,
+  VALIDATOR_LICENSE_NUMBER,
+  VALIDATOR_NUMBER_PLATE,
 } from "../../../Shared/Components/util/validate";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
@@ -96,19 +98,22 @@ const DeliveryForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    const formData = new FormData();
+
+    formData.append('name',formState.inputs.name.value);
+    formData.append('telephone',formState.inputs.telephone.value);
+    formData.append('mail',formState.inputs.mail.value);
+    formData.append('address',formState.inputs.address.value);
+    formData.append('license',formState.inputs.license.value);
+    formData.append('city',formState.inputs.city.value);
+    formData.append('numberplate',formState.inputs.numberplate.value);
+    formData.append('type',formState.inputs.type.value);
+    formData.append('capacity',formState.inputs.capacity.value);
+    formData.append('image',formState.inputs.image.value);
+
     axios
-      .post("http://localhost:5000/delivery/", {
-        id: 1,
-        name: formState.inputs.name.value,
-        telephone: formState.inputs.telephone.value,
-        mail: formState.inputs.mail.value,
-        address: formState.inputs.address.value,
-        license: formState.inputs.license.value,
-        city: formState.inputs.city.value,
-        numberplate: formState.inputs.numberplate.value,
-        type: formState.inputs.type.value,
-        capacity: formState.inputs.capacity.value,
-      })
+      .post("http://localhost:5000/delivery/", formData)
       .then((res) => {
         setLoading(false);
         navigate("/Delivery/");
@@ -209,7 +214,7 @@ const DeliveryForm = () => {
                             type="text"
                             placeholder="Enter License Number"
                             label="License Number: "
-                            validators={[VALIDATOR_REQUIRE()]}
+                            validators={[VALIDATOR_LICENSE_NUMBER()]}
                             errorText="Please Enter a valid License Number"
                             onInput={inputHandler}
                           />
@@ -222,7 +227,7 @@ const DeliveryForm = () => {
                             type="text"
                             placeholder="Enter Number Plate"
                             label="Number Plate: "
-                            validators={[VALIDATOR_REQUIRE()]}
+                            validators={[VALIDATOR_NUMBER_PLATE()]}
                             errorText="Please Enter a valid Number Plate"
                             onInput={inputHandler}
                           />
@@ -230,7 +235,7 @@ const DeliveryForm = () => {
                         <div class="md:col-span-2">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            element="Type"
+                            element="Input"
                             id="type"
                             type="text"
                             placeholder="Enter the type of the vehicle"
@@ -243,11 +248,11 @@ const DeliveryForm = () => {
                         <div class="md:col-span-2">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            element="Capacity"
+                            element="Input"
                             id="capacity"
                             type="text"
                             placeholder="Enter the capacity of the vehicle"
-                            label="Capacity of the Vehicle: "
+                            label="Capacity of the Vehicle(Kilograms): "
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a valid capacity of the Vehicle"
                             onInput={inputHandler}

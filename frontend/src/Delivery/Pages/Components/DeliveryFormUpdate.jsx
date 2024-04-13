@@ -8,6 +8,8 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_PHONE,
   VALIDATOR_EMAIL,
+  VALIDATOR_LICENSE_NUMBER,
+  VALIDATOR_NUMBER_PLATE,
 } from "../../../Shared/Components/util/validate";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -137,7 +139,7 @@ const DeliveryFormUpdate  = () => {
                 isValid: true,
               },
               image: {
-                value: null,
+                value: res.data.image,
                 isValid: true,
               },
           },
@@ -154,18 +156,22 @@ const DeliveryFormUpdate  = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    const formData = new FormData();
+
+    formData.append('name',formState.inputs.name.value);
+    formData.append('telephone',formState.inputs.telephone.value);
+    formData.append('mail',formState.inputs.mail.value);
+    formData.append('address',formState.inputs.address.value);
+    formData.append('license',formState.inputs.license.value);
+    formData.append('city',formState.inputs.city.value);
+    formData.append('numberplate',formState.inputs.numberplate.value);
+    formData.append('type',formState.inputs.type.value);
+    formData.append('capacity',formState.inputs.capacity.value);
+    formData.append('image',formState.inputs.image.value);
+
     axios
-    .put(`http://localhost:5000/delivery/${id}`, {
-        name: formState.inputs.name.value,
-        telephone: formState.inputs.telephone.value,
-        mail: formState.inputs.mail.value,
-        address: formState.inputs.address.value,
-        city: formState.inputs.city.value,
-        license: formState.inputs.license.value,
-        numberplate: formState.inputs.numberplate.value,
-        type: formState.inputs.type.value,
-        capacity: formState.inputs.capacity.value,
-      })
+    .put(`http://localhost:5000/delivery/${id}`, formData)
       .then((res) => {
         setLoading(false);
         navigate("/Delivery/");
@@ -174,7 +180,6 @@ const DeliveryFormUpdate  = () => {
         console.error(err);
         setLoading(false);
       });
-    console.log(formState);
   };
 
   return (
@@ -191,7 +196,7 @@ const DeliveryFormUpdate  = () => {
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                     <div class="text-gray-600 flex justify-center items-center">
-                      <ImageUpload center id="image" onInput={inputHandler} />
+                    <ImageUpload center id="image" onInput={inputHandler} initialValue={formState.inputs.image.value}/>
                     </div>
                     <div class="lg:col-span-2">
                       
@@ -273,7 +278,7 @@ const DeliveryFormUpdate  = () => {
                             initialValue={formState.inputs.license.value}
                             placeholder="Enter License Number"
                             label="License Number: "
-                            validators={[VALIDATOR_REQUIRE()]}
+                            validators={[VALIDATOR_LICENSE_NUMBER()]}
                             errorText="Please Enter a valid License Number"
                             onInput={inputHandler}
                           />
@@ -287,7 +292,7 @@ const DeliveryFormUpdate  = () => {
                             initialValue={formState.inputs.numberplate.value}
                             placeholder="Enter Number Plate"
                             label="Number Plate: "
-                            validators={[VALIDATOR_REQUIRE()]}
+                            validators={[VALIDATOR_NUMBER_PLATE()]}
                             errorText="Please Enter a valid Number Plate"
                             onInput={inputHandler}
                           />
@@ -295,7 +300,7 @@ const DeliveryFormUpdate  = () => {
                         <div class="md:col-span-2">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            element="Type"
+                            element="Input"
                             id="type"
                             type="text"
                             initialValue={formState.inputs.type.value}
@@ -309,12 +314,12 @@ const DeliveryFormUpdate  = () => {
                         <div class="md:col-span-2">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            element="Capacity"
+                            element="Input"
                             id="capacity"
                             type="text"
                             initialValue={formState.inputs.capacity.value}
                             placeholder="Enter the capacity of the vehicle"
-                            label="Capacity of the Vehicle: "
+                            label="Capacity of the Vehicle(Kilograms): "
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a valid capacity of the Vehicle"
                             onInput={inputHandler}
