@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import SupplierTable from "./Components/SupplierTable";
+import WholesalecustomerTable from "./Components/WholesalecustomerTable";
 import Card from "../../Shared/Components/UiElements/Card";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
 import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
 
-const Suppliers = () => {
-  const [suppliers, setsupplier] = useState([]);
+const Wholesalecustomer = () => {
+  const [wholesalecustomer, setwholesalecustomer] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/supplier")
+      .get("http://localhost:5000/wholesalecustomer")
       .then((res) => {
-        setsupplier(res.data);
+        setwholesalecustomer(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -30,13 +30,13 @@ const Suppliers = () => {
         
             <Card className="flex" style={{ width: "100%" }}>
               <div className="flex justify-between items-center">
-                <h1 className="text-3xl my-8">Supplier List</h1>
-                <Link to="/Supplier/create">
+                <h1 className="text-3xl my-8">Wholesalecustomer List</h1>
+                <Link to="/Wholesalecustomer/create">
                   <MdOutlineAddBox className="text-sky-800 text-4xl" />
                 </Link>
               </div>
-              <SupplierTable
-                Suppliers={suppliers}
+              <WholesalecustomerTable
+                Wholesalecustomer={wholesalecustomer}
                 loading={loading}
                 setloading={setLoading}
               />
@@ -47,4 +47,4 @@ const Suppliers = () => {
   );
 };
 
-export default Suppliers;
+export default Wholesalecustomer;

@@ -109,8 +109,6 @@ const WholesalecustomerForm = () => {
                 <p class="text-gray-500 mb-6 text-center">Enter Wholesalecustomer details below !!</p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
-                    <div class="text-gray-600 flex justify-center items-center">
-                    </div>
                     <div class="lg:col-span-2">
                       
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
