@@ -87,14 +87,17 @@ const ProductformUpdate = () => {
           },
           true
         );
+        
         setLoading(false);
+        
       })
       .catch((err) => {
         console.error(err);
         setLoading(false);
-      });
+      })
+      
   }, [id, setFormData]);
-
+  console.table(formState);
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
