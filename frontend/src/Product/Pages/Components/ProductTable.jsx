@@ -54,6 +54,7 @@ const ProductTable = (props) => {
                     id={item._id}
                     link2={`/Product/update/` + item._id}
                     deletelink={`http://localhost:5000/product/${item._id}`}
+                    dlt={props.dlt}
                   />
                 </td>
               </TableRow>

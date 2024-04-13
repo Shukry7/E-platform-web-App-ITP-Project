@@ -5,11 +5,14 @@ import Card from "../../Shared/Components/UiElements/Card"
 import Navbar from "../../Shared/Components/UiElements/Navbar";
 import { Link } from "react-router-dom";
 import {MdOutlineAddBox} from 'react-icons/md'
+import Search from "../../Shared/Components/UiElements/Search";
 
 const Delivery = () => {
 
   const [delivery, setdelivery] = useState([]);
   const [loading , setLoading] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [FilteredDeliveryPersons , setFilteredDeliveryPersons] = useState([]);
   
   useEffect(() =>{
     setLoading(true)
@@ -23,20 +26,39 @@ const Delivery = () => {
       console.error(err)
       setLoading(false)});
   },[]);
+
+  useEffect(() => {
+    setFilteredDeliveryPersons(delivery);
+  }, [delivery]);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    const filtered = delivery.filter(delivery =>
+      delivery.name.toLowerCase().includes(e.target.value.toLowerCase())||
+      delivery.ID.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredDeliveryPersons(filtered);
+  };
+
   return (
     <>
     <div>
     <Navbar/>
    
     <Card style={{width: "100%"}}>
-    <div className="flex justify-between items-center">
+    <div className="flex items-center justify-between">
       <h1 className="text-3xl my-8">Delivery Person Lists</h1>
+      <Search
+                  searchTerm={searchTerm}
+                  handleSearch={handleSearch}
+                  placeholder={"Search By ID / Name"}
+                />
       <Link to='/Delivery/create'>
         <MdOutlineAddBox className='text-sky-800 text-4xl'/>
       </Link>
     </div>
       <DeliveryTable 
-        Delivery={delivery}
+        Delivery={FilteredDeliveryPersons}
         loading={loading} 
         setloading={setLoading}
 

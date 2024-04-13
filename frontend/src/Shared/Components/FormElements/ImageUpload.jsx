@@ -6,23 +6,27 @@ const ImageUpload = (props) => {
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState();
   const [isValid, setIsValid] = useState(false);
-  const [selected , setselected] = useState(false)
+  const [selected , setSelected] = useState(false)
 
   const filePickerRef = useRef();
 
   useEffect(() => {
     setPreviewUrl(`http://localhost:5000/${props.initialValue}`);
-    setselected(true)
+    setSelected(true)
   }, [props.initialValue]);
 
+  console.log(selected)
   useEffect(() => {
     if (!file) {
-      return setselected(false);
+      if(props.initialValue)
+        return
+      else
+      return  setSelected(false);
     }
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result);
-      setselected(true)
+      setSelected(true)
     };
     fileReader.readAsDataURL(file);
   }, [file]);

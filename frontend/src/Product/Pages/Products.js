@@ -6,10 +6,12 @@ import Navbar from "../../Shared/Components/UiElements/Navbar";
 import { MdOutlineAddBox } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Search from "../../Shared/Components/UiElements/Search";
+import Toast from "../../Shared/Components/UiElements/Toast/Toast";
 
 const Products = () => {
   const [products, setproducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [deleteProduct,setdeleteProduct] = useState(false)
   const [FilteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +27,7 @@ const Products = () => {
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  }, [deleteProduct]);
 
   useEffect(() => {
     setFilteredProducts(products);
@@ -39,7 +41,7 @@ const Products = () => {
     );
     setFilteredProducts(filtered);
   };
-
+  
 
 
   return (
@@ -63,6 +65,7 @@ const Products = () => {
                 Product={FilteredProducts}
                 loading={loading}
                 setloading={setLoading}
+                dlt={setdeleteProduct}
               />
             </Card>
           
