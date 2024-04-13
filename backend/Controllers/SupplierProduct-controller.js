@@ -17,6 +17,30 @@ const createSupplierProduct = async (req, res, next) => {
   
 };
 
+const listSupplierProduct = async (req, res) => {
+  try {
+    const supplierProduct = await SupplierProduct.find({});
+
+    return res.status(200).json(supplierProduct);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+
+};
+
+const listSupplierProductById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const supplierProduct = await SupplierProduct.findById(id);
+
+    return res.status(200).json(supplierProduct);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
 
 const listProductBySupplierId = async (req, res) => {
   try {
@@ -60,6 +84,22 @@ const UpdateSupplierProduct = async (req, res) => {
   }
 };
 
+const UpdateSupplierProductPrice = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await SupplierProduct.findByIdAndUpdate(id, req.body);
+
+    if (!result) {
+      return res.status(404).send({ message: "SupplierProduct Not Find !" });
+    }
+
+    return res.status(200).send({ message: "SupplierProduct Updated Successfully!" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
 const DeleteSupplierProduct =  async (req,res) => {
 
   try{
@@ -86,3 +126,6 @@ exports.UpdateSupplierProduct = UpdateSupplierProduct;
 exports.listProductBySupplierId = listProductBySupplierId;
 exports.listSupplierByProductId = listSupplierByProductId;
 exports.DeleteSupplierProduct = DeleteSupplierProduct;
+exports.listSupplierProduct = listSupplierProduct;
+exports.listSupplierProductById = listSupplierProductById;
+exports.UpdateSupplierProductPrice = UpdateSupplierProductPrice;

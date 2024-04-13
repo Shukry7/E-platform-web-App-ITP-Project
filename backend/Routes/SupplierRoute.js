@@ -8,6 +8,7 @@ Router.get("/", SupplierControllers.listSupplier);
 Router.delete("/:id", SupplierControllers.DeleteSupplier);
 Router.get("/:id", SupplierControllers.listSupplierById);
 Router.put("/:id", SupplierControllers.UpdateSupplier);
+Router.put("/updateCredit/:id",SupplierControllers.UpdateSupplierCredit);
 
 
 module.exports = Router;

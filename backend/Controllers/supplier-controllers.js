@@ -72,6 +72,22 @@ const UpdateSupplier = async (req, res) => {
   }
 };
 
+const UpdateSupplierCredit = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Supplier.findByIdAndUpdate(id, req.body);
+
+    if (!result) {
+      return res.status(404).send({ message: "Supplier Not Find !" });
+    }
+
+    return res.status(200).send({ message: "Supplier Updated Successfully!" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
 const DeleteSupplier =  async (req,res) => {
 
   try{
@@ -109,3 +125,4 @@ exports.listSupplier = listSupplier;
 exports.UpdateSupplier = UpdateSupplier;
 exports.listSupplierById = listSupplierById;
 exports.DeleteSupplier = DeleteSupplier;
+exports.UpdateSupplierCredit = UpdateSupplierCredit;
