@@ -1,6 +1,7 @@
 const HttpError = require("../Models/http-error");
 const SupplierProduct = require("../Models/SupplierProduct");
 const uuid = require("uuid");
+const Product = require("../Models/ProductModel");
 
 const createSupplierProduct = async (req, res, next) => {
   const { supplier, product, unitPrice} = req.body;
@@ -27,6 +28,20 @@ const listSupplierProduct = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 
+};
+
+const listProductsNotAssignedToSupplier = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productsAssignedToSupplier = await SupplierProduct.find({ supplier: id }).distinct('product');
+
+    const productsNotAssignedToSupplier = await Product.find({ _id: { $nin: productsAssignedToSupplier } });
+
+    return res.status(200).json(productsNotAssignedToSupplier);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
 };
 
 const listSupplierProductById = async (req, res) => {
@@ -129,3 +144,4 @@ exports.DeleteSupplierProduct = DeleteSupplierProduct;
 exports.listSupplierProduct = listSupplierProduct;
 exports.listSupplierProductById = listSupplierProductById;
 exports.UpdateSupplierProductPrice = UpdateSupplierProductPrice;
+exports.listProductsNotAssignedToSupplier = listProductsNotAssignedToSupplier;

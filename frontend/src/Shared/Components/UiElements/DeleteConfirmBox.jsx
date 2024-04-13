@@ -41,7 +41,7 @@ const DeleteConfirmBox = (props) => {
           <div
             id="deleteModal"
             tabindex="-1"
-            className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-50"
+            className="fixed z-40 top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-50"
             aria-modal="true"
             role="dialog"
           >

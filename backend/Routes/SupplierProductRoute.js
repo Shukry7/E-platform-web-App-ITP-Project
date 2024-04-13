@@ -10,6 +10,7 @@ Router.get("/supplier/:id", SupplierProductControllers.listProductBySupplierId);
 Router.get("/product/:id", SupplierProductControllers.listSupplierByProductId);
 Router.put("/:id", SupplierProductControllers.UpdateSupplierProduct);
 Router.put("/updatePrice/:id", SupplierProductControllers.UpdateSupplierProductPrice);
+Router.get("/addproduct/:id", SupplierProductControllers.listProductsNotAssignedToSupplier)
 
 
 module.exports = Router;

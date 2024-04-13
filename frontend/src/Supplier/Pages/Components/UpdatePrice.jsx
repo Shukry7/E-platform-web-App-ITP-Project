@@ -85,7 +85,7 @@ const UpdatePrice = (props) => {
           id="crud-modal"
           tabindex="-1"
           aria-hidden="true"
-          className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-50"
+          className="fixed z-40 top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-50"
         >
           <div class="relative p-4 w-full max-w-md max-h-full">
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">

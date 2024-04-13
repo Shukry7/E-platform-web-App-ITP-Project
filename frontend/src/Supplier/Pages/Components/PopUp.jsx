@@ -22,7 +22,7 @@ function PopUp(props) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/product")
+      .get(`http://localhost:5000/supplierproduct/addproduct/${props.id}`)
       .then((res) => {
         setproducts(res.data);
         setLoading(false);
