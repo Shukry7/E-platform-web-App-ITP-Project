@@ -225,6 +225,7 @@ const EmployeeformUpdate = () => {
                             element="Input"
                             id="hourlywage"
                             type="number"
+                            initialValue={formState.inputs.hourlywage.value}
                             placeholder="Enter Hourly Wage"
                             label="Hourly Wage :"
                             validators={[VALIDATOR_REQUIRE()]}
