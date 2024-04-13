@@ -105,7 +105,7 @@ const SupplierformUpdate = () => {
                 isValid: true,
               },
             image: {
-              value: null,
+              value: res.data.image,
               isValid: true,
             },
           },
@@ -122,14 +122,17 @@ const SupplierformUpdate = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    const formData = new FormData();
+    formData.append('name',formState.inputs.name.value);
+    formData.append('telephone',formState.inputs.telephone.value);
+    formData.append('mail',formState.inputs.mail.value);
+    formData.append('address',formState.inputs.address.value);
+    formData.append('city',formState.inputs.city.value);
+    formData.append('image',formState.inputs.image.value);
+
     axios
-      .put(`http://localhost:5000/supplier/${id}`, {
-        name: formState.inputs.name.value,
-        telephone: formState.inputs.telephone.value,
-        mail: formState.inputs.mail.value,
-        address: formState.inputs.address.value,
-        city: formState.inputs.city.value,
-      })
+      .put(`http://localhost:5000/supplier/${id}`, formData)
       .then((res) => {
         setLoading(false);
         navigate("/Supplier/");
@@ -159,7 +162,7 @@ const SupplierformUpdate = () => {
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                     <div class="text-gray-600 flex justify-center items-center">
-                      <ImageUpload center id="image" onInput={inputHandler} />
+                      <ImageUpload center id="image" onInput={inputHandler} initialValue={formState.inputs.image.value}/>
                     </div>
                     <div class="lg:col-span-2">
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">

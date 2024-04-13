@@ -7,6 +7,7 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import DeleteConfirmBox from "../../../Shared/Components/UiElements/DeleteConfirmBox";
+import UpdatePrice from "./UpdatePrice";
 
 const SupplierProductTable = (props) => {
 
@@ -27,6 +28,7 @@ const SupplierProductTable = (props) => {
             </center>
           ) : (
             props.supplierProducts.map((item, index) => {
+              console.log(item._id)
               return (
                 <TableRow>
                   <td class="px-6 py-4">{index + 1}</td>
@@ -37,7 +39,10 @@ const SupplierProductTable = (props) => {
                   >
                     {item.product.name}
                   </th>
-                  <td class="px-6 py-4">Rs.{item.unitPrice}</td>
+                  <td class="px-6 py-4" style={{display: 'flex', alignItems: 'center'}}>
+                    <span style={{marginRight: '10px'}}>Rs.{item.unitPrice}</span>
+                    <UpdatePrice id={item._id} />
+                  </td>
                   <td className="px-6 py-4"><DeleteConfirmBox deletelink={`http://localhost:5000/supplierproduct/${item._id}`}/></td>
                 </TableRow>
               );

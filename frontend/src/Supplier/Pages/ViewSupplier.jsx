@@ -34,7 +34,7 @@ const ViewSupplier = () => {
     useEffect(() => {
       setLoading(true);
       axios
-        .get(`http://localhost:5000/supplierproduct/${id}`)
+        .get(`http://localhost:5000/supplierproduct/supplier/${id}`)
         .then((res) => {
           setsupplierProduct(res.data);
           setLoading(false);
@@ -44,8 +44,6 @@ const ViewSupplier = () => {
           setLoading(false);
         });
     }, [id]);
-
-    console.log(supplier)
 
     return (
       <>
