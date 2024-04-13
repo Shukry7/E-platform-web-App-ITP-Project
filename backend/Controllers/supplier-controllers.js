@@ -59,10 +59,36 @@ const listSupplierById = async (req, res) => {
 const UpdateSupplier = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Supplier.findByIdAndUpdate(id, req.body);
+
+    const supplier = await Supplier.findById(id);
+
+    const path = supplier.image;
+    if (path !== "uploads/images/No-Image-Placeholder.png") {
+      fs.unlink(path, (err) => {
+        console.log(err);
+      });
+    }
+
+    const { name, telephone, mail, address, city } = req.body;
+
+    console.log(name)
+
+    let path2 = "uploads/images/No-Image-Placeholder.png";
+    if (req.file && req.file.path) path2 = req.file.path;
+
+    const Updatesupplier = {
+      name: name,
+      telephone: telephone,
+      mail: mail,
+      address: address,
+      city: city,
+      image: path2,
+    };
+
+    const result = await Supplier.findByIdAndUpdate(id, Updatesupplier);
 
     if (!result) {
-      return res.status(404).send({ message: "Supplier Not Found !" });
+      return res.status(404).send({ message: "Supplier Not Find !" });
     }
 
     return res.status(200).send({ message: "Supplier Updated Successfully!" });
