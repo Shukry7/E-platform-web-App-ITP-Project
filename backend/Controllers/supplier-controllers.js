@@ -71,8 +71,6 @@ const UpdateSupplier = async (req, res) => {
 
     const { name, telephone, mail, address, city } = req.body;
 
-    console.log(name)
-
     let path2 = "uploads/images/No-Image-Placeholder.png";
     if (req.file && req.file.path) path2 = req.file.path;
 
@@ -104,7 +102,7 @@ const UpdateSupplierCredit = async (req, res) => {
     const result = await Supplier.findByIdAndUpdate(id, req.body);
 
     if (!result) {
-      return res.status(404).send({ message: "Supplier Not Find !" });
+      return res.status(404).send({ message: "Supplier Not Found !" });
     }
 
     return res.status(200).send({ message: "Supplier Updated Successfully!" });

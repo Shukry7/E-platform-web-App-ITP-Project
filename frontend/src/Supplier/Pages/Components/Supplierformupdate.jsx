@@ -141,7 +141,6 @@ const SupplierformUpdate = () => {
         console.error(err);
         setLoading(false);
       });
-    console.log(formState);
   };
 
   return (
