@@ -60,7 +60,7 @@ const DeliveryTable = (props) => {
                   <td class="px-6 py-4">{item.address}, {item.city}</td>
                   <td class="px-6 py-4">{item.license}</td>
                   <td class="px-6 py-4">{item.numberplate}</td>
-                  <td class="px-6 py-4">{item.type}({item.capacity})</td>
+                  <td class="px-6 py-4">{item.type}({item.capacity}kg)</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
                     link1=""

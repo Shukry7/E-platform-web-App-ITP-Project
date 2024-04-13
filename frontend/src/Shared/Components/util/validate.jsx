@@ -7,6 +7,9 @@ const VALIDATOR_TYPE_EMAIL = 'EMAIL';
 const VALIDATOR_TYPE_FILE = 'FILE';
 const VALIDATOR_TYPE_PHONE = 'PHONE'; 
 const VALIDATOR_TYPE_DATE = 'DATE';
+const VALIDATOR_TYPE_LICENSE_NUMBER = 'LICENSE_NUMBER'; // New validator type for license number
+const VALIDATOR_TYPE_NUMBER_PLATE = 'NUMBER_PLATE'; // New validator type for number plate
+
 
 export const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
 export const VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
@@ -23,6 +26,9 @@ export const VALIDATOR_MAX = val => ({ type: VALIDATOR_TYPE_MAX, val: val });
 export const VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
 export const VALIDATOR_PHONE = () => ({ type: VALIDATOR_TYPE_PHONE });
 export const VALIDATOR_DATE = () => ({ type: VALIDATOR_TYPE_DATE });
+export const VALIDATOR_LICENSE_NUMBER = () => ({ type: VALIDATOR_TYPE_LICENSE_NUMBER }); // Validator for license number
+export const VALIDATOR_NUMBER_PLATE = () => ({ type: VALIDATOR_TYPE_NUMBER_PLATE }); // Validator for number plate
+
 
 export const validate = (value, validators) => {
   let isValid = true;
@@ -54,7 +60,12 @@ export const validate = (value, validators) => {
       const inputDate = new Date(value);
       isValid = isValid && inputDate > today;
     }
-    
+    if (validator.type === VALIDATOR_TYPE_LICENSE_NUMBER) { // Validation logic for license number
+      isValid = isValid && /^[A-Z]\d{7}$/.test(value); // Assuming the license number format is one letter followed by 7 digits
+    }
+    if (validator.type === VALIDATOR_TYPE_NUMBER_PLATE) {
+      isValid = isValid && /^[A-Z]{3}-\d{4}$/.test(value); // Assuming the number plate format is three letters followed by a dash and four digits
+    }
   }
   return isValid;
 };
