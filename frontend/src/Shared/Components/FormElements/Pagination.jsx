@@ -1,57 +1,59 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
-const Pagination = () => {
-  const [active, setActive] = useState(1); // Specify the type for active state
+const Pagination = ({ active, totalItems, itemsPerPage, onPageChange }) => {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const getItemProps = (index) =>
-    ({
-      variant: active === index ? "filled" : "text",
-      color: "gray",
-      onClick: () => setActive(index),
-    });
-
-  const next = () => {
-    if (active === 5) return;
-
-    setActive(active + 1);
+  const handlePrev = () => {
+    if (active > 1) {
+      onPageChange(active - 1);
+    }
   };
 
-  const prev = () => {
-    if (active === 1) return;
+  const handleNext = () => {
+    if (active < totalPages) {
+      onPageChange(active + 1);
+    }
+  };
 
-    setActive(active - 1);
+  const handlePageClick = (page) => {
+    onPageChange(page);
   };
 
   return (
-    <div className="flex justify-center items-center gap-4 mt-4">
+    <div className="flex justify-center items-center mt-4">
       <Button
         variant="text"
         className="flex items-center gap-2"
-        onClick={prev}
+        onClick={handlePrev}
         disabled={active === 1}
       >
         <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
       </Button>
       <div className="flex items-center gap-2">
-        <IconButton {...getItemProps(1)}>1</IconButton>
-        <IconButton {...getItemProps(2)}>2</IconButton>
-        <IconButton {...getItemProps(3)}>3</IconButton>
-        <IconButton {...getItemProps(4)}>4</IconButton>
-        <IconButton {...getItemProps(5)}>5</IconButton>
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <IconButton
+            key={index}
+            variant={active === index + 1 ? "filled" : "text"} // Fix variant calculation
+            color="gray"
+            onClick={() => handlePageClick(index + 1)}
+          >
+            {index + 1}
+          </IconButton>
+        ))}
       </div>
       <Button
         variant="text"
         className="flex items-center gap-2"
-        onClick={next}
-        disabled={active === 5}
+        onClick={handleNext}
+        disabled={active === totalPages}
       >
         Next
         <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
       </Button>
     </div>
   );
-}
+};
 
 export default Pagination;

@@ -19,6 +19,20 @@ const ProductTable = (props) => {
     "Action",
   ];
 
+  if (props.Product.length === 0) {
+    return (
+      <>
+        <Table Headings={Headings}>
+          <tr
+            
+            className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+          >
+            <td colSpan={8} className="px-6 py-4 text-center">No Data Found !!</td>
+          </tr>
+        </Table>
+      </>
+    ); // Add message if no data is found
+  }
   return (
     <>
       <Table Headings={Headings}>
@@ -28,17 +42,19 @@ const ProductTable = (props) => {
           </center>
         ) : (
           props.Product.map((item, index) => {
-            let Status
-            if(item.Stock === 0){
-              Status = 0
-            }else if (item.Stock <= item.Alert_quantity){
-              Status = 1
-            }else{
-              Status = 2
+            let Status;
+            if (item.Stock === 0) {
+              Status = 0;
+            } else if (item.Stock <= item.Alert_quantity) {
+              Status = 1;
+            } else {
+              Status = 2;
             }
             return (
               <TableRow>
-                <td class="px-6 py-4">{index + 1}</td>
+                <td class="px-6 py-4">
+                  {(props.active - 1) * props.itemsPerPage + index + 1}
+                </td>
                 <td class="px-6 py-4">{item.ID}</td>
                 <th
                   scope="row"
@@ -54,39 +70,40 @@ const ProductTable = (props) => {
                   <span style={{ marginRight: "10px" }}>Rs.{item.price}</span>
                   <Popup id={item._id} />
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-2 py-4">
                   {Status === 0 && (
                     <span class="relative inline-block px-3  py-1 font-semibold text-red-900 leading-tight">
-                    <span
-                      aria-hidden
-                      class="absolute inset-0 bg-red-200 opacity-50 rounded-full pl-4"
-                    ></span>
-                    <span class="relative">Out Of Stock</span>
-                  </span>
-            )}
-            {Status === 1 && (<>{item.Stock}
-              <span
-                  class="relative inline-block px-3 ml-2 py-1 font-semibold text-orange-900 leading-tight"
-                >
-                  <span
-                    aria-hidden
-                    class="absolute inset-0 bg-orange-200 opacity-50 rounded-full "
-                  ></span>
-                  <span class="relative">Warning</span>
-                </span></>
-            )}
-            {Status === 2 && (<>{item.Stock}
-              <span
-                  class="relative inline-block px-3 ml-2 py-1 font-semibold text-green-900 leading-tight"
-                >
-                  <span
-                    aria-hidden
-                    class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                  ></span>
-                  <span class="relative">Available</span>
-                </span></>
-            )} 
-          
+                      <span
+                        aria-hidden
+                        class="absolute inset-0 bg-red-200 opacity-50 rounded-full pl-4"
+                      ></span>
+                      <span class="relative">Out Of Stock</span>
+                    </span>
+                  )}
+                  {Status === 1 && (
+                    <>
+                      {item.Stock}
+                      <span class="relative inline-block px-3 ml-2 py-1 font-semibold text-orange-900 leading-tight">
+                        <span
+                          aria-hidden
+                          class="absolute inset-0 bg-orange-200 opacity-50 rounded-full "
+                        ></span>
+                        <span class="relative">Warning</span>
+                      </span>
+                    </>
+                  )}
+                  {Status === 2 && (
+                    <>
+                      {item.Stock}
+                      <span class="relative inline-block px-3 ml-2 py-1 font-semibold text-green-900 leading-tight">
+                        <span
+                          aria-hidden
+                          class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                        ></span>
+                        <span class="relative">Available</span>
+                      </span>
+                    </>
+                  )}
                 </td>
                 <td class="px-6 py-4">{item.Alert_quantity}</td>
                 <td class="px-6 py-4">

@@ -10,10 +10,12 @@ import Pagination from "../../Shared/Components/FormElements/Pagination";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [displayProducts, setDisplayProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [deleteProduct,setDeleteProduct] = useState(false)
+  const [deleteProduct, setDeleteProduct] = useState(false);
   const [FilteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
     setLoading(true);
@@ -29,47 +31,64 @@ const Products = () => {
       });
   }, [deleteProduct]);
 
+  const handlePageChange = (page) => {
+    setActivePage(page);
+  };
+
   useEffect(() => {
     setFilteredProducts(products);
+    setDisplayProducts(products)
   }, [products]);
+
+  useEffect(() => {
+    const startIndex = (activePage - 1) * 6;
+    const endIndex = startIndex + 6;
+    setDisplayProducts(FilteredProducts.slice(startIndex, endIndex));
+  }, [ activePage, FilteredProducts]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    const filtered = products.filter(product =>
-      product.name.toLowerCase().includes(e.target.value.toLowerCase())||
-      product.ID.toLowerCase().includes(e.target.value.toLowerCase())
+    const filtered = products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        product.ID.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredProducts(filtered);
+    setActivePage(1)
   };
-  
-
 
   return (
     <>
       <div>
         <Navbar />
-        
-            <Card className="flex" style={{ width: "100%" }}>
-              <div className="flex items-center justify-between">
-                <h1 className="text-3xl my-8">Product List</h1>
-                <Search
-                  searchTerm={searchTerm}
-                  handleSearch={handleSearch}
-                  placeholder={"Search By ID / Name"}
-                />
-                <Link to="/Product/new">
-                  <MdOutlineAddBox className="text-sky-800 text-4xl" />
-                </Link>
-              </div>
-              <ProductTable
-                Product={FilteredProducts}
-                loading={loading}
-                setLoading={setLoading}
-                dlt={setDeleteProduct}
-              />
-              <Pagination/>
-            </Card>
-          
+
+        <Card className="flex" style={{ width: "100%" }}>
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl my-8">Product List</h1>
+            <Search
+              searchTerm={searchTerm}
+              handleSearch={handleSearch}
+              placeholder={"Search By ID / Name"}
+            />
+            <Link to="/Product/new">
+              <MdOutlineAddBox className="text-sky-800 text-4xl" />
+            </Link>
+          </div>
+          <ProductTable
+            Product={displayProducts}
+            loading={loading}
+            setLoading={setLoading}
+            dlt={setDeleteProduct}
+            active={activePage}
+            itemsPerPage={6}
+          />
+          <Pagination
+            active={activePage}
+            totalItems={FilteredProducts.length}
+            itemsPerPage={6}
+            onPageChange={handlePageChange}
+          />
+        </Card>
       </div>
     </>
   );
