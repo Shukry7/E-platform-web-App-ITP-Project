@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
 const EmployeeAttendanceSchema = mongoose.Schema({
-  employeeID: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Employee", // Reference to the Employee model
+  empID: {
+    type: String,
+    required: true,
+  },
+  empName: {
+    type: String,
     required: true,
   },
   date: {
@@ -18,6 +21,6 @@ const EmployeeAttendanceSchema = mongoose.Schema({
   },
 });
 
-const EmployeeAttendance = mongoose.model("EmployeeAttendance",EmployeeAttendanceSchema);
+const EmployeeAttendance = mongoose.model("EmployeeAttendance", EmployeeAttendanceSchema);
 
 module.exports = EmployeeAttendance;
