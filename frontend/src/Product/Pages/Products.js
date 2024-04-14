@@ -6,12 +6,12 @@ import Navbar from "../../Shared/Components/UiElements/Navbar";
 import { MdOutlineAddBox } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Search from "../../Shared/Components/UiElements/Search";
-import Toast from "../../Shared/Components/UiElements/Toast/Toast";
+import Pagination from "../../Shared/Components/FormElements/Pagination";
 
 const Products = () => {
-  const [products, setproducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [deleteProduct,setdeleteProduct] = useState(false)
+  const [deleteProduct,setDeleteProduct] = useState(false)
   const [FilteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -20,7 +20,7 @@ const Products = () => {
     axios
       .get("http://localhost:5000/product")
       .then((res) => {
-        setproducts(res.data);
+        setProducts(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -64,9 +64,10 @@ const Products = () => {
               <ProductTable
                 Product={FilteredProducts}
                 loading={loading}
-                setloading={setLoading}
-                dlt={setdeleteProduct}
+                setLoading={setLoading}
+                dlt={setDeleteProduct}
               />
+              <Pagination/>
             </Card>
           
       </div>

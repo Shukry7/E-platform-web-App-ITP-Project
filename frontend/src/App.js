@@ -25,6 +25,8 @@ import Dashboard from "./Dashboard/Dashboard";
 import ViewCustomer from "./Customer/ViewCustomer";
 import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecustomer";
 import LoginPage from "./Login/LoginPage";
+import ProductList from "./Product/Pages/Components/ProductList";
+import ProductDetails from "./Product/Pages/Components/ProductDetails";
 
 
 const App = () => {
@@ -52,8 +54,11 @@ const App = () => {
         <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
         <Route path="/Customer/view/:id" exact element={<ViewCustomer/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
-        <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
+        <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
+        <Route path="/ProductList" exact element={<ProductList/>}/>
+        <Route path="/ProductList/Details" exact element={<ProductDetails/>}/>
         <Route path="/Login" exact element={<LoginPage/>}/>
+        
       </Routes >
     </Router>
   );
