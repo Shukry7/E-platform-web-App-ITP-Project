@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 const SupplierformUpdate = () => {
   const { id } = useParams();
@@ -135,6 +136,7 @@ const SupplierformUpdate = () => {
       .put(`http://localhost:5000/supplier/${id}`, formData)
       .then((res) => {
         setLoading(false);
+        Toast("Supplier Updated Successfully!!","success")
         navigate("/Supplier/");
       })
       .catch((err) => {

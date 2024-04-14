@@ -62,17 +62,20 @@ const UpdateSupplier = async (req, res) => {
 
     const supplier = await Supplier.findById(id);
 
-    const path = supplier.image;
-    if (path !== "uploads/images/No-Image-Placeholder.png") {
-      fs.unlink(path, (err) => {
-        console.log(err);
-      });
+    let path = supplier.image;
+    if (req.file && req.file.path) {
+      
+      if (path !== "uploads/images/No-Image-Placeholder.png") {
+        fs.unlink(path, (err) => {
+          console.log(err);
+        });
+      }
+      path = req.file.path;
     }
 
     const { name, telephone, mail, address, city } = req.body;
 
-    let path2 = "uploads/images/No-Image-Placeholder.png";
-    if (req.file && req.file.path) path2 = req.file.path;
+    if (req.file && req.file.path) path = req.file.path;
 
     const Updatesupplier = {
       name: name,
@@ -80,7 +83,7 @@ const UpdateSupplier = async (req, res) => {
       mail: mail,
       address: address,
       city: city,
-      image: path2,
+      image: path,
     };
 
     const result = await Supplier.findByIdAndUpdate(id, Updatesupplier);
