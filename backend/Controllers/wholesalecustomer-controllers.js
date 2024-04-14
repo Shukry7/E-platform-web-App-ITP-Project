@@ -4,7 +4,7 @@ const Wholesalecustomer = require("../Models/WholesalecustomerModel");
 
 // get details from body and assigned to variables
 const createWholesalecustomer = async (req, res, next) => {
-  const { id, name, address, telephone, email, creditlimit } = req.body;
+  const { id, name, address, telephone, email, creditlimit, credit } = req.body;
 
   const newWholesalecustomer = {
     ID: id,
@@ -13,14 +13,15 @@ const createWholesalecustomer = async (req, res, next) => {
     telephone: telephone,
     email: email,
     creditlimit: creditlimit,
+    credit: credit,
   };
 
-// new employee is created
+// new wholesalecustomer is created
   const wholesalecustomer = await Wholesalecustomercreate(newWholesalecustomer);
   return res.status(201).send(wholesalecustomer);
 };
 
-// responding employees
+// responding wholesalecustomers
 const listWholesalecustomer = async (req, res) => {
   try {
     const wholesalecustomer = await Wholesalecustomer.find({});
