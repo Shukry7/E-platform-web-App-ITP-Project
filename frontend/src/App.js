@@ -16,6 +16,7 @@ import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
 import CreateEmployee from "./Employee/Pages/CreateEmployee";
 import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
+import MarkAttendance from "./Employee/Pages/Attendance";
 import CCForm from "./Payment/Pages/Components/CreditCardForm";
 import Customers from "./Customer/Customers";
 import RegisterCustomer from "./Customer/RegisterCustomer";
@@ -54,6 +55,7 @@ const App = () => {
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
         <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
+        <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Login" exact element={<LoginPage/>}/>  
       </Routes >
     </Router>
