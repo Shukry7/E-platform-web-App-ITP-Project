@@ -10,11 +10,11 @@ import SupplierProductTable from './Components/SupplierProductTable';
 import ViewCard from './Components/ViewCard';
 import PopUp from './Components/PopUp';
 
-const ViewSupplier = () => {
+const ViewWholesalecustomer = () => {
     const { id } = useParams();
     const[loading, setLoading] = useState(false);
     const[loading1, setLoading1] = useState(false);
-    const [supplier, setsupplier] = useState({});
+    const [wholesalecustomer, setwholesalecustomer] = useState({});
     const [supplierProduct, setsupplierProduct] = useState([]);
 
     useEffect(()=> {
@@ -22,7 +22,7 @@ const ViewSupplier = () => {
         axios
             .get(`http://localhost:5000/supplier/${id}`)
             .then((res)=> {
-                setsupplier(res.data);
+                setwholesalecustomer(res.data);
                 setLoading1(false);
             })
             .catch((err)=> {
@@ -45,7 +45,7 @@ const ViewSupplier = () => {
         });
     }, [id]);
 
-    console.log(supplier)
+    console.log(wholesalecustomer)
 
     return (
       <>
@@ -70,7 +70,7 @@ const ViewSupplier = () => {
           </div>
           <div className=" bg-gray-100 p-4 flex-initial w-96 ...">
           <ViewCard
-            supplier = {supplier}
+            supplier = {wholesalecustomer}
             loading1 = {loading1}
             setloading1 = {setLoading1}
           />
@@ -80,4 +80,4 @@ const ViewSupplier = () => {
     );
 }
 
-export default ViewSupplier;
+export default ViewWholesalecustomer;
