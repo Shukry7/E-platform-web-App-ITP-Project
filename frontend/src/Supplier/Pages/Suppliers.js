@@ -10,6 +10,7 @@ import Search from "../../Shared/Components/UiElements/Search";
 const Suppliers = () => {
   const [suppliers, setsupplier] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [deleteProduct, setdeleteProduct] = useState(false);
   const [FilteredSuppliers, setFilteredSuppliers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +26,7 @@ const Suppliers = () => {
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  }, [deleteProduct]);
 
   useEffect(() => {
     setFilteredSuppliers(suppliers);
@@ -63,6 +64,7 @@ const Suppliers = () => {
                 Suppliers={FilteredSuppliers}
                 loading={loading}
                 setloading={setLoading}
+                dlt= {setdeleteProduct}
               />
             </Card>
           

@@ -4,11 +4,22 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import Card from "../../../Shared/Components/UiElements/Card";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AssignDelivery = () => {
   const [deliveryPersons, setDeliveryPersons] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [completedRows, setCompletedRows] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // Dummy data
+  const [dummyData, setDummyData] = useState([
+    { paymentId: "P0001", customerName: "Alice Johnson", completed: false },
+    { paymentId: "P0005", customerName: "David Smith", completed: false },
+    { paymentId: "P0008", customerName: "Emily Brow", completed: false },
+    { paymentId: "P0009", customerName: "Carl Johnson", completed: false }
+  ]);
 
   useEffect(() => {
     setLoading(true);
@@ -38,7 +49,8 @@ const AssignDelivery = () => {
     "Payment ID",
     "Customer Name",
     "Assign Delivery Persons",
-    "Assigned Delivery Person"
+    "Assigned Delivery Person",
+    "Action"
   ];
 
   useEffect(() => {
@@ -56,6 +68,34 @@ const AssignDelivery = () => {
     );
   };
 
+  const handleDeliveryComplete = (paymentId) => {
+    const selectedPersonId = selectedOptions[paymentId];
+    if (selectedPersonId) {
+      // Remove the selected person for this payment ID
+      setSelectedOptions((prevSelectedOptions) => {
+        const updatedOptions = { ...prevSelectedOptions };
+        delete updatedOptions[paymentId];
+        return updatedOptions;
+      });
+      // Update dummy data to mark the row as completed
+      setDummyData(dummyData.map(row => {
+        if (row.paymentId === paymentId) {
+          return { ...row, completed: true };
+        }
+        return row;
+      }));
+      // Display toast message
+      toast.success("Delivery is Completed!", {
+        onClose: () => {
+          // Remove the completed row after the toast is closed
+          setCompletedRows((prevCompletedRows) =>
+            prevCompletedRows.filter((rowId) => rowId !== paymentId)
+          );
+        }
+      });
+    }
+  };
+
   return (
     <Card style={{ width: "100%" }}>
       <div className="justify-between items-center">
@@ -65,17 +105,13 @@ const AssignDelivery = () => {
             <Table Headings={Headings}>
               {loading ? (
                 <tr>
-                  <td colSpan="4">
+                  <td colSpan="5">
                     <Loader />
                   </td>
                 </tr>
               ) : (
-                [
-                  { paymentId: "P0001", customerName: "Alice Johnson" },
-                  { paymentId: "P0005", customerName: "David Smith" },
-                  { paymentId: "P0008", customerName: "Emily Brow" },
-                  { paymentId: "P0009", customerName: "Carl Johnson" }
-                ].map(({ paymentId, customerName }) => {
+                dummyData.map(({ paymentId, customerName, completed }) => {
+                  if (completed) return null; // Skip rendering completed rows
                   const selectedPersonId = selectedOptions[paymentId];
                   const availablePersons = getAvailablePersons(paymentId);
 
@@ -99,14 +135,34 @@ const AssignDelivery = () => {
                           ))}
                         </select>
                       </td>
-                      <td className="px-6 py-4" style={{ color: availablePersons.length === 0 ? "red" : selectedPersonId ? "green" : "red" }}>
+                      <td
+                        className="px-6 py-4"
+                        style={{
+                          color:
+                            availablePersons.length === 0
+                              ? "red"
+                              : selectedPersonId
+                              ? "green"
+                              : "red"
+                        }}
+                      >
                         {availablePersons.length === 0
                           ? "No Delivery Person Available"
                           : selectedPersonId
-                            ? deliveryPersons.find(
-                                (person) => person.ID === selectedPersonId
-                              )?.name || "Not Assigned"
-                            : "Not Assigned"}
+                          ? deliveryPersons.find(
+                              (person) => person.ID === selectedPersonId
+                            )?.name || "Not Assigned"
+                          : "Not Assigned"}
+                      </td>
+                      <td>
+                        {selectedPersonId && (
+                          <button
+                            onClick={() => handleDeliveryComplete(paymentId)}
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          >
+                            Complete Delivery
+                          </button>
+                        )}
                       </td>
                     </TableRow>
                   );

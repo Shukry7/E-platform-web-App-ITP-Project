@@ -7,6 +7,7 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_PHONE,
   VALIDATOR_EMAIL,
+  VALIDATOR_MIN,
 } from "../../../Shared/Components/util/validate";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
@@ -69,6 +70,10 @@ const WholesalecustomerForm = () => {
         value: "",
         isValid: false,
       },
+      credit: {
+        value: "",
+        isValid: false,
+      },
     },
     false
   );
@@ -84,6 +89,7 @@ const WholesalecustomerForm = () => {
         mail: formState.inputs.mail.value,
         address: formState.inputs.address.value,
         creditlimit: formState.inputs.creditlimit.value,
+        credit: formState.inputs.credit.value,
       })
       .then((res) => {
         setLoading(false);
@@ -109,8 +115,6 @@ const WholesalecustomerForm = () => {
                 <p class="text-gray-500 mb-6 text-center">Enter Wholesalecustomer details below !!</p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
-                    <div class="text-gray-600 flex justify-center items-center">
-                    </div>
                     <div class="lg:col-span-2">
                       
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
@@ -174,8 +178,21 @@ const WholesalecustomerForm = () => {
                             type="number"
                             placeholder="Enter Creditlimit"
                             label="creditlimit :"
-                            validators={[VALIDATOR_REQUIRE()]}
+                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
                             errorText="Please Enter a valid creditlimit (numbers)"
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                        <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="credit"
+                            type="number"
+                            placeholder="Enter Credit"
+                            label="credit :"
+                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
+                            errorText="Please Enter a valid credit (numbers)"
                             onInput={inputHandler}
                           />
                         </div>

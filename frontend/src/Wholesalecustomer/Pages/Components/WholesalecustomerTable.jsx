@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./SupplierTable.css";
+import "./WholesalecustomerTable.css";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
@@ -8,15 +8,16 @@ import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
 
-const SupplierTable = (props) => {
+const WholesalecustomerTable = (props) => {
 
   const Headings = [
     "#",
-    "Supplier ID",
-    "Supplier name",
+    "Wholesalecustomer ID",
+    "Wholesalecustomer name",
     "Telephone",
     "Email",
     "Address",
+    "Credit_limit",
     "Credit",
     "Action",
   ];
@@ -29,7 +30,7 @@ const SupplierTable = (props) => {
               <Loader />
             </center>
           ) : (
-            props.Suppliers.map((item, index) => {
+            props.Wholesalecustomer.map((item, index) => {
               return (
                 <TableRow>
                   <td class="px-6 py-4">{index + 1}</td>
@@ -42,13 +43,14 @@ const SupplierTable = (props) => {
                   </th>
                   <td class="px-6 py-4">{item.telephone}</td>
                   <td class="px-6 py-4">{item.mail}</td>
-                  <td class="px-6 py-4">{item.address}, {item.city}</td>
+                  <td class="px-6 py-4">{item.address}</td>
+                  <td class="px-6 py-4">{item.credit_limit}</td>
                   <td class="px-6 py-4">{item.credit}</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
-                    link1={`/Supplier/view/`+ item._id}
-                    link2={`/Supplier/update/`+ item._id}
-                    deletelink={`http://localhost:5000/supplier/${item._id}`}
+                    link1={`/Wholesalecustomer/view/`+ item._id}
+                    link2={`/Wholesalecustomer/update/`+ item._id}
+                    deletelink={`http://localhost:5000/Wholesalecustomer/${item._id}`}
                     />
                   </td>
                 </TableRow>
@@ -60,4 +62,4 @@ const SupplierTable = (props) => {
   );
 };
 
-export default SupplierTable;
+export default WholesalecustomerTable;

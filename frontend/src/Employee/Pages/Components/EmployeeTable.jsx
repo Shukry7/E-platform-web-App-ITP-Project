@@ -22,8 +22,7 @@ const EmployeeTable = (props) => {
       .delete(`http://localhost:5000/employee/${id}`)
       .then((res) => {
         props.setloading(false);
-        enqueueSnackbar('Employee deleted successfully',{variant:'success'});
-        Navigate("/Employee");
+        Navigate("/Employee/");
       })
       .catch((err) => {
         console.error(err);
@@ -79,6 +78,7 @@ const EmployeeTable = (props) => {
                     
                     link2={`/Employee/update/`+ item._id}
                     deletelink={`http://localhost:5000/employee/${item._id}`}
+                    dlt={props.dlt}
                     />
                   </td>
                 </TableRow>
