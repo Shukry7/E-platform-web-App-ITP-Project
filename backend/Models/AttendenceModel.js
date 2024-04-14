@@ -1,21 +1,23 @@
 const mongoose = require("mongoose");
 
-const AttendanceSchema = mongoose.Schema(
-  {
-    employeeId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee",
-      required: true,
-    },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
+const AttendanceSchema = new mongoose.Schema({
+  empID: {
+    type: String,
+    required: true,
   },
-  {
-    timestamps: true,
-  }
-);
+  empName: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  status: {
+    type: String,
+    enum: ["present", "absent"],
+    required: true,
+  },
+});
 
-const Attendance = mongoose.model("Attendance", AttendanceSchema);
-module.exports = Attendance;
+module.exports = mongoose.model("Attendance", AttendanceSchema);
