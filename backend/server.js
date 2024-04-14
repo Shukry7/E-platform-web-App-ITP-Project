@@ -14,6 +14,11 @@ const EmployeeRoute = require("./Routes/EmployeeRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
 
 
+const store = new MongoDBSession({
+  uri: process.env.MONGO_URL,
+  collection: 'mySessions',
+});
+
 const app = express();
 
 //MiddleWare
@@ -25,10 +30,20 @@ app.use(cors({
   methods: ["GET" , "POST" , "PUT" , "DELETE"],
   allowedHeaders: ["Content-Type"]
 }))
+app.use(
+  session({
+    secret: "key that will sign cookie",
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
 
 //Routes
 
 app.get("/", (req, res) => {
+  req.session.isAuth = true;
+  console.log(req.session)
   res.send("HOME PAGE");
 });
 
@@ -52,16 +67,6 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-const store = new MongoDBSession({
-  uri: process.env.MONGO_URL,
-  collection: 'mySessions',
-});
 
-app.use(
-  session({
-    secret: "key that will sign cookie",
-    resave: false,
-    saveUninitialized: false,
-    store: store,
-  })
-)
+
+
