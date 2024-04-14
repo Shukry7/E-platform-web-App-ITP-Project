@@ -18,6 +18,7 @@ const WholesalecustomerTable = (props) => {
     "Email",
     "Address",
     "Credit_limit",
+    "Credit",
     "Action",
   ];
 
@@ -44,6 +45,7 @@ const WholesalecustomerTable = (props) => {
                   <td class="px-6 py-4">{item.mail}</td>
                   <td class="px-6 py-4">{item.address}</td>
                   <td class="px-6 py-4">{item.credit_limit}</td>
+                  <td class="px-6 py-4">{item.credit}</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
                     link1={`/Wholesalecustomer/view/`+ item._id}

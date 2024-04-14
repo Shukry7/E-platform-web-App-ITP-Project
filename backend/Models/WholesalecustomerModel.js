@@ -30,6 +30,10 @@ const WholesalecustomerSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    credit: {
+      type: Number,
+      default: 0,
+    },
    
   },
   {
