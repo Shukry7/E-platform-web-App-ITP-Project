@@ -66,6 +66,7 @@ const DeliveryTable = (props) => {
                     link1=""
                     link2={`/Delivery/update/` + item._id}
                     deletelink={`http://localhost:5000/delivery/${item._id}`}
+                    dlt={props.dlt}
                     />
                   </td>
                 </TableRow>
