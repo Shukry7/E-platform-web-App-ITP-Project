@@ -2,19 +2,19 @@
 import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
-import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_PHONE,
   VALIDATOR_REQUIRE,
+  VALIDATOR_MIN,
 } from "../../../Shared/Components/util/validate";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 
-const SupplierformUpdate = () => {
+const WholesalecustomerformUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const City = [
@@ -65,13 +65,13 @@ const SupplierformUpdate = () => {
             value: "",
             isValid: false,
         },
-        city: {
-            value: "",
-            isValid: false,
+        creditlimit: {
+          value: "",
+          isValid: false,
         },
-        image: {
-            value: null,
-            isValid: true,
+        credit: {
+          value: "",
+          isValid: false,
         },
     },
     false
@@ -80,7 +80,7 @@ const SupplierformUpdate = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5000/supplier/${id}`)
+      .get(`http://localhost:5000/wholesalecustomer/${id}`)
       .then((res) => {
         setFormData(
           {
@@ -100,14 +100,14 @@ const SupplierformUpdate = () => {
               value: res.data.address,
               isValid: true,
             },
-            city: {
-                value: res.data.city,
+            creditlimit: {
+                value: res.data.creditlimit,
                 isValid: true,
               },
-            image: {
-              value: null,
-              isValid: true,
-            },
+              credit: {
+                value: res.data.credit,
+                isValid: true,
+              },
           },
           true
         );
@@ -123,16 +123,17 @@ const SupplierformUpdate = () => {
     event.preventDefault();
     setLoading(true);
     axios
-      .put(`http://localhost:5000/supplier/${id}`, {
+      .put(`http://localhost:5000/wholesalecustomer/${id}`, {
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,
         mail: formState.inputs.mail.value,
         address: formState.inputs.address.value,
-        city: formState.inputs.city.value,
+        creditlimit: formState.inputs.creditlimit.value,
+        credit: formState.inputs.credit.value,
       })
       .then((res) => {
         setLoading(false);
-        navigate("/Supplier/");
+        navigate("/Wholesalecustomer/");
       })
       .catch((err) => {
         console.error(err);
@@ -154,13 +155,11 @@ const SupplierformUpdate = () => {
                   Update Supplier
                 </h2>
                 <p class="text-gray-500 mb-6 text-center">
-                  Enter Supplier details below !!
+                  Enter wholesalecustomer details below !!
                 </p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
-                    <div class="text-gray-600 flex justify-center items-center">
-                      <ImageUpload center id="image" onInput={inputHandler} />
-                    </div>
+                
                     <div class="lg:col-span-2">
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                         <div class="md:col-span-5">
@@ -213,21 +212,38 @@ const SupplierformUpdate = () => {
                             type="text"
                             initialValue={formState.inputs.address.value}
                             placeholder="Enter Address"
-                            label="Street :"
+                            label="Address :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter an Address."
                             onInput={inputHandler}
                           />
                         </div>
                         <div class="md:col-span-2">
-                          <Dropdown
+                          <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            id="city"
-                            initialValue={formState.inputs.city.value}
-                            options={City}
+                            element="Input"
+                            id="creditlimit"
+                            type="number"
+                            initialValue={formState.inputs.creditlimit.value}
+                            placeholder="Enter Creditlimit"
+                            label="creditlimit :"
+                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
+                            errorText="Please Enter a valid creditlimit (numbers)."
                             onInput={inputHandler}
-                            Display=""
-                            label="City:"
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="credit"
+                            type="number"
+                            initialValue={formState.inputs.credit.value}
+                            placeholder="Enter Credit"
+                            label="credit :"
+                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
+                            errorText="Please Enter a valid credit (numbers)."
+                            onInput={inputHandler}
                           />
                         </div>
 
@@ -255,4 +271,4 @@ const SupplierformUpdate = () => {
   );
 };
 
-export default SupplierformUpdate;
+export default WholesalecustomerformUpdate;

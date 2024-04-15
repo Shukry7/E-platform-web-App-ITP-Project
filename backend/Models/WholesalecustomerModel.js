@@ -4,12 +4,12 @@ const WholesalecustomerSchema = mongoose.Schema(
   {
     ID: {
       type: String,
-      required: [true, "Please Enter Costumer ID"],
+      required: [true, "Please Enter Customer ID"],
       trim: true,
     },
     name: {
       type: String,
-      required: [true, "Please Enter Costumer Name"],
+      required: [true, "Please Enter Customer Name"],
       trim: true,
     },
     telephone: {

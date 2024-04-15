@@ -1,115 +1,212 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Input from "../../../Shared/Components/FormElements/input";
+import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
+import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
+import {SnackbarProvider, useSnackbar} from 'notistack';
 import Button from "../../../Shared/Components/FormElements/Button";
+import {
+  
+  VALIDATOR_EMAIL,
+  VALIDATOR_MIN,
+  VALIDATOR_PHONE,
+  VALIDATOR_REQUIRE,
+} from "../../../Shared/Components/util/validate";
+import { useForm } from "../../../Shared/hooks/form-hook";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 
-const EmployeeAttendanceForm = () => {
+const Type = [
+  { value: "...." },
+  { value: "Sales person" },
+  { value: "System Administrator" },
+  { value: "Manager" },
+  { value: "Store Keeper" },
+  { value: "Cashier" },
+  {value: "Others"},
+];
+
+const EmployeeForm = () => {
+  const navigate = useNavigate();
+  const {enqueueSnackbar} = useSnackbar();
+
   const [loading, setLoading] = useState(false);
-  const [attendanceData, setAttendanceData] = useState([]);
-  const [date, setDate] = useState("");
+  const [formState, inputHandler] = useForm(
+    {
+      name: {
+        value: "",
+        isValid: false,
+      },
+      
+      address: {
+        value: "",
+        isValid: false,
+      },
+      telephone: {
+        value: "",
+        isValid: false,
+      },
+      mail:{
+        value:"",
+        isValid:false,
 
-  const handleStatusChange = (index, status) => {
-    const updatedAttendance = [...attendanceData];
-    updatedAttendance[index].status = status;
-    setAttendanceData(updatedAttendance);
-  };
+      },
+      type: {
+        value: "",
+        isValid: false,
+      },
+      hourlywage: {
+        value: "",
+        isValid: false,
+      },
+      
+    },
+    false
+  );
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
+  const submitHandler = async (event) => {
+    event.preventDefault();
     setLoading(true);
-    try {
-      await axios.post("http://localhost:5000/attendance/mark", {
-        date,
-        attendance: attendanceData,
+    axios
+      .post("http://localhost:5000/employee/new", {
+        id: 1,
+        name: formState.inputs.name.value,
+        address: formState.inputs.address.value,
+        telephone: formState.inputs.telephone.value,
+        mail:formState.inputs.mail.value,
+        type: formState.inputs.type.value,
+        hourlywage: formState.inputs.hourlywage.value,
+        
+      })
+      .then((res) => {
+        setLoading(false);
+        enqueueSnackbar('Employee created successfully',{variant:'success'});
+        navigate("/Employee");
+      })
+      .catch((err) => {
+        enqueueSnackbar('error',{variant:'Error'});
+        console.error(err);
+        setLoading(false);
       });
-      alert("Attendance marked successfully");
-    } catch (error) {
-      console.error(error);
-      alert("Failed to mark attendance");
-    }
-    setLoading(false);
-  };
-
-  const fetchEmployees = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/employee");
-      setAttendanceData(
-        response.data.map((employee) => ({
-          empID: employee._id,
-          empName: employee.name,
-          status: "",
-        }))
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    console.log(formState);
   };
 
   return (
     <form onSubmit={submitHandler}>
       {loading ? (
-        <Loader />
+        <Loader/>
       ) : (
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-semibold mb-4">Mark Employee Attendance</h2>
-          <div className="mb-4">
-            <label htmlFor="date" className="block text-sm font-medium text-gray-700">
-              Date
-            </label>
-            <input
-              id="date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-200 shadow-sm sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
-          <div className="overflow-x-auto mb-4">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Employee ID
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Name
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {attendanceData.map((employee, index) => (
-                  <tr key={employee.empID}>
-                    <td className="px-6 py-4 whitespace-nowrap">{employee.empID}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{employee.empName}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <select
-                        value={employee.status}
-                        onChange={(e) => handleStatusChange(index, e.target.value)}
-                        className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      >
-                        <option value="">Select</option>
-                        <option value="present">Present</option>
-                        <option value="absent">Absent</option>
-                      </select>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <Button
-            type="submit"
-            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
-          >
-            Submit
-          </Button>
-        </div>
+        <>
+        <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
+            <div class="container mx-auto">
+              <div>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Emmployee</h2>
+                <p class="text-gray-500 mb-6 text-center">Enter Employee details below !!</p>
+                <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+                  <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                    
+                    <div class="lg:col-span-2">
+                      
+                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="name"
+                            type="text"
+                            placeholder="Enter Employee Name"
+                            label="Name :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a Name."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="telephone"
+                            type="number"
+                            placeholder="Enter Telephone Number"
+                            label="Telephone :"
+                            validators={[VALIDATOR_PHONE()]}
+                            errorText="Please Enter a valid Phone Number (10 numbers)"
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-5">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="mail"
+                            type="text"
+                            placeholder="Enter email address"
+                            label="Email Address :"
+                            validators={[VALIDATOR_EMAIL()]}
+                            errorText="Please Enter a valid EMail address"
+                            onInput={inputHandler}
+                          />
+                        </div>
+                      
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="address"
+                            type="text"
+                            placeholder="Enter Address"
+                            label="Address :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter an Address."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Dropdown
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            id="type"
+                            options={Type}
+                            onInput={inputHandler}
+                            Display=""
+                            label="Type:"
+                          />
+                        </div>
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="hourlywage"
+                            type="number"
+                            placeholder="Enter Hourly Wage"
+                            label="Hourly Wage :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter wage."
+                            onInput={inputHandler}
+                          />
+                        </div>
+                        <div class="md:col-span-5 text-right">
+                          <div class="inline-flex items-end">
+                            <Button
+                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                              type="submit"
+                              disabled={!formState.isValid}
+                            >
+                              Submit
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
+        </>
       )}
     </form>
   );
 };
+export default EmployeeForm;
 
-export default EmployeeAttendanceForm;

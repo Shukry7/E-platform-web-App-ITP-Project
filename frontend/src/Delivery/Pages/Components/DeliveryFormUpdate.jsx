@@ -15,6 +15,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 const DeliveryFormUpdate  = () => {
   const { id } = useParams();
@@ -174,6 +175,7 @@ const DeliveryFormUpdate  = () => {
     .put(`http://localhost:5000/delivery/${id}`, formData)
       .then((res) => {
         setLoading(false);
+        Toast("Delivery Person Updated Successfully!","success")
         navigate("/Delivery/");
       })
       .catch((err) => {
