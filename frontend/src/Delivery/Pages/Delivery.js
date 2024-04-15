@@ -6,14 +6,17 @@ import Navbar from "../../Shared/Components/UiElements/Navbar";
 import { Link } from "react-router-dom";
 import {MdOutlineAddBox} from 'react-icons/md'
 import Search from "../../Shared/Components/UiElements/Search";
+import Pagination from "../../Shared/Components/FormElements/Pagination";
 
 const Delivery = () => {
 
   const [delivery, setdelivery] = useState([]);
+  const [displayDelivery, setDisplayDelivery] = useState([]);
   const [loading , setLoading] = useState(false)
-  const [deleteProduct, setdeleteProduct] = useState(false);
+  const [deleteDelivery, setdeleteDelivery] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [FilteredDeliveryPersons , setFilteredDeliveryPersons] = useState([]);
+  const [activePage, setActivePage] = useState(1);
   
   useEffect(() =>{
     setLoading(true)
@@ -26,11 +29,25 @@ const Delivery = () => {
     .catch(err => {
       console.error(err)
       setLoading(false)});
-  },[deleteProduct]);
+  },[deleteDelivery]);
+
+  const handlePageChange = (page) => {
+    setActivePage(page);
+  };
 
   useEffect(() => {
     setFilteredDeliveryPersons(delivery);
+    setDisplayDelivery(delivery)
   }, [delivery]);
+
+
+  
+  useEffect(() => {
+    const startIndex = (activePage - 1) * 6;
+    const endIndex = startIndex + 6;
+    setDisplayDelivery(FilteredDeliveryPersons.slice(startIndex, endIndex));
+  }, [ activePage, FilteredDeliveryPersons]);
+
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -39,6 +56,7 @@ const Delivery = () => {
       delivery.ID.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredDeliveryPersons(filtered);
+    setActivePage(1)
   };
 
   return (
@@ -59,12 +77,19 @@ const Delivery = () => {
       </Link>
     </div>
       <DeliveryTable 
-        Delivery={FilteredDeliveryPersons}
+        Delivery={displayDelivery}
         loading={loading} 
         setloading={setLoading}
-        dlt= {setdeleteProduct}
-
+        dlt= {setdeleteDelivery}
+        active={activePage}
+        itemsPerPage={6}
         />
+        <Pagination
+            active={activePage}
+            totalItems={FilteredDeliveryPersons.length}
+            itemsPerPage={6}
+            onPageChange={handlePageChange}
+          />
       </Card>
       
     </div>

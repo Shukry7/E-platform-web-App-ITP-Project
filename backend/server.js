@@ -12,6 +12,7 @@ const SupplierProductRoute = require("./Routes/SupplierProductRoute")
 const DeliveryRoute = require("./Routes/DeliveryRoute");
 const EmployeeRoute = require("./Routes/EmployeeRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
+const OnPay = require("./Routes/OnlinePayRoute");
 const AttendanceRoute = require("./Routes/AttendanceRoute");
 
 
@@ -56,8 +57,12 @@ app.use("/supplierproduct", SupplierProductRoute)
 app.use("/attendance", AttendanceRoute);
 app.use("/delivery", DeliveryRoute);
 app.use("/OffPay", OffPay);
-
+app.use("/OnPay", OnPay);
 app.use('/uploads/images', express.static(path.join('uploads','images')))
+
+
+
+// Read user ID from the cookie
 
 
 const PORT = process.env.PORT || 5000;

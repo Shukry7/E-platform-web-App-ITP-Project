@@ -54,23 +54,23 @@ const CCForm = () => {
     },
     false
   );
-
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
     axios
-      .post("http://localhost:5000/credit/new", {
-        id: 1,
+      .post("http://localhost:5000/Onpay/onpay/new", {
+      
         firstname: formState.inputs.firstname.value,
         lastname: formState.inputs.lastname.value,
-        cvv: formState.inputs.cvv.value,
         category: formState.inputs.category.value,
+        cvv: formState.inputs.cvv.value,
         expiredate: formState.inputs.expiredate.value,
         number: formState.inputs.number.value,
+        
       })
       .then((res) => {
         setLoading(false);
-        navigate("/Credit/");
+        navigate("/");
       })
       .catch((err) => {
         console.error(err);
@@ -78,7 +78,7 @@ const CCForm = () => {
       });
     console.log(formState);
   };
-
+  
   return (
     <form onSubmit={submitHandler}>
       {loading ? (
@@ -102,11 +102,11 @@ const CCForm = () => {
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
-                            id="fname"
+                            id="firstname"
                             type="text"
                             placeholder="Enter First Name"
                             label="First Name :"
-                            validators={[VALIDATOR_REQUIRE()]}
+                            validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(16)]}
                             errorText="Please Enter a Name."
                             onInput={inputHandler}
                           />
@@ -115,7 +115,7 @@ const CCForm = () => {
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
-                            id="lname"
+                            id="lastname"
                             type="text"
                             placeholder="Enter Last Name"
                             label="Last Name :"
@@ -133,8 +133,8 @@ const CCForm = () => {
                             placeholder="Enter Card Number"
                             label="Card Number :"
                             validators={[
-                              VALIDATOR_MIN(16),
-                              VALIDATOR_MAX(16),
+                              VALIDATOR_MINLENGTH(16),
+                              VALIDATOR_MAXLENGTH(16),
                             ]}
                             errorText="Please enter correct card number"
                             onInput={inputHandler}
@@ -149,8 +149,8 @@ const CCForm = () => {
                             placeholder="Enter CVV"
                             label="CVV :"
                             validators={[
-                              VALIDATOR_MIN(3),
-                              VALIDATOR_MAX(4),
+                              VALIDATOR_MIN(0),
+                              VALIDATOR_MAX(10000),
                             ]}
                             errorText="Please Enter your cvv"
                             onInput={inputHandler}
@@ -164,13 +164,15 @@ const CCForm = () => {
                             onInput={inputHandler}
                             Display=""
                             label="Category:"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please Enter a Card type."
                           />
                         </div>
                         <div class="md:col-span-2">
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
-                            id="expdate"
+                            id="expiredate"
                             type="date"
                             placeholder="Enter Expiry Date"
                             label="Expiry Date :"

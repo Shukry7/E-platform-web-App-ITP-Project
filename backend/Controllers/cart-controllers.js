@@ -42,6 +42,7 @@ const listCartByUId = async (req, res) => {
 
 
   try {
+    
     const cart = await Cart.find({user:hardcodedUserId});
     return res.status(200).json(cart);
   } catch (error) {

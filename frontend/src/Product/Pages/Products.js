@@ -27,7 +27,7 @@ const Products = () => {
       })
       .catch((err) => {
         console.error(err);
-        setLoading(false);
+        setLoading(true);
       });
   }, [deleteProduct]);
 

@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [FilteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -40,9 +38,12 @@ const ProductList = () => {
                 <div class="text-xl font-semibold text-gray-500 dark:text">
                   Rs.{item.price}.00
                 </div>
-                <div class="flex-none w-full mt-2 text-sm font-medium text-green-500 ">
+                {item.Stock === 0 ? 
+                  <div class="flex-none w-full mt-2 text-sm font-medium text-red-700 ">
+                  Out Of Stock
+                </div> : <div class="flex-none w-full mt-2 text-sm font-medium text-green-500 ">
                   In stock
-                </div>
+                </div>}
                 <p class="text-gray-500 text-sm">{item.description}</p>
               </div>
             </div>

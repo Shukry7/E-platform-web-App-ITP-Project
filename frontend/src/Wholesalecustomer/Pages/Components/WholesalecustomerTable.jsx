@@ -42,13 +42,12 @@ const WholesalecustomerTable = (props) => {
                     {item.name}
                   </th>
                   <td class="px-6 py-4">{item.telephone}</td>
-                  <td class="px-6 py-4">{item.mail}</td>
+                  <td class="px-6 py-4">{item.email}</td>
                   <td class="px-6 py-4">{item.address}</td>
                   <td class="px-6 py-4">{item.credit_limit}</td>
                   <td class="px-6 py-4">{item.credit}</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
-                    link1={`/Wholesalecustomer/view/`+ item._id}
                     link2={`/Wholesalecustomer/update/`+ item._id}
                     deletelink={`http://localhost:5000/Wholesalecustomer/${item._id}`}
                     />

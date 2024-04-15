@@ -11,7 +11,7 @@ const createDelivery = async (req, res, next) => {
 
 
   if (latestDelivery.length !==0) {
-    const latestId = parseInt(latestDelivery[0].ID.slice(1)); 
+    const latestId = parseInt(latestDelivery[0].id.slice(1)); 
     id = "D" + String(latestId + 1).padStart(4, "0"); 
   } else {
     id = "D0001"; 

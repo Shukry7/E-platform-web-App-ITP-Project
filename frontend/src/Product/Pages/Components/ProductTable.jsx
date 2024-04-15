@@ -23,12 +23,16 @@ const ProductTable = (props) => {
     return (
       <>
         <Table Headings={Headings}>
+        {props.loading ? (
+          <center>
+            <Loader />
+          </center>
+        ) : (
           <tr
-            
             className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
           >
             <td colSpan={8} className="px-6 py-4 text-center">No Data Found !!</td>
-          </tr>
+          </tr>)}
         </Table>
       </>
     ); // Add message if no data is found
@@ -65,9 +69,9 @@ const ProductTable = (props) => {
                 <td class="px-6 py-4">{item.category}</td>
                 <td
                   class="px-6 py-4"
-                  style={{ display: "flex", alignItems: "center" }}
+                  style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
                 >
-                  <span style={{ marginRight: "10px" }}>Rs.{item.price}</span>
+                  <span style={{ marginRight: "auto" }}>Rs.{item.price}</span>
                   <Popup id={item._id} />
                 </td>
                 <td class="px-2 py-4">
@@ -113,12 +117,15 @@ const ProductTable = (props) => {
                     link2={`/Product/update/` + item._id}
                     deleteLink={`http://localhost:5000/product/${item._id}`}
                     dlt={props.dlt}
+                    length={props.Product.length}
+                    index={index + 1}
                   />
                 </td>
               </TableRow>
             );
           })
         )}
+        {props.Product.length <= 3 ? <><TableRow/><td></td><TableRow/></> : <></>}
       </Table>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import DeleteConfirmBox from "./DeleteConfirmBox";
 import ViewPopup from "../../../Product/Pages/Components/Viewpopup";
@@ -6,6 +6,20 @@ import ViewPopup from "../../../Product/Pages/Components/Viewpopup";
 const ThreeDotDropdown = (props) => {
   const [isClick, setIsClick] = useState(false);
   const [viewOpen, setViewOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsClick(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const toggleModel = () => {
     setIsClick(!isClick);
@@ -14,8 +28,15 @@ const ThreeDotDropdown = (props) => {
   const toggleView = () => {
     setViewOpen(!viewOpen);
   };
+  let style;
+  if(props.length >= props.index && props.length - 1 <= props.index && props.length >=4){
+    style = "bottom-full"
+  }
+  else
+    style = ""
+
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button
         onClick={toggleModel}
         id="dropdownMenuIconHorizontalButton"
@@ -36,7 +57,7 @@ const ThreeDotDropdown = (props) => {
       {isClick && (
         <div
           id="dropdownDotsHorizontal"
-          class="z-10 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 block absolute items-center"
+          className={`z-10 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 block absolute  items-center ${style}`}
         >
           <ul
             class="py-2 text-sm text-gray-700 dark:text-gray-200"
