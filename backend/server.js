@@ -13,7 +13,6 @@ const DeliveryRoute = require("./Routes/DeliveryRoute");
 const EmployeeRoute = require("./Routes/EmployeeRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
 const OnPay = require("./Routes/OnlinePayRoute");
-const cookieParser = require('cookie-parser');
 const AttendanceRoute = require("./Routes/AttendanceRoute");
 
 
@@ -59,7 +58,6 @@ app.use("/attendance", AttendanceRoute);
 app.use("/delivery", DeliveryRoute);
 app.use("/OffPay", OffPay);
 app.use("/OnPay", OnPay);
-app.use(cookieParser());
 app.use('/uploads/images', express.static(path.join('uploads','images')))
 
 
