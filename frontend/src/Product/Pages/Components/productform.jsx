@@ -134,8 +134,10 @@ const ProductForm = () => {
                               VALIDATOR_MINLENGTH(5),
                               VALIDATOR_MAXLENGTH(250),
                             ]}
-                            errorText="Please Enter a Description (5 - 250 words)"
+                            errorText="Please Enter a Description (5 - 250 letters)"
                             onInput={inputHandler}
+                            initialValue="No Description Available !!"
+                            initialValid= {true}
                           />
                         </div>
                         <div class="md:col-span-3">

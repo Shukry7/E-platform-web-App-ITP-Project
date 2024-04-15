@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../Shared/Components/UiElements/Table";
 import TableRow from "../../Shared/Components/UiElements/TableRow";
+import Loader3 from "../../Shared/Components/UiElements/loader3";
 import axios from "axios";
 
 const Restock = () => {
-  const Headings = [
-    "#",
-    "Product ID",
-    "Product name",
-    "Alert Quantity",
-    "Stock",
-    "ReStock",
-  ];
+  const Headings = ["#", "Product ID", "Product name", "Stock", "ReStock"];
 
   const [products, setproducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -26,7 +20,7 @@ const Restock = () => {
       })
       .catch((err) => {
         console.error(err);
-        setLoading(false);
+        setLoading(true);
       });
   }, []);
   return (
@@ -49,31 +43,38 @@ const Restock = () => {
           </svg>
         </h3>
         <div className="border-t border-gray-200 dark:border-gray-600">
-          <Table Headings={Headings}>
-          {products.map((item,index) => {
-            return(
+          {loading ? (
+            <center>
+              <Loader3 />
+            </center>
+          ) : (
+            <Table Headings={Headings}>
+              {products.map((item, index) => {
+                return (
+                  <TableRow>
+                    <td class="px-6 py-4">{index + 1}</td>
+                    <td class="px-6 py-4">{item.ID}</td>
+                    <th
+                      scope="row"
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {item.name}
+                    </th>
 
-            <TableRow>
-              <td class="px-6 py-4">{index+1}</td>
-              <td class="px-6 py-4">{item.ID}</td>
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                {item.name}
-              </th>
-              <td class="px-6 py-4">{item.Alert_quantity}</td>
-              <td
-                class="px-6 py-4"
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <span style={{ marginRight: "10px" }}>{item.Stock}</span>
-              </td>
-              <td class="px-6 py-4">Hello</td>
-            </TableRow>
-            )
-          })}
-          </Table>
+                    <td
+                      class="px-6 py-4"
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <span style={{ marginRight: "10px" }}>
+                        {item.Stock} ({item.Alert_quantity})
+                      </span>
+                    </td>
+                    <td class="px-6 py-4">Hello</td>
+                  </TableRow>
+                );
+              })}
+            </Table>
+          )}
         </div>
       </div>
     </>

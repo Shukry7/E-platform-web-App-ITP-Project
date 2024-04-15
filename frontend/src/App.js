@@ -29,6 +29,7 @@ import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
 import LoginPage from "./Login/LoginPage";
 import ProductList from "./Product/Pages/Components/ProductList";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
+import Loader from "./Shared/Components/UiElements/Loader";
 
 const App = () => {
   return (
@@ -63,7 +64,7 @@ const App = () => {
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Login" exact element={<LoginPage/>}/>  
-
+        <Route path="/Loader" exact element={<Loader/>}/>
       </Routes >
     </Router>
   );
