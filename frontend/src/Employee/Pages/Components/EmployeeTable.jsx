@@ -50,7 +50,7 @@ const EmployeeTable = (props) => {
   return (
     <>
       
-      <Table Headings={Headings} style={{width:"100%"}}>
+      <Table Headings={Headings} style={{width:"100%"}} >
           {props.loading ? (
             <center>
               <Loader />
@@ -59,21 +59,21 @@ const EmployeeTable = (props) => {
             props.Employee.map((item, index) => {
               return (
                 <TableRow>
-                  <td class="px-6 py-4">{index + 1}</td>
-                  <td class="px-6 py-4">{item.ID}</td>
+                  <td className="px-6 py-4">{index + 1}</td>
+                  <td className="px-6 py-4">{item.ID}</td>
                   <th
                     scope="row"
-                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
                     {item.name}
                   </th>
-                  <td class="px-6 py-4">{item.address}</td>
-                  <td class="px-6 py-4">{item.telephone}</td>
-                  <td class="px-6 py-4">{item.mail}</td>
-                  <td class="px-6 py-4">{item.type}</td>
-                  <td class="px-6 py-4">Rs.{item.hourlywage}/-</td>
+                  <td className="px-6 py-4">{item.address}</td>
+                  <td className="px-6 py-4">{item.telephone}</td>
+                  <td className="px-6 py-4">{item.mail}</td>
+                  <td className="px-6 py-4">{item.type}</td>
+                  <td className="px-6 py-4">Rs.{item.hourlywage}/-</td>
                  
-                  <td class="px-6 py-4">
+                  <td className="px-6 py-4">
                     <ThreeDotDropdown
                     
                     link2={`/Employee/update/`+ item._id}

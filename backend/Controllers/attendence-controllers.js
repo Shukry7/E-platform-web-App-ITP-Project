@@ -30,7 +30,6 @@ const getAttendanceByDate = async (req, res) => {
   }
 };
 
-module.exports = {
-  markAttendance,
-  getAttendanceByDate,
-};
+exports.markAttendance = markAttendance;
+exports.getAttendanceByDate = getAttendanceByDate;
+

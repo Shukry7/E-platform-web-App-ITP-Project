@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const EmployeeAttendanceSchema = mongoose.Schema({
   employeeID: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Employee", // Reference to the Employee model
-    required: true,
+    type: String,
+      required:true,
+      trim: true,
   },
   date: {
     type: Date,
