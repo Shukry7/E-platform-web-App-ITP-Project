@@ -12,8 +12,8 @@ const WholesalecustomerTable = (props) => {
 
   const Headings = [
     "#",
-    "Wholesalecustomer ID",
-    "Wholesalecustomer name",
+    "ID",
+    "Name",
     "Telephone",
     "Email",
     "Address",
@@ -44,7 +44,7 @@ const WholesalecustomerTable = (props) => {
                   <td class="px-6 py-4">{item.telephone}</td>
                   <td class="px-6 py-4">{item.email}</td>
                   <td class="px-6 py-4">{item.address}</td>
-                  <td class="px-6 py-4">{item.credit_limit}</td>
+                  <td class="px-6 py-4">{item.creditlimit}</td>
                   <td class="px-6 py-4">{item.credit}</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
