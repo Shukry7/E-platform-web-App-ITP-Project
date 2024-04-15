@@ -82,7 +82,7 @@ const WholesalecustomerForm = () => {
     event.preventDefault();
     setLoading(true);
     axios
-      .post("http://localhost:5000/wholesalecustomer/", {
+      .post("http://localhost:5000/wholesalecustomer/new", {
         id: 1,
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,

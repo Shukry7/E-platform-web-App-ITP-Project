@@ -17,7 +17,7 @@ const createWholesalecustomer = async (req, res, next) => {
   };
 
 // new wholesalecustomer is created
-  const wholesalecustomer = await Wholesalecustomercreate(newWholesalecustomer);
+  const wholesalecustomer = await Wholesalecustomer.create(newWholesalecustomer);
   return res.status(201).send(wholesalecustomer);
 };
 
