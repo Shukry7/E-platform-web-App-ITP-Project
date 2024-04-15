@@ -26,7 +26,7 @@ const MarkAttendance = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000/attendance/mark", {
+      await axios.post("http://localhost:5000/attendance/mark/", {
         date,
         attendance,
       });
