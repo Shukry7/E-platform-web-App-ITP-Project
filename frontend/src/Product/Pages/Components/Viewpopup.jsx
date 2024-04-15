@@ -5,15 +5,15 @@ import { GrView } from "react-icons/gr";
 
 const ViewPopup = (props) => {
   const [loading, setLoading] = useState(false);
-  const [product, setproduct] = useState({});
-  const [supplierProduct, setsupplierProduct] = useState([]);
+  const [product, setProduct] = useState({});
+  const [supplierProduct, setSupplierProduct] = useState([]);
 
   useEffect(() => {
     setLoading(true);
     axios
       .get(`http://localhost:5000/product/update/${props.id}`)
       .then((res) => {
-        setproduct(res.data);
+        setProduct(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -27,7 +27,7 @@ const ViewPopup = (props) => {
     axios
       .get(`http://localhost:5000/supplierproduct/product/${props.id}`)
       .then((res) => {
-        setsupplierProduct(res.data);
+        setSupplierProduct(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -51,7 +51,7 @@ const ViewPopup = (props) => {
           >
             <button
               onClick={() => {
-                props.setclick(!props.click);
+                props.setClick(!props.click);
               }}
               type="button"
               class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 fixed top-5 right-10 "

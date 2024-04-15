@@ -1,86 +1,109 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Card from "../../../Shared/Components/UiElements/Card";
-import "./employeeTable.css";
-import Table from "../../../Shared/Components/UiElements/Table";
-import TableRow from "../../../Shared/Components/UiElements/TableRow";
-
 
 const MarkAttendance = () => {
+  const [date, setDate] = useState("");
   const [employees, setEmployees] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [attendanceRecords, setAttendanceRecords] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get("http://localhost:5000/employee")
-      .then((res) => {
-        setEmployees(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
-  const Headings = [
-    
-    "Employee ID",
-    "Employee name",
-    "Status",
-  ];
+    const fetchEmployees = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/employee");
+        setEmployees(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  const handleAttendanceChange = (id, status) => {
-    // Logic to mark attendance for the employee with the specified ID
-    console.log(`Employee ID: ${id}, Attendance Status: ${status}`);
+    fetchEmployees();
+  }, []);
+
+  const handleMarkAttendance = async (employeeID, status) => {
+    try {
+      await axios.post("http://localhost:5000/attendance/mark", {
+        empID: employeeID,
+        empName: employees.find((emp) => emp._id === employeeID).name,
+        date: date,
+        status: status,
+      });
+      alert("Attendance marked successfully");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to mark attendance");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await Promise.all(attendanceRecords.map(async (record) => {
+        await axios.post("http://localhost:5000/attendance/mark", record);
+      }));
+      alert("Attendance marked successfully");
+      setAttendanceRecords([]);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to mark attendance");
+    }
+  };
+
+  const handleStatusChange = (employeeID, status) => {
+    const updatedAttendance = attendanceRecords.filter(record => record.empID !== employeeID);
+    updatedAttendance.push({
+      empID: employeeID,
+      empName: employees.find(emp => emp._id === employeeID).name,
+      date: date,
+      status: status
+    });
+    setAttendanceRecords(updatedAttendance);
   };
 
   return (
-    <div>
-      
-        <h2 className="text-2xl mb-4">Mark Attendance</h2>
-        <table Headings={Headings}  className="w-full">
+    <div className="container mx-auto">
+      <h2 className="text-3xl font-semibold mb-4">Mark Employee Attendance</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="date"
+          className="mb-4 p-2 rounded border border-gray-300"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+        <table className="min-w-full">
           <thead>
             <tr>
-              <th className="border text-center px-6 py-4">Employee ID</th>
-              <th className="border px-6 py-4">Employee Name</th>
-              <th className="border px-6 py-4">Attendance</th>
+              <th className="px-4 py-2">Employee ID</th>
+              <th className="px-4 py-2">Name</th>
+              <th className="px-4 py-2">Status</th>
             </tr>
           </thead>
           <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan="3" className="text-center py-2">
-                  Loading...
+            {employees.map((employee) => (
+              <tr key={employee._id}>
+                <td className="px-4 py-2">{employee.ID}</td>
+                <td className="px-4 py-2">{employee.name}</td>
+                <td className="px-4 py-2">
+                  <button
+                    className={`mr-2 px-4 py-2 rounded ${attendanceRecords.find(record => record.empID === employee._id && record.status === 'present') ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-600'}`}
+                    onClick={() => handleStatusChange(employee._id, 'present')}
+                  >
+                    Present
+                  </button>
+                  <button
+                    className={`px-4 py-2 rounded ${attendanceRecords.find(record => record.empID === employee._id && record.status === 'absent') ? 'bg-red-500 text-white' : 'bg-gray-300 text-gray-600'}`}
+                    onClick={() => handleStatusChange(employee._id, 'absent')}
+                  >
+                    Absent
+                  </button>
                 </td>
               </tr>
-            ) : (
-              employees.map((employee) => (
-                <tr key={employee._id}>
-                  <td className="border px-4 py-2">{employee.ID}</td>
-                  <td className="border px-4 py-2">{employee.name}</td>
-                  <td className="border px-4 py-2">
-                    <input
-                      type="radio"
-                      name={`attendance-${employee._id}`}
-                      value="present"
-                      onChange={() => handleAttendanceChange(employee._id, "present")}
-                    />{" "}
-                    Present
-                    <input
-                      type="radio"
-                      name={`attendance-${employee._id}`}
-                      value="absent"
-                      onChange={() => handleAttendanceChange(employee._id, "absent")}
-                    />{" "}
-                    Absent
-                  </td>
-                </tr>
-              ))
-            )}
+            ))}
           </tbody>
         </table>
-      
+        <button type="submit" className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Submit
+        </button>
+      </form>
     </div>
   );
 };

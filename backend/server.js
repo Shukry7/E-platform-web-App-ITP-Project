@@ -12,6 +12,7 @@ const SupplierProductRoute = require("./Routes/SupplierProductRoute")
 const DeliveryRoute = require("./Routes/DeliveryRoute");
 const EmployeeRoute = require("./Routes/EmployeeRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
+const AttendanceRoute = require("./Routes/AttendanceRoute");
 
 
 const store = new MongoDBSession({
@@ -52,7 +53,7 @@ app.use("/product", ProductRoute);
 app.use("/supplier", SupplierRoute);
 app.use("/employee",EmployeeRoute);
 app.use("/supplierproduct", SupplierProductRoute)
-
+app.use("/attendance", AttendanceRoute);
 app.use("/delivery", DeliveryRoute);
 app.use("/OffPay", OffPay);
 

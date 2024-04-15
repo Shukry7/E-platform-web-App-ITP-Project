@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const AttendanceSchema = new mongoose.Schema({
+const EmployeeAttendanceSchema = mongoose.Schema({
   empID: {
     type: String,
     required: true,
@@ -12,6 +12,7 @@ const AttendanceSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
+    required: true,
   },
   status: {
     type: String,
@@ -20,4 +21,6 @@ const AttendanceSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Attendance", AttendanceSchema);
+const EmployeeAttendance = mongoose.model("EmployeeAttendance", EmployeeAttendanceSchema);
+
+module.exports = EmployeeAttendance;

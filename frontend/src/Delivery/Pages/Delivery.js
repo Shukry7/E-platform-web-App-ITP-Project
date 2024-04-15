@@ -11,6 +11,7 @@ const Delivery = () => {
 
   const [delivery, setdelivery] = useState([]);
   const [loading , setLoading] = useState(false)
+  const [deleteProduct, setdeleteProduct] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [FilteredDeliveryPersons , setFilteredDeliveryPersons] = useState([]);
   
@@ -25,7 +26,7 @@ const Delivery = () => {
     .catch(err => {
       console.error(err)
       setLoading(false)});
-  },[]);
+  },[deleteProduct]);
 
   useEffect(() => {
     setFilteredDeliveryPersons(delivery);
@@ -61,6 +62,7 @@ const Delivery = () => {
         Delivery={FilteredDeliveryPersons}
         loading={loading} 
         setloading={setLoading}
+        dlt= {setdeleteProduct}
 
         />
       </Card>

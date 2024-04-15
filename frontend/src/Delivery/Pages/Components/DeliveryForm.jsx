@@ -14,6 +14,7 @@ import {
 import { useForm } from "../../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 const City = [
   { value: "...." },
@@ -116,6 +117,7 @@ const DeliveryForm = () => {
       .post("http://localhost:5000/delivery/", formData)
       .then((res) => {
         setLoading(false);
+        Toast("Delivery Person Added Successfully!","success")
         navigate("/Delivery/");
       })
       .catch((err) => {
