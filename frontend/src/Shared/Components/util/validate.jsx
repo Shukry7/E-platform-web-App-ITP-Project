@@ -50,7 +50,7 @@ export const validate = (value, validators) => {
     }
     if (validator.type === VALIDATOR_TYPE_DATE) {
       const today = new Date();
-      today.setHours(0, 0, 0, 0); // Set the time to 00:00:00.000
+      today.setHours(0, 0, 0, 0); 
       const inputDate = new Date(value);
       isValid = isValid && inputDate > today;
     }

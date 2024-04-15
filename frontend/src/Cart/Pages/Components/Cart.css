@@ -49,6 +49,13 @@
     right: 10px;
   }
   
+  .summary {position: absolute;
+    right: 0;
+    padding-right: 1%;}
+
+  table{
+    
+  }
   
   
   

@@ -1,14 +1,22 @@
-const Image = require('../Models/OfflinePaymentModel');
 
-exports.uploadImage = (req, res) => {
-  let newImage = new Image();
-  newImage.filename = req.file.filename;
-  newImage.contentType = req.file.mimetype;
-  newImage.imageBase64 = req.file.buffer.toString('base64');
-  newImage.save((err) => {
-    if (err) {
-      return res.status(400).json({ message: 'Error saving image to database.' });
-    }
-    res.json({ message: 'Image uploaded successfully', file: req.file });
-  });
+const OffPay = require("../Models/OfflinePaymentModel");
+
+const createProduct = async (req, res, next) => {
+  const  uid  =req.body;
+
+  
+
+  
+  let path = "uploads/images/No-Image-Placeholder.png";
+  if (req.file && req.file.path) path = req.file.path;
+
+  const newProduct = {
+    UID: uid,
+    image: path,
+  };
+  
+  const product = await OffPay.create(newProduct);
+  return res.status(201).send(product);
 };
+
+exports.createProduct = createProduct;

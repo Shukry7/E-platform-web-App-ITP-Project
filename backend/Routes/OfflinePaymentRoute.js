@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const upload = multer({ storage: multer.memoryStorage() });
-const imageController = require('../Controllers/offline_payment-controllers');
 
-router.post('/upload', upload.single('image'), imageController.uploadImage);
+const fileupload = require('../middleware/file-upload')
+const offpay = require('../Controllers/offline_payment-controllers')
+
+
+router.post("/new",fileupload.single('image'), offpay.createProduct);
 
 module.exports = router;

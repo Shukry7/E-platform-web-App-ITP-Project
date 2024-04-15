@@ -11,7 +11,8 @@ const DeliveryRoute = require("./Routes/DeliveryRoute");
 const EmployeeRoute = require("./Routes/EmployeeRoute");
 const Cart = require("./Routes/CartRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
-
+const OnPay = require("./Routes/OnlinePayRoute");
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -38,8 +39,13 @@ app.use("/supplierproduct", SupplierProductRoute);
 app.use("/cart",Cart);
 app.use("/delivery", DeliveryRoute);
 app.use("/OffPay", OffPay);
-
+app.use("/OnPay", OnPay);
+app.use(cookieParser());
 app.use('/uploads/images', express.static(path.join('uploads','images')))
+
+
+
+// Read user ID from the cookie
 
 
 const PORT = process.env.PORT || 5000;
