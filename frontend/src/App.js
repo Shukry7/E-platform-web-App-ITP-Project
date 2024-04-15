@@ -17,16 +17,24 @@ import CreateEmployee from "./Employee/Pages/CreateEmployee";
 import Employee from "./Employee/Pages/Employee";
 import Updateemployee from "./Employee/Pages/Updateemployee";
 import AddCC from "./Payment/Pages/AddCreditCard";
+import MarkAttendance from "./Employee/Pages/Attendance";
+import CCForm from "./Payment/Pages/Components/CreditCardForm";
 import Customers from "./Customer/Customers";
 import RegisterCustomer from "./Customer/RegisterCustomer";
 import UpdateCustomer from "./Customer/UpdateCustomer";
-import ViewCustomer from "./Customer/ViewCustomer";
-import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery"
+import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery";
 import Dashboard from "./Dashboard/Dashboard";
 import Cart from "./Cart/Pages/Cart";
 import Offpay from "./Payment/Pages/OfflinePayment";
 import CC from "./Payment/Pages/CreditCard"
 
+import ViewCustomer from "./Customer/ViewCustomer";
+import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecustomer"
+import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
+import LoginPage from "./Login/LoginPage";
+import ProductList from "./Product/Pages/Components/ProductList";
+import ProductDetails from "./Product/Pages/Components/ProductDetails";
+import Loader from "./Shared/Components/UiElements/Loader";
 
 const App = () => {
   return (
@@ -57,6 +65,15 @@ const App = () => {
         <Route path="/offpay" exact element={<Offpay/>}/>
         <Route path="/CC" exact element={<CC/>}/>
         
+        <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
+        <Route path="/ProductList" exact element={<ProductList/>}/>
+        <Route path="/ProductList/Details" exact element={<ProductDetails/>}/>
+        <Route path="/Login" exact element={<LoginPage/>}/>
+        <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
+        <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
+        <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
+        <Route path="/Login" exact element={<LoginPage/>}/>  
+        <Route path="/Loader" exact element={<Loader/>}/>
       </Routes >
     </Router>
   );

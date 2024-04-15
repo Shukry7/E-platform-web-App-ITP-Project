@@ -6,20 +6,27 @@ const ImageUpload = (props) => {
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState();
   const [isValid, setIsValid] = useState(false);
+  const [selected , setSelected] = useState(false)
 
   const filePickerRef = useRef();
 
   useEffect(() => {
     setPreviewUrl(`http://localhost:5000/${props.initialValue}`);
+    setSelected(true)
   }, [props.initialValue]);
 
+  console.log(selected)
   useEffect(() => {
     if (!file) {
-      return;
+      if(props.initialValue)
+        return
+      else
+      return  setSelected(false);
     }
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result);
+      setSelected(true)
     };
     fileReader.readAsDataURL(file);
   }, [file]);
@@ -55,8 +62,8 @@ const ImageUpload = (props) => {
       />
       <div className={`image-upload ${props.center && "center"}`}>
         <div className="image-upload__preview">
-          {previewUrl && <img src={previewUrl} alt="Preview" />}
-          {!previewUrl && <p>Please pick an image.</p>}
+          {previewUrl && selected && <img src={previewUrl} alt="Preview" />}
+          {!selected && <p>Please pick an image.</p>}
         </div>
         <Button type="button" onClick={pickImageHandler}>
           PICK IMAGE

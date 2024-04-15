@@ -1,5 +1,6 @@
 const Supplier = require("../Models/SupplierModel");
 const fs = require("fs");
+const supplierproduct = require("../Models/SupplierProduct");
 
 const createSupplier = async (req, res, next) => {
   const { name, telephone, mail, address, city} = req.body;
@@ -58,6 +59,49 @@ const listSupplierById = async (req, res) => {
 const UpdateSupplier = async (req, res) => {
   try {
     const { id } = req.params;
+
+    const supplier = await Supplier.findById(id);
+
+    let path = supplier.image;
+    if (req.file && req.file.path) {
+      
+      if (path !== "uploads/images/No-Image-Placeholder.png") {
+        fs.unlink(path, (err) => {
+          console.log(err);
+        });
+      }
+      path = req.file.path;
+    }
+
+    const { name, telephone, mail, address, city } = req.body;
+
+    if (req.file && req.file.path) path = req.file.path;
+
+    const Updatesupplier = {
+      name: name,
+      telephone: telephone,
+      mail: mail,
+      address: address,
+      city: city,
+      image: path,
+    };
+
+    const result = await Supplier.findByIdAndUpdate(id, Updatesupplier);
+
+    if (!result) {
+      return res.status(404).send({ message: "Supplier Not Find !" });
+    }
+
+    return res.status(200).send({ message: "Supplier Updated Successfully!" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+const UpdateSupplierCredit = async (req, res) => {
+  try {
+    const { id } = req.params;
     const result = await Supplier.findByIdAndUpdate(id, req.body);
 
     if (!result) {
@@ -76,6 +120,8 @@ const DeleteSupplier =  async (req,res) => {
   try{
       const {id} = req.params;
       const supplier = await Supplier.findById(id);
+
+      await supplierproduct.deleteMany({ supplier: id });
 
       const path = supplier.image;
 
@@ -106,3 +152,4 @@ exports.listSupplier = listSupplier;
 exports.UpdateSupplier = UpdateSupplier;
 exports.listSupplierById = listSupplierById;
 exports.DeleteSupplier = DeleteSupplier;
+exports.UpdateSupplierCredit = UpdateSupplierCredit;

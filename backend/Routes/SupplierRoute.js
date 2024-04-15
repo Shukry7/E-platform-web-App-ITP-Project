@@ -7,7 +7,8 @@ Router.post("/",fileupload.single('image'), SupplierControllers.createSupplier);
 Router.get("/", SupplierControllers.listSupplier);
 Router.delete("/:id", SupplierControllers.DeleteSupplier);
 Router.get("/:id", SupplierControllers.listSupplierById);
-Router.put("/:id", SupplierControllers.UpdateSupplier);
+Router.put("/:id",fileupload.single('image'), SupplierControllers.UpdateSupplier);
+Router.put("/updateCredit/:id",SupplierControllers.UpdateSupplierCredit);
 
 
 module.exports = Router;

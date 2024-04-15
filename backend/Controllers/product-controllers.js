@@ -1,5 +1,6 @@
 const fs = require("fs");
 const Product = require("../Models/ProductModel");
+const supplierproduct = require("../Models/SupplierProduct");
 
 const createProduct = async (req, res, next) => {
   const { name, category, Alert_quantity, price, weight, description } =
@@ -53,30 +54,45 @@ const listProductById = async (req, res) => {
   }
 };
 
+const listRestockProduct = async (req, res) => {
+  try {
+    const product = await Product.find({$expr:{$lte:["$Stock", "$Alert_quantity"]}})
+    console.table(product)
+    return res.status(200).json(product);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
 const UpdateProduct = async (req, res) => {
   try {
     const { id } = req.params;
 
     const product = await Product.findById(id);
 
-    const path = product.image;
-    if (path !== "uploads/images/No-Image-Placeholder.png") {
-      fs.unlink(path, (err) => {
-        console.log(err);
-      });
+    let path = product.image;
+    if (req.file && req.file.path) {
+      
+      if (path !== "uploads/images/No-Image-Placeholder.png") {
+        fs.unlink(path, (err) => {
+          console.log(err);
+        });
+      }
+      path = req.file.path;
     }
+    
 
     const { name, category, weight, description } = req.body;
-
-    let path2 = "uploads/images/No-Image-Placeholder.png";
-    if (req.file && req.file.path) path2 = req.file.path;
+    
+    if (req.file && req.file.path) path = req.file.path;
 
     const Updateproduct = {
       name: name,
       category: category,
       weight: weight,
       description: description,
-      image: path2,
+      image: path,
     };
 
     const result = await Product.findByIdAndUpdate(id, Updateproduct);
@@ -113,6 +129,7 @@ const DeleteProduct = async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
 
+    await supplierproduct.deleteMany({ product: id });
     const path = product.image;
     if (path !== "uploads/images/No-Image-Placeholder.png") {
       fs.unlink(path, (err) => {
@@ -137,4 +154,5 @@ exports.listProduct = listProduct;
 exports.UpdateProduct = UpdateProduct;
 exports.listProductById = listProductById;
 exports.DeleteProduct = DeleteProduct;
-exports.UpdateProductPriceAndQty = UpdateProductPriceAndQty; 
+exports.UpdateProductPriceAndQty = UpdateProductPriceAndQty;
+exports.listRestockProduct = listRestockProduct

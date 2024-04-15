@@ -1,5 +1,7 @@
 const dotenv = require("dotenv").config();
 const express = require("express");
+const session = require("express-session");
+const MongoDBSession = require('connect-mongodb-session')(session);
 const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -9,10 +11,16 @@ const SupplierRoute = require("./Routes/SupplierRoute");
 const SupplierProductRoute = require("./Routes/SupplierProductRoute")
 const DeliveryRoute = require("./Routes/DeliveryRoute");
 const EmployeeRoute = require("./Routes/EmployeeRoute");
-const Cart = require("./Routes/CartRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
 const OnPay = require("./Routes/OnlinePayRoute");
 const cookieParser = require('cookie-parser');
+const AttendanceRoute = require("./Routes/AttendanceRoute");
+
+
+const store = new MongoDBSession({
+  uri: process.env.MONGO_URL,
+  collection: 'mySessions',
+});
 
 const app = express();
 
@@ -25,18 +33,29 @@ app.use(cors({
   methods: ["GET" , "POST" , "PUT" , "DELETE"],
   allowedHeaders: ["Content-Type"]
 }))
+app.use(
+  session({
+    secret: "key that will sign cookie",
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
 
 //Routes
 
 app.get("/", (req, res) => {
+  req.session.isAuth = true;
+  console.log(req.session);
+  console.log(req.session.id);
   res.send("HOME PAGE");
 });
 
 app.use("/product", ProductRoute);
 app.use("/supplier", SupplierRoute);
 app.use("/employee",EmployeeRoute);
-app.use("/supplierproduct", SupplierProductRoute);
-app.use("/cart",Cart);
+app.use("/supplierproduct", SupplierProductRoute)
+app.use("/attendance", AttendanceRoute);
 app.use("/delivery", DeliveryRoute);
 app.use("/OffPay", OffPay);
 app.use("/OnPay", OnPay);
@@ -56,3 +75,7 @@ mongoose
     app.listen(PORT, () => console.log(`Server running on port ${PORT} 🔥`));
   })
   .catch((err) => console.log(err));
+
+
+
+

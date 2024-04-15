@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./employeeTable.css";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
@@ -6,18 +6,23 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
-
+import {SnackbarProvider, useSnackbar} from 'notistack';
 import { Link } from "react-router-dom";
 import { MdDeleteForever,MdUpdate } from "react-icons/md";
 
+
+
+
 const EmployeeTable = (props) => {
+  const {enqueueSnackbar} = useSnackbar();
+  
   const deleteHandle = (id) => {
     props.setloading(true);
     axios
       .delete(`http://localhost:5000/employee/${id}`)
       .then((res) => {
         props.setloading(false);
-        Navigate("/Employee");
+        Navigate("/Employee/");
       })
       .catch((err) => {
         console.error(err);
@@ -33,12 +38,18 @@ const EmployeeTable = (props) => {
     "Telephone",
     "Email",
     "Type",
-    "Hourly Wage",
+    "Daily Wage",
     "Action",
   ];
 
+  
+
+   
+
+
   return (
     <>
+      
       <Table Headings={Headings} style={{width:"100%"}}>
           {props.loading ? (
             <center>
@@ -60,13 +71,14 @@ const EmployeeTable = (props) => {
                   <td class="px-6 py-4">{item.telephone}</td>
                   <td class="px-6 py-4">{item.mail}</td>
                   <td class="px-6 py-4">{item.type}</td>
-                  <td class="px-6 py-4">{item.hourlywage}</td>
+                  <td class="px-6 py-4">Rs.{item.hourlywage}/-</td>
                  
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
                     
                     link2={`/Employee/update/`+ item._id}
                     deletelink={`http://localhost:5000/employee/${item._id}`}
+                    dlt={props.dlt}
                     />
                   </td>
                 </TableRow>

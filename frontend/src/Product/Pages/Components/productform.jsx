@@ -13,6 +13,7 @@ import {
 import { useForm } from "../../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 const Category = [
   { value: "...." },
@@ -80,6 +81,7 @@ const ProductForm = () => {
       .post("http://localhost:5000/product/new", formData)
       .then((res) => {
         setLoading(false);
+        Toast("Product Added Successfully!! 🔥","success")
         navigate("/Product/");
       })
       .catch((err) => {
@@ -132,8 +134,10 @@ const ProductForm = () => {
                               VALIDATOR_MINLENGTH(5),
                               VALIDATOR_MAXLENGTH(250),
                             ]}
-                            errorText="Please Enter a Description (5 - 250 words)"
+                            errorText="Please Enter a Description (5 - 250 letters)"
                             onInput={inputHandler}
+                            initialValue="No Description Available !!"
+                            initialValid= {true}
                           />
                         </div>
                         <div class="md:col-span-3">

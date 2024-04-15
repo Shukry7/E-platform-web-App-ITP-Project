@@ -7,6 +7,7 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
+import UpdateCredit from "./UpdateCredit";
 
 const SupplierTable = (props) => {
 
@@ -43,12 +44,16 @@ const SupplierTable = (props) => {
                   <td class="px-6 py-4">{item.telephone}</td>
                   <td class="px-6 py-4">{item.mail}</td>
                   <td class="px-6 py-4">{item.address}, {item.city}</td>
-                  <td class="px-6 py-4">{item.credit}</td>
+                  <td class="px-6 py-4" style={{display: 'flex', alignItems: 'center'}}>
+                    <span style={{marginRight: '10px'}}>Rs.{item.credit}</span>
+                    <UpdateCredit id={item._id} />
+                  </td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
                     link1={`/Supplier/view/`+ item._id}
                     link2={`/Supplier/update/`+ item._id}
                     deletelink={`http://localhost:5000/supplier/${item._id}`}
+                    dlt={props.dlt}
                     />
                   </td>
                 </TableRow>

@@ -9,20 +9,6 @@ import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
 
 const DeliveryTable = (props) => {
-  const deleteHandle = (id) => {
-    props.setloading(true);
-    axios
-      .delete(`http://localhost:5000/delivery/${id}`)
-      .then((res) => {
-        props.setloading(false);
-        Navigate("/Delivery");
-      })
-      .catch((err) => {
-        console.error(err);
-        props.setloading(false);
-      });
-  };
-
   const Headings = [
     "#",
     "Delivery Person ID",
@@ -32,10 +18,25 @@ const DeliveryTable = (props) => {
     "Address",
     "License Number",
     "Number Plate",
-    "Type",
-    "Capacity",   
+    "Type & Capacity",  
     "Action",
   ];
+
+
+  if (props.Delivery.length === 0) {
+    return (
+      <>
+        <Table Headings={Headings}>
+          <tr
+            
+            className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+          >
+            <td colSpan={8} className="px-6 py-4 text-center">No Data Found !</td>
+          </tr>
+        </Table>
+      </>
+    ); // Add message if no data is found
+  }
 
   return (
     <>
@@ -61,13 +62,13 @@ const DeliveryTable = (props) => {
                   <td class="px-6 py-4">{item.address}, {item.city}</td>
                   <td class="px-6 py-4">{item.license}</td>
                   <td class="px-6 py-4">{item.numberplate}</td>
-                  <td class="px-6 py-4">{item.type}</td>
-                  <td class="px-6 py-4">{item.capacity}</td>
+                  <td class="px-6 py-4">{item.type}({item.capacity}kg)</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
                     link1=""
                     link2={`/Delivery/update/` + item._id}
-                    deletelink={`http://localhost:5000/delivery/${item._id}`}
+                    deleteLink={`http://localhost:5000/delivery/${item._id}`}
+                    dlt={props.dlt}
                     />
                   </td>
                 </TableRow>

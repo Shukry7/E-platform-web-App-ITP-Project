@@ -1,75 +1,78 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Card from "../../../Shared/Components/UiElements/Card";
 
-          <Input
-            element="Input"
-            id="name"
-            type="text"
-            placeholder="Enter Employee Name"
-            label="Name :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a Name."
-            onInput={inputHandler}
-            initialValue={formState.inputs.name.value}
-          />
-          <Input
-            element="Input"
-            id="address"
-            type="text"
-            placeholder="Enter Address"
-            label="Address :"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter a address."
-            onInput={inputHandler}
-            initialValue={formState.inputs.address.value}
-          />
-          
-          <Input
-            id="telephone"
-            type="number"
-            placeholder="Enter Phone number"
-            label="Phone Number :"
-            validators={[VALIDATOR_PHONE()]}
-            errorText="Please Enter a phone number(10 numbers)"
-            onInput={inputHandler}
-            initialValue={formState.inputs.telephone.value}
-          />
-          
-                  <Input
-                            
-                            id="mail"
-                            type="text"
-                            placeholder="Enter email address"
-                            label="Email Address :"
-                            validators={[VALIDATOR_EMAIL()]}
-                            errorText="Please Enter a valid EMail address"
-                            onInput={inputHandler}
-                            initialValue={formState.inputs.mail.value}
-                          />
-                        
-         
-         <Dropdown
-            id="type"
-            options={Type}
-            onInput={inputHandler}
-            Display=""
-            label="Employee Type:"
-            initialValue={formState.inputs.type.value}
-          />
-          <Input
-            element="Input"
-            id="hourlywage"
-            type="number"
-            placeholder="Enter hourly wage"
-            label="Hourly Wage :"
-            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-            errorText="Please Enter a wage."
-            onInput={inputHandler}
-            initialValue={formState.inputs.hourlywage.value}
-          />
-          <Button
-            type="submit"
-            style={{ left: "76%", position: "relative" }}
-            disabled={!formState.isValid}
-          >
-            Add
-          </Button>
-        </>
+const MarkAttendance = () => {
+  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get("http://localhost:5000/employee")
+      .then((res) => {
+        setEmployees(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleAttendanceChange = (id, status) => {
+    // Logic to mark attendance for the employee with the specified ID
+    console.log(`Employee ID: ${id}, Attendance Status: ${status}`);
+  };
+
+  return (
+    <div>
+      <Card className="w-200 mx-auto p-4">
+        <h2 className="text-2xl mb-4">Mark Attendance</h2>
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th className="border px-6 py-4">Employee ID</th>
+              <th className="border px-6 py-4">Employee Name</th>
+              <th className="border px-6 py-4">Attendance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan="3" className="text-center py-2">
+                  Loading...
+                </td>
+              </tr>
+            ) : (
+              employees.map((employee) => (
+                <tr key={employee._id}>
+                  <td className="border px-4 py-2">{employee.ID}</td>
+                  <td className="border px-4 py-2">{employee.name}</td>
+                  <td className="border px-4 py-2">
+                    <input
+                      type="radio"
+                      name={`attendance-${employee._id}`}
+                      value="present"
+                      onChange={() => handleAttendanceChange(employee._id, "present")}
+                    />{" "}
+                    Present
+                    <input
+                      type="radio"
+                      name={`attendance-${employee._id}`}
+                      value="absent"
+                      onChange={() => handleAttendanceChange(employee._id, "absent")}
+                    />{" "}
+                    Absent
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </Card>
+    </div>
+  );
+};
+
+export default MarkAttendance;
