@@ -13,6 +13,7 @@ const Employee = () => {
 
   const [employee, setemployee] = useState([]);
   const [loading, setLoading] = useState(false)
+  const [deleteProduct, setDeleteProduct] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState([]);
   
@@ -42,7 +43,7 @@ const Employee = () => {
         setLoading(false)
       });
 
-  }, [])
+  }, [deleteProduct])
   return (
     <><div>
       <Navbar />
@@ -63,7 +64,8 @@ const Employee = () => {
         
         Employee={filteredEmployees} 
         loading={loading} 
-        setloading={setLoading} />
+        setloading={setLoading} 
+        dlt={setDeleteProduct}/>
       </Card>
 
     </div>

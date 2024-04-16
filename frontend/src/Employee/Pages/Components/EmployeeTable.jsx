@@ -77,7 +77,7 @@ const EmployeeTable = (props) => {
                     <ThreeDotDropdown
                     
                     link2={`/Employee/update/`+ item._id}
-                    deletelink={`http://localhost:5000/employee/${item._id}`}
+                    deleteLink={`http://localhost:5000/employee/${item._id}`}
                     dlt={props.dlt}
                     />
                   </td>
