@@ -18,20 +18,16 @@ const markAttendance = async (req, res) => {
   }
 };
 
-const getAttendanceByDate = async (req, res) => {
+const listAttendance = async (req, res) => {
   try {
-    const { date } = req.params;
-    const attendance = await EmployeeAttendance.find({ date }).populate(
-      "employeeID",
-      "name"
-    );
-    res.status(200).json(attendance);
+    const attendance = await EmployeeAttendance.find({});
+    return res.status(200).json(attendance);
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: "Server error" });
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
   }
 };
 
 exports.markAttendance = markAttendance;
-exports.getAttendanceByDate = getAttendanceByDate;
+exports.listAttendance = listAttendance;
 
