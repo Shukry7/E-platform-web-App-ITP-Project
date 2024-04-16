@@ -12,6 +12,7 @@ import {
 import { useForm } from "../../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 const City = [
   { value: "...." },
@@ -93,6 +94,7 @@ const WholesalecustomerForm = () => {
       })
       .then((res) => {
         setLoading(false);
+        Toast("Wholesalecustomer added successfully!!","success")
         navigate("/Wholesalecustomer/");
       })
       .catch((err) => {
