@@ -83,7 +83,7 @@ const ThreeDotDropdown = (props) => {
             </li>
             <li>
               
-              <DeleteConfirmBox deleteLink={props.deleteLink} dlt={props.dlt}/>
+              <DeleteConfirmBox deleteLink={props.deleteLink} dlt={props.dlt} dltset={props.dltset}/>
             </li>
           </ul>
         </div>

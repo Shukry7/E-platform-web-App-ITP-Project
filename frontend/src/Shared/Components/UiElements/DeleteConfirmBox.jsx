@@ -7,7 +7,6 @@ import Toast from "./Toast/Toast";
 const DeleteConfirmBox = (props) => {
   const [isClick, setIsClick] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const toggleModel = () => {
     setIsClick(!isClick);
   };
@@ -20,8 +19,8 @@ const DeleteConfirmBox = (props) => {
       .then((res) => {
         setLoading(false);
         setIsClick(!isClick);
-        props.dlt(isClick)
-        Toast("Deleted Successfully!! 💔","success")
+        props.dltset(props.dlt + 1)
+        Toast("Deleted Successfully!!","success")
       })
       .catch((err) => {
         console.error(err);

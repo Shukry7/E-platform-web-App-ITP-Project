@@ -117,6 +117,7 @@ const ProductTable = (props) => {
                     link2={`/Product/update/` + item._id}
                     deleteLink={`http://localhost:5000/product/${item._id}`}
                     dlt={props.dlt}
+                    dltset={props.dltset}
                     length={props.Product.length}
                     index={index + 1}
                   />

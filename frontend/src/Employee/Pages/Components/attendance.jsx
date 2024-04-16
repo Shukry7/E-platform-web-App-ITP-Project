@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Checkbox from './Checkbox';
 
 const MarkAttendance = () => {
+
+  var now = new Date();
+  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var dayName = days[now.getDay()];
+  var day = now.getDate();
+  var month = now.toLocaleString('default', { month: 'long' });
+  var year = now.getFullYear();
+
+
+  var dateTimeString = dayName + ', ' + day + ' ' + month + ' ' + year;
+
+
+  
   const [date, setDate] = useState('');
   const [employees, setEmployees] = useState([]);
   const [attendance, setAttendance] = useState({});
@@ -31,6 +45,8 @@ const MarkAttendance = () => {
     setAttendance({ ...attendance, [employeeID]: status });
   };
 
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -59,14 +75,7 @@ const MarkAttendance = () => {
           <label htmlFor='date' className='block text-sm font-medium text-gray-700'>
             Date
           </label>
-          <input
-            id='date'
-            type='date'
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-            required
-          />
+          <span>{dateTimeString}</span>
         </div>
         <div className='overflow-x-auto mb-4'>
           <table className='min-w-full divide-y divide-gray-200'>
@@ -89,15 +98,7 @@ const MarkAttendance = () => {
                   <td className='px-6 py-4 whitespace-nowrap'>{employee.ID}</td>
                   <td className='px-6 py-4 whitespace-nowrap'>{employee.name}</td>
                   <td className='px-6 py-4 whitespace-nowrap'>
-                    <select
-                      value={attendance[employee._id]}
-                      onChange={(e) => handleStatusChange(employee._id, e.target.value)}
-                      className='focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-                      required
-                    >
-                      <option value='present'>Present</option>
-                      <option value='absent'>Absent</option>
-                    </select>
+                    <Checkbox/>
                   </td>
                 </tr>
               ))}
