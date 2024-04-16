@@ -16,19 +16,6 @@ import { MdDeleteForever,MdUpdate } from "react-icons/md";
 const EmployeeTable = (props) => {
   const {enqueueSnackbar} = useSnackbar();
   
-  const deleteHandle = (id) => {
-    props.setloading(true);
-    axios
-      .delete(`http://localhost:5000/employee/${id}`)
-      .then((res) => {
-        props.setloading(false);
-        Navigate("/Employee/");
-      })
-      .catch((err) => {
-        console.error(err);
-        props.setloading(false);
-      });
-  };
 
   const Headings = [
     "#",
@@ -75,7 +62,7 @@ const EmployeeTable = (props) => {
                  
                   <td className="px-6 py-4">
                     <ThreeDotDropdown
-                    
+                    link1=""
                     link2={`/Employee/update/`+ item._id}
                     deleteLink={`http://localhost:5000/employee/${item._id}`}
                     dlt={props.dlt}

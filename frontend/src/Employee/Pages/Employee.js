@@ -10,6 +10,7 @@ import Search from "../../Shared/Components/UiElements/Search";
 
 
 const Employee = () => {
+  const [deleteEmployee, setDeleteEmployee] = useState(false);
 
   const [employee, setemployee] = useState([]);
   const [loading, setLoading] = useState(false)
@@ -43,7 +44,11 @@ const Employee = () => {
         setLoading(false)
       });
 
+<<<<<<< Updated upstream
   }, [deleteProduct])
+=======
+  }, [deleteEmployee])
+>>>>>>> Stashed changes
   return (
     <><div>
       <Navbar />
@@ -64,8 +69,13 @@ const Employee = () => {
         
         Employee={filteredEmployees} 
         loading={loading} 
+<<<<<<< Updated upstream
         setloading={setLoading} 
         dlt={setDeleteProduct}/>
+=======
+        setloading={setLoading}
+        dlt={setDeleteEmployee} />
+>>>>>>> Stashed changes
       </Card>
 
     </div>

@@ -75,6 +75,7 @@ const DeleteEmployee =  async (req,res) => {
 
   try{
       const {id} = req.params;
+      const emoloyee = await Employee.findById(id);
       const result = await Employee.findByIdAndDelete(id);
 
       if(!result){
@@ -90,9 +91,21 @@ const DeleteEmployee =  async (req,res) => {
   }
 
 };
+const getIds =  async (req, res) => {
+  try {
+    const employees = await Employee.find({}, 'ID');
+    const employeeIds = employees.map(employee => employee.ID);
+    res.json(employeeIds);
+  } catch (error) {
+    console.error('Error fetching employee IDs:', error);
+    res.status(500).send({ message: 'Internal Server Error' });
+  }
+};
+
 
 exports.createEmployee = createEmployee;
 exports.listEmployee = listEmployee;
 exports.UpdateEmployee = UpdateEmployee;
 exports.listEmployeeById = listEmployeeById;
 exports.DeleteEmployee = DeleteEmployee;
+exports.getIds =getIds;
