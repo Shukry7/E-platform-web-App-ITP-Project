@@ -1,104 +1,102 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-
-
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const MarkAttendance = () => {
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState('');
   const [employees, setEmployees] = useState([]);
-  const [attendance, setAttendance] = useState([]);
+  const [attendance, setAttendance] = useState({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchEmployees = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get("http://localhost:5000/employee");
+        const response = await axios.get('http://localhost:5000/employee');
         setEmployees(response.data);
+        // Initialize attendance state with fetched employees
+        const initialAttendance = response.data.reduce((acc, employee) => {
+          acc[employee._id] = 'present'; // default status
+          return acc;
+        }, {});
+        setAttendance(initialAttendance);
       } catch (error) {
-        console.error(error);
+        console.error('Failed to fetch employees:', error);
       }
+      setLoading(false);
     };
     fetchEmployees();
   }, []);
 
+  const handleStatusChange = (employeeID, status) => {
+    setAttendance({ ...attendance, [employeeID]: status });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      setLoading(true);
-      await axios.post("http://localhost:5000/attendance/mark/", {
+      const response = await axios.post('http://localhost:5000/attendance/mark/', {
         date,
         attendance,
       });
-      alert("Attendance marked successfully");
-      setLoading(false);
+      alert('Attendance marked successfully');
     } catch (error) {
-      console.error(error);
-      alert("Failed to mark attendance");
-      setLoading(false);
+      console.error('Failed to mark attendance:', error);
+      alert('Failed to mark attendance');
     }
+    setLoading(false);
   };
 
-  const handleStatusChange = (employeeID, status) => {
-    const updatedAttendance = [...attendance];
-    const existingRecordIndex = updatedAttendance.findIndex(
-      (record) => record.employeeID === employeeID
-    );
-    if (existingRecordIndex !== -1) {
-      updatedAttendance[existingRecordIndex].status = status;
-    } else {
-      updatedAttendance.push({ employeeID, status });
-    }
-    setAttendance(updatedAttendance);
-  };
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
-    <div className="container mx-auto">
-      <h2 className="text-3xl font-semibold mb-4">Mark Employee Attendance</h2>
+    <div className='container mx-auto'>
+      <h2 className='text-3xl font-semibold mb-4'>Mark Employee Attendance</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="date" className="block text-sm font-medium text-gray-700">
+        <div className='mb-4'>
+          <label htmlFor='date' className='block text-sm font-medium text-gray-700'>
             Date
           </label>
           <input
-            id="date"
-            type="date"
+            id='date'
+            type='date'
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+            required
           />
         </div>
-        <div className="overflow-x-auto mb-4">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div className='overflow-x-auto mb-4'>
+          <table className='min-w-full divide-y divide-gray-200'>
+            <thead className='bg-gray-50'>
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                   Employee ID
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                   Name
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                   Status
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className='bg-white divide-y divide-gray-200'>
               {employees.map((employee) => (
                 <tr key={employee._id}>
-                  <td className="px-6 py-4 whitespace-nowrap">{employee.ID}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{employee.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className='px-6 py-4 whitespace-nowrap'>{employee.ID}</td>
+                  <td className='px-6 py-4 whitespace-nowrap'>{employee.name}</td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
                     <select
-                      value={
-                        attendance.find((record) => record.employeeID === employee._id)?.status || ""
-                      }
+                      value={attendance[employee._id]}
                       onChange={(e) => handleStatusChange(employee._id, e.target.value)}
-                      className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className='focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                      required
                     >
-                      <option value="">Select</option>
-                      <option value="present">Present</option>
-                      <option value="absent">Absent</option>
+                      <option value='present'>Present</option>
+                      <option value='absent'>Absent</option>
                     </select>
                   </td>
                 </tr>
@@ -106,14 +104,8 @@ const MarkAttendance = () => {
             </tbody>
           </table>
         </div>
-        <button
-          type="submit"
-          className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
-            loading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          disabled={loading}
-        >
-          {loading ? "Submitting..." : "Submit"}
+        <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+          {loading ? 'Submitting...' : 'Submit Attendance'}
         </button>
       </form>
     </div>

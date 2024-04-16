@@ -43,12 +43,7 @@ const Employee = () => {
         console.error(err)
         setLoading(false)
       });
-
-<<<<<<< Updated upstream
-  }, [deleteProduct])
-=======
   }, [deleteEmployee])
->>>>>>> Stashed changes
   return (
     <><div>
       <Navbar />
@@ -69,13 +64,8 @@ const Employee = () => {
         
         Employee={filteredEmployees} 
         loading={loading} 
-<<<<<<< Updated upstream
-        setloading={setLoading} 
-        dlt={setDeleteProduct}/>
-=======
         setloading={setLoading}
         dlt={setDeleteEmployee} />
->>>>>>> Stashed changes
       </Card>
 
     </div>

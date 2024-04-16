@@ -1,18 +1,24 @@
 const EmployeeAttendance = require("../Models/AttendenceModel");
 const HttpError = require("../Models/http-error.js");
 const uuid = require("uuid");
+
+
 const markAttendance = async (req, res) => {
+  const { date, attendance } = req.body;
   try {
-    const { employeeID, status } = req.body;
-    const newAttendance = new EmployeeAttendance({
+    // Create an array of attendance records to insert into the database
+    const attendanceRecords = Object.entries(attendance).map(([employeeID, status]) => ({
       employeeID,
-      status,
-    });
-    await newAttendance.save();
-    res.status(201).json({ message: "Attendance marked successfully" });
+      date,
+      status
+    }));
+
+    // Use insertMany to insert the records in bulk
+    await EmployeeAttendance.insertMany(attendanceRecords);
+    res.status(201).send('Attendance marked successfully');
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: "Server error" });
+    console.error('Error marking attendance:', error);
+    res.status(500).send('Failed to mark attendance');
   }
 };
 
