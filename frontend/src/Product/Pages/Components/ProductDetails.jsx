@@ -7,6 +7,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   useEffect(() => {
     setLoading(true);
     axios
@@ -84,11 +85,11 @@ const ProductDetails = () => {
                   Select Quantity:
                 </span>
                 <div class="flex items-center">
-                          <button class="border rounded-md py-2 px-4 mr-2">
+                          <button class="border rounded-md py-2 px-4 mr-2" disabled={quantity === 1} onClick={() => setQuantity(quantity - 1)} >
                             -
                           </button>
-                          <span class="text-center w-8">2</span>
-                          <button class="border rounded-md py-2 px-4 ml-2">
+                          <span class="text-center w-8">{quantity}</span>
+                          <button class="border rounded-md py-2 px-4 ml-2" onClick={() => setQuantity(quantity + 1)}>
                             +
                           </button>
                         </div>
