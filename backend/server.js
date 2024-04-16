@@ -14,6 +14,7 @@ const EmployeeRoute = require("./Routes/EmployeeRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
 const OnPay = require("./Routes/OnlinePayRoute");
 const AttendanceRoute = require("./Routes/AttendanceRoute");
+const cart = require("./Routes/CartRoute");
 
 
 const store = new MongoDBSession({
@@ -59,6 +60,7 @@ app.use("/delivery", DeliveryRoute);
 app.use("/OffPay", OffPay);
 app.use("/OnPay", OnPay);
 app.use('/uploads/images', express.static(path.join('uploads','images')))
+app.use('/cart',cart);
 
 
 

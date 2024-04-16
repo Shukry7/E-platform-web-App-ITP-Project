@@ -43,6 +43,18 @@ const CartPage = () => {
       });
   };
 
+  const handleQuantityUpdate = (itemId, newQuantity) => {
+    axios
+      .put(`http://localhost:5000/cart/${itemId}`, { quantity: newQuantity })
+      .then((response) => {
+        // Update the state or do something else with the response
+      })
+      .catch((error) => {
+        console.error("Error updating quantity", error);
+      });
+  };
+
+
   return (
     <div class="bg-gray-100 h-screen py-8">
       <div class="container mx-auto px-4">
@@ -71,17 +83,17 @@ const CartPage = () => {
                       <td class="px-6 py-4">${item.price}</td>
                       <td class="px-6 py-4">
                         <div class="flex items-center">
-                          <button class="border rounded-md py-2 px-4 mr-2">
+                          <button class="border rounded-md py-2 px-4 mr-2" onClick={() => handleQuantityUpdate(item.product, item.quantity - 1)}>
                             -
                           </button>
                           <span class="text-center w-8">{item.quantity}</span>
-                          <button class="border rounded-md py-2 px-4 ml-2">
+                          <button class="border rounded-md py-2 px-4 ml-2"  onClick={() => handleQuantityUpdate(item.product, item.quantity + 1)}>
                             +
                           </button>
                         </div>
                       </td>
                       <td class="px-6 py-4">${item.quantity * item.price}</td>
-                      <td class="px-6 py-4">X</td>
+                      <td class="px-6 py-4"><button onClick={() => handleDelete(item.id)}>X</button></td>
                     </tr>
                   ))}
                 </tbody>
