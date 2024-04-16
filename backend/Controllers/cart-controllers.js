@@ -64,7 +64,7 @@ const updateCart = async (req, res) => {
     }
 
     // Update the cart item with new info from req.body
-    const updatedCartItem = await Cart.findByIdAndUpdate(cartItem._id, req.body, { new: true });
+    const updatedCartItem = await Cart.findByIdAndUpdate(cartItem.product, req.body, { new: true });
 
     return res.status(200).send({ message: "Cart updated successfully!", updatedCartItem });
   } catch (error) {
