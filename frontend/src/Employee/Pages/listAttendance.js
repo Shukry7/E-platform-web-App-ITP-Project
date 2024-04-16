@@ -11,39 +11,41 @@ import AttendanceTable from "./Components/listAttendance";
 
 
 const Attendance = () => {
-  const [deleteEmployee, setDeleteEmployee] = useState(1);
-
-  const [employee, setemployee] = useState([]);
+  
+  const [deleteAttendance, setDeleteAttendance] = useState(1);
+  const [attendance, setattendance] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredEmployees, setFilteredEmployees] = useState([]);
+  const [filteredAttendance, setFilteredAttendance] = useState([]);
   
   useEffect(() => {
-    setFilteredEmployees(employee);
-  }, [employee]);
+    setFilteredAttendance(attendance);
+  }, [attendance]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    const filtered = employee.filter(employee =>
-      employee.name.toLowerCase().includes(e.target.value.toLowerCase())||
-    employee.ID.toLowerCase().includes(e.target.value.toLowerCase())
+    const filtered = attendance.filter(attendance =>
+      attendance.name.toLowerCase().includes(e.target.value.toLowerCase())||
+    attendance.ID.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    setFilteredEmployees(filtered);
+    setFilteredAttendance(filtered);
   };
 
   useEffect(() => {
     setLoading(true)
     axios
-      .get("http://localhost:5000/attendancelist")
+      .get("http://localhost:5000/attendance/attendancelist")
       .then(res => {
-        setemployee(res.data)
+        setattendance(res.data)
+        console.log(attendance)
+        console.log(filteredAttendance)
         setLoading(false)
       })
       .catch(err => {
         console.error(err)
         setLoading(false)
       });
-  }, [deleteEmployee])
+  }, [deleteAttendance])
   return (
     <><div>
       <Navbar />
@@ -62,11 +64,10 @@ const Attendance = () => {
         </div>
         <AttendanceTable
         
-        Employee={filteredEmployees} 
+        Attendance={filteredAttendance} 
         loading={loading} 
         setloading={setLoading}
-        dlt={deleteEmployee} 
-          dltset={setDeleteEmployee}
+        
         />
       </Card>
 

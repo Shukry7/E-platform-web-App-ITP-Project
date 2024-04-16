@@ -52,7 +52,7 @@ const AttendanceTable= (props) => {
               <Loader />
             </center>
           ) : (
-            props.Employee.map((item, index) => {
+            props.Attendance.map((item, index) => {
               return (
                 <TableRow>
                   <td className="px-6 py-4">{index + 1}</td>
@@ -67,7 +67,8 @@ const AttendanceTable= (props) => {
                   <td className="px-6 py-4">{item.telephone}</td>
                   <td className="px-6 py-4">{item.mail}</td>
                   <td className="px-6 py-4">{item.type}</td>
-                  <td className="px-6 py-4">Rs.{item.hourlywage}/-</td>
+                  <td className="px-6 py-4"></td>
+                  <td className="px-6 py-4"></td>
                  
                   
                   
