@@ -15,6 +15,7 @@ const OffPay = require("./Routes/OfflinePaymentRoute");
 const OnPay = require("./Routes/OnlinePayRoute");
 const AttendanceRoute = require("./Routes/AttendanceRoute");
 const Wholesalecustomer = require("./Routes/WholesalecustomerRoute");
+const LoginRoute = require("./Routes/LoginRoute");
 
 
 const store = new MongoDBSession({
@@ -61,6 +62,7 @@ app.use("/wholesalecustomer", Wholesalecustomer);
 app.use("/OffPay", OffPay);
 app.use("/OnPay", OnPay);
 app.use('/uploads/images', express.static(path.join('uploads','images')))
+app.use("/login", LoginRoute)
 
 
 
