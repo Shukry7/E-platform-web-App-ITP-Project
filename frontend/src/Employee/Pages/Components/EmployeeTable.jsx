@@ -66,6 +66,7 @@ const EmployeeTable = (props) => {
                     link2={`/Employee/update/`+ item._id}
                     deleteLink={`http://localhost:5000/employee/${item._id}`}
                     dlt={props.dlt}
+                    dltset={props.dltset}
                     />
                   </td>
                 </TableRow>

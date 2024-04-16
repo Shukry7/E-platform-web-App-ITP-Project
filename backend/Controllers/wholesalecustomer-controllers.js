@@ -46,7 +46,7 @@ const listWholesalecustomerById = async (req, res) => {
 const UpdateWholesalecustomer = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Employee.findByIdAndUpdate(id, req.body);
+    const result = await Wholesalecustomer.findByIdAndUpdate(id, req.body);
 
     if (!result) {
       return res.status(404).send({ message: "wholesalecustomer Not Find !" });
@@ -63,7 +63,7 @@ const DeleteWholesalecustomer =  async (req,res) => {
 
   try{
       const {id} = req.params;
-      const result = await Employee.findByIdAndDelete(id);
+      const result = await Wholesalecustomer.findByIdAndDelete(id);
 
       if(!result){
           return res.status(404).send({ message: 'wholesalecustomer Not Find !' });

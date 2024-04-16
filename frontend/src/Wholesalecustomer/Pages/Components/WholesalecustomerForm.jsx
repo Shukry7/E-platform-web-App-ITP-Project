@@ -86,7 +86,7 @@ const WholesalecustomerForm = () => {
         id: 1,
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,
-        mail: formState.inputs.mail.value,
+        email: formState.inputs.mail.value,
         address: formState.inputs.address.value,
         creditlimit: formState.inputs.creditlimit.value,
         credit: formState.inputs.credit.value,

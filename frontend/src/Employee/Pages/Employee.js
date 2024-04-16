@@ -10,11 +10,10 @@ import Search from "../../Shared/Components/UiElements/Search";
 
 
 const Employee = () => {
-  const [deleteEmployee, setDeleteEmployee] = useState(false);
+  const [deleteEmployee, setDeleteEmployee] = useState(1);
 
   const [employee, setemployee] = useState([]);
-  const [loading, setLoading] = useState(false)
-  const [deleteProduct, setDeleteProduct] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState([]);
   
@@ -65,7 +64,9 @@ const Employee = () => {
         Employee={filteredEmployees} 
         loading={loading} 
         setloading={setLoading}
-        dlt={setDeleteEmployee} />
+        dlt={deleteEmployee} 
+          dltset={setDeleteEmployee}
+        />
       </Card>
 
     </div>

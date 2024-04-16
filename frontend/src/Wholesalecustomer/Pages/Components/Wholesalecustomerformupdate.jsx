@@ -80,7 +80,7 @@ const WholesalecustomerformUpdate = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5000/wholesalecustomer/${id}`)
+      .get(`http://localhost:5000/wholesalecustomer/update/${id}`)
       .then((res) => {
         setFormData(
           {
@@ -93,7 +93,7 @@ const WholesalecustomerformUpdate = () => {
               isValid: true,
             },
             mail: {
-              value: res.data.mail,
+              value: res.data.email,
               isValid: true,
             },
             address: {
@@ -123,10 +123,10 @@ const WholesalecustomerformUpdate = () => {
     event.preventDefault();
     setLoading(true);
     axios
-      .put(`http://localhost:5000/wholesalecustomer/${id}`, {
+      .put(`http://localhost:5000/wholesalecustomer/update/${id}`, {
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,
-        mail: formState.inputs.mail.value,
+        email: formState.inputs.mail.value,
         address: formState.inputs.address.value,
         creditlimit: formState.inputs.creditlimit.value,
         credit: formState.inputs.credit.value,
@@ -152,7 +152,7 @@ const WholesalecustomerformUpdate = () => {
             <div class="container mx-auto">
               <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center">
-                  Update Supplier
+                  Update wholesalecustomer
                 </h2>
                 <p class="text-gray-500 mb-6 text-center">
                   Enter wholesalecustomer details below !!
@@ -169,7 +169,7 @@ const WholesalecustomerformUpdate = () => {
                             id="name"
                             type="text"
                             initialValue={formState.inputs.name.value}
-                            placeholder="Enter Supplier Name"
+                            placeholder="Enter wholesalecustomer Name"
                             label="Name :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Name."

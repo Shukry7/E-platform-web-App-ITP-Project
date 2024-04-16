@@ -9,6 +9,7 @@ import { MdOutlineAddBox } from "react-icons/md";
 const Wholesalecustomer = () => {
   const [wholesalecustomer, setwholesalecustomer] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [deleteCustomer, setDeleteCustomer] = useState(1);
 
   useEffect(() => {
     setLoading(true);
@@ -22,7 +23,7 @@ const Wholesalecustomer = () => {
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  }, [deleteCustomer]);
   return (
     <>
       <div>
@@ -39,6 +40,8 @@ const Wholesalecustomer = () => {
                 Wholesalecustomer={wholesalecustomer}
                 loading={loading}
                 setloading={setLoading}
+                dltset={setDeleteCustomer}
+                dlt={deleteCustomer}
               />
             </Card>
           
