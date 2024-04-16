@@ -4,17 +4,13 @@ const uuid = require("uuid");
 
 
 const markAttendance = async (req, res) => {
-  const { date, attendance } = req.body;
+  console.log(req.body)
+
+
   try {
-    // Create an array of attendance records to insert into the database
-    const attendanceRecords = Object.entries(attendance).map(([employeeID, status]) => ({
-      employeeID,
-      date,
-      status
-    }));
 
     // Use insertMany to insert the records in bulk
-    await EmployeeAttendance.insertMany(attendanceRecords);
+    await EmployeeAttendance.insertMany(req.body.Attendence_list);
     res.status(201).send('Attendance marked successfully');
   } catch (error) {
     console.error('Error marking attendance:', error);

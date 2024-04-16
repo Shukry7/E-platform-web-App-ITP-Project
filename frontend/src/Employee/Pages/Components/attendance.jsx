@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Checkbox from './Checkbox';
+import Checkbox from './Dropdown';
+import Dropdown from '../Components/Dropdown';
 
 const MarkAttendance = () => {
 
@@ -10,62 +11,74 @@ const MarkAttendance = () => {
   var day = now.getDate();
   var month = now.toLocaleString('default', { month: 'long' });
   var year = now.getFullYear();
-
-
   var dateTimeString = dayName + ', ' + day + ' ' + month + ' ' + year;
 
-
-  
   const [date, setDate] = useState('');
   const [employees, setEmployees] = useState([]);
   const [attendance, setAttendance] = useState({});
   const [loading, setLoading] = useState(false);
+  const [attendanceRecords, setAttendanceRecords] = useState([]);
 
   useEffect(() => {
-    const fetchEmployees = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get('http://localhost:5000/employee');
-        setEmployees(response.data);
-        // Initialize attendance state with fetched employees
-        const initialAttendance = response.data.reduce((acc, employee) => {
-          acc[employee._id] = 'present'; // default status
-          return acc;
-        }, {});
-        setAttendance(initialAttendance);
-      } catch (error) {
-        console.error('Failed to fetch employees:', error);
-      }
-      setLoading(false);
-    };
-    fetchEmployees();
-  }, []);
-
-  const handleStatusChange = (employeeID, status) => {
-    setAttendance({ ...attendance, [employeeID]: status });
-  };
-
-  
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await axios.post('http://localhost:5000/attendance/mark/', {
-        date,
-        attendance,
+    setLoading(true)
+    axios
+      .get("http://localhost:5000/employee")
+      .then(res => {
+        setEmployees(res.data);
+        const initialAttendanceRecords = res.data.map((employee) => ({
+          employee: employee._id,
+          date: dateTimeString,
+          status: 'Absent',
+        }));
+        setAttendanceRecords(initialAttendanceRecords);
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error(err)
+        setLoading(false)
       });
-      alert('Attendance marked successfully');
-    } catch (error) {
-      console.error('Failed to mark attendance:', error);
-      alert('Failed to mark attendance');
-    }
-    setLoading(false);
+  }, [])
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true)
+    let payload = {
+      Attendence_list: attendanceRecords
+    };
+    axios
+      .post("http://localhost:5000/attendance/mark",payload)
+      .then(res => {
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error(err)
+        setLoading(false)
+      });
+    
+    console.log("Attendance Records:", payload);
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  const handleStatusChange = (employee, date, status) => {
+    const existingRecordIndex = attendanceRecords.findIndex(
+      (record) => record.employee === employee && record.date === date
+    );
+
+    if (existingRecordIndex !== -1) {
+      // If record already exists, update its status
+      setAttendanceRecords((prevRecords) =>
+        prevRecords.map((record, index) =>
+          index === existingRecordIndex ? { ...record, status } : record
+        )
+      );
+    } else {
+      // If record doesn't exist, add it to the array
+      setAttendanceRecords((prevRecords) => [
+        ...prevRecords,
+        { employee, date, status }
+      ]);
+    }
+  };
+
 
   return (
     <div className='container mx-auto'>
@@ -93,15 +106,21 @@ const MarkAttendance = () => {
               </tr>
             </thead>
             <tbody className='bg-white divide-y divide-gray-200'>
-              {employees.map((employee) => (
-                <tr key={employee._id}>
-                  <td className='px-6 py-4 whitespace-nowrap'>{employee.ID}</td>
-                  <td className='px-6 py-4 whitespace-nowrap'>{employee.name}</td>
-                  <td className='px-6 py-4 whitespace-nowrap'>
-                    <Checkbox/>
-                  </td>
-                </tr>
-              ))}
+              {employees.map((employee) => {
+                return (
+                  <tr key={employee._id}>
+                    <td className='px-6 py-4 whitespace-nowrap'>{employee.ID}</td>
+                    <td className='px-6 py-4 whitespace-nowrap'>{employee.name}</td>
+                    <td className='px-6 py-4 whitespace-nowrap'>
+                      <Dropdown
+                        employee={employee._id}
+                        date={dateTimeString}
+                        onStatusChange={handleStatusChange}
+                      />
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
