@@ -14,6 +14,8 @@ const EmployeeRoute = require("./Routes/EmployeeRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
 const OnPay = require("./Routes/OnlinePayRoute");
 const AttendanceRoute = require("./Routes/AttendanceRoute");
+const Wholesalecustomer = require("./Routes/WholesalecustomerRoute");
+const LoginRoute = require("./Routes/LoginRoute");
 const cart = require("./Routes/CartRoute");
 
 
@@ -57,10 +59,10 @@ app.use("/employee",EmployeeRoute);
 app.use("/supplierproduct", SupplierProductRoute)
 app.use("/attendance", AttendanceRoute);
 app.use("/delivery", DeliveryRoute);
+app.use("/wholesalecustomer", Wholesalecustomer);
 app.use("/OffPay", OffPay);
 app.use("/OnPay", OnPay);
 app.use('/uploads/images', express.static(path.join('uploads','images')))
-app.use('/cart',cart);
 
 
 

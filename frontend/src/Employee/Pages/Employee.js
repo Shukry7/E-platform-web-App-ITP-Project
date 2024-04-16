@@ -10,9 +10,11 @@ import Search from "../../Shared/Components/UiElements/Search";
 
 
 const Employee = () => {
+  const [deleteEmployee, setDeleteEmployee] = useState(false);
 
   const [employee, setemployee] = useState([]);
   const [loading, setLoading] = useState(false)
+  const [deleteProduct, setDeleteProduct] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState([]);
   
@@ -41,8 +43,7 @@ const Employee = () => {
         console.error(err)
         setLoading(false)
       });
-
-  }, [])
+  }, [deleteEmployee])
   return (
     <><div>
       <Navbar />
@@ -63,7 +64,8 @@ const Employee = () => {
         
         Employee={filteredEmployees} 
         loading={loading} 
-        setloading={setLoading} />
+        setloading={setLoading}
+        dlt={setDeleteEmployee} />
       </Card>
 
     </div>

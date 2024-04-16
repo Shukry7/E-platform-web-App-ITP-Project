@@ -6,7 +6,9 @@ Router.post("/new", EmployeeControllers.createEmployee);
 Router.get("/", EmployeeControllers.listEmployee);
 Router.delete("/:id", EmployeeControllers.DeleteEmployee);
 Router.get("/update/:id", EmployeeControllers.listEmployeeById);
+Router.get("/salaryform/:id", EmployeeControllers.listEmployeeById);
 Router.put("/update/:id", EmployeeControllers.UpdateEmployee);
+Router.get("/ids", EmployeeControllers.getIds);
 
 
 module.exports = Router;

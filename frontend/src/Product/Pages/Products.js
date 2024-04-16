@@ -12,7 +12,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [displayProducts, setDisplayProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [deleteProduct, setDeleteProduct] = useState(false);
+  const [deleteProduct, setDeleteProduct] = useState(1);
   const [FilteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activePage, setActivePage] = useState(1);
@@ -44,7 +44,7 @@ const Products = () => {
     const startIndex = (activePage - 1) * 6;
     const endIndex = startIndex + 6;
     setDisplayProducts(FilteredProducts.slice(startIndex, endIndex));
-  }, [ activePage, FilteredProducts]);
+  }, [activePage, FilteredProducts]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -78,7 +78,8 @@ const Products = () => {
             Product={displayProducts}
             loading={loading}
             setLoading={setLoading}
-            dlt={setDeleteProduct}
+            dltset={setDeleteProduct}
+            dlt={deleteProduct}
             active={activePage}
             itemsPerPage={6}
           />
