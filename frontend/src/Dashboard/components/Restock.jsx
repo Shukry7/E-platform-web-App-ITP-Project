@@ -3,12 +3,14 @@ import Table from "../../Shared/Components/UiElements/Table";
 import TableRow from "../../Shared/Components/UiElements/TableRow";
 import Loader3 from "../../Shared/Components/UiElements/loader3";
 import axios from "axios";
+import SupplierDetails from "./SupplierDetails";
 
 const Restock = () => {
   const Headings = ["#", "Product ID", "Product name", "Stock", "ReStock"];
 
   const [products, setproducts] = useState([]);
   const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     setLoading(true);
@@ -69,13 +71,18 @@ const Restock = () => {
                         {item.Stock} ({item.Alert_quantity})
                       </span>
                     </td>
-                    <td class="px-6 py-4">Hello</td>
+                    <td class="px-6 py-4">
+                      <SupplierDetails id={item._id}/>
+                    </td>
                   </TableRow>
                 );
               })}
             </Table>
           )}
         </div>
+        
+        
+        
       </div>
     </>
   );
