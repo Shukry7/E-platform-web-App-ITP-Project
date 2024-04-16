@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./SupplierTable.css";
 import axios from "axios";
@@ -11,12 +11,19 @@ import UpdatePrice from "./UpdatePrice";
 
 const SupplierProductTable = (props) => {
 
+  const [cart, setCart] = useState("");
+
+
+
+  console.log("cart is"+cart)
+
   const Headings = [
     "#",
     "Product id",
     "Product name",
     "Unit Price",
-    "Action"
+    "Action",
+    "Cart"
   ];
 
   return (
@@ -28,7 +35,6 @@ const SupplierProductTable = (props) => {
             </center>
           ) : (
             props.supplierProducts.map((item, index) => {
-              console.log(item._id)
               return (
                 <TableRow>
                   <td class="px-6 py-4">{index + 1}</td>
@@ -43,7 +49,10 @@ const SupplierProductTable = (props) => {
                     <span style={{marginRight: '10px'}}>Rs.{item.unitPrice}</span>
                     <UpdatePrice id={item._id} />
                   </td>
-                  <td className="px-6 py-4"><DeleteConfirmBox deletelink={`http://localhost:5000/supplierproduct/${item._id}`}/></td>
+                  <td className="px-6 py-4"><DeleteConfirmBox deleteLink={`http://localhost:5000/supplierproduct/${item._id}`} dlt={props.dlt}/></td>
+                  <td className="px-6 py-4">
+                    <button onClick={()=> setCart(...item._id)}>Add</button>
+                  </td>
                 </TableRow>
               );
             })
