@@ -37,6 +37,7 @@ import ProductList from "./Product/Pages/Components/ProductList";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
 import Loader from "./Shared/Components/UiElements/Loader";
+import Attendance from "./Employee/Pages/listAttendance";
 
 const App = () => {
   return (
@@ -75,6 +76,7 @@ const App = () => {
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/update/:id" exact element={<UpdateWholesalecustomer/>}/>
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
+        <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/Login" exact element={<LoginPage/>}/>  
         <Route path="/Loader" exact element={<Loader/>}/>
