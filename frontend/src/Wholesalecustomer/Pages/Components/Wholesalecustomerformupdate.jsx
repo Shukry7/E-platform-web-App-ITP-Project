@@ -127,7 +127,6 @@ const WholesalecustomerformUpdate = () => {
     if (formState.inputs.credit.value > formState.inputs.creditlimit.value) {
       alert("Credit exceeds credit limit!");
       setLoading(false);
-      navigate("/Wholesalecustomer/");
       return; 
     } 
     axios
