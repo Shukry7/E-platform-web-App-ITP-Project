@@ -30,11 +30,13 @@ const SupplierProductTable = (props) => {
         cart: cart,
         total: total,
         amount: amount,
+        supplier: supplier,
       })
       .then((res) => {
         setLoading(false);
-        Toast("Supplier Added Successfully!! 🔥","success")
-        Navigate("/Supplier/");
+        window.location.reload();
+        Toast("Purchesed Successfully!! 🔥","success");
+        
       })
       .catch((err) => {
         console.error(err);
@@ -130,7 +132,7 @@ const SupplierProductTable = (props) => {
 
         
         <div className="text-center pt-4">
-          {cart.length != 0 ? (<button
+          {cart.length !== 0 ? (<button
             type="button"
             onClick={togglemodelpopup}
             className="mx-auto text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
@@ -219,6 +221,7 @@ const SupplierProductTable = (props) => {
                                                                 }}
                                                                 type="number"
                                                                 min={0}
+                                                                defaultValue={0}
                                                                 className="border rounded px-1 py-1 w-20 border-gray-700"
                                                             /></p>
                     </div>

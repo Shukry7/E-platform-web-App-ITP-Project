@@ -4,6 +4,7 @@ const uuid = require("uuid");
 const Product = require("../Models/ProductModel");
 const Purchase = require("../Models/PurchaseModel");
 const SupplierProductPurchase = require("../Models/Sup_Prod_Purchase");
+const Supplier = require("../Models/SupplierModel");
 
 const createSupplierProduct = async (req, res, next) => {
   const { supplier, product, unitPrice} = req.body;
@@ -139,7 +140,9 @@ const DeleteSupplierProduct =  async (req,res) => {
 };
 
 const SupplierPurchase = async (req, res, next) => {
-  const { cart, total, amount } = req.body;
+  const { cart, total, amount, supplier } = req.body;
+
+  const credit = total - amount;
 
   try {
     const latestPurchase = await Purchase.find().sort({ _id: -1 }).limit(1);
@@ -172,7 +175,12 @@ const SupplierPurchase = async (req, res, next) => {
     }));
 
     const addedItems = await SupplierProductPurchase.insertMany(itemsToAdd);
-    console.log('Items added:', addedItems);
+
+    const supplierInfo = await Supplier.findById(supplier);
+    const currentCredit = supplierInfo.credit;
+
+    const newCredit = currentCredit + credit;
+    const result = await Supplier.findByIdAndUpdate(supplier, { credit: newCredit });
 
     res.status(200).json({ success: true, message: "Purchase and items added successfully" });
   } catch (error) {
@@ -195,8 +203,9 @@ const listPurchase = async (req, res) => {
 
 const listOnePurchasedetails =  async (req, res) => {
   try {
-    //const supplierProduct = await SupplierProductPurchase.find({});
-    const supplierProduct = await SupplierProductPurchase.find({}).populate('purchaseID').populate({
+    const { id } = req.params;
+
+    const supplierProduct = await SupplierProductPurchase.find({purchaseID : id}).populate('purchaseID').populate({
       path: 'supplier_product',
       populate: {
         path: 'supplier'
@@ -230,3 +239,4 @@ exports.UpdateSupplierProductPrice = UpdateSupplierProductPrice;
 exports.listProductsNotAssignedToSupplier = listProductsNotAssignedToSupplier;
 exports.SupplierPurchase = SupplierPurchase;
 exports.listPurchase = listPurchase;
+exports.listOnePurchasedetails = listOnePurchasedetails;

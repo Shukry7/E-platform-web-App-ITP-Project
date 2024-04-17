@@ -49,14 +49,13 @@ const ViewPurchase = () => {
             <Card className="flex" style={{ width: "100%" }}>
               <div className="flex justify-between items-center">
                 <h1 className="text-3xl my-8">Purchase History</h1>
-                <Search
-                  searchTerm={searchTerm}
-                  handleSearch={handleSearch}
-                  placeholder={"Search By ID / Date"}
-                />
-                <Link to="/Supplier/create">
-                  <MdOutlineAddBox className="text-sky-800 text-4xl" />
-                </Link>
+                <div className="mr-96">
+                    <Search
+                    searchTerm={searchTerm}
+                    handleSearch={handleSearch}
+                    placeholder={"Search By ID / Date"}
+                    />
+                </div>
               </div>
               <PurchaseTable
                 Purchase={FilteredPurchase}

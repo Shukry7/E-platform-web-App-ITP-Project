@@ -13,6 +13,7 @@ Router.put("/updatePrice/:id", SupplierProductControllers.UpdateSupplierProductP
 Router.get("/addproduct/:id", SupplierProductControllers.listProductsNotAssignedToSupplier);
 Router.post("/purchase", SupplierProductControllers.SupplierPurchase)
 Router.get("/purchase/list", SupplierProductControllers.listPurchase)
+Router.get("/purchase/list/:id", SupplierProductControllers.listOnePurchasedetails)
 
 
 module.exports = Router;
