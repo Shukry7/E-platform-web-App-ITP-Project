@@ -26,7 +26,7 @@ const MarkAttendance = () => {
       .then(res => {
         setEmployees(res.data);
         const initialAttendanceRecords = res.data.map((employee) => ({
-          employee: employee._id,
+          employee: employee,
           date: dateTimeString,
           status: 'Absent',
         }));
@@ -42,9 +42,7 @@ const MarkAttendance = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true)
-    let payload = {
-      Attendence_list: attendanceRecords
-    };
+    let payload = attendanceRecords
     axios
       .post("http://localhost:5000/attendance/mark",payload)
       .then(res => {
@@ -113,7 +111,7 @@ const MarkAttendance = () => {
                     <td className='px-6 py-4 whitespace-nowrap'>{employee.name}</td>
                     <td className='px-6 py-4 whitespace-nowrap'>
                       <Dropdown
-                        employee={employee._id}
+                        employee={employee}
                         date={dateTimeString}
                         onStatusChange={handleStatusChange}
                       />

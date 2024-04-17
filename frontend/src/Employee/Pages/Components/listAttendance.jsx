@@ -56,12 +56,12 @@ const AttendanceTable= (props) => {
               return (
                 <TableRow>
                   <td className="px-6 py-4">{index + 1}</td>
-                  <td className="px-6 py-4">{item.ID}</td>
+                  <td className="px-6 py-4">{item.employee.name}</td>
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {item.name}
+                    {item.employee.name}
                   </th>
                   <td className="px-6 py-4">{item.address}</td>
                   <td className="px-6 py-4">{item.telephone}</td>

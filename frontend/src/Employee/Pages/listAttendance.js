@@ -20,6 +20,7 @@ const Attendance = () => {
   
   useEffect(() => {
     setFilteredAttendance(attendance);
+    console.log(filteredAttendance)
   }, [attendance]);
 
   const handleSearch = (e) => {
@@ -37,7 +38,7 @@ const Attendance = () => {
       .get("http://localhost:5000/attendance/attendancelist")
       .then(res => {
         setattendance(res.data)
-        console.log(attendance)
+        console.log(res.data)
         console.log(filteredAttendance)
         setLoading(false)
       })
