@@ -8,7 +8,7 @@ import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
 import UpdateCredit from "./UpdateCredit";
-import { GrView } from "react-icons/gr";
+import PopUpPurchase from "./PopUpPurchase";
 
 const PurchaseTable = (props) => {
 
@@ -38,13 +38,9 @@ const PurchaseTable = (props) => {
                   <td class="px-6 py-4">{item.paidAmount}</td>
                   <td class="py-4">{item.date}</td>
                   <td class="py-3">
-                    <Link
-                      to={`/Supplier/view/` + item._id}
-                        class="block py-2 pr-9 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-center">
-                          <center>
-                            <GrView />
-                          </center>
-                    </Link>
+                    <PopUpPurchase
+                        id = {item._id}
+                    />
                   </td>
                 </TableRow>
               );
