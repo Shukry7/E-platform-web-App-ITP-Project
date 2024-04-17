@@ -15,7 +15,7 @@ const MarkAttendance = () => {
     "Saturday",
   ];
   var dayName = days[now.getDay()];
-  var day = now.getDate();
+  var day = now.getDate() + 1;
   var month = now.toLocaleString("default", { month: "long" });
   var year = now.getFullYear();
   var dateTimeString = dayName + ", " + day + " " + month + " " + year;

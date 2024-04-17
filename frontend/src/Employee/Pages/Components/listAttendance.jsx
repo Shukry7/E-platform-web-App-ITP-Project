@@ -27,22 +27,26 @@ const AttendanceTable = (props) => {
   ];
   var dayName = days[now.getDay()];
   var day = now.getDate();
-  var months = now.getMonth();
+  var months = now.getMonth() +1;
   var month = now.toLocaleString("default", { month: "long" });
   var year = now.getFullYear();
   var dateTimeString = dayName + ", " + day + " " + month + " " + year;
 
+  const date = new Date(dateTimeString);
+  var day2 = date.getDate();
+  var months2 = date.getMonth() +1;
+  
+  const formattedDate = `${day2}/${months2}`;
+
   const Headings = [
     "#",
     "Employee ID",
-    "Employee name",
-    day + "/" + months,
-    day - 1 + "/" + months,
-    day - 2 + "/" + months,
-    day - 3 + "/" + months,
-    day - 4 + "/" + months,
-    day - 5 + "/" + months,
+    "Employee name"
   ];
+  for(let i = 3 ; i<=13 ; i++){
+    Headings[i] = `${day2 - (i-3)}/${months2}`
+  }
+
 
   useEffect(() => {
     setLoading(true);
@@ -68,6 +72,9 @@ const AttendanceTable = (props) => {
         ) : (
           <>
             {employee.map((item, index) => {
+
+              const employeeAttendance = props.Attendance.filter(attendance => attendance.employee.ID === item.ID);
+              console.log(employeeAttendance)
               return (
                 <>
                   <TableRow>
@@ -79,6 +86,10 @@ const AttendanceTable = (props) => {
                     >
                       {item.name}
                     </th>
+                    {employeeAttendance.map((attendence) => {
+                      return(
+                      <td key={index} className="px-6 py-4">{attendence.date}</td>)
+                    })}
                   </TableRow>
                 </>
 

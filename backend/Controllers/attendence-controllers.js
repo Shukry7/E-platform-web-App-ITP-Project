@@ -13,10 +13,8 @@ const markAttendance = async (req, res) => {
   }))
 
   try {
-    // Insert attendance records into the database
-    const insertedAttendance = await EmployeeAttendance.insertMany(req.body);
 
-    const Attend = await EmployeeAttendance.insertMany(Att);
+    await EmployeeAttendance.insertMany(Att);
     res.status(201).send('Attendance marked successfully');
 
   } catch (error) {
@@ -27,7 +25,7 @@ const markAttendance = async (req, res) => {
 
 const listAttendance = async (req, res) => {
   try {
-    const attendance = await EmployeeAttendance.find({}).populate('employee');
+    const attendance = await EmployeeAttendance.find({}).populate('employee').sort({_id:-1})
     
     return res.status(200).json(attendance);
   } catch (error) {
