@@ -44,8 +44,6 @@ function PopUp(props) {
         false
       );
 
-      console.log(formState)
-
       const submitHandler = async (event) => {
         event.preventDefault();
         if (product == null || product==='') {
@@ -68,14 +66,12 @@ function PopUp(props) {
             console.error(err);
             setLoading(false);
           });
-        console.log(formState);
       };
   
     const togglemodel = () => {
       setisClick(!isclick);
     };
   
-    console.log("Selected Product ID:", product);
     return (
       <>
         <Link
