@@ -4,16 +4,21 @@ const uuid = require("uuid");
 
 
 const markAttendance = async (req, res) => {
+
   const  {employee} = req.body;
   const Att = employee.map(item => ({
     employee:item.employee,
     date: item.date,
     status : item.status
   }))
+
   try {
+    // Insert attendance records into the database
+    const insertedAttendance = await EmployeeAttendance.insertMany(req.body);
 
     const Attend = await EmployeeAttendance.insertMany(Att);
     res.status(201).send('Attendance marked successfully');
+
   } catch (error) {
     console.error('Error marking attendance:', error);
     res.status(500).send('Failed to mark attendance');
@@ -23,6 +28,7 @@ const markAttendance = async (req, res) => {
 const listAttendance = async (req, res) => {
   try {
     const attendance = await EmployeeAttendance.find({}).populate('employee');
+    
     return res.status(200).json(attendance);
   } catch (error) {
     console.log(error.message);

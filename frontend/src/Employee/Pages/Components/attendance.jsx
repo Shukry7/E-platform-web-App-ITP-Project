@@ -48,7 +48,7 @@ const MarkAttendance = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(true)
     axios
       .post("http://localhost:5000/attendance/mark", {
         employee: attendanceRecords,
@@ -134,7 +134,7 @@ const MarkAttendance = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Dropdown
-                        employee={employee._id}
+                        employee={employee}
                         date={dateTimeString}
                         onStatusChange={handleStatusChange}
                       />
