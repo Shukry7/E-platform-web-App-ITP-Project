@@ -2,6 +2,7 @@ const HttpError = require("../Models/http-error");
 const SupplierProduct = require("../Models/SupplierProduct");
 const uuid = require("uuid");
 const Product = require("../Models/ProductModel");
+const Purchase = require("../Models/PurchaseModel");
 
 const createSupplierProduct = async (req, res, next) => {
   const { supplier, product, unitPrice} = req.body;
@@ -135,6 +136,27 @@ const DeleteSupplierProduct =  async (req,res) => {
 
 };
 
+const SupplierPurchase =async (req, res, next) => {
+  const { cart, total, amount} = req.body;
+
+  const latestPurchase = await Purchase.find().sort({ _id: -1 }).limit(1);
+  let id;
+
+  if (latestPurchase.length !==0) {
+    const latestId = parseInt(latestPurchase[0].ID.slice(1)); 
+    id = "B" + String(latestId + 1).padStart(4, "0"); 
+  } else {
+    id = "B0001"; 
+  }
+
+  
+  console.log(total)
+  console.log(cart)
+  
+
+  
+};
+
 
 exports.createSupplierProduct = createSupplierProduct;
 exports.UpdateSupplierProduct = UpdateSupplierProduct;
@@ -145,3 +167,4 @@ exports.listSupplierProduct = listSupplierProduct;
 exports.listSupplierProductById = listSupplierProductById;
 exports.UpdateSupplierProductPrice = UpdateSupplierProductPrice;
 exports.listProductsNotAssignedToSupplier = listProductsNotAssignedToSupplier;
+exports.SupplierPurchase = SupplierPurchase;

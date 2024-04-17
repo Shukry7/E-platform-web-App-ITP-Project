@@ -4,18 +4,32 @@ const uuid = require("uuid");
 
 
 const markAttendance = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
 
+  try {
+    // Insert attendance records into the database
+    const insertedAttendance = await EmployeeAttendance.insertMany(req.body);
 
-    try {
-      const employee = await EmployeeAttendance.insertMany(req.body);
-      console.log(employee)
-      return res.status(201).send(employee);
-    } catch (error) {
-      console.error('Error marking attendance:', error);
-      res.status(500).send('Failed to mark attendance');
-    }
+    // Retrieve the employee details for each attendance record
+    const populatedAttendance = await Promise.all(
+      insertedAttendance.map(async (attendance) => {
+        // Retrieve employee details using the ObjectId reference
+        const employee = await Employee.findById(attendance.employee);
 
+        // Replace the ObjectId reference with the actual employee object
+        return {
+          ...attendance.toObject(),
+          employee: employee.toObject(), // Convert to plain JavaScript object
+        };
+      })
+    );
+
+    console.log(populatedAttendance);
+    return res.status(201).send(populatedAttendance);
+  } catch (error) {
+    console.error('Error marking attendance:', error);
+    res.status(500).send('Failed to mark attendance');
+  }
 };
 
 const listAttendance = async (req, res) => {

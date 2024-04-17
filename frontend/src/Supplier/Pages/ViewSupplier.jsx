@@ -14,8 +14,10 @@ const ViewSupplier = () => {
     const { id } = useParams();
     const[loading, setLoading] = useState(false);
     const[loading1, setLoading1] = useState(false);
+    const [deletesp , setdeletesp] = useState(1)
     const [supplier, setsupplier] = useState({});
     const [supplierProduct, setsupplierProduct] = useState([]);
+
 
     useEffect(()=> {
         setLoading(true);
@@ -43,7 +45,7 @@ const ViewSupplier = () => {
           console.error(err);
           setLoading(false);
         });
-    }, [id]);
+    }, [id , deletesp]);
 
     return (
       <>
@@ -63,6 +65,9 @@ const ViewSupplier = () => {
                   supplierProducts={supplierProduct}
                   loading={loading}
                   setloading={setLoading}
+                  deletesp={deletesp}
+                  setdeletesp={setdeletesp}
+                  id={id}
                 />
             </Card>
           </div>
