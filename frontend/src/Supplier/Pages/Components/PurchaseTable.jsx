@@ -1,0 +1,58 @@
+import React from "react";
+
+import "./SupplierTable.css";
+import axios from "axios";
+import { Link, Navigate } from "react-router-dom";
+import Loader from "../../../Shared/Components/UiElements/Loader";
+import Table from "../../../Shared/Components/UiElements/Table";
+import TableRow from "../../../Shared/Components/UiElements/TableRow";
+import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
+import UpdateCredit from "./UpdateCredit";
+import { GrView } from "react-icons/gr";
+
+const PurchaseTable = (props) => {
+
+  const Headings = [
+    "#",
+    "Purchase ID",
+    "Total Bill",
+    "Paid Amount",
+    "Date",
+    "Action",
+  ];
+
+  return (
+    <>
+      <Table Headings={Headings}>
+          {props.loading ? (
+            <center>
+              <Loader />
+            </center>
+          ) : (
+            props.Purchase.map((item, index) => {
+              return (
+                <TableRow>
+                  <td class="px-6 py-4">{index + 1}</td>
+                  <td class="px-6 py-4">{item.ID}</td>
+                  <td class="px-6 py-4">{item.total}</td>
+                  <td class="px-6 py-4">{item.paidAmount}</td>
+                  <td class="py-4">{item.date}</td>
+                  <td class="py-3">
+                    <Link
+                      to={`/Supplier/view/` + item._id}
+                        class="block py-2 pr-9 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-center">
+                          <center>
+                            <GrView />
+                          </center>
+                    </Link>
+                  </td>
+                </TableRow>
+              );
+            })
+          )}
+      </Table>
+    </>
+  );
+};
+
+export default PurchaseTable;

@@ -12,6 +12,7 @@ Router.put("/:id", SupplierProductControllers.UpdateSupplierProduct);
 Router.put("/updatePrice/:id", SupplierProductControllers.UpdateSupplierProductPrice);
 Router.get("/addproduct/:id", SupplierProductControllers.listProductsNotAssignedToSupplier);
 Router.post("/purchase", SupplierProductControllers.SupplierPurchase)
+Router.get("/purchase/list", SupplierProductControllers.listPurchase)
 
 
 module.exports = Router;
