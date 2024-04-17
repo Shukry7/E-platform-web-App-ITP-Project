@@ -82,6 +82,14 @@ const WholesalecustomerForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    if (formState.inputs.credit.value > formState.inputs.creditlimit.value) {
+      alert("Credit exceeds credit limit!");
+      setLoading(false);
+      navigate("/Wholesalecustomer/");
+      return; 
+    } 
+
     axios
       .post("http://localhost:5000/wholesalecustomer/new", {
         id: 1,
