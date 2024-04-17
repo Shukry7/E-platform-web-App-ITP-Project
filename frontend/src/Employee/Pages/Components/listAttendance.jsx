@@ -88,7 +88,7 @@ const AttendanceTable = (props) => {
                     </th>
                     {employeeAttendance.map((attendence) => {
                       return(
-                      <td key={index} className="px-6 py-4">{attendence.date}</td>)
+                      <td key={index} className="px-6 py-4">{attendence.status}</td>)
                     })}
                   </TableRow>
                 </>

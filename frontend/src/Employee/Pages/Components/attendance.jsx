@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Checkbox from "./Dropdown";
 import Dropdown from "../Components/Dropdown";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 const MarkAttendance = () => {
   var now = new Date();
@@ -15,7 +16,7 @@ const MarkAttendance = () => {
     "Saturday",
   ];
   var dayName = days[now.getDay()];
-  var day = now.getDate() + 1;
+  var day = now.getDate() ;
   var month = now.toLocaleString("default", { month: "long" });
   var year = now.getFullYear();
   var dateTimeString = dayName + ", " + day + " " + month + " " + year;
@@ -53,7 +54,9 @@ const MarkAttendance = () => {
       .post("http://localhost:5000/attendance/mark", {
         employee: attendanceRecords,
       })
+      
       .then((res) => {
+        Toast("Employee Attendance Submitted!! 🔥","success")
         setLoading(false);
       })
       .catch((err) => {
@@ -96,7 +99,7 @@ const MarkAttendance = () => {
           >
             Date
           </label>
-          <span>{dateTimeString}</span>
+          <span className="text-sm text-black-500">{dateTimeString}</span>
         </div>
         <div className="overflow-x-auto mb-4">
           <table className="min-w-full divide-y divide-gray-200">
