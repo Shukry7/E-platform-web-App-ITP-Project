@@ -116,7 +116,6 @@ const UpdateProductPriceAndQty = async (req, res) => {
     if (!result) {
       return res.status(404).send({ message: "Product Not Find !" });
     }
-
     return res.status(200).send({ message: "Product Updated Successfully!" });
   } catch (error) {
     console.log(error.message);
