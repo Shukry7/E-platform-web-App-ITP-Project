@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 const WholesalecustomerformUpdate = () => {
   const { id } = useParams();
@@ -80,7 +81,7 @@ const WholesalecustomerformUpdate = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5000/wholesalecustomer/${id}`)
+      .get(`http://localhost:5000/wholesalecustomer/update/${id}`)
       .then((res) => {
         setFormData(
           {
@@ -93,7 +94,7 @@ const WholesalecustomerformUpdate = () => {
               isValid: true,
             },
             mail: {
-              value: res.data.mail,
+              value: res.data.email,
               isValid: true,
             },
             address: {
@@ -122,17 +123,24 @@ const WholesalecustomerformUpdate = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    if (formState.inputs.credit.value > formState.inputs.creditlimit.value) {
+      alert("Credit exceeds credit limit!");
+      setLoading(false);
+      return; 
+    } 
     axios
-      .put(`http://localhost:5000/wholesalecustomer/${id}`, {
+      .put(`http://localhost:5000/wholesalecustomer/update/${id}`, {
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,
-        mail: formState.inputs.mail.value,
+        email: formState.inputs.mail.value,
         address: formState.inputs.address.value,
         creditlimit: formState.inputs.creditlimit.value,
         credit: formState.inputs.credit.value,
       })
       .then((res) => {
         setLoading(false);
+        Toast("Wholesalecustomer updated successfully!!","success")
         navigate("/Wholesalecustomer/");
       })
       .catch((err) => {
@@ -152,7 +160,7 @@ const WholesalecustomerformUpdate = () => {
             <div class="container mx-auto">
               <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center">
-                  Update Supplier
+                  Update wholesalecustomer
                 </h2>
                 <p class="text-gray-500 mb-6 text-center">
                   Enter wholesalecustomer details below !!
@@ -169,7 +177,7 @@ const WholesalecustomerformUpdate = () => {
                             id="name"
                             type="text"
                             initialValue={formState.inputs.name.value}
-                            placeholder="Enter Supplier Name"
+                            placeholder="Enter wholesalecustomer Name"
                             label="Name :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Name."

@@ -12,6 +12,7 @@ import {
 import { useForm } from "../../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 const City = [
   { value: "...." },
@@ -81,18 +82,26 @@ const WholesalecustomerForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    if (formState.inputs.credit.value > formState.inputs.creditlimit.value) {
+      alert("Credit exceeds credit limit!");
+      setLoading(false);
+      return; 
+    } 
+
     axios
       .post("http://localhost:5000/wholesalecustomer/new", {
         id: 1,
         name: formState.inputs.name.value,
         telephone: formState.inputs.telephone.value,
-        mail: formState.inputs.mail.value,
+        email: formState.inputs.mail.value,
         address: formState.inputs.address.value,
         creditlimit: formState.inputs.creditlimit.value,
         credit: formState.inputs.credit.value,
       })
       .then((res) => {
         setLoading(false);
+        Toast("Wholesalecustomer added successfully!!","success")
         navigate("/Wholesalecustomer/");
       })
       .catch((err) => {

@@ -8,13 +8,13 @@ const SalaryCalculatorForm = () => {
   const [noOfDays, setNoOfDays] = useState(0);
   const [bonus, setBonus] = useState(0);
   const [salary, setSalary] = useState(0);
-  const [employeeIds, setEmployeeIds] = useState([]);
+  const [Employee, setEmployee] = useState([]);
 
   useEffect(() => {
     // Fetch employee IDs when the component mounts
-    axios.get(`http://localhost:5000/employee/ids`)
+    axios.get(`http://localhost:5000/employee`)
       .then(response => {
-        setEmployeeIds(response.data);
+        setEmployee(response.data);
       })
       .catch(error => {
         console.error('Error fetching employee IDs:', error);
@@ -24,21 +24,26 @@ const SalaryCalculatorForm = () => {
   useEffect(() => {
     // Fetch employee data when empid changes
     if (empid) {
-      axios.get(`http://localhost:5000/employee/${empid}`)
+      axios.get(`http://localhost:5000/employee/salaryform/${empid}`)
         .then(response => {
-          const { empname, dailywage } = response.data;
-          setEmpname(empname);
-          setDailyWage(dailywage);
+          console.log(response.data)
+          const { name, hourlywage } = response.data;
+          setEmpname(name);
+          setDailyWage(hourlywage);
         })
         .catch(error => {
           console.error('Error fetching employee data:', error);
         });
     }
-  }, [empid]);
+  }, [empid , setEmpid]);
 
+  const changedetails =(e) => {
+      setEmpid(e.target.value)
+  }
   const handleCalculateSalary = () => {
     // Calculate salary here
-    const totalSalary = (dailywage * noOfDays) + bonus;
+    const sal = (dailywage * noOfDays);
+    const totalSalary = (sal + parseInt(bonus));
     setSalary(totalSalary);
   };
 
@@ -54,9 +59,9 @@ const SalaryCalculatorForm = () => {
             onChange={e => setEmpid(e.target.value)}
             className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           >
-            <option value="">Select Employee ID</option>
-            {employeeIds.map(id => (
-              <option key={id} value={id}>{id}</option>
+            <option onChange={changedetails} >Select Employee ID</option>
+            {Employee.map(id => (
+              <option key={id._id} value={id._id}>{id.ID} {id.name}</option>
             ))}
           </select>
         </div>

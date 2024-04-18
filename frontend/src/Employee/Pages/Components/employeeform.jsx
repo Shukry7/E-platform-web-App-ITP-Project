@@ -4,6 +4,7 @@ import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
 import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
 import {SnackbarProvider, useSnackbar} from 'notistack';
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 import Button from "../../../Shared/Components/FormElements/Button";
 import {
   
@@ -80,7 +81,7 @@ const EmployeeForm = () => {
       })
       .then((res) => {
         setLoading(false);
-        enqueueSnackbar('Employee created successfully',{variant:'success'});
+        Toast("Employee Added Successfully!! 🔥","success")
         navigate("/Employee");
       })
       .catch((err) => {

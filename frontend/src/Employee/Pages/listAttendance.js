@@ -7,42 +7,46 @@ import Navbar from "../../Shared/Components/UiElements/Navbar";
 import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
 import Search from "../../Shared/Components/UiElements/Search";
+import AttendanceTable from "./Components/listAttendance";
 
 
-const Employee = () => {
-  const [deleteEmployee, setDeleteEmployee] = useState(1);
-
-  const [employee, setemployee] = useState([]);
+const Attendance = () => {
+  
+  const [deleteAttendance, setDeleteAttendance] = useState(1);
+  const [attendance, setattendance] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredEmployees, setFilteredEmployees] = useState([]);
+  const [filteredAttendance, setFilteredAttendance] = useState([]);
   
   useEffect(() => {
-    setFilteredEmployees(employee);
-  }, [employee]);
+    setFilteredAttendance(attendance);
+    console.log(filteredAttendance)
+  }, [attendance]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    const filtered = employee.filter(employee =>
-      employee.name.toLowerCase().includes(e.target.value.toLowerCase())||
-    employee.ID.toLowerCase().includes(e.target.value.toLowerCase())
+    const filtered = attendance.filter(attendance =>
+      attendance.name.toLowerCase().includes(e.target.value.toLowerCase())||
+    attendance.ID.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    setFilteredEmployees(filtered);
+    setFilteredAttendance(filtered);
   };
 
   useEffect(() => {
     setLoading(true)
     axios
-      .get("http://localhost:5000/employee")
+      .get("http://localhost:5000/attendance/attendancelist")
       .then(res => {
-        setemployee(res.data)
+        setattendance(res.data)
+        console.log(res.data)
+        console.log(filteredAttendance)
         setLoading(false)
       })
       .catch(err => {
         console.error(err)
         setLoading(false)
       });
-  }, [deleteEmployee])
+  }, [deleteAttendance])
   return (
     <><div>
       <Navbar />
@@ -59,13 +63,12 @@ const Employee = () => {
             <MdOutlineAddBox className="text-sky-800 text-4xl" />
           </Link>
         </div>
-        <EmployeeTable
+        <AttendanceTable
         
-        Employee={filteredEmployees} 
+        Attendance={filteredAttendance} 
         loading={loading} 
         setloading={setLoading}
-        dlt={deleteEmployee} 
-          dltset={setDeleteEmployee}
+        
         />
       </Card>
 
@@ -75,4 +78,4 @@ const Employee = () => {
   );
 };
 
-export default Employee;
+export default Attendance;

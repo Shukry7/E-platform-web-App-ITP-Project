@@ -54,6 +54,7 @@ const SupplierTable = (props) => {
                     link2={`/Supplier/update/`+ item._id}
                     deleteLink={`http://localhost:5000/supplier/${item._id}`}
                     dlt={props.dlt}
+                    dltset={props.dltset}
                     />
                   </td>
                 </TableRow>

@@ -10,6 +10,7 @@ import Suppliers from "./Supplier/Pages/Suppliers";
 import CreateSupplier from "./Supplier/Pages/CreateSupplier";
 import Updatesupplier from "./Supplier/Pages/Updatesupplier";
 import ViewSupplier from "./Supplier/Pages/ViewSupplier";
+import ViewPurchase from "./Supplier/Pages/ViewPurchase";
 import Delivery from "./Delivery/Pages/Delivery";
 import CreateDelivery from "./Delivery/Pages/CreateDelivery";
 import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
@@ -31,11 +32,13 @@ import UpdateCC from "./Payment/Pages/Components/CCUpdateForm";
 import ViewCustomer from "./Customer/ViewCustomer";
 import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecustomer"
 import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
+import UpdateWholesalecustomer from "./Wholesalecustomer/Pages/UpdateWholesalecustomer";
 import LoginPage from "./Login/LoginPage";
 import ProductList from "./Product/Pages/Components/ProductList";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
 import Loader from "./Shared/Components/UiElements/Loader";
+import Attendance from "./Employee/Pages/listAttendance";
 
 const App = () => {
   return (
@@ -50,6 +53,7 @@ const App = () => {
         <Route path="/Supplier/create" exact element={<CreateSupplier/>}/>
         <Route path="/Supplier/update/:id" exact element={<Updatesupplier/>}/>
         <Route path="/Supplier/view/:id" exact element={<ViewSupplier/>}/>
+        <Route path="/Supplier/purchase" exact element={<ViewPurchase/>}/>
         <Route path="/Delivery" exact element={<Delivery/>}/>
         <Route path="/Delivery/create" exact element={<CreateDelivery/>}/>
         <Route path="/Delivery/update/:id" exact element={<UpdateDelivery/>}/>
@@ -73,7 +77,9 @@ const App = () => {
         <Route path="/Login" exact element={<LoginPage/>}/>
         <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
+        <Route path="/Wholesalecustomer/update/:id" exact element={<UpdateWholesalecustomer/>}/>
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
+        <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/Login" exact element={<LoginPage/>}/>  
         <Route path="/Loader" exact element={<Loader/>}/>

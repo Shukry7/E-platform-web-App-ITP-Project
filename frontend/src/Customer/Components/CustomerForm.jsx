@@ -82,19 +82,23 @@ const CustomerForm = () => {
     false
   );
 
+  console.log(formState)
+
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    const formData = new FormData();
+    formData.append('name',formState.inputs.name.value);
+    formData.append('telephone',formState.inputs.telephone.value);
+    formData.append('mail',formState.inputs.mail.value);
+    formData.append('address',formState.inputs.address.value);
+    formData.append('city',formState.inputs.city.value);
+    formData.append('password',formState.inputs.password.value);
+    formData.append('image',formState.inputs.image.value);
+
     axios
-      .post("http://localhost:5000/customer/", {
-        id: 1,
-        name: formState.inputs.name.value,
-        telephone: formState.inputs.telephone.value,
-        mail: formState.inputs.mail.value,
-        address: formState.inputs.address.value,
-        city: formState.inputs.city.value,
-        password: formState.inputs.password.value,
-      })
+      .post("http://localhost:5000/customer/", formData)
       .then((res) => {
         setLoading(false);
         navigate("/Customer/");
@@ -103,7 +107,7 @@ const CustomerForm = () => {
         console.error(err);
         setLoading(false);
       });
-    console.log(formState);
+      console.table(Object.fromEntries(formData))
   };
 
   return (

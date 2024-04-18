@@ -4,7 +4,18 @@ const Wholesalecustomer = require("../Models/WholesalecustomerModel");
 
 // get details from body and assigned to variables
 const createWholesalecustomer = async (req, res, next) => {
-  const { id, name, address, telephone, email, creditlimit, credit } = req.body;
+  const { name, address, telephone, email, creditlimit, credit } = req.body;
+
+  const latestWholesalecustomer = await Wholesalecustomer.find().sort({ _id: -1 }).limit(1);
+  let id;
+
+  if (latestWholesalecustomer.length !== 0) {
+    const latestId = parseInt(latestWholesalecustomer[0].ID.slice(1));
+    id = "W" + String(latestId + 1).padStart(4, "0");
+  } else {
+    id = "W0001";
+  }
+
 
   const newWholesalecustomer = {
     ID: id,
@@ -46,7 +57,7 @@ const listWholesalecustomerById = async (req, res) => {
 const UpdateWholesalecustomer = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Employee.findByIdAndUpdate(id, req.body);
+    const result = await Wholesalecustomer.findByIdAndUpdate(id, req.body);
 
     if (!result) {
       return res.status(404).send({ message: "wholesalecustomer Not Find !" });
@@ -63,7 +74,7 @@ const DeleteWholesalecustomer =  async (req,res) => {
 
   try{
       const {id} = req.params;
-      const result = await Employee.findByIdAndDelete(id);
+      const result = await Wholesalecustomer.findByIdAndDelete(id);
 
       if(!result){
           return res.status(404).send({ message: 'wholesalecustomer Not Find !' });

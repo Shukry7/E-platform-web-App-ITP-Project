@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
 const employeeAttendanceSchema = new mongoose.Schema({
-  employeeID: {
+  employee: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Employee', // Assuming you have an Employee model with an _id field
-    required: true
+    ref: 'Employee',
   },
   date: {
     type: Date,
@@ -12,7 +11,7 @@ const employeeAttendanceSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['present', 'absent'],
+    enum: ['Present', 'Absent'],
     required: true
   }
 });
