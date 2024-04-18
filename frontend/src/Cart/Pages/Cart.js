@@ -2,12 +2,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ModalComponent from "../../Payment/Pages/Components/PaymentOption";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../Shared/Components/FormElements/Button";
+import DeleteConfirmBox from "../../Shared/Components/UiElements/DeleteConfirmBox"
 import "../../Cart/Pages/Components/Cart.css";
+import Toast from "../../Shared/Components/UiElements/Toast/Toast";
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
+  const [deleteCart,setdeleteCart] = useState(1);
+  let subtotal = 0;
+
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -26,33 +31,29 @@ const CartPage = () => {
       .then((response) => {
         setCart(response.data);
       })
+      
       .catch((error) => {
         console.error("Error fetching cart", error);
       });
-  }, []);
+  }, [deleteCart]);
+  console.log(cart)
 
-  const handleDelete = (itemId) => {
-    axios
-      .delete(`http://localhost:5000/cart/${itemId}`)
-      .then((response) => {
-        // Remove item from state
-        setCart(cart.filter((item) => item._id !== itemId));
-      })
-      .catch((error) => {
-        console.error("Error deleting item", error);
-      });
-  };
 
-  const handleQuantityUpdate = (itemId, newQuantity) => {
+  const handleQuantityUpdate = (Id, newQuantity) => {
     axios
-      .put(`http://localhost:5000/cart/${itemId}`, { quantity: newQuantity })
+      .put(`http://localhost:5000/cart/cart/${Id}`, { quantity: newQuantity })
       .then((response) => {
-        // Update the state or do something else with the response
+        setdeleteCart(deleteCart + 1)
+        Toast("Quantity updated !!" , "success")
       })
       .catch((error) => {
         console.error("Error updating quantity", error);
       });
   };
+
+  cart.map((item) => (
+    subtotal = subtotal + (item.quantity * item.product.price)
+  ))
 
 
   return (
@@ -72,28 +73,36 @@ const CartPage = () => {
                     <th class="text-left font-semibold px-6 py-4">Delete</th>
                   </tr>
                 </thead>
+                
                 <tbody>
                   {cart.map((item) => (
                     <tr key={item._id}>
                       <td class="py-4">
                         <div class="flex items-center">
-                          <span class="font-semibold">Product name</span>
+                        <img
+                    class="w-full rounded-lg sm:w-40 object-cover"
+                    src={`http://localhost:5000/${item.product.image}`}
+                    alt="profile_pic"
+                  />
+                          <span class="font-semibold pl-5">{item.product.name}</span>
                         </div>
                       </td>
-                      <td class="px-6 py-4">${item.price}</td>
+                      <td class="px-6 py-4">${item.product.price}</td>
                       <td class="px-6 py-4">
                         <div class="flex items-center">
-                          <button class="border rounded-md py-2 px-4 mr-2" onClick={() => handleQuantityUpdate(item.product, item.quantity - 1)}>
+                          <button class="border rounded-md py-2 px-4 mr-2" disabled={item.quantity===1} onClick={() => handleQuantityUpdate(item._id,item.quantity - 1)}>
                             -
                           </button>
                           <span class="text-center w-8">{item.quantity}</span>
-                          <button class="border rounded-md py-2 px-4 ml-2"  onClick={() => handleQuantityUpdate(item.product, item.quantity + 1)}>
+                          <button class="border rounded-md py-2 px-4 ml-2"  onClick={() => handleQuantityUpdate(item._id,item.quantity + 1)} >
                             +
                           </button>
                         </div>
                       </td>
-                      <td class="px-6 py-4">${item.quantity * item.price}</td>
-                      <td class="px-6 py-4"><button onClick={() => handleDelete(item.id)}>X</button></td>
+                      <td class="px-6 py-4">${item.quantity * item.product.price}</td>
+                      
+                      <td class="px-6 py-4"><button class="border rounded-md py-2 px-4 ml-2" ><DeleteConfirmBox deleteLink={`http://localhost:5000/cart/${item._id}`} dlt={deleteCart} dltset={setdeleteCart}/></button></td>
+                      
                     </tr>
                   ))}
                 </tbody>
@@ -105,7 +114,7 @@ const CartPage = () => {
               <h2 class="text-lg font-semibold mb-4">Summary</h2>
               <div class="flex justify-between mb-2">
                 <span>Subtotal</span>
-                <span>$19.99</span>
+                <span class="pl-4">Rs.{subtotal}/=</span>
               </div>
               <div class="flex justify-between mb-2">
                 <span>Taxes</span>
@@ -132,8 +141,8 @@ const CartPage = () => {
                   Choose your desired payment option !!
                 </p>
                 <div className="modal-button">
-                  <Button to="../CC/new">Online</Button>
-                  <Button to="../CC/new" className="modal-button">
+                  <Button to="../CC/">Online</Button>
+                  <Button to="../offpay" className="modal-button">
                     Offline
                   </Button>
                 </div>

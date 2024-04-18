@@ -14,10 +14,10 @@ const EmployeeRoute = require("./Routes/EmployeeRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
 const OnPay = require("./Routes/OnlinePayRoute");
 const AttendanceRoute = require("./Routes/AttendanceRoute");
-const Wholesalecustomer = require("./Routes/WholesalecustomerRoute");
-const LoginRoute = require("./Routes/LoginRoute");
 const cart = require("./Routes/CartRoute");
 const CustomerRoute = require("./Routes/CustomerRoute");
+const OrderRoute = require('./Routes/OrderRoute');
+
 
 
 const store = new MongoDBSession({
@@ -61,10 +61,11 @@ app.use("/employee",EmployeeRoute);
 app.use("/supplierproduct", SupplierProductRoute)
 app.use("/attendance", AttendanceRoute);
 app.use("/delivery", DeliveryRoute);
-app.use("/wholesalecustomer", Wholesalecustomer);
+app.use("/cart", cart);
 app.use("/OffPay", OffPay);
 app.use("/OnPay", OnPay);
 app.use("/Login" , LoginRoute)
+app.use("/order", OrderRoute);
 app.use('/uploads/images', express.static(path.join('uploads','images')))
 
 

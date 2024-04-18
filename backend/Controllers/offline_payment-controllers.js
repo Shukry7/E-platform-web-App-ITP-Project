@@ -1,22 +1,21 @@
 
 const OffPay = require("../Models/OfflinePaymentModel");
 
-const createProduct = async (req, res, next) => {
-  const  uid  =req.body;
+const CreateOffPay = async (req, res, next) => {
 
-  
 
   
   let path = "uploads/images/No-Image-Placeholder.png";
   if (req.file && req.file.path) path = req.file.path;
 
-  const newProduct = {
-    UID: uid,
+  const newOffPay = {
+
+    UID: 1,
     image: path,
   };
   
-  const product = await OffPay.create(newProduct);
-  return res.status(201).send(product);
+  const offpay = await OffPay.create(newOffPay);
+  return res.status(201).send(offpay);
 };
 
-exports.createProduct = createProduct;
+exports.CreateOffPay = CreateOffPay;
