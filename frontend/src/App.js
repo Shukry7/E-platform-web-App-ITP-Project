@@ -11,6 +11,7 @@ import CreateSupplier from "./Supplier/Pages/CreateSupplier";
 import Updatesupplier from "./Supplier/Pages/Updatesupplier";
 import ViewSupplier from "./Supplier/Pages/ViewSupplier";
 import ViewPurchase from "./Supplier/Pages/ViewPurchase";
+import ViewPendingPurchase from "./Supplier/Pages/ViewPendingPurchase";
 import Delivery from "./Delivery/Pages/Delivery";
 import CreateDelivery from "./Delivery/Pages/CreateDelivery";
 import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
@@ -54,6 +55,7 @@ const App = () => {
         <Route path="/Supplier/update/:id" exact element={<Updatesupplier/>}/>
         <Route path="/Supplier/view/:id" exact element={<ViewSupplier/>}/>
         <Route path="/Supplier/purchase" exact element={<ViewPurchase/>}/>
+        <Route path="/Supplier/pendingpurchase" exact element={<ViewPendingPurchase/>}/>
         <Route path="/Delivery" exact element={<Delivery/>}/>
         <Route path="/Delivery/create" exact element={<CreateDelivery/>}/>
         <Route path="/Delivery/update/:id" exact element={<UpdateDelivery/>}/>
