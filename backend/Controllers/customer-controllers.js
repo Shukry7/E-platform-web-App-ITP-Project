@@ -1,6 +1,7 @@
 const HttpError = require("../Models/http-error");
 const Customer = require("../Models/CustomerModel");
 const uuid = require("uuid");
+const fs = require("fs");
 
 const createCustomer = async (req, res, next) => {
   const { name, telephone, mail, address, city, password} = req.body;
@@ -15,6 +16,10 @@ const createCustomer = async (req, res, next) => {
     id = "C0001"; 
   }
 
+  let path = 'uploads/images/No-Image-Placeholder.png' 
+  if(req.file && req.file.path )
+    path = req.file.path
+
   const newCustomer = {
     ID: id,
     name: name,
@@ -23,6 +28,7 @@ const createCustomer = async (req, res, next) => {
     address: address,
     city: city,
     password: password,
+    image: path,
   };
   
 

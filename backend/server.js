@@ -17,6 +17,7 @@ const AttendanceRoute = require("./Routes/AttendanceRoute");
 const Wholesalecustomer = require("./Routes/WholesalecustomerRoute");
 const LoginRoute = require("./Routes/LoginRoute");
 const cart = require("./Routes/CartRoute");
+const CustomerRoute = require("./Routes/CustomerRoute");
 
 
 const store = new MongoDBSession({
@@ -54,6 +55,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/product", ProductRoute);
+app.use("/customer", CustomerRoute);
 app.use("/supplier", SupplierRoute);
 app.use("/employee",EmployeeRoute);
 app.use("/supplierproduct", SupplierProductRoute)
