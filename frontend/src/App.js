@@ -27,7 +27,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import Cart from "./Cart/Pages/Cart";
 import Offpay from "./Payment/Pages/OfflinePayment";
 import CC from "./Payment/Pages/CreditCard"
-
+import UpdateCC from "./Payment/Pages/Components/CCUpdateForm";
 import ViewCustomer from "./Customer/ViewCustomer";
 import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecustomer"
 import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
@@ -65,7 +65,8 @@ const App = () => {
         <Route path="/Cart" exact element={<Cart/>}/>
         <Route path="/offpay" exact element={<Offpay/>}/>
         <Route path="/CC" exact element={<CC/>}/>
-        
+        <Route path="/CC/:id" exact element={<UpdateCC/>}/>
+        <Route path="/CC/new" exact element={<CCForm/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
         <Route path="/ProductList" exact element={<ProductList/>}/>
         <Route path="/ProductList/Details" exact element={<ProductDetails/>}/>
