@@ -9,11 +9,13 @@ import {
   VALIDATOR_MAX,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
-  VALIDATOR_DATE
+  VALIDATOR_DATE,
 } from "../../../Shared/Components/util/validate";
 import { useForm } from "../../../Shared/hooks/form-hook";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 const Category = [
   { value: "...." },
@@ -21,11 +23,11 @@ const Category = [
   { value: "Mastercard" },
 ];
 
-const CCForm = () => {
+const CCForm = (props) => {
+  const { id } = useParams();
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, setFormData] = useForm(
     {
       firstname: {
         value: "",
@@ -54,31 +56,86 @@ const CCForm = () => {
     },
     false
   );
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`http://localhost:5000/OnPay/onpay/card/${id}`)
+      .then((res) => {
+        setFormData(
+          {
+            firstname: {
+              value: res.data.firstname,
+              isValid: true,
+            },
+            lastname: {
+              value: res.data.lastname,
+              isValid: true,
+            },
+            category: {
+              value: res.data.category,
+              isValid: true,
+            },
+            cvv: {
+              value: res.data.cvv,
+              isValid: true,
+            },
+            expiredate: {
+              value: res.data.expiredate,
+              isValid: true,
+            },
+            number: {
+              value: res.data.number,
+              isValid: true,
+            },
+          },
+          true
+        );
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [id, setFormData]);
+
+  console.log(formState)
+
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    const formData = new FormData();
+    formData.append("firstname", formState.inputs.firstname.value);
+    formData.append("lastname", formState.inputs.lastname.value);
+    formData.append("category", formState.inputs.category.value);
+    formData.append("cvv", formState.inputs.cvv.value);
+    formData.append("expiredate", formState.inputs.expiredate.value);
+    formData.append("number", formState.inputs.number.value);
+
+    console.table(Object.fromEntries(formData))
+
     axios
-      .post("http://localhost:5000/Onpay/onpay/new", {
-      
+      .put(`http://localhost:5000/OnPay/onpay/${id}`, {
         firstname: formState.inputs.firstname.value,
         lastname: formState.inputs.lastname.value,
         category: formState.inputs.category.value,
         cvv: formState.inputs.cvv.value,
         expiredate: formState.inputs.expiredate.value,
         number: formState.inputs.number.value,
-        
       })
       .then((res) => {
         setLoading(false);
-        navigate("CC/new");
+        Toast("Credit Card Updated Successfully!!", "success");
+        navigate("/CC/");
       })
       .catch((err) => {
         console.error(err);
         setLoading(false);
       });
-    console.log(formState);
   };
   
+
   return (
     <form onSubmit={submitHandler}>
       {loading ? (
@@ -106,7 +163,11 @@ const CCForm = () => {
                             type="text"
                             placeholder="Enter First Name"
                             label="First Name :"
-                            validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(16)]}
+                            initialValue={formState.inputs.firstname.value}
+                            validators={[
+                              VALIDATOR_REQUIRE(),
+                              VALIDATOR_MAXLENGTH(16),
+                            ]}
                             errorText="Please Enter a Name."
                             onInput={inputHandler}
                           />
@@ -119,7 +180,11 @@ const CCForm = () => {
                             type="text"
                             placeholder="Enter Last Name"
                             label="Last Name :"
-                            validators={[VALIDATOR_REQUIRE(),VALIDATOR_MAXLENGTH(16)]}
+                            initialValue={formState.inputs.lastname.value}
+                            validators={[
+                              VALIDATOR_REQUIRE(),
+                              VALIDATOR_MAXLENGTH(16),
+                            ]}
                             errorText="Please Enter a Name."
                             onInput={inputHandler}
                           />
@@ -132,6 +197,7 @@ const CCForm = () => {
                             type="text"
                             placeholder="Enter Card Number"
                             label="Card Number :"
+                            initialValue={formState.inputs.number.value}
                             validators={[
                               VALIDATOR_MINLENGTH(16),
                               VALIDATOR_MAXLENGTH(16),
@@ -148,6 +214,7 @@ const CCForm = () => {
                             type="number"
                             placeholder="Enter CVV"
                             label="CVV :"
+                            initialValue={formState.inputs.cvv.value}
                             validators={[
                               VALIDATOR_MIN(0),
                               VALIDATOR_MAX(10000),
@@ -164,6 +231,7 @@ const CCForm = () => {
                             onInput={inputHandler}
                             Display=""
                             label="Category:"
+                            initialValue={formState.inputs.category.value}
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Card type."
                           />
@@ -176,7 +244,8 @@ const CCForm = () => {
                             type="date"
                             placeholder="Enter Expiry Date"
                             label="Expiry Date :"
-                            validators={[VALIDATOR_REQUIRE(),VALIDATOR_DATE()]}
+                            initialValue={formState.inputs.expiredate.value}
+                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_DATE()]}
                             errorText="Please Enter a Expiry date."
                             onInput={inputHandler}
                           />
