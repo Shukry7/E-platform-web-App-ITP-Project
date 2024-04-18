@@ -8,7 +8,10 @@ const CustomerLogin = async (req,res) => {
     .then(user =>{
       if(user) {
         if(user.password === password) {
-          res.json("Success")
+          res.json({
+            message: 'Success',
+            user: user
+          })
         } else{
           res.json("The password is incorrect")
         }

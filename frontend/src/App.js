@@ -40,10 +40,14 @@ import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
 import Loader from "./Shared/Components/UiElements/Loader";
 import Attendance from "./Employee/Pages/listAttendance";
+import { AuthProvider } from './Shared/Components/context/authcontext';
 
 const App = () => {
+
+  
+
   return (
-    
+    <AuthProvider >
     <Router>
       <Routes >
         <Route path="/Dashboard" exact element={<Dashboard/>}/>
@@ -87,6 +91,7 @@ const App = () => {
         <Route path="/Loader" exact element={<Loader/>}/>
       </Routes >
     </Router>
+    </AuthProvider>
   );
 };
 

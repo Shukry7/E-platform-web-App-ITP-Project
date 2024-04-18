@@ -108,7 +108,7 @@ const UpdateProduct = async (req, res) => {
   }
 };
 
-const UpdateProductPriceAndQty = async (req, res) => {
+const UpdateProductPriceQtyndStock = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await Product.findByIdAndUpdate(id, req.body);
@@ -153,5 +153,5 @@ exports.listProduct = listProduct;
 exports.UpdateProduct = UpdateProduct;
 exports.listProductById = listProductById;
 exports.DeleteProduct = DeleteProduct;
-exports.UpdateProductPriceAndQty = UpdateProductPriceAndQty;
+exports.UpdateProductPriceQtyndStock = UpdateProductPriceQtyndStock;
 exports.listRestockProduct = listRestockProduct

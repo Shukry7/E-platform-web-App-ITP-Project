@@ -64,6 +64,7 @@ app.use("/delivery", DeliveryRoute);
 app.use("/cart", cart);
 app.use("/OffPay", OffPay);
 app.use("/OnPay", OnPay);
+app.use("/Login" , LoginRoute)
 app.use("/order", OrderRoute);
 app.use('/uploads/images', express.static(path.join('uploads','images')))
 
