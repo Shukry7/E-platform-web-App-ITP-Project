@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProductTable from "./Components/ProductTable";
 import Card from "../../Shared/Components/UiElements/Card";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
-import { MdOutlineAddBox } from "react-icons/md";
-import { Link } from "react-router-dom";
 import Search from "../../Shared/Components/UiElements/Search";
 import Pagination from "../../Shared/Components/FormElements/Pagination";
+import RSProductTable from "./Components/RSProductTable";
 import Header from "../../Shared/Components/UiElements/header";
 
-const Products = () => {
+const RestockProduct = () => {
   const [products, setProducts] = useState([]);
   const [displayProducts, setDisplayProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [deleteProduct, setDeleteProduct] = useState(1);
   const [FilteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activePage, setActivePage] = useState(1);
@@ -21,7 +18,7 @@ const Products = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/product")
+      .get("http://localhost:5000/product/RestockProduct/")
       .then((res) => {
         setProducts(res.data);
         setLoading(false);
@@ -30,7 +27,7 @@ const Products = () => {
         console.error(err);
         setLoading(true);
       });
-  }, [deleteProduct]);
+  }, []);
 
   const handlePageChange = (page) => {
     setActivePage(page);
@@ -65,22 +62,17 @@ const Products = () => {
         <Header/>
         <Card className="flex" style={{ width: "100%" }}>
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl my-8">Product List</h1>
+            <h1 className="text-3xl my-8">Restock Product List</h1>
             <Search
               searchTerm={searchTerm}
               handleSearch={handleSearch}
               placeholder={"Search By ID / Name"}
             />
-            <Link to="/Product/new">
-              <MdOutlineAddBox className="text-sky-800 text-4xl" />
-            </Link>
           </div>
-          <ProductTable
+          <RSProductTable
             Product={displayProducts}
             loading={loading}
             setLoading={setLoading}
-            dltset={setDeleteProduct}
-            dlt={deleteProduct}
             active={activePage}
             itemsPerPage={6}
           />
@@ -96,4 +88,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default RestockProduct; 

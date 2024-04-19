@@ -10,7 +10,7 @@ const Table = (props) => {
           {props.Headings.map((heading)=>{
 
             return (
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class={props.Style || "px-6 py-3"}>
                 {heading}
             </th>
             )

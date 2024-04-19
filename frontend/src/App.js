@@ -6,6 +6,7 @@ import {
 import AddProduct from "./Product/Pages/Addproduct";
 import Updateproduct from "./Product/Pages/Updateproduct";
 import Products from "./Product/Pages/Products";
+import RestockProduct from "./Product/Pages/RestockProduct"
 import Suppliers from "./Supplier/Pages/Suppliers";
 import CreateSupplier from "./Supplier/Pages/CreateSupplier";
 import Updatesupplier from "./Supplier/Pages/Updatesupplier";
@@ -54,6 +55,7 @@ const App = () => {
         <Route path="/Product" exact element={<Products/>}/>
         <Route path="/Product/update/:id" exact element={<Updateproduct/>}/> 
         <Route path="/Product/new" exact element={<AddProduct/>}/>
+        <Route path="/Product/Restock" exact element={<RestockProduct/>}/>
         <Route path="/Supplier" exact element={<Suppliers/>}/>
         <Route path="/Supplier/create" exact element={<CreateSupplier/>}/>
         <Route path="/Supplier/update/:id" exact element={<Updatesupplier/>}/>
