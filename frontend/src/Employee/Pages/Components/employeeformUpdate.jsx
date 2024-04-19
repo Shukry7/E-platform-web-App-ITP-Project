@@ -27,7 +27,7 @@ const EmployeeformUpdate = () => {
   { value: "Manager" },
   { value: "Store Keeper" },
   { value: "Cashier" },
-  { value: "Others"},
+  { value: "Glass cutter"},
   ];
   const [loading, setLoading] = useState(false);
   const [formState, inputHandler, setFormData] = useForm(
@@ -227,7 +227,7 @@ const EmployeeformUpdate = () => {
                             type="number"
                             initialValue={formState.inputs.hourlywage.value}
                             placeholder="Enter Hourly Wage"
-                            label="Hourly Wage :"
+                            label="Daily Wage :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter wage."
                             onInput={inputHandler}
