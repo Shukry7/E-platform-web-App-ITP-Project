@@ -14,6 +14,7 @@ const EmployeeRoute = require("./Routes/EmployeeRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
 const OnPay = require("./Routes/OnlinePayRoute");
 const AttendanceRoute = require("./Routes/AttendanceRoute");
+const LoginRoute = require("./Routes/LoginRoute")
 const cart = require("./Routes/CartRoute");
 const CustomerRoute = require("./Routes/CustomerRoute");
 const OrderRoute = require('./Routes/OrderRoute');
@@ -74,7 +75,6 @@ app.use('/uploads/images', express.static(path.join('uploads','images')))
 
 
 const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => console.log(`Server running on port ${PORT} 🔥`));
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
