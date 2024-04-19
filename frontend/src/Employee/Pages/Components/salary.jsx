@@ -9,6 +9,7 @@ const SalaryCalculatorForm = () => {
   const [bonus, setBonus] = useState(0);
   const [salary, setSalary] = useState(0);
   const [Employee, setEmployee] = useState([]);
+  const [Total, setTotal] = useState(0);
 
   useEffect(() => {
     // Fetch employee IDs when the component mounts
@@ -45,6 +46,7 @@ const SalaryCalculatorForm = () => {
     const sal = (dailywage * noOfDays);
     const totalSalary = (sal + parseInt(bonus));
     setSalary(totalSalary);
+    setTotal(totalSalary)
   };
 
   return (
@@ -105,6 +107,7 @@ const SalaryCalculatorForm = () => {
             className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
+        
         <button
           type="button"
           onClick={handleCalculateSalary}
@@ -112,10 +115,16 @@ const SalaryCalculatorForm = () => {
         >
           Calculate Salary
         </button>
+        <label htmlFor="bonus" className="block mb-1">Net salary</label>
+          <input
+            id="salary"
+            type="number"
+            value={Total}
+            onChange={e => setBonus(e.target.value)}
+            className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+          />
       </form>
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold">Total Salary: {salary}</h3>
-      </div>
+     
     </div>
   );
 };

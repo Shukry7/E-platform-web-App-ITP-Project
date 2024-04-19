@@ -24,7 +24,7 @@ const Type = [
   { value: "Manager" },
   { value: "Store Keeper" },
   { value: "Cashier" },
-  {value: "Others"},
+  {value: "Glass cutter"},
 ];
 
 const EmployeeForm = () => {
@@ -181,7 +181,7 @@ const EmployeeForm = () => {
                             id="hourlywage"
                             type="number"
                             placeholder="Enter Hourly Wage"
-                            label="Hourly Wage :"
+                            label="Daily Wage :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter wage."
                             onInput={inputHandler}
