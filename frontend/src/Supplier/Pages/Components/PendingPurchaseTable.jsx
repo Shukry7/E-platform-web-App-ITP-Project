@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import "./SupplierTable.css";
 import axios from "axios";
@@ -9,6 +9,21 @@ import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import PopUpPurchase from "./PopUpPurchase";
 
 const PendingPurchaseTable = (props) => {
+
+  const [pid, setPid] = useState();
+
+  const submitHandler = async (itemId) => {
+ 
+    console.log(itemId)
+    axios
+      .put(`http://localhost:5000/supplierproduct/confirmDelivery/${itemId}`)
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   const Headings = [
     "#",
@@ -40,6 +55,7 @@ const PendingPurchaseTable = (props) => {
                             <PopUpPurchase
                                 id = {item._id}
                             />
+                            <button onClick={() => submitHandler(item._id)} type="button" class="mt-3 text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-400 dark:hover:bg-blue-400 dark:focus:ring-blue-500">Confirm delivery</button>
                         </td>
                         </TableRow>
                     );

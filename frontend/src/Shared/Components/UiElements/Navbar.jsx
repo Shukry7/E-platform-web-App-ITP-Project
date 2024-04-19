@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
 
   const [isDropdownOpenSupplier, setIsDropdownOpenSupplier] = useState(false);
+  const [count, setCount] = useState()
 
   const toggleDropdownSupplier = () => {
     setIsDropdownOpenSupplier(!isDropdownOpenSupplier);
   };
 
-
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/supplierproduct/pendingCount/count`)
+      .then((res) => {
+        setCount(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   return (
     <>
@@ -200,7 +211,7 @@ const Navbar = () => {
                     >
                       Pending Orders
                       <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                        3
+                        {count}
                       </span>
                     </Link>
                   </li>

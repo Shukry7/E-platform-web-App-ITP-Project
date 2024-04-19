@@ -40,7 +40,7 @@ function PopUpPurchase(props) {
             
           onClick={togglemodel}
         >
-          <center className="pr-10">
+          <center className="pr-16">
             <GrView />
           </center>
         </Link>
