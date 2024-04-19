@@ -14,7 +14,6 @@ const EmployeeRoute = require("./Routes/EmployeeRoute");
 const OffPay = require("./Routes/OfflinePaymentRoute");
 const OnPay = require("./Routes/OnlinePayRoute");
 const AttendanceRoute = require("./Routes/AttendanceRoute");
-const LoginRoute = require("./Routes/LoginRoute")
 const cart = require("./Routes/CartRoute");
 const CustomerRoute = require("./Routes/CustomerRoute");
 const OrderRoute = require('./Routes/OrderRoute');
