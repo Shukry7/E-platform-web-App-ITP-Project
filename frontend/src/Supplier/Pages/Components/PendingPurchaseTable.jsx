@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import "./SupplierTable.css";
 import axios from "axios";
@@ -7,6 +7,7 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import PopUpPurchase from "./PopUpPurchase";
+import ConfirmDeliveryBox from "./ConfirmDeliveryBox";
 
 const PendingPurchaseTable = (props) => {
 
@@ -40,6 +41,7 @@ const PendingPurchaseTable = (props) => {
                             <PopUpPurchase
                                 id = {item._id}
                             />
+                            <ConfirmDeliveryBox id = {item._id}/>
                         </td>
                         </TableRow>
                     );
