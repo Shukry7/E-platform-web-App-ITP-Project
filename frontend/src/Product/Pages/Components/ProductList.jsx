@@ -1,7 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from '../../../Shared/Components/context/authcontext';
 
 const ProductList = () => {
+
+  const auth = useContext(AuthContext)
+  console.log(auth.cusId)
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 

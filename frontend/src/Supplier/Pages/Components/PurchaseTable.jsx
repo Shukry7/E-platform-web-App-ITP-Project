@@ -18,6 +18,7 @@ const PurchaseTable = (props) => {
     "Total Bill",
     "Paid Amount",
     "Date",
+    "Status",
     "Action",
   ];
 
@@ -37,6 +38,7 @@ const PurchaseTable = (props) => {
                   <td class="px-6 py-4">{item.total}</td>
                   <td class="px-6 py-4">{item.paidAmount}</td>
                   <td class="py-4">{item.date}</td>
+                  <td class="px-6 py-4">{item.status}</td>
                   <td class="py-3">
                     <PopUpPurchase
                         id = {item._id}

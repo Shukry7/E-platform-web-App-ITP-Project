@@ -36,7 +36,7 @@ const Pagination = ({ active, totalItems, itemsPerPage, onPageChange }) => {
           <IconButton
             key={index}
             variant={active === index + 1 ? "filled" : "text"} // Fix variant calculation
-            color="gray"
+            color="light-blue"
             onClick={() => handlePageClick(index + 1)}
           >
             {index + 1}

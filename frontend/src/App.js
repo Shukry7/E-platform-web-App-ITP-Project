@@ -11,6 +11,7 @@ import CreateSupplier from "./Supplier/Pages/CreateSupplier";
 import Updatesupplier from "./Supplier/Pages/Updatesupplier";
 import ViewSupplier from "./Supplier/Pages/ViewSupplier";
 import ViewPurchase from "./Supplier/Pages/ViewPurchase";
+import ViewPendingPurchase from "./Supplier/Pages/ViewPendingPurchase";
 import Delivery from "./Delivery/Pages/Delivery";
 import CreateDelivery from "./Delivery/Pages/CreateDelivery";
 import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
@@ -28,7 +29,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import Cart from "./Cart/Pages/Cart";
 import Offpay from "./Payment/Pages/OfflinePayment";
 import CC from "./Payment/Pages/CreditCard"
-
+import UpdateCC from "./Payment/Pages/Components/CCUpdateForm";
 import ViewCustomer from "./Customer/ViewCustomer";
 import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecustomer"
 import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
@@ -39,10 +40,14 @@ import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
 import Loader from "./Shared/Components/UiElements/Loader";
 import Attendance from "./Employee/Pages/listAttendance";
+import { AuthProvider } from './Shared/Components/context/authcontext';
 
 const App = () => {
+
+  
+
   return (
-    
+    <AuthProvider >
     <Router>
       <Routes >
         <Route path="/Dashboard" exact element={<Dashboard/>}/>
@@ -54,6 +59,7 @@ const App = () => {
         <Route path="/Supplier/update/:id" exact element={<Updatesupplier/>}/>
         <Route path="/Supplier/view/:id" exact element={<ViewSupplier/>}/>
         <Route path="/Supplier/purchase" exact element={<ViewPurchase/>}/>
+        <Route path="/Supplier/pendingpurchase" exact element={<ViewPendingPurchase/>}/>
         <Route path="/Delivery" exact element={<Delivery/>}/>
         <Route path="/Delivery/create" exact element={<CreateDelivery/>}/>
         <Route path="/Delivery/update/:id" exact element={<UpdateDelivery/>}/>
@@ -69,7 +75,8 @@ const App = () => {
         <Route path="/Cart" exact element={<Cart/>}/>
         <Route path="/offpay" exact element={<Offpay/>}/>
         <Route path="/CC" exact element={<CC/>}/>
-        
+        <Route path="/CC/:id" exact element={<UpdateCC/>}/>
+        <Route path="/CC/new" exact element={<CCForm/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
         <Route path="/ProductList" exact element={<ProductList/>}/>
         <Route path="/ProductList/Details" exact element={<ProductDetails/>}/>
@@ -84,6 +91,7 @@ const App = () => {
         <Route path="/Loader" exact element={<Loader/>}/>
       </Routes >
     </Router>
+    </AuthProvider>
   );
 };
 

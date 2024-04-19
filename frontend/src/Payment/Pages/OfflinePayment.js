@@ -7,13 +7,16 @@ import { useForm } from "../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Shared/Components/UiElements/Loader";
 
-
-const ProductForm = () => {
+const CreditForm = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [formState, inputHandler] = useForm(
     {
+      userId: {
+        value: "",
+        isValid: true,
+      },
       image: {
         value: null,
         isValid: true,
@@ -25,9 +28,9 @@ const ProductForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
-    console.log(formState.inputs)
+    console.log(formState.inputs);
     const formData = new FormData();
-    formData.append('image',formState.inputs.image.value);
+    formData.append("image", formState.inputs.image.value);
 
     axios
       .post("http://localhost:5000/offpay/new", formData)
@@ -51,36 +54,44 @@ const ProductForm = () => {
           <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
             <div class="container mx-auto">
               <div>
-                <h2 class="font-semibold text-xl text-gray-600 text-center">Add Product</h2>
-                <p class="text-gray-500 mb-6 text-center">Enter Product details below !!</p>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">
+                  Offline Payment
+                </h2>
+                <p class="text-gray-500 mb-6 text-center">
+                  Submit your offline payment details
+                </p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-1 gap-y-2text-sm grid-cols-1 lg:grid-cols-3">
-                  <div class="text-gray-600 flex justify-center items-center">
-                    
+                    <div class="text-gray-600 flex justify-center items-center">
                       <ImageUpload center id="image" onInput={inputHandler} />
-                      </div>
-                    <div class="md:col-span-5 text-right">
-                          <div class="inline-flex items-end">
-                            <Button
-                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                              type="submit"
-                              disabled={!formState.isValid}
-                            >
-                              Submit
-                            </Button>
-                            </div>
-                        </div>
-                          </div>
+                    </div>
+                    <div class="lg:col-span-2">
+                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                        <div class="md:col-span-5">
+                          <span>Google Ceo</span>
                         </div>
                       </div>
                     </div>
+                    <div class="md:col-span-5 text-right">
+                      <div class="inline-flex items-end">
+                        <Button
+                          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          type="submit"
+                          disabled={!formState.isValid}
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                    </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </form>
   );
 };
 
-export default ProductForm;
-
-
+export default CreditForm;

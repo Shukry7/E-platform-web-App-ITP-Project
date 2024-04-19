@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CreditTable.css'
+import { Link } from 'react-router-dom';
+import DeleteConfirmBox from "../../../Shared/Components/UiElements/DeleteConfirmBox"
 
 function CardList() {
   const [cards, setCards] = useState([]);
+  const [deleteCart,setdeleteCart] = useState(1);
+  
 
   useEffect(() => {
     // Fetch cart items when component mounts
@@ -17,7 +21,7 @@ function CardList() {
   }, []);
 return(
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table3">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -34,6 +38,9 @@ return(
                 </th>
                 <th scope="col" class="px-6 py-3">
                     CVV
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Usage
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Edit
@@ -62,10 +69,13 @@ return(
                 {card.cvv}
                 </td>
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Use</a>
+                </td>
+                <td class="px-6 py-4 font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                    <Link to={`/CC/${card._id}`} > Update</Link>
                 </td>
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                    <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" ><DeleteConfirmBox deleteLink={`http://localhost:5000/OnPay/${card._id}`} dlt={deleteCart} dltset={setdeleteCart}/></button>
                 </td>
             </tr>
             ))}

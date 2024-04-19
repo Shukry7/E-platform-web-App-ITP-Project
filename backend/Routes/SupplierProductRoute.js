@@ -14,6 +14,8 @@ Router.get("/addproduct/:id", SupplierProductControllers.listProductsNotAssigned
 Router.post("/purchase", SupplierProductControllers.SupplierPurchase)
 Router.get("/purchase/list", SupplierProductControllers.listPurchase)
 Router.get("/purchase/list/:id", SupplierProductControllers.listOnePurchasedetails)
+Router.put("/confirmDelivery/:id", SupplierProductControllers.confirmDelivery)
+Router.get("/pendingCount/count", SupplierProductControllers.pendingOrderCount)
 
 
 module.exports = Router;
