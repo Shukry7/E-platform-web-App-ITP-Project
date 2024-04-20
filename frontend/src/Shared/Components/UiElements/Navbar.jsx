@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const [isDropdownOpenSupplier, setIsDropdownOpenSupplier] = useState(false);
   const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(false);
+  const [isDropdownOpenEmployee, setIsDropdownOpenEmployee] = useState(false);
   const [count, setCount] = useState();
   const [RestockCount, setRestockCount] = useState();
 
@@ -14,6 +15,10 @@ const Navbar = () => {
 
   const toggleDropdownProduct = () => {
     setIsDropdownOpenProduct(!isDropdownOpenProduct);
+  };
+
+  const toggleDropdownEmployee = () => {
+    setIsDropdownOpenEmployee(!isDropdownOpenEmployee);
   };
 
   useEffect(() => {
@@ -102,7 +107,7 @@ const Navbar = () => {
               <button
                 type="button"
                 className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                onClick={toggleDropdownSupplier}
+                onClick={toggleDropdownEmployee}
               >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
@@ -118,7 +123,7 @@ const Navbar = () => {
                 </span>
                 <svg
                   className={`w-3 h-3 ${
-                    isDropdownOpenSupplier ? "transform rotate-180" : ""
+                    isDropdownOpenEmployee ? "transform rotate-180" : ""
                   }`}
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +139,7 @@ const Navbar = () => {
                   />
                 </svg>
               </button>
-              {isDropdownOpenSupplier && (
+              {isDropdownOpenEmployee && (
                 <ul className="py-2 space-y-2">
                   <li>
                     <Link

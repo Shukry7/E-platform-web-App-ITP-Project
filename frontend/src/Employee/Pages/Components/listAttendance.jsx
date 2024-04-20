@@ -41,10 +41,11 @@ const AttendanceTable = (props) => {
   const Headings = [
     "#",
     "Employee ID",
-    "Employee name"
+    "Employee name",
+    "Days Worked"
   ];
-  for(let i = 3 ; i<=13 ; i++){
-    Headings[i] = `${day2 - (i-3)}/${months2}`
+  for(let i = 4 ; i<=23 ; i++){
+    Headings[i] = `${day2 - (i-4)}/${months2}`
   }
 
 
@@ -62,6 +63,10 @@ const AttendanceTable = (props) => {
       });
   }, []);
 
+   const getPresentDaysCount = (employeeAttendance) => {
+    return employeeAttendance.filter((attendance) => attendance.status === "Present").length;
+  };
+
   return (
     <>
       <Table Headings={Headings} style={{ width: "100%" }}>
@@ -75,6 +80,7 @@ const AttendanceTable = (props) => {
 
               const employeeAttendance = props.Attendance.filter(attendance => attendance.employee.ID === item.ID);
               console.log(employeeAttendance)
+              const presentDaysCount = getPresentDaysCount(employeeAttendance);
               return (
                 <>
                   <TableRow>
@@ -86,9 +92,10 @@ const AttendanceTable = (props) => {
                     >
                       {item.name}
                     </th>
+                    <td className="px-6 py-4">{presentDaysCount}</td>
                     {employeeAttendance.map((attendence) => {
                       return(
-                      <td key={index} className="px-6 py-4">{attendence.status}</td>)
+                      <td key={index} className={`px-6 py-4 ${attendence.status === 'Present' ? 'text-green-500' : 'text-red-500'}`} >{attendence.status}</td>)
                     })}
                   </TableRow>
                 </>
@@ -103,3 +110,4 @@ const AttendanceTable = (props) => {
 };
 
 export default AttendanceTable;
+

@@ -1,12 +1,14 @@
 import React from "react";
 import Card from "../../Shared/Components/UiElements/Card";
-import ProductformUpdate from "./Components/employeeformUpdate";
+import Navbar from "../../Shared/Components/UiElements/Navbar";
 import SalaryCalculatorForm from "./Components/salary";
 
 const Salaryform = () => {
   return (
     <>
-      <Card className="flex" style={{ width: "80%" }}>
+     <Navbar />
+
+      <Card className="flex" style={{ width: "80%" ,height:"20%"}}>
         <SalaryCalculatorForm />
       </Card>
     </>

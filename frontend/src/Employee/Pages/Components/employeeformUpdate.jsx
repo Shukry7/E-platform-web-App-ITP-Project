@@ -5,6 +5,7 @@ import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
 import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
 import {SnackbarProvider, useSnackbar} from 'notistack';
 import Button from "../../../Shared/Components/FormElements/Button";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 import {
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MIN,
@@ -119,7 +120,7 @@ const EmployeeformUpdate = () => {
       })
       .then((res) => {
         setLoading(false);
-        enqueueSnackbar('Employee updated successfully',{variant:'success'});
+        Toast("Employee Updated Successfully!! 🔥","success")
         navigate("/Employee/");
       })
       .catch((err) => {

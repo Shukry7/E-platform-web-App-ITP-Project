@@ -50,6 +50,14 @@ const MarkAttendance = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true)
+
+    const alreadySubmitted = attendanceRecords.some(record => record.date === dateTimeString);
+
+  if (alreadySubmitted) {
+    // Show a toast message or alert indicating that attendance has already been submitted
+    Toast("Attendance for today has already been submitted!", "info");
+    return; // Exit early if attendance has already been submitted
+  }
     axios
       .post("http://localhost:5000/attendance/mark", {
         employee: attendanceRecords,
@@ -65,6 +73,8 @@ const MarkAttendance = () => {
       });
 
     console.log("Attendance Records:", attendanceRecords);
+
+    
   };
 
   const handleStatusChange = (employee, date, status) => {
