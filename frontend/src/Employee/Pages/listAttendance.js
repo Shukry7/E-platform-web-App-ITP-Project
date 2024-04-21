@@ -38,8 +38,6 @@ const Attendance = () => {
       .get("http://localhost:5000/attendance/attendancelist")
       .then(res => {
         setattendance(res.data)
-        console.log(res.data)
-        console.log(filteredAttendance)
         setLoading(false)
       })
       .catch(err => {
@@ -65,7 +63,7 @@ const Attendance = () => {
         </div>
         <AttendanceTable
         
-        Attendance={filteredAttendance} 
+        Attendance={attendance} 
         loading={loading} 
         setloading={setLoading}
         
