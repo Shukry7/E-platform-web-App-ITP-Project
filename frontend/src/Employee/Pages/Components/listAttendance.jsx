@@ -44,7 +44,7 @@ const AttendanceTable = (props) => {
     "Employee name",
     "Days Worked"
   ];
-  for(let i = 4 ; i<=23 ; i++){
+  for(let i = 4 ; i<=24 ; i++){
     Headings[i] = `${day2 - (i-4)}/${months2}`
   }
 
@@ -110,4 +110,5 @@ const AttendanceTable = (props) => {
 };
 
 export default AttendanceTable;
+
 
