@@ -241,7 +241,7 @@ const EmployeeformUpdate = () => {
                               type="submit"
                               disabled={!formState.isValid}
                             >
-                              Submit
+                              Update
                             </Button>
                           </div>
                         </div>
