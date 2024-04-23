@@ -10,7 +10,7 @@ const CheckoutPage = () => {
     // Fetch cart items from the server
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get('/api/cart');
+        const response = await axios.get('/Cart/cart');
         setCartItems(response.data);
         setIsLoading(false);
       } catch (error) {
