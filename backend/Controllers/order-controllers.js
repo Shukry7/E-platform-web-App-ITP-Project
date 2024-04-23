@@ -18,10 +18,10 @@ createOrder = async (req, res) => {
 
       const newOrder = {
         userId: userId,
-        cartItems: items
-      };
+        CartItems: items
+      }; 
   
-      // Save the order to the database
+      // Save the order to 
       const order = await Order.create(newOrder);
   
       // Respond with a success message
