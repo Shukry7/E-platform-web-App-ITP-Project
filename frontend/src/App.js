@@ -36,11 +36,11 @@ import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecu
 import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
 import UpdateWholesalecustomer from "./Wholesalecustomer/Pages/UpdateWholesalecustomer";
 import LoginPage from "./Login/LoginPage";
-import ProductList from "./Product/Pages/Components/ProductList";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
 import Loader from "./Shared/Components/UiElements/Loader";
 import Attendance from "./Employee/Pages/listAttendance";
+import ProductCustomerUI from "./Product/Pages/ProductCustomerUI"
 import { AuthProvider } from './Shared/Components/context/authcontext';
 
 const App = () => {
@@ -52,6 +52,7 @@ const App = () => {
     <Router>
       <Routes >
         <Route path="/Dashboard" exact element={<Dashboard/>}/>
+        <Route path="/products" exact element={<ProductCustomerUI/>}/>
         <Route path="/Product" exact element={<Products/>}/>
         <Route path="/Product/update/:id" exact element={<Updateproduct/>}/> 
         <Route path="/Product/new" exact element={<AddProduct/>}/>
@@ -80,8 +81,7 @@ const App = () => {
         <Route path="/CC/:id" exact element={<UpdateCC/>}/>
         <Route path="/CC/new" exact element={<CCForm/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
-        <Route path="/ProductList" exact element={<ProductList/>}/>
-        <Route path="/ProductList/Details" exact element={<ProductDetails/>}/>
+        <Route path="/ProductList/:id" exact element={<ProductDetails/>}/>
         <Route path="/Login" exact element={<LoginPage/>}/>
         <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>

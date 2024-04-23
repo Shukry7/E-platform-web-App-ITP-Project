@@ -10,6 +10,8 @@ const SalaryCalculatorForm = () => {
   const [salary, setSalary] = useState(0);
   const [Employee, setEmployee] = useState([]);
   const [Total, setTotal] = useState(0);
+  const [attendance, setattendance] = useState([]);
+  const [Loading , setLoading] = useState(false)
 
 
   var now = new Date();
@@ -29,6 +31,20 @@ const SalaryCalculatorForm = () => {
   }, []);
 
   useEffect(() => {
+    setLoading(true)
+    axios
+      .get("http://localhost:5000/attendance/attendancelist")
+      .then(res => {
+        setattendance(res.data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error(err)
+        setLoading(false)
+      });
+  }, [])
+
+  useEffect(() => {
     // Fetch employee data when empid changes
     if (empid) {
       axios.get(`http://localhost:5000/employee/salaryform/${empid}`)
@@ -41,6 +57,19 @@ const SalaryCalculatorForm = () => {
         .catch(error => {
           console.error('Error fetching employee data:', error);
         });
+        let employeeAttendance = attendance.filter((attendance) => {
+          if (attendance && attendance.employee) {
+            return attendance.employee._id === empid;
+          }
+          return false;
+        })
+        setNoOfDays(() => {
+          return employeeAttendance.filter(
+            (attendance) => attendance.status === "Present"
+          ).length;
+        })
+
+
     }
   }, [empid , setEmpid]);
 
@@ -103,7 +132,7 @@ const SalaryCalculatorForm = () => {
             id="noOfDays"
             type="number"
             value={noOfDays}
-            onChange={e => setNoOfDays(e.target.value)}
+            readOnly
             className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>

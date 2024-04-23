@@ -11,7 +11,7 @@ const ProductDetails = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5000/product/update/661bc1a3c68f6174031a5eb4`)
+      .get(`http://localhost:5000/product/update/${id}`)
       .then((res) => {
         setProduct(res.data)
         setLoading(false);
