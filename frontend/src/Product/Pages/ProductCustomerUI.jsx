@@ -40,6 +40,7 @@ const ProductCustomerUI = () => {
   useEffect(() => {
     console.log(products);
     filterProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products, searchTerm, selectedCategories, minPrice, maxPrice]);
 
   const handleSearch = (e) => {
@@ -299,7 +300,7 @@ const ProductCustomerUI = () => {
           </aside>
           <div className="mt-6 lg:mt-0 lg:col-span-4 ">
             <div className="opacity-75 border border-gray-300 border-dashed rounded-lg overflow-hidden h-96 lg:h-full relative">
-              <ProductList products={FilteredProducts} />
+              <ProductList products={FilteredProducts} loading={loading} />
             </div>
           </div>
         </div>

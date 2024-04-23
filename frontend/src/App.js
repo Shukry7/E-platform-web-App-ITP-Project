@@ -42,6 +42,7 @@ import Loader from "./Shared/Components/UiElements/Loader";
 import Attendance from "./Employee/Pages/listAttendance";
 import ProductCustomerUI from "./Product/Pages/ProductCustomerUI"
 import { AuthProvider } from './Shared/Components/context/authcontext';
+import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
 
 const App = () => {
 
@@ -90,7 +91,7 @@ const App = () => {
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/Login" exact element={<LoginPage/>}/>  
-        <Route path="/Loader" exact element={<Loader/>}/>
+        <Route path="/Loader" exact element={<CustomerLoader/>}/>
       </Routes >
     </Router>
     </AuthProvider>

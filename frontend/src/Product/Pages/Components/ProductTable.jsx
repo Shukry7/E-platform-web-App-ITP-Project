@@ -1,18 +1,14 @@
-import React, { useContext } from "react";
-
+import React from "react";
 import "./ProductTable.css";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import Popup from "./Popup";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
-import { AuthContext } from '../../../Shared/Components/context/authcontext';
 
 const ProductTable = (props) => {
 
-  const auth = useContext(AuthContext)
-
-  console.log(auth.cusId)
+  
   const Headings = [
     "#",
     "Product ID",
