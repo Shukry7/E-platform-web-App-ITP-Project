@@ -12,7 +12,7 @@ import AttendanceTable from "./Components/listAttendance";
 
 const Attendance = () => {
   
-  const [deleteAttendance, setDeleteAttendance] = useState(1);
+ 
   const [attendance, setattendance] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,22 +44,20 @@ const Attendance = () => {
         console.error(err)
         setLoading(false)
       });
-  }, [deleteAttendance])
+  }, [])
   return (
     <><div>
       <Navbar />
 
       <Card className="flex" style={{ width: "100%" }}>
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl my-8">Employee List</h1>
+          <h1 className="text-3xl my-8">Attendance List</h1>
           <Search
                   searchTerm={searchTerm}
                   handleSearch={handleSearch}
                   placeholder={"Search By ID / Name"}
                 />
-          <Link to="/employee/new">
-            <MdOutlineAddBox className="text-sky-800 text-4xl" />
-          </Link>
+          
         </div>
         <AttendanceTable
         

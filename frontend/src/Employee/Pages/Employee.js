@@ -34,6 +34,11 @@ const Employee = () => {
     setFilteredEmployees(filtered);
     setActivePage(1);
   };
+
+  useEffect(() => {
+    setFilteredEmployees(employee);
+    setDisplayEmployee(employee)
+  }, [employee]);
   
   const handlePageChange = (page) => {
     setActivePage(page);
@@ -75,7 +80,7 @@ const Employee = () => {
         </div>
         <EmployeeTable
         
-        Employee={filteredEmployees} 
+        Employee={displayEmployee} 
         loading={loading} 
         setloading={setLoading}
         dlt={deleteEmployee} 
