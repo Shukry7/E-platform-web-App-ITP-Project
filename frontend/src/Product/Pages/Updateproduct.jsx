@@ -1,5 +1,5 @@
 import React from "react";
-import ProductformUpdate from "./Components/productformUpdate";
+import ProductFormUpdate from "./Components/productformUpdate";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
 
 const UpdateProduct = () => {
@@ -7,7 +7,7 @@ const UpdateProduct = () => {
     <>
       <div>
         <Navbar />
-        <ProductformUpdate />
+        <ProductFormUpdate />
       </div>
     </>
   );
