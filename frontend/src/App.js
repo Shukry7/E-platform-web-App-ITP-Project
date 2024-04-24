@@ -72,7 +72,7 @@ const App = () => {
         <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
         <Route path="/Customer/view/:id" exact element={<ViewCustomer/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
-        <Route path="/Cart" exact element={<Cart/>}/>
+        <Route path="/Cart/:id" exact element={<Cart/>}/>
         <Route path="/offpay" exact element={<Offpay/>}/>
         <Route path="/CC" exact element={<CC/>}/>
         <Route path="/CC/:id" exact element={<UpdateCC/>}/>
