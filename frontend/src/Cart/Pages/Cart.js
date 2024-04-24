@@ -27,12 +27,12 @@ const CartPage = () => {
   };
 
   const auth = useContext(AuthContext);
-
+  console.log(auth.cusId)
 
   useEffect(() => {
     // Fetch cart items when component mounts
     axios
-      .get(`http://localhost:5000/cart/list/${auth.id}`)
+      .get(`http://localhost:5000/cart/list/${auth.cusId}`)
       .then((response) => {
         setCart(response.data);
       })

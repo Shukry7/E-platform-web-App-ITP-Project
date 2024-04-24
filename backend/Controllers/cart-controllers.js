@@ -1,18 +1,15 @@
-
-
 // cartController.js
 
-const Cart = require('../Models/CartModel'); // Path to your Cart model
-
+const Cart = require("../Models/CartModel"); // Path to your Cart model
 
 // Create a new cart
 const createCart = async (req, res) => {
-  const { user, product,  quantity } = req.body;
+  const { user, product, quantity } = req.body;
 
   const newCart = {
     user: user,
     product: product,
-    quantity: quantity
+    quantity: quantity,
   };
 
   try {
@@ -27,7 +24,7 @@ const createCart = async (req, res) => {
 // List all carts
 const listCart = async (req, res) => {
   try {
-    const cart = await Cart.find({});
+    const cart = await Cart.find({}).populate("user").populate("product");
     return res.status(200).json(cart);
   } catch (error) {
     console.log(error.message);
@@ -37,15 +34,13 @@ const listCart = async (req, res) => {
 
 // List cart by user ID
 const listCartByUId = async (req, res) => {
-  
-  const userId = req.params
+  const {id} = req.params;
 
   try {
-    
-    const cart = await Cart.find({user:userId}).populate('product');
+    const cart = await Cart.find({ user: id }).populate("product");
 
-    console.log(cart)
-    
+    console.log(cart);
+
     return res.status(200).json(cart);
   } catch (error) {
     console.log(error.message);
@@ -55,24 +50,24 @@ const listCartByUId = async (req, res) => {
 
 // Update a cart
 const updateCart = async (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.params;
 
   try {
-    
-    const cartItem = await Cart.findByIdAndUpdate(id,req.body);
+    const cartItem = await Cart.findByIdAndUpdate(id, req.body);
 
     if (!cartItem) {
       return res.status(404).send({ message: "Cart item not found!" });
     }
 
     // Update the cart item with new info from req.body
-    return res.status(200).send({ message: "Cart updated successfully!", cartItem });
+    return res
+      .status(200)
+      .send({ message: "Cart updated successfully!", cartItem });
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
   }
 };
-
 
 // Delete a cart
 const deleteCart = async (req, res) => {
@@ -81,9 +76,9 @@ const deleteCart = async (req, res) => {
   try {
     const result = await Cart.findByIdAndDelete(id);
     if (!result) {
-      return res.status(404).send({ message: 'Cart Not Found !' });
+      return res.status(404).send({ message: "Cart Not Found !" });
     }
-    return res.status(200).send({ message: 'Item Deleted Successfully!' });
+    return res.status(200).send({ message: "Item Deleted Successfully!" });
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
