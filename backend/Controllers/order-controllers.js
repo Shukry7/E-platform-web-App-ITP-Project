@@ -3,10 +3,10 @@ const Order = require("../Models/OrderModel");
 
 createOrder = async (req, res) => {
   try {
-    const userId = "jdfskje";
+    
 
     // Assuming you receive cart items in the request body
-    const { cartitem } = req.body;
+    const { cartitem,uid } = req.body;
 
     const latestProduct = await Product.find().sort({ _id: -1 }).limit(1);
     let id;
@@ -28,7 +28,7 @@ createOrder = async (req, res) => {
 
     const newOrder = {
       orderId: id,
-      userId: userId,
+      userId: uid,
       CartItems: items,
     };
 

@@ -3,23 +3,23 @@ const mongoose = require('mongoose');
 const OnlinePay = mongoose.Schema(
   {
     uid: {
-      type: String,
-      required: [true, "Please Enter a ID"],
-      trim: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Customer",
+      required: true,
     },
     id: {
       type: String,
-      required: [true, "Please Enter a Name"],
+      required: [true, "Please Enter a id"],
       trim: true,
     },
     firstname: {
       type: String,
-      required: [true, "Please Enter a firstname"],
+      required: [true, "Please Enter a first name"],
       trim: true,
     },
     lastname: {
       type: String,
-      required: [true, "Please Enter a lastname"],
+      required: [true, "Please Enter a last name"],
     },
     cvv: {
       type: String,
@@ -32,7 +32,7 @@ const OnlinePay = mongoose.Schema(
     },
     expiredate: {
       type: String,
-      required: [true, "Please Enter a expiredate"],
+      required: [true, "Please Enter a expire date"],
     },
     number: {
       type: String,

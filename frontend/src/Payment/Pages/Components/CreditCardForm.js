@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
@@ -14,6 +14,7 @@ import {
 import { useForm } from "../../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
+import {AuthContext} from "../../../Shared/Components/context/authcontext";
 
 const Category = [
   { value: "...." },
@@ -24,6 +25,7 @@ const Category = [
 const CCForm = () => {
   const navigate = useNavigate();
 
+  const auth=useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [formState, inputHandler] = useForm(
     {
@@ -59,7 +61,7 @@ const CCForm = () => {
     setLoading(true);
     axios
       .post("http://localhost:5000/Onpay/onpay/new", {
-      
+        uid : auth.cusId,
         firstname: formState.inputs.firstname.value,
         lastname: formState.inputs.lastname.value,
         category: formState.inputs.category.value,

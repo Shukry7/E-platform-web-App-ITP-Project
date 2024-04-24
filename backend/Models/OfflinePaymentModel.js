@@ -3,14 +3,19 @@ const mongoose = require('mongoose');
 
 const offpay = mongoose.Schema(
   {
-    UID: {
-      type: String,
-      trim: true,
+    uid: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Customer",
+      required: true,
     },
     
     image: {
       type: Object,
       default: {},
+    },
+    submissionDate: {
+      type: Date,
+      default: Date.now // Set default value to current date and time
     },
   },
   {
