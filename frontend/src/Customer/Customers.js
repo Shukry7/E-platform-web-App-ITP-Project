@@ -5,10 +5,45 @@ import Card from "../Shared/Components/UiElements/Card";
 import Navbar from "../Shared/Components/UiElements/Navbar";
 import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
+import Search from "../Shared/Components/UiElements/Search";
+import Pagination from "../Shared/Components/FormElements/Pagination";
 
 const Customers = () => {
   const [customers, setcustomer] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [deleteCustomer, setDeleteCustomer] = useState(1);
+  const [displayCustomer, setDisplayCustomer] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredcustomers, setFilteredCustomers] = useState([]);
+  const [activePage, setActivePage] = useState(1);
+
+  useEffect(() => {
+    setFilteredCustomers(customers);
+  }, [customers]);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    const filtered = customers.filter(customers =>
+      customers.name.toLowerCase().includes(e.target.value.toLowerCase())||
+      customers.ID.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredCustomers(filtered);
+    setActivePage(1);
+  };
+
+  useEffect(() => {
+    setFilteredCustomers(customers);
+    setDisplayCustomer(customers)
+  }, [customers]);
+
+  const handlePageChange = (page) => {
+    setActivePage(page);
+  };
+  useEffect(() => {
+    const startIndex = (activePage - 1) * 6;
+    const endIndex = startIndex + 6;
+    setDisplayCustomer(filteredcustomers.slice(startIndex, endIndex));
+  }, [activePage, filteredcustomers]);
 
   useEffect(() => {
     setLoading(true);
@@ -22,7 +57,7 @@ const Customers = () => {
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  }, [deleteCustomer]);
   return (
     <>
       <div>
@@ -30,16 +65,31 @@ const Customers = () => {
         
             <Card className="flex" style={{ width: "100%" }}>
               <div className="flex justify-between items-center">
+              <Search
+                  searchTerm={searchTerm}
+                  handleSearch={handleSearch}
+                  placeholder={"Search By ID / Name"}
+                />
                 <h1 className="text-3xl my-8">Customer List</h1>
                 <Link to="/Customer/create">
                   <MdOutlineAddBox className="text-sky-800 text-4xl" />
                 </Link>
               </div>
               <CustomerTable
+
                 Customers={customers}
                 loading={loading}
                 setloading={setLoading}
+                dlt={deleteCustomer} 
+                dltset={setDeleteCustomer}
               />
+
+              <Pagination
+                  active={activePage}
+                  totalItems={filteredcustomers.length}
+                  itemsPerPage={6}
+                  onPageChange={handlePageChange}
+               />
             </Card>
           
       </div>
