@@ -38,20 +38,20 @@ createOrder = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 
-  const listOrderById = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const order = await Order.findById(id);
-  
-      return res.status(200).json(order);
-    } catch (error) {
-      console.log(error.message);
-      res.status(500).send({ message: error.message });
-    }
-  };
-
-
 };
 
+const listOrder = async (req, res) => {
+  try {
+    
+    const order = await Order.find({}).populate("userId").populate("CartItems.productId");
+
+    return res.status(200).json(order);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+
 exports.createOrder = createOrder;
-exports.listOrderByById = listOrderById;
+exports.listOrder = listOrder;
