@@ -61,7 +61,7 @@ const Products = () => {
   return (
     <>
       <div>
-        <Navbar />
+        <Navbar select={"Product Details"}/>
         <Header/>
         <Card className="flex" style={{ width: "100%" }}>
           <div className="flex items-center justify-between">
