@@ -101,7 +101,7 @@ const CustomerForm = () => {
       .post("http://localhost:5000/customer/", formData)
       .then((res) => {
         setLoading(false);
-        navigate("/Customer/");
+        navigate("/Products/");
       })
       .catch((err) => {
         console.error(err);

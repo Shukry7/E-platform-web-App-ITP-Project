@@ -4,6 +4,7 @@ import TableRow from "../../Shared/Components/UiElements/TableRow";
 import Loader3 from "../../Shared/Components/UiElements/loader3";
 import axios from "axios";
 import SupplierDetails from "./SupplierDetails";
+import { Link } from "react-router-dom";
 
 const Restock = () => {
   const Headings = ["#", "Product ID", "Product name", "Stock", "ReStock"];
@@ -82,8 +83,8 @@ const Restock = () => {
         <div class="flex items-center justify-between pt-3 mt-4 border-t border-gray-200 sm:pt-6 dark:border-gray-700">
           
           <div class="relative left-0-0">
-            <a
-              href="#"
+            <Link
+              to={"../Product/Restock"}
               class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm hover:bg-gray-100 dark:text-primary-500 dark:hover:bg-gray-700"
             >
               See all
@@ -101,7 +102,7 @@ const Restock = () => {
                   d="M9 5l7 7-7 7"
                 ></path>
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
