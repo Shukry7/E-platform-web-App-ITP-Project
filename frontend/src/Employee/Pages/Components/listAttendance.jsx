@@ -27,26 +27,18 @@ const AttendanceTable = (props) => {
   ];
   var dayName = days[now.getDay()];
   var day = now.getDate();
-  var months = now.getMonth() +1;
   var month = now.toLocaleString("default", { month: "long" });
   var year = now.getFullYear();
   var dateTimeString = dayName + ", " + day + " " + month + " " + year;
 
   const date = new Date(dateTimeString);
   var day2 = date.getDate();
-  var months2 = date.getMonth() +1;
-  
-  const formattedDate = `${day2}/${months2}`;
+  var months2 = date.getMonth() + 1;
 
-  const Headings = [
-    "#",
-    "Employee ID",
-    "Employee name"
-  ];
-  for(let i = 3 ; i<=13 ; i++){
-    Headings[i] = `${day2 - (i-3)}/${months2}`
+  const Headings = ["#", "Employee ID", "Employee name", "Days Worked"];
+  for (let i = 4; i <= 24; i++) {
+    Headings[i] = `${day2 - (i - 4)}/${months2}`;
   }
-
 
   useEffect(() => {
     setLoading(true);
@@ -62,6 +54,12 @@ const AttendanceTable = (props) => {
       });
   }, []);
 
+  const getPresentDaysCount = (employeeAttendance) => {
+    return employeeAttendance.filter(
+      (attendance) => attendance.status === "Present"
+    ).length;
+  };
+
   return (
     <>
       <Table Headings={Headings} style={{ width: "100%" }}>
@@ -72,9 +70,26 @@ const AttendanceTable = (props) => {
         ) : (
           <>
             {employee.map((item, index) => {
-
-              const employeeAttendance = props.Attendance.filter(attendance => attendance.employee.ID === item.ID);
+              const employeeAttendance = props.Attendance.filter(
+                (attendance) => {
+                  if (attendance && attendance.employee) {
+                    return attendance.employee._id === item._id;
+                  }
+                  return false;
+                }
+              );
               console.log(employeeAttendance)
+              const presentDaysCount = getPresentDaysCount(employeeAttendance);
+
+              const attendanceMap = {};
+              employeeAttendance.forEach((attendence) => {
+                const attendanceDate = new Date(attendence.date);
+                const day = attendanceDate.getDate();
+                const month = attendanceDate.getMonth() + 1;
+                const formattedDate = `${day}/${month}`;
+                attendanceMap[formattedDate] = attendence.status;
+              });
+
               return (
                 <>
                   <TableRow>
@@ -86,13 +101,23 @@ const AttendanceTable = (props) => {
                     >
                       {item.name}
                     </th>
-                    {employeeAttendance.map((attendence) => {
-                      return(
-                      <td key={index} className="px-6 py-4">{attendence.status}</td>)
-                    })}
+                    <td className="px-6 py-4">{presentDaysCount}</td>
+                    {Headings.slice(4).map((headingDate, dateIndex) => {
+                                const status = attendanceMap[headingDate] || "Pending";
+                                return (
+                                    <td
+                                        key={dateIndex}
+                                        className={`px-6 py-4 ${ status === "Present" && "text-green-500"}  
+                                        ${ status === "Absent" && "text-red-500"}  
+                                        ${ status === "Pending" && "text-yellow-900"}  
+                                        }`}
+                                    >
+                                        {status}
+                                    </td>
+                                );
+                            })}
                   </TableRow>
                 </>
-
               );
             })}
           </>

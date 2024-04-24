@@ -19,6 +19,11 @@ const purchaseSchema = mongoose.Schema(
       type: Date,
       required: [true],
     },
+    status: {
+      type: String,
+      enum: ['Pending', 'Recieved'],
+      default: 'Pending',
+    }
   },
   {
     timestamps: true,

@@ -6,11 +6,13 @@ import {
 import AddProduct from "./Product/Pages/Addproduct";
 import Updateproduct from "./Product/Pages/Updateproduct";
 import Products from "./Product/Pages/Products";
+import RestockProduct from "./Product/Pages/RestockProduct"
 import Suppliers from "./Supplier/Pages/Suppliers";
 import CreateSupplier from "./Supplier/Pages/CreateSupplier";
 import Updatesupplier from "./Supplier/Pages/Updatesupplier";
 import ViewSupplier from "./Supplier/Pages/ViewSupplier";
 import ViewPurchase from "./Supplier/Pages/ViewPurchase";
+import ViewPendingPurchase from "./Supplier/Pages/ViewPendingPurchase";
 import Delivery from "./Delivery/Pages/Delivery";
 import CreateDelivery from "./Delivery/Pages/CreateDelivery";
 import UpdateDelivery from "./Delivery/Pages/UpdateDelivery";
@@ -28,32 +30,40 @@ import Dashboard from "./Dashboard/Dashboard";
 import Cart from "./Cart/Pages/Cart";
 import Offpay from "./Payment/Pages/OfflinePayment";
 import CC from "./Payment/Pages/CreditCard"
-
+import UpdateCC from "./Payment/Pages/Components/CCUpdateForm";
 import ViewCustomer from "./Customer/ViewCustomer";
 import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecustomer"
 import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
 import UpdateWholesalecustomer from "./Wholesalecustomer/Pages/UpdateWholesalecustomer";
 import LoginPage from "./Login/LoginPage";
-import ProductList from "./Product/Pages/Components/ProductList";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
 import Loader from "./Shared/Components/UiElements/Loader";
 import Attendance from "./Employee/Pages/listAttendance";
+import ProductCustomerUI from "./Product/Pages/ProductCustomerUI"
+import { AuthProvider } from './Shared/Components/context/authcontext';
+import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
 
 const App = () => {
+
+  
+
   return (
-    
+    <AuthProvider >
     <Router>
       <Routes >
         <Route path="/Dashboard" exact element={<Dashboard/>}/>
+        <Route path="/products" exact element={<ProductCustomerUI/>}/>
         <Route path="/Product" exact element={<Products/>}/>
         <Route path="/Product/update/:id" exact element={<Updateproduct/>}/> 
         <Route path="/Product/new" exact element={<AddProduct/>}/>
+        <Route path="/Product/Restock" exact element={<RestockProduct/>}/>
         <Route path="/Supplier" exact element={<Suppliers/>}/>
         <Route path="/Supplier/create" exact element={<CreateSupplier/>}/>
         <Route path="/Supplier/update/:id" exact element={<Updatesupplier/>}/>
         <Route path="/Supplier/view/:id" exact element={<ViewSupplier/>}/>
         <Route path="/Supplier/purchase" exact element={<ViewPurchase/>}/>
+        <Route path="/Supplier/pendingpurchase" exact element={<ViewPendingPurchase/>}/>
         <Route path="/Delivery" exact element={<Delivery/>}/>
         <Route path="/Delivery/create" exact element={<CreateDelivery/>}/>
         <Route path="/Delivery/update/:id" exact element={<UpdateDelivery/>}/>
@@ -69,10 +79,10 @@ const App = () => {
         <Route path="/Cart" exact element={<Cart/>}/>
         <Route path="/offpay" exact element={<Offpay/>}/>
         <Route path="/CC" exact element={<CC/>}/>
-        
+        <Route path="/CC/:id" exact element={<UpdateCC/>}/>
+        <Route path="/CC/new" exact element={<CCForm/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
-        <Route path="/ProductList" exact element={<ProductList/>}/>
-        <Route path="/ProductList/Details" exact element={<ProductDetails/>}/>
+        <Route path="/ProductList/:id" exact element={<ProductDetails/>}/>
         <Route path="/Login" exact element={<LoginPage/>}/>
         <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
@@ -81,9 +91,10 @@ const App = () => {
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/Login" exact element={<LoginPage/>}/>  
-        <Route path="/Loader" exact element={<Loader/>}/>
+        <Route path="/Loader" exact element={<CustomerLoader/>}/>
       </Routes >
     </Router>
+    </AuthProvider>
   );
 };
 

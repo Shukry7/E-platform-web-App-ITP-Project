@@ -5,6 +5,7 @@ import Dropdown from "../../../Shared/Components/FormElements/Dropdown";
 import ImageUpload from "../../../Shared/Components/FormElements/ImageUpload";
 import {SnackbarProvider, useSnackbar} from 'notistack';
 import Button from "../../../Shared/Components/FormElements/Button";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 import {
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MIN,
@@ -27,7 +28,7 @@ const EmployeeformUpdate = () => {
   { value: "Manager" },
   { value: "Store Keeper" },
   { value: "Cashier" },
-  { value: "Others"},
+  { value: "Glass cutter"},
   ];
   const [loading, setLoading] = useState(false);
   const [formState, inputHandler, setFormData] = useForm(
@@ -119,7 +120,7 @@ const EmployeeformUpdate = () => {
       })
       .then((res) => {
         setLoading(false);
-        enqueueSnackbar('Employee updated successfully',{variant:'success'});
+        Toast("Employee Updated Successfully!! 🔥","success")
         navigate("/Employee/");
       })
       .catch((err) => {
@@ -227,7 +228,7 @@ const EmployeeformUpdate = () => {
                             type="number"
                             initialValue={formState.inputs.hourlywage.value}
                             placeholder="Enter Hourly Wage"
-                            label="Hourly Wage :"
+                            label="Daily Wage :"
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter wage."
                             onInput={inputHandler}
@@ -240,7 +241,7 @@ const EmployeeformUpdate = () => {
                               type="submit"
                               disabled={!formState.isValid}
                             >
-                              Submit
+                              Update
                             </Button>
                           </div>
                         </div>

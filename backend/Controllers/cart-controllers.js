@@ -4,15 +4,15 @@
 
 const Cart = require('../Models/CartModel'); // Path to your Cart model
 const HttpError = require("../Models/http-error");
+const product = require('../Models/ProductModel');
 
 // Create a new cart
 const createCart = async (req, res) => {
-  const { user, product, price, quantity } = req.body;
+  const { user, product,  quantity } = req.body;
 
   const newCart = {
     user: user,
     product: product,
-    price: price,
     quantity: quantity
   };
 
@@ -43,7 +43,10 @@ const listCartByUId = async (req, res) => {
 
   try {
     
-    const cart = await Cart.find({user:hardcodedUserId});
+    const cart = await Cart.find({user:hardcodedUserId}).populate('product');
+
+    console.log(cart)
+    
     return res.status(200).json(cart);
   } catch (error) {
     console.log(error.message);
@@ -53,20 +56,18 @@ const listCartByUId = async (req, res) => {
 
 // Update a cart
 const updateCart = async (req, res) => {
-  const { user, product } = req.params; // Assuming you have userId and productId in the URL
+  const { id } = req.params; 
 
   try {
-    // Find the cart item based on the user and product
-    const cartItem = await Cart.findOne({ user: user, product: product });
+    
+    const cartItem = await Cart.findByIdAndUpdate(id,req.body);
 
     if (!cartItem) {
       return res.status(404).send({ message: "Cart item not found!" });
     }
 
     // Update the cart item with new info from req.body
-    const updatedCartItem = await Cart.findByIdAndUpdate(cartItem.product, req.body, { new: true });
-
-    return res.status(200).send({ message: "Cart updated successfully!", updatedCartItem });
+    return res.status(200).send({ message: "Cart updated successfully!", cartItem });
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
@@ -76,10 +77,10 @@ const updateCart = async (req, res) => {
 
 // Delete a cart
 const deleteCart = async (req, res) => {
-  const { product } = req.params;
+  const { id } = req.params;
 
   try {
-    const result = await Cart.findByIdAndDelete(product);
+    const result = await Cart.findByIdAndDelete(id);
     if (!result) {
       return res.status(404).send({ message: 'Cart Not Found !' });
     }

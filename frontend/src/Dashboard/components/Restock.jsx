@@ -11,7 +11,6 @@ const Restock = () => {
   const [products, setproducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-
   useEffect(() => {
     setLoading(true);
     axios
@@ -50,29 +49,29 @@ const Restock = () => {
               <Loader3 />
             </center>
           ) : (
-            <Table Headings={Headings}>
-              {products.map((item, index) => {
+            <Table Headings={Headings} Style="px-3 py-3">
+              {products.slice(0, 6).map((item, index) => {
                 return (
                   <TableRow>
                     <td class="px-6 py-4">{index + 1}</td>
-                    <td class="px-6 py-4">{item.ID}</td>
+                    <td class="px-3 py-4">{item.ID}</td>
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
                       {item.name}
                     </th>
 
                     <td
-                      class="px-6 py-4"
+                      class="px-3 py-4"
                       style={{ display: "flex", alignItems: "center" }}
                     >
                       <span style={{ marginRight: "10px" }}>
                         {item.Stock} ({item.Alert_quantity})
                       </span>
                     </td>
-                    <td class="px-6 py-4">
-                      <SupplierDetails id={item._id}/>
+                    <td class="px-3 py-4">
+                      <SupplierDetails id={item._id} />
                     </td>
                   </TableRow>
                 );
@@ -80,9 +79,31 @@ const Restock = () => {
             </Table>
           )}
         </div>
-        
-        
-        
+        <div class="flex items-center justify-between pt-3 mt-4 border-t border-gray-200 sm:pt-6 dark:border-gray-700">
+          
+          <div class="relative left-0-0">
+            <a
+              href="#"
+              class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm hover:bg-gray-100 dark:text-primary-500 dark:hover:bg-gray-700"
+            >
+              See all
+              <svg
+                class="w-4 h-4 ml-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
     </>
   );

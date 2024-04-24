@@ -9,6 +9,15 @@ const SalaryCalculatorForm = () => {
   const [bonus, setBonus] = useState(0);
   const [salary, setSalary] = useState(0);
   const [Employee, setEmployee] = useState([]);
+  const [Total, setTotal] = useState(0);
+  const [attendance, setattendance] = useState([]);
+  const [Loading , setLoading] = useState(false)
+
+
+  var now = new Date();
+  var day = now.getDate() ;
+  var month = now.toLocaleString("default", { month: "long" });
+  var year = now.getFullYear();
 
   useEffect(() => {
     // Fetch employee IDs when the component mounts
@@ -20,6 +29,20 @@ const SalaryCalculatorForm = () => {
         console.error('Error fetching employee IDs:', error);
       });
   }, []);
+
+  useEffect(() => {
+    setLoading(true)
+    axios
+      .get("http://localhost:5000/attendance/attendancelist")
+      .then(res => {
+        setattendance(res.data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error(err)
+        setLoading(false)
+      });
+  }, [])
 
   useEffect(() => {
     // Fetch employee data when empid changes
@@ -34,6 +57,19 @@ const SalaryCalculatorForm = () => {
         .catch(error => {
           console.error('Error fetching employee data:', error);
         });
+        let employeeAttendance = attendance.filter((attendance) => {
+          if (attendance && attendance.employee) {
+            return attendance.employee._id === empid;
+          }
+          return false;
+        })
+        setNoOfDays(() => {
+          return employeeAttendance.filter(
+            (attendance) => attendance.status === "Present"
+          ).length;
+        })
+
+
     }
   }, [empid , setEmpid]);
 
@@ -45,77 +81,90 @@ const SalaryCalculatorForm = () => {
     const sal = (dailywage * noOfDays);
     const totalSalary = (sal + parseInt(bonus));
     setSalary(totalSalary);
+    setTotal(totalSalary)
   };
 
   return (
-    <div className="max-w-md mx-auto my-8 p-6 bg-gray-100 rounded-md shadow-md">
-      <h2 className="text-xl font-bold mb-4">Salary Calculator</h2>
-      <form>
-        <div className="mb-4">
-          <label htmlFor="empid" className="block mb-1">Employee ID:</label>
+    <div className="max-w-md mx-auto my-8 p-4 bg-gray-100 rounded-md shadow-md">
+    
+  <div className="flex justify-between items-center mb-4">
+    <h2 className="text-lg font-bold">Salary Calculator</h2>
+    <h3 className="text-lg ">Month: {month}</h3>
+  </div>
+      <form className="space-y-4">
+        <div className="flex flex-col">
+          <label htmlFor="empid" className="mb-1">Employee ID:</label>
           <select
             id="empid"
             value={empid}
             onChange={e => setEmpid(e.target.value)}
-            className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           >
-            <option onChange={changedetails} >Select Employee ID</option>
+            <option>Select Employee ID</option>
             {Employee.map(id => (
-              <option key={id._id} value={id._id}>{id.ID} {id.name}</option>
+              <option key={id._id} value={id._id}>{id.ID}  {id.name}</option>
             ))}
           </select>
         </div>
-        <div className="mb-4">
-          <label htmlFor="empname" className="block mb-1">Employee Name:</label>
+        <div className="flex flex-col">
+          <label htmlFor="empname" className="mb-1">Employee Name:</label>
           <input
             id="empname"
             type="text"
             value={empname}
             readOnly
-            className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="dailywage" className="block mb-1">Daily Wage:</label>
+        <div className="flex flex-col">
+          <label htmlFor="dailywage" className="mb-1">Daily Wage:</label>
           <input
             id="dailywage"
             type="number"
             value={dailywage}
             readOnly
-            className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="noOfDays" className="block mb-1">No. of Days Worked:</label>
+        <div className="flex flex-col">
+          <label htmlFor="noOfDays" className="mb-1">No. of Days Worked:</label>
           <input
             id="noOfDays"
             type="number"
             value={noOfDays}
-            onChange={e => setNoOfDays(e.target.value)}
-            className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            readOnly
+            className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="bonus" className="block mb-1">Bonus:</label>
+        <div className="flex flex-col">
+          <label htmlFor="bonus" className="mb-1">Bonus:</label>
           <input
             id="bonus"
             type="number"
             value={bonus}
             onChange={e => setBonus(e.target.value)}
-            className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
+        
         <button
           type="button"
           onClick={handleCalculateSalary}
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
         >
           Calculate Salary
         </button>
+        <div>
+          <label htmlFor="bonus" className="mt-4 mb-1">Net salary </label>
+          <input
+            id="salary"
+            type="number"
+            value={Total}
+            onChange={e => setBonus(e.target.value)}
+            className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
       </form>
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold">Total Salary: {salary}</h3>
-      </div>
     </div>
   );
 };

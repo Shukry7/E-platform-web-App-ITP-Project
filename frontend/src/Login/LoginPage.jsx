@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import {useNavigate} from "react-router-dom";
+import { AuthContext } from '../Shared/Components/context/authcontext';
 
 export const LoginPage = () => {
 
+    const auth = useContext(AuthContext)
     const [mail, setMail] = useState()
     const [password, setPassword] = useState()
     const navigate = useNavigate()
@@ -13,10 +15,12 @@ export const LoginPage = () => {
         axios.post('http://localhost:5000/login/', {mail, password})
         .then(res => {
             console.log(res)
-            if(res.data === "Success"){
+            if(res.data.message === "Success"){
+                auth.login(res.data.user._id);
+                console.log(res.data.user)
                 navigate("/ProductList")
             }
-        navigate("/ProductList")
+        
         })
         .catch(err=> console.log(err))
     }

@@ -1,0 +1,37 @@
+const Order = require('../Models/OrderModel');
+
+
+createOrder = async (req, res) => {
+  try {
+    const userId='jdfskje';
+    
+      // Assuming you receive cart items in the request body
+      const { cartitem } = req.body;
+
+      const items = cartitem.map(item => {
+        return {
+          productId: item.product._id,
+          quantity: item.quantity,
+        };
+      })
+      console.log(items)
+
+      const newOrder = {
+        userId: userId,
+        CartItems: items
+      }; 
+  
+      // Save the order to 
+      const order = await Order.create(newOrder);
+  
+      // Respond with a success message
+      res.status(201).json({ message: 'Order placed successfully' });
+    } catch (error) {
+      // Handle errors
+      console.error('Error placing order:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    
+  };
+};
+
+exports.createOrder = createOrder;

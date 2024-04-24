@@ -7,16 +7,20 @@ import Navbar from "../../Shared/Components/UiElements/Navbar";
 import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
 import Search from "../../Shared/Components/UiElements/Search";
+import Pagination from "../../Shared/Components/FormElements/Pagination";
+
 
 
 const Employee = () => {
   const [deleteEmployee, setDeleteEmployee] = useState(1);
+  const [displayEmployee, setDisplayEmployee] = useState([]);
 
   const [employee, setemployee] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState([]);
-  
+  const [activePage, setActivePage] = useState(1);
+
   useEffect(() => {
     setFilteredEmployees(employee);
   }, [employee]);
@@ -28,7 +32,22 @@ const Employee = () => {
     employee.ID.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredEmployees(filtered);
+    setActivePage(1);
   };
+
+  useEffect(() => {
+    setFilteredEmployees(employee);
+    setDisplayEmployee(employee)
+  }, [employee]);
+  
+  const handlePageChange = (page) => {
+    setActivePage(page);
+  };
+  useEffect(() => {
+    const startIndex = (activePage - 1) * 6;
+    const endIndex = startIndex + 6;
+    setDisplayEmployee(filteredEmployees.slice(startIndex, endIndex));
+  }, [activePage, filteredEmployees]);
 
   useEffect(() => {
     setLoading(true)
@@ -61,12 +80,18 @@ const Employee = () => {
         </div>
         <EmployeeTable
         
-        Employee={filteredEmployees} 
+        Employee={displayEmployee} 
         loading={loading} 
         setloading={setLoading}
         dlt={deleteEmployee} 
           dltset={setDeleteEmployee}
         />
+         <Pagination
+            active={activePage}
+            totalItems={filteredEmployees.length}
+            itemsPerPage={6}
+            onPageChange={handlePageChange}
+          />
       </Card>
 
     </div>

@@ -19,7 +19,7 @@ Router.put(
 );
 Router.put(
   "/updatePriceAndQty/:id",
-  ProductControllers.UpdateProductPriceAndQty
+  ProductControllers.UpdateProductPriceQtyndStock
 );
 Router.get("/RestockProduct/", ProductControllers.listRestockProduct);
 

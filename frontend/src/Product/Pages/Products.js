@@ -7,6 +7,7 @@ import { MdOutlineAddBox } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Search from "../../Shared/Components/UiElements/Search";
 import Pagination from "../../Shared/Components/FormElements/Pagination";
+import Header from "../../Shared/Components/UiElements/header";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -61,7 +62,7 @@ const Products = () => {
     <>
       <div>
         <Navbar />
-
+        <Header/>
         <Card className="flex" style={{ width: "100%" }}>
           <div className="flex items-center justify-between">
             <h1 className="text-3xl my-8">Product List</h1>

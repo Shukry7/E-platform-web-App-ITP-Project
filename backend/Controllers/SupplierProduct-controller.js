@@ -226,6 +226,57 @@ const listOnePurchasedetails =  async (req, res) => {
   }
 };
 
+const confirmDelivery = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let qty, stock, newstock, product
+
+    console.log(id)
+
+    const result = await Purchase.findByIdAndUpdate(id, { status: 'Recieved' });
+
+    const supplierProductPurchase = await SupplierProductPurchase.find({purchaseID : id}).populate('purchaseID').populate({
+      path: 'supplier_product',
+      populate: {
+        path: 'supplier'
+      }
+    }).populate({
+      path: 'supplier_product',
+      populate: {
+        path: 'product'
+      }
+    });
+
+    for (const item of supplierProductPurchase) {
+      product = item.supplier_product.product._id;
+      stock = item.supplier_product.product.Stock;
+      qty = item.Quantity;
+      newstock = stock + qty;
+
+      await Product.findByIdAndUpdate(product, { Stock: newstock });
+    }
+    
+
+    res.status(200).json({ success: true, message: "Purchase and items added successfully" });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+const pendingOrderCount = async (req, res) => {
+  try {
+    const pending = await Purchase.find({ status: 'Pending' })
+
+    const count = pending.length;
+    
+    return res.status(200).json(count);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+
+};
 
 
 exports.createSupplierProduct = createSupplierProduct;
@@ -240,3 +291,5 @@ exports.listProductsNotAssignedToSupplier = listProductsNotAssignedToSupplier;
 exports.SupplierPurchase = SupplierPurchase;
 exports.listPurchase = listPurchase;
 exports.listOnePurchasedetails = listOnePurchasedetails;
+exports.confirmDelivery = confirmDelivery;
+exports.pendingOrderCount = pendingOrderCount;

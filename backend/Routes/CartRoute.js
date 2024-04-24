@@ -2,13 +2,14 @@
 
 const express = require('express');
 const router = express.Router();
-const cartController = require('../Controllers/cart-controllers'); // Update the path to your Cart controller
+const cartController = require('../Controllers/cart-controllers'); 
 
-router.post('/add-to-cart', cartController.createCart);
+router.post('/cart/new', cartController.createCart);
 router.get('/', cartController.listCart);
 router.get('/cart/', cartController.listCartByUId);
-router.put('/cart/:userId/:productId', cartController.updateCart);
-router.delete('/:productId', cartController.deleteCart);
+router.put('/cart/:id', cartController.updateCart);
+router.delete('/:id', cartController.deleteCart);
+
 
 module.exports = router;
 

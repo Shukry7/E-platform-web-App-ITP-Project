@@ -4,6 +4,7 @@ import {  useNavigate} from "react-router-dom";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import Input from "../../../Shared/Components/FormElements/input";
 import { GrUpdate } from "react-icons/gr";
+import { PiWarningFill } from "react-icons/pi";
 import {
   VALIDATOR_MIN,
   VALIDATOR_REQUIRE
@@ -19,8 +20,10 @@ const Popup = (props) => {
   const [loading, setLoading] = useState(false);
   const [oldPrice, setOldPrice] = useState("");
   const [oldQuantity, setOldQuantity] = useState("");
+  const [oldStock, setoldStock] = useState("");
   const [text, settext] = useState(false);
   const [isclick, setisclick] = useState(false);
+  const [isclick2, setisclick2] = useState(false);
   const [formState, inputHandler, setFormData] = useForm(
     {
       price: {
@@ -28,6 +31,10 @@ const Popup = (props) => {
         isValid: false,
       },
       Alert_quantity: {
+        value: "",
+        isValid: false,
+      },
+      Stock: {
         value: "",
         isValid: false,
       },
@@ -40,15 +47,32 @@ const Popup = (props) => {
     if (isclick === true){
       setFormData(
         {
-          
           Alert_quantity: {
             value: oldQuantity,
             isValid: true,
           }
-        }
-      );
+        },
+          true
+        );
     }
   };
+
+  const toggleStock = () => {
+    setisclick2(!isclick2);
+    settext(!text);
+    if (isclick2 === true){
+      setFormData(
+        {
+          
+          Stock: {
+            value: oldStock,
+            isValid: true,
+          }
+        },
+        true
+      );
+    }
+  }
 
 
   useEffect(() => {
@@ -66,11 +90,16 @@ const Popup = (props) => {
               value: res.data.Alert_quantity,
               isValid: true,
             },
+            Stock: {
+              value: res.data.Stock,
+              isValid: true,
+            },
           },
           true
         );
         setOldPrice(res.data.price);
         setOldQuantity(res.data.Alert_quantity)
+        setoldStock(res.data.Stock)
         setLoading(false);
       })
       .catch((err) => {
@@ -80,12 +109,14 @@ const Popup = (props) => {
   }, [props.id, setFormData]);
 
   const submitHandler = async (event) => {
+    console.log(formState)
     setLoading(true);
     axios
       .put(`http://localhost:5000/product/updatePriceAndQty/${props.id}`, {
         
         price: formState.inputs.price.value,
         Alert_quantity: formState.inputs.Alert_quantity.value,
+        Stock: formState.inputs.Stock.value,
       })
       .then((res) => {
         setLoading(false);
@@ -119,7 +150,7 @@ const Popup = (props) => {
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                  Update Price  {text && <>& Quantity</>}
+                  Update 
                 </h3>
                 <button
                   onClick={toggleModal}
@@ -189,8 +220,8 @@ const Popup = (props) => {
                       for="default-checkbox"
                       class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
-                      Change Alert Quantity (Old Alert Quantity :
-                      {oldQuantity})
+                      Change Alert Quantity (Old Alert Quantity : 
+                      {" " + oldQuantity} )
                     </label>
                   </div>
                   {isclick && (
@@ -204,11 +235,43 @@ const Popup = (props) => {
                       placeholder="Enter New Alert Quantity"
                       label="New Alert Quantity"
                       validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
-                      errorText="Please Enter a Price."
+                      errorText="Please Enter a Alert quantit."
+                      onInput={inputHandler}
+                    />
+                  )}
+                  <div class="col-span-2">
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      onChange={toggleStock}
+                      value=""
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      for="default-checkbox"
+                      class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Add Stock Manually (Exisiting Stock : {oldStock})  :
+                    </label>
+                  </div>
+                  {isclick2 && (
+                    <Input
+                      element="Input"
+                      divClass="col-span-2"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      divLabel="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      id="Stock"
+                      type="Number"
+                      placeholder="Enter New Stock"
+                      label="Add Stock "
+                      validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
+                      errorText="Please Enter a Stock."
                       onInput={inputHandler}
                     />
                   )}
                 </div>
+                
+                
                 <button
 
                   onClick={submitHandler}

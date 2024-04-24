@@ -50,6 +50,8 @@ const MarkAttendance = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true)
+
+    
     axios
       .post("http://localhost:5000/attendance/mark", {
         employee: attendanceRecords,
@@ -65,6 +67,8 @@ const MarkAttendance = () => {
       });
 
     console.log("Attendance Records:", attendanceRecords);
+
+    
   };
 
   const handleStatusChange = (employee, date, status) => {

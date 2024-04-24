@@ -54,7 +54,7 @@ const ViewSupplier = () => {
             <Navbar />
           </div>
           <div className='flex-1 w-64 ...'>
-            <Card className="" style={{ width: "90%"}}>
+            <Card className="" style={{ width: "100%"}}>
                 <div className="flex justify-between items-center">
                   <h1 className="text-3xl my-8">Products</h1>
                   <div>

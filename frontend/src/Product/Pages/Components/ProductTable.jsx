@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./ProductTable.css";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
@@ -8,6 +7,8 @@ import Popup from "./Popup";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
 
 const ProductTable = (props) => {
+
+  
   const Headings = [
     "#",
     "Product ID",
