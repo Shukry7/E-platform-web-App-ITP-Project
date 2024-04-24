@@ -3,8 +3,7 @@
 // cartController.js
 
 const Cart = require('../Models/CartModel'); // Path to your Cart model
-const HttpError = require("../Models/http-error");
-const product = require('../Models/ProductModel');
+
 
 // Create a new cart
 const createCart = async (req, res) => {
@@ -38,12 +37,12 @@ const listCart = async (req, res) => {
 
 // List cart by user ID
 const listCartByUId = async (req, res) => {
-  const hardcodedUserId = 'jdfskje';
-
+  
+  const userId = req.params
 
   try {
     
-    const cart = await Cart.find({user:hardcodedUserId}).populate('product');
+    const cart = await Cart.find({user:userId}).populate('product');
 
     console.log(cart)
     
