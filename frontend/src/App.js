@@ -38,16 +38,12 @@ import UpdateWholesalecustomer from "./Wholesalecustomer/Pages/UpdateWholesalecu
 import LoginPage from "./Login/LoginPage";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
-import Loader from "./Shared/Components/UiElements/Loader";
 import Attendance from "./Employee/Pages/listAttendance";
 import ProductCustomerUI from "./Product/Pages/ProductCustomerUI"
 import { AuthProvider } from './Shared/Components/context/authcontext';
 import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
 
 const App = () => {
-
-  
-
   return (
     <AuthProvider >
     <Router>
