@@ -39,7 +39,7 @@ const listCartByUId = async (req, res) => {
   try {
     const cart = await Cart.find({ user: id }).populate("product");
 
-    console.log(cart);
+    
 
     return res.status(200).json(cart);
   } catch (error) {

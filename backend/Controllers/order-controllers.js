@@ -1,19 +1,15 @@
 const Order = require("../Models/OrderModel");
 
-
 createOrder = async (req, res) => {
   try {
-    
+    const { cartitem, uid } = req.body;
 
-    // Assuming you receive cart items in the request body
-    const { cartitem,uid } = req.body;
-
-    const latestProduct = await Product.find().sort({ _id: -1 }).limit(1);
+    const latestOrder = await Order.find().sort({ _id: -1 }).limit(1);
     let id;
-
-    if (latestProduct.length !== 0) {
-      const latestId = parseInt(latestProduct[0].ID.slice(1));
-      id = "P" + String(latestId + 1).padStart(4, "0");
+    console.log(uid);
+    if (latestOrder.length !== 0) {
+      const latestId = parseInt(latestOrder[0].ID.slice(1));
+      id = "O" + String(latestId + 1).padStart(4, "0");
     } else {
       id = "O0001";
     }
@@ -32,7 +28,6 @@ createOrder = async (req, res) => {
       CartItems: items,
     };
 
-    // Save the order to
     const order = await Order.create(newOrder);
 
     // Respond with a success message
