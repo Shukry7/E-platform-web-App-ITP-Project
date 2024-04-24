@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Shared/Components/UiElements/Navbar";
 import Header from "../Shared/Components/UiElements/header";
-import Table from "../Shared/Components/UiElements/Table";
-import TableRow from "../Shared/Components/UiElements/TableRow";
 import Restock from "./components/Restock";
-import { TotalProduct } from "../Product/Pages/Products";
 import axios from "axios";
 import Loader3 from "../Shared/Components/UiElements/loader3";
 import TopPandC from "./components/TopPandC";
@@ -30,7 +27,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar select={"Dashboard"}/>
       <Header />
       <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
         <div className="px-4 pt-6 w-full">

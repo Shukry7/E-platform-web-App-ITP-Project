@@ -3,6 +3,7 @@ import axios from "axios";
 import Checkbox from "./Dropdown";
 import Dropdown from "../Components/Dropdown";
 import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
+import Attendance from "../listAttendance";
 
 const MarkAttendance = () => {
   var now = new Date();
@@ -16,29 +17,23 @@ const MarkAttendance = () => {
     "Saturday",
   ];
   var dayName = days[now.getDay()];
-  var day = now.getDate() ;
+  var day = now.getDate();
   var month = now.toLocaleString("default", { month: "long" });
   var year = now.getFullYear();
   var dateTimeString = dayName + ", " + day + " " + month + " " + year;
 
   const [date, setDate] = useState("");
   const [employees, setEmployees] = useState([]);
-  const [attendance, setAttendance] = useState({});
+  const [attendance, setAttendance] = useState([]);
   const [loading, setLoading] = useState(false);
   const [attendanceRecords, setAttendanceRecords] = useState([]);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/employee")
+      .get("http://localhost:5000/attendance/attendancelist")
       .then((res) => {
-        setEmployees(res.data);
-        const initialAttendanceRecords = res.data.map((employee) => ({
-          employee: employee,
-          date: dateTimeString,
-          status: "Absent",
-        }));
-        setAttendanceRecords(initialAttendanceRecords);
+        setAttendance(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -47,18 +42,53 @@ const MarkAttendance = () => {
       });
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get("http://localhost:5000/employee")
+      .then((res) => {
+        setEmployees(res.data);
+
+        const initialAttendanceRecords = res.data.map((employee) => {
+
+          const selected = attendance.filter((check) => {
+            if (!check || !check.employee || !check.employee._id) {
+              return false; 
+            }
+            const checkDateFormatted = convertDatabaseDate(check.date);
+            return (
+              check.employee._id === employee._id &&
+              checkDateFormatted === dateTimeString
+            );
+          });
+          const status = selected.length > 0 ? selected[0].status : "Absent";
+          console.log(selected)
+          return {
+            employee: employee,
+            date: dateTimeString,
+            status: status,
+          };
+        });
+        setAttendanceRecords(initialAttendanceRecords);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [attendance]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
 
-    
     axios
       .post("http://localhost:5000/attendance/mark", {
         employee: attendanceRecords,
       })
-      
+
       .then((res) => {
-        Toast("Employee Attendance Submitted!! 🔥","success")
+        Toast("Employee Attendance Submitted!! 🔥", "success");
         setLoading(false);
       })
       .catch((err) => {
@@ -67,8 +97,6 @@ const MarkAttendance = () => {
       });
 
     console.log("Attendance Records:", attendanceRecords);
-
-    
   };
 
   const handleStatusChange = (employee, date, status) => {
@@ -90,6 +118,24 @@ const MarkAttendance = () => {
         { employee, date, status },
       ]);
     }
+  };
+
+  const convertDatabaseDate = (dateString) => {
+    const date = new Date(dateString);
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const dayName = days[date.getDay()];
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    return `${dayName}, ${day} ${month} ${year}`;
   };
 
   return (
@@ -131,6 +177,20 @@ const MarkAttendance = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {employees.map((employee) => {
+                if (!employee || !employee._id) {
+                  return null;
+                }
+
+                const selected = attendance.filter((check) => {
+                  if (!check || !check.employee || !check.employee._id) {
+                    return false; // Skip this check
+                  }
+                  const checkDateFormatted = convertDatabaseDate(check.date);
+                  return (
+                    check.employee._id === employee._id &&
+                    checkDateFormatted === dateTimeString
+                  );
+                });
                 return (
                   <tr key={employee._id}>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -144,6 +204,7 @@ const MarkAttendance = () => {
                         employee={employee}
                         date={dateTimeString}
                         onStatusChange={handleStatusChange}
+                        selected={selected}
                       />
                     </td>
                   </tr>

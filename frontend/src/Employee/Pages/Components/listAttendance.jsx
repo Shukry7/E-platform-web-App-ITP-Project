@@ -13,7 +13,6 @@ import { MdDeleteForever, MdUpdate } from "react-icons/md";
 const AttendanceTable = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState();
-  const [employee, setemployee] = useState([]);
 
   var now = new Date();
   var days = [
@@ -40,19 +39,6 @@ const AttendanceTable = (props) => {
     Headings[i] = `${day2 - (i - 4)}/${months2}`;
   }
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("http://localhost:5000/employee")
-      .then((res) => {
-        setemployee(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
 
   const getPresentDaysCount = (employeeAttendance) => {
     return employeeAttendance.filter(
@@ -69,7 +55,7 @@ const AttendanceTable = (props) => {
           </center>
         ) : (
           <>
-            {employee.map((item, index) => {
+            {props.employee.map((item, index) => {
               const employeeAttendance = props.Attendance.filter(
                 (attendance) => {
                   if (attendance && attendance.employee) {
@@ -103,7 +89,7 @@ const AttendanceTable = (props) => {
                     </th>
                     <td className="px-6 py-4">{presentDaysCount}</td>
                     {Headings.slice(4).map((headingDate, dateIndex) => {
-                                const status = attendanceMap[headingDate] || "Pending";
+                                const status = attendanceMap[headingDate] || "No Data!";
                                 return (
                                     <td
                                         key={dateIndex}

@@ -2,9 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const [isDropdownOpenSupplier, setIsDropdownOpenSupplier] = useState(false);
-  const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(false);
+  const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(props.select === "Product Details" || props.select === "Restock Products" ? true : false);
   const [isDropdownOpenEmployee, setIsDropdownOpenEmployee] = useState(false);
   const [count, setCount] = useState();
   const [RestockCount, setRestockCount] = useState();
@@ -20,6 +20,7 @@ const Navbar = () => {
   const toggleDropdownEmployee = () => {
     setIsDropdownOpenEmployee(!isDropdownOpenEmployee);
   };
+
 
   useEffect(() => {
     axios
@@ -88,7 +89,7 @@ const Navbar = () => {
             <li>
               <Link
                 to={"/Dashboard"}
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                class={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white  dark:hover:bg-gray-700 group ${props.select === "Dashboard" ? 'bg-gray-400' : 'hover:bg-gray-100'}`}
               >
                 <svg
                   class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -290,7 +291,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       to={"/Product"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Product Details" ? 'bg-gray-400' : 'hover:bg-gray-100'}`}
                     >
                       Product Details
                     </Link>
@@ -298,7 +299,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       to={"/Product/Restock"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Restock Products" ? 'bg-gray-400' : 'hover:bg-gray-100'}`}
                     >
                       Restock Products
                       <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
