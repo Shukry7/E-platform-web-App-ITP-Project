@@ -37,6 +37,21 @@ createOrder = async (req, res) => {
     console.error("Error placing order:", error);
     res.status(500).json({ message: "Internal server error" });
   }
+
+  const listOrderById = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const order = await Order.findById(id);
+  
+      return res.status(200).json(order);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send({ message: error.message });
+    }
+  };
+
+
 };
 
 exports.createOrder = createOrder;
+exports.listOrderByById = listOrderById;
