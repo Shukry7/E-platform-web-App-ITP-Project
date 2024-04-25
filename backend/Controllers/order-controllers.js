@@ -8,7 +8,7 @@ createOrder = async (req, res) => {
     let id;
     console.log(uid);
     if (latestOrder.length !== 0) {
-      const latestId = parseInt(latestOrder[0].ID.slice(1));
+      const latestId = parseInt(latestOrder[0].orderId.slice(1));
       id = "O" + String(latestId + 1).padStart(4, "0");
     } else {
       id = "O0001";
