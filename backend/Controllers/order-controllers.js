@@ -4,7 +4,7 @@ createOrder = async (req, res) => {
   try {
     const { cartitem, uid } = req.body;
 
-    const latestOrder = await Order.find().sort({ _id: -1 }).limit(1);
+    const latestOrder = await Order.find().sort({ _id : -1 }).limit(1);
     let id;
     console.log(uid);
     if (latestOrder.length !== 0) {

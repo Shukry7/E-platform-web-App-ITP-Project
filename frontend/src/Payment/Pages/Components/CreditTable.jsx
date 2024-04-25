@@ -34,11 +34,13 @@ function CardList() {
       });
 
      
-      console.log("Order placed successfully:");
+      console.log("Order placed successfully:",);
       // Handle success (e.g., display a success message)
 
-      await axios.delete(`http://localhost:5000/cart/${cartItems._id}`);
-        console.log("Cart items deleted successfully.");
+      for (const item of cartItems) {
+        await axios.delete(`http://localhost:5000/cart/${item._id}`);
+        console.log("Cart item deleted successfully:", item._id);
+      }
     } catch (error) {
       console.error("Error placing order:", error);
       // Handle error (e.g., display an error message)

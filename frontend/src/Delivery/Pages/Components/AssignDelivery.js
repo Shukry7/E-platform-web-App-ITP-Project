@@ -6,13 +6,14 @@ import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import Card from "../../../Shared/Components/UiElements/Card";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../../../Shared/Components/UiElements/Navbar";
+import Header from "../../../Shared/Components/UiElements/header";
 
 const AssignDelivery = () => {
   const [deliveryPersons, setDeliveryPersons] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({});
-  const [completedRows, setCompletedRows] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [orders, setOrders] = useState([]); // State to store orders data
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -20,7 +21,7 @@ const AssignDelivery = () => {
     axios
       .get("http://localhost:5000/order")
       .then((res) => {
-        setOrders(res.data); // Update orders state with the received data
+        setOrders(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -34,7 +35,7 @@ const AssignDelivery = () => {
     axios
       .get("http://localhost:5000/delivery")
       .then((res) => {
-        setDeliveryPersons(res.data); // Update deliveryPersons state with the received data
+        setDeliveryPersons(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -52,25 +53,20 @@ const AssignDelivery = () => {
   const handleDeliveryComplete = (orderId) => {
     const selectedPersonId = selectedOptions[orderId];
     if (selectedPersonId) {
-      // Remove the selected person for this order ID
+      // Remove the completed order from the orders state
+      setOrders((prevOrders) =>
+        prevOrders.filter((order) => order.orderId !== orderId)
+      );
+
+      // Free up the assigned delivery person
       setSelectedOptions((prevSelectedOptions) => {
         const updatedOptions = { ...prevSelectedOptions };
         delete updatedOptions[orderId];
         return updatedOptions;
       });
-      // Update completed rows state
-      setCompletedRows((prevCompletedRows) =>
-        prevCompletedRows.filter((rowId) => rowId !== orderId)
-      );
+
       // Display toast message
-      toast.success("Delivery is Completed!", {
-        onClose: () => {
-          // Remove the completed row after the toast is closed
-          setCompletedRows((prevCompletedRows) =>
-            prevCompletedRows.filter((rowId) => rowId !== orderId)
-          );
-        }
-      });
+      toast.success("Delivery is Completed!");
     }
   };
 
@@ -82,7 +78,25 @@ const AssignDelivery = () => {
     "Action"
   ];
 
+  const getAvailablePersons = (currentOrderId) => {
+    const selectedPersonIds = Object.values(selectedOptions).filter(
+      (personId) => personId !== "" && personId !== null
+    );
+    const selectedPersonId = selectedOptions[currentOrderId];
+
+    return deliveryPersons.filter(
+      (person) =>
+        !selectedPersonIds.includes(person.ID) ||
+        person.ID === selectedPersonId
+    );
+  };
+
   return (
+
+    <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
+    <Navbar />
+    <Header/>
+
     <Card style={{ width: "100%" }}>
       <div className="justify-between items-center">
         <div className="p-8">
@@ -98,7 +112,7 @@ const AssignDelivery = () => {
               ) : (
                 orders.map(({ orderId, userId }) => {
                   const selectedPersonId = selectedOptions[orderId];
-                  const availablePersons = deliveryPersons;
+                  const availablePersons = getAvailablePersons(orderId);
 
                   return (
                     <TableRow key={orderId}>
@@ -158,6 +172,7 @@ const AssignDelivery = () => {
         </div>
       </div>
     </Card>
+    </div>
   );
 };
 
