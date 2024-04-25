@@ -12,21 +12,15 @@ const AssignDelivery = () => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [completedRows, setCompletedRows] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // Dummy data
-  const [dummyData, setDummyData] = useState([
-    { paymentId: "P0001", customerName: "Alice Johnson", completed: false },
-    { paymentId: "P0005", customerName: "David Smith", completed: false },
-    { paymentId: "P0008", customerName: "Emily Brow", completed: false },
-    { paymentId: "P0009", customerName: "Carl Johnson", completed: false }
-  ]);
+  const [orders, setOrders] = useState([]); // State to store orders data
 
   useEffect(() => {
     setLoading(true);
+    // Fetch orders data from the API
     axios
-      .get("http://localhost:5000/delivery")
+      .get("http://localhost:5000/order")
       .then((res) => {
-        setDeliveryPersons(res.data);
+        setOrders(res.data); // Update orders state with the received data
         setLoading(false);
       })
       .catch((err) => {
@@ -35,66 +29,58 @@ const AssignDelivery = () => {
       });
   }, []);
 
-  const handleSelectChange = (e, paymentId) => {
-    const personId = e.target.value;
+  useEffect(() => {
+    // Fetch delivery persons data from the API
+    axios
+      .get("http://localhost:5000/delivery")
+      .then((res) => {
+        setDeliveryPersons(res.data); // Update deliveryPersons state with the received data
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
-    // Update selected options
+  const handleSelectChange = (e, orderId) => {
+    const personId = e.target.value;
     setSelectedOptions((prevSelectedOptions) => ({
       ...prevSelectedOptions,
-      [paymentId]: personId
+      [orderId]: personId
     }));
   };
 
-  const Headings = [
-    "Payment ID",
-    "Customer Name",
-    "Assign Delivery Persons",
-    "Assigned Delivery Person",
-    "Action"
-  ];
-
-  useEffect(() => {
-    console.log("Selected Options:", selectedOptions);
-  }, [selectedOptions]);
-
-  const getAvailablePersons = (currentPaymentId) => {
-    const selectedPersonIds = Object.values(selectedOptions).filter(
-      (personId) => personId !== "" && personId !== null
-    );
-    return deliveryPersons.filter(
-      (person) =>
-        !selectedPersonIds.includes(person.ID) ||
-        selectedOptions[currentPaymentId] === person.ID
-    );
-  };
-
-  const handleDeliveryComplete = (paymentId) => {
-    const selectedPersonId = selectedOptions[paymentId];
+  const handleDeliveryComplete = (orderId) => {
+    const selectedPersonId = selectedOptions[orderId];
     if (selectedPersonId) {
-      // Remove the selected person for this payment ID
+      // Remove the selected person for this order ID
       setSelectedOptions((prevSelectedOptions) => {
         const updatedOptions = { ...prevSelectedOptions };
-        delete updatedOptions[paymentId];
+        delete updatedOptions[orderId];
         return updatedOptions;
       });
-      // Update dummy data to mark the row as completed
-      setDummyData(dummyData.map(row => {
-        if (row.paymentId === paymentId) {
-          return { ...row, completed: true };
-        }
-        return row;
-      }));
+      // Update completed rows state
+      setCompletedRows((prevCompletedRows) =>
+        prevCompletedRows.filter((rowId) => rowId !== orderId)
+      );
       // Display toast message
       toast.success("Delivery is Completed!", {
         onClose: () => {
           // Remove the completed row after the toast is closed
           setCompletedRows((prevCompletedRows) =>
-            prevCompletedRows.filter((rowId) => rowId !== paymentId)
+            prevCompletedRows.filter((rowId) => rowId !== orderId)
           );
         }
       });
     }
   };
+
+  const Headings = [
+    "Order ID",
+    "Customer Name",
+    "Assign Delivery Persons",
+    "Assigned Delivery Person",
+    "Action"
+  ];
 
   return (
     <Card style={{ width: "100%" }}>
@@ -110,20 +96,19 @@ const AssignDelivery = () => {
                   </td>
                 </tr>
               ) : (
-                dummyData.map(({ paymentId, customerName, completed }) => {
-                  if (completed) return null; // Skip rendering completed rows
-                  const selectedPersonId = selectedOptions[paymentId];
-                  const availablePersons = getAvailablePersons(paymentId);
+                orders.map(({ orderId, userId }) => {
+                  const selectedPersonId = selectedOptions[orderId];
+                  const availablePersons = deliveryPersons;
 
                   return (
-                    <TableRow key={paymentId}>
-                      <td className="px-6 py-4">{paymentId}</td>
-                      <td className="px-6 py-4">{customerName}</td>
+                    <TableRow key={orderId}>
+                      <td className="px-6 py-4">{orderId}</td>
+                      <td className="px-6 py-4">{userId.name}</td>
                       <td className="px-6 py-4">
                         <select
                           className="border border-gray-300 rounded px-4 py-2 mr-4"
                           value={selectedPersonId || ""}
-                          onChange={(e) => handleSelectChange(e, paymentId)}
+                          onChange={(e) => handleSelectChange(e, orderId)}
                         >
                           <option key="" value="">
                             Select a Delivery Person
@@ -157,7 +142,7 @@ const AssignDelivery = () => {
                       <td>
                         {selectedPersonId && (
                           <button
-                            onClick={() => handleDeliveryComplete(paymentId)}
+                            onClick={() => handleDeliveryComplete(orderId)}
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                           >
                             Complete Delivery
