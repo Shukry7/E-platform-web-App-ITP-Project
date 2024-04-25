@@ -9,6 +9,7 @@ import Card from '../../Shared/Components/UiElements/Card';
 import SupplierProductTable from './Components/SupplierProductTable';
 import ViewCard from './Components/ViewCard';
 import PopUp from './Components/PopUp';
+import Header from "../../Shared/Components/UiElements/header";
 
 const ViewSupplier = () => {
     const { id } = useParams();
@@ -52,9 +53,10 @@ const ViewSupplier = () => {
         <div className='flex'>
           <div>
             <Navbar />
+            <Header/>
           </div>
           <div className='flex-1 w-64 ...'>
-            <Card className="" style={{ width: "100%"}}>
+            <Card className="" style={{ width: "100%"} } width>
                 <div className="flex justify-between items-center">
                   <h1 className="text-3xl my-8">Products</h1>
                   <div>

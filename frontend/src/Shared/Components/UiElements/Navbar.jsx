@@ -71,7 +71,7 @@ const Navbar = (props) => {
 
       <aside
         id="logo-sidebar"
-        class="fixed top-0 left-0 z-30 w-64 h-screen overflow-y-auto border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform -translate-x-full sm:translate-x-0"
+        class="fixed top-0 left-0 z-10 w-64 h-screen overflow-y-auto border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform -translate-x-full sm:translate-x-0"
         style={{backgroundColor: "white"}}
         aria-label="Sidebar"
       >
