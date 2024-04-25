@@ -6,6 +6,8 @@ import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import Card from "../../../Shared/Components/UiElements/Card";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../../../Shared/Components/UiElements/Navbar";
+import Header from "../../../Shared/Components/UiElements/header";
 
 const AssignDelivery = () => {
   const [deliveryPersons, setDeliveryPersons] = useState([]);
@@ -90,6 +92,11 @@ const AssignDelivery = () => {
   };
 
   return (
+
+    <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
+    <Navbar />
+    <Header/>
+
     <Card style={{ width: "100%" }}>
       <div className="justify-between items-center">
         <div className="p-8">
@@ -165,6 +172,7 @@ const AssignDelivery = () => {
         </div>
       </div>
     </Card>
+    </div>
   );
 };
 

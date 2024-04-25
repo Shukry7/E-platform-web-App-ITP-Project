@@ -11,8 +11,8 @@ import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDrop
 const DeliveryTable = (props) => {
   const Headings = [
     "#",
-    "Delivery Person ID",
-    "Delivery Person Name",
+    "ID",
+    "Name",
     "Telephone",
     "Mail",
     "Address",
