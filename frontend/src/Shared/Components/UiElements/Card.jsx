@@ -4,12 +4,14 @@ import "./Card.css";
 const Card = (props) => {
   return (
     <>
-      <div class="min-h-screen h-screen p-6 pt-0 bg-gray-100 flex items-center justify-center">
-        <div class="container mx-auto">
+    <div className="main-content ml-64 w-full h-screen overflow-y-auto bg-gray-50 pt-14 dark:bg-gray-900">
+      <div class="h-screen p-6 pt-2 bg-gray-100 flex items-center justify-center">
+        <div class="container mx-auto ">
           <div class="card" style={props.style}>
             {props.children}
           </div>
         </div>
+      </div>
       </div>
     </>
   );

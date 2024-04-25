@@ -71,10 +71,11 @@ const Navbar = (props) => {
 
       <aside
         id="logo-sidebar"
-        class="float-left top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        class="fixed top-0 left-0 w-64 h-screen overflow-y-auto border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 z-40 transition-transform -translate-x-full sm:translate-x-0"
+        style={{backgroundColor: "white"}}
         aria-label="Sidebar"
       >
-        <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div class="relative px-3 py-4 flex flex-col flex-1 min-h-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
           <a href="https://flowbite.com/" class="flex items-center ps-2.5 mb-5">
             <img
               src="https://www.svgrepo.com/show/424912/valorant-logo-play-2.svg"
@@ -85,14 +86,14 @@ const Navbar = (props) => {
               DEDSEC
             </span>
           </a>
-          <ul class="space-y-2 font-medium">
+          <ul class="space-y-2 font-medium pt-5">
             <li>
               <Link
                 to={"/Dashboard"}
-                class={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white  dark:hover:bg-gray-700 group ${props.select === "Dashboard" ? 'bg-gray-400' : 'hover:bg-gray-100'}`}
+                class={`flex items-center p-2  rounded-lg dark:text-white  dark:hover:bg-gray-700 group ${props.select === "Dashboard" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
               >
                 <svg
-                  class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  class={`w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white ${props.select === "Dashboard" ? 'text-white' : 'group-hover:text-gray-900 text-gray-500'}`}
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -291,7 +292,7 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Product"}
-                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Product Details" ? 'bg-gray-400' : 'hover:bg-gray-100'}`}
+                      className={`flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Product Details" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
                     >
                       Product Details
                     </Link>
@@ -299,7 +300,7 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Product/Restock"}
-                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Restock Products" ? 'bg-gray-400' : 'hover:bg-gray-100'}`}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Restock Products" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
                     >
                       Restock Products
                       <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">

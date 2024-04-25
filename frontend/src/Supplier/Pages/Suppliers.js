@@ -6,13 +6,16 @@ import Navbar from "../../Shared/Components/UiElements/Navbar";
 import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
 import Search from "../../Shared/Components/UiElements/Search";
+import Pagination from "../../Shared/Components/FormElements/Pagination";
 
 const Suppliers = () => {
   const [suppliers, setsupplier] = useState([]);
+  const [displaySuppliers, setDisplaySuppliers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteSupplier, setdeleteSupplier] = useState(false);
   const [FilteredSuppliers, setFilteredSuppliers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
     setLoading(true);
@@ -28,9 +31,20 @@ const Suppliers = () => {
       });
   }, [deleteSupplier]);
 
+  const handlePageChange = (page) => {
+    setActivePage(page);
+  };
+
   useEffect(() => {
     setFilteredSuppliers(suppliers);
+    setDisplaySuppliers(suppliers)
   }, [suppliers]);
+
+  useEffect(() => {
+    const startIndex = (activePage - 1) * 6;
+    const endIndex = startIndex + 6;
+    setDisplaySuppliers(FilteredSuppliers.slice(startIndex, endIndex));
+  }, [activePage, FilteredSuppliers]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -41,6 +55,7 @@ const Suppliers = () => {
       supplier.city.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredSuppliers(filtered);
+    setActivePage(1)
   };
 
   return (
@@ -68,6 +83,12 @@ const Suppliers = () => {
                 dltset={setdeleteSupplier}
                 
               />
+              <Pagination
+            active={activePage}
+            totalItems={FilteredSuppliers.length}
+            itemsPerPage={6}
+            onPageChange={handlePageChange}
+          />
             </Card>
           
       </div>

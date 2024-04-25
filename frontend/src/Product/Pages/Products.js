@@ -59,10 +59,10 @@ const Products = () => {
   };
 
   return (
-    <>
-      <div>
+    <><div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
         <Navbar select={"Product Details"}/>
         <Header/>
+      
         <Card className="flex" style={{ width: "100%" }}>
           <div className="flex items-center justify-between">
             <h1 className="text-3xl my-8">Product List</h1>
