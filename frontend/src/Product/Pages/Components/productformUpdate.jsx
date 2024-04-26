@@ -49,6 +49,10 @@ const ProductformUpdate = () => {
         value: "",
         isValid: false,
       },
+      Alert_quantity: {
+        value: "",
+        isValid: false,
+      },
 
       image: {
         value: null,
@@ -81,6 +85,10 @@ const ProductformUpdate = () => {
               value: res.data.weight,
               isValid: true,
             },
+            Alert_quantity: {
+              value: res.data.Alert_quantity,
+              isValid: true,
+            },
             image: {
               value: res.data.image,
               isValid: true,
@@ -107,6 +115,7 @@ const ProductformUpdate = () => {
     formData.append('description',formState.inputs.description.value);
     formData.append('category',formState.inputs.category.value);
     formData.append('weight',formState.inputs.weight.value);
+    formData.append('Alert_quantity',formState.inputs.Alert_quantity.value);
     formData.append('image',formState.inputs.image.value);
     axios
       .put(`http://localhost:5000/product/update/${id}`, formData)
@@ -198,6 +207,20 @@ const ProductformUpdate = () => {
                             Display=""
                             label="Category:"
                             initialValue={formState.inputs.category.value}
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="Alert_quantity"
+                            initialValue={formState.inputs.Alert_quantity.value}
+                            type="number"
+                            placeholder="Enter Alert Quantity of product"
+                            label="Alert Quantity :"
+                            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
+                            errorText="Please Enter a number :"
+                            onInput={inputHandler}
                           />
                         </div>
 

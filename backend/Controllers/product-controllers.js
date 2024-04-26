@@ -82,7 +82,7 @@ const UpdateProduct = async (req, res) => {
     }
     
 
-    const { name, category, weight, description } = req.body;
+    const { name, category, weight, description , Alert_quantity} = req.body;
     
     if (req.file && req.file.path) path = req.file.path;
 
@@ -91,6 +91,7 @@ const UpdateProduct = async (req, res) => {
       category: category,
       weight: weight,
       description: description,
+      Alert_quantity : Alert_quantity,
       image: path,
     };
 

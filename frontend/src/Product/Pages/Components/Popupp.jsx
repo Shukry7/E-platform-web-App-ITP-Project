@@ -48,8 +48,24 @@ const Popupp = (props) => {
         });
     }, [props.id, setFormData]);
   
-    const submitHandler = async (event) => {
-      
+    const submitHandler = (event) => {
+      console.log(formState)
+      setLoading(true);
+      axios
+        .put(`http://localhost:5000/product/updatePriceAndQty/${props.id}`, {
+  
+          price: formState.inputs.price.value
+  
+        })
+        .then((res) => {
+          setLoading(false);
+          Toast("Price Updated !!" , "success")
+          navigate("/Product/");
+        })
+        .catch((err) => {
+          console.error(err);
+          setLoading(false);
+        });
     };
   
     return (
