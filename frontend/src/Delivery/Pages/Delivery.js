@@ -12,7 +12,7 @@ const Delivery = () => {
 
   const [delivery, setdelivery] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [deleteDelivery, setdeleteDelivery] = useState(false);
+  const [deleteDelivery, setdeleteDelivery] = useState(1);
   const [FilteredDeliveryPersons , setFilteredDeliveryPersons] = useState([]);
   const [loading , setLoading] = useState(false)
   
@@ -66,7 +66,8 @@ const Delivery = () => {
         Delivery={FilteredDeliveryPersons}
         loading={loading} 
         setloading={setLoading}
-        dlt= {setdeleteDelivery}
+        dlt = {deleteDelivery}
+        dltset={setdeleteDelivery}
         />
       </Card>
       
