@@ -9,7 +9,7 @@ const Salaryform = () => {
      <Navbar />
      <Header />
      
-     <Card className="flex" style={{ width: "80%" }}>
+     <Card className="flex" style={{ width: "110%" }}>
 
       
         <SalaryCalculatorForm />
