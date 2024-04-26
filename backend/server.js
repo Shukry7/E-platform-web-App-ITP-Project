@@ -18,7 +18,7 @@ const OrderRoute = require("./Routes/OrderRoute");
 const LoginRoute = require("./Routes/LoginRoute");
 const NotificationRoute = require("./Routes/NotificationRoute");
 const WholesalecustomerRoute = require("./Routes/WholesalecustomerRoute");
-
+const SalaryRoute = require("./Routes/SalaryRoute")
 const app = express();
 
 //MiddleWare
@@ -47,6 +47,7 @@ app.use("/OffPay", OffPay);
 app.use("/OnPay", OnPay);
 app.use("/Login", LoginRoute);
 app.use("/order", OrderRoute);
+app.use("/salary", SalaryRoute);
 app.use("/notify", NotificationRoute);
 app.use("/wholesalecustomer", WholesalecustomerRoute);
 app.use("/uploads/images", express.static(path.join("uploads", "images")));

@@ -1,4 +1,4 @@
-import Salary from "../Models/SalaryModel";
+const Salary = require("../Models/SalaryModel");
 const HttpError = require("../Models/http-error");
 
 
