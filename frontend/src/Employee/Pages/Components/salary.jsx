@@ -50,13 +50,13 @@ const SalaryCalculatorForm = () => {
   );
   
   const submitHandler = async (event) => {
-    event.preventDefault();
-    const statuss="pending";
+   
+    const statuss="unpaid";
     setLoading(true);
     axios
       .post("http://localhost:5000/salary/new", {
         id: 1,
-        employee: empid,
+       // employee: ID,
         date: day,
         status: statuss,
         net:Total,
@@ -176,7 +176,7 @@ const SalaryCalculatorForm = () => {
             id="empname"
             type="text"
             value={empname}
-            onInput={inputHandler}
+            
             
             readOnly
             className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
@@ -215,7 +215,7 @@ const SalaryCalculatorForm = () => {
         
         <button
           type="button"
-          onClick={handleButtonClick}
+          onClick={handleCalculateSalary}
           className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
         >
           Calculate Salary
@@ -225,7 +225,7 @@ const SalaryCalculatorForm = () => {
           <input
             id="salary"
             type="number"
-            onInput={inputHandler}
+            
             value={Total}
             onChange={e => setBonus(e.target.value)}
             className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
