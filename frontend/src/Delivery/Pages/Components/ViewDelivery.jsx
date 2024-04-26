@@ -36,7 +36,7 @@ const ViewDelivery = () => {
           </div>
           <div className='flex-1 w-64 ...'>
           <ViewCard
-            delivery = {delivery}
+            customer = {delivery}
             loading1 = {loading1}
             setloading1 = {setLoading1}
           />
