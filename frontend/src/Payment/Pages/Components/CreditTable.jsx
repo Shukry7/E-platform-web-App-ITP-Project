@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./CreditTable.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DeleteConfirmBox from "../../../Shared/Components/UiElements/DeleteConfirmBox";
 import { AuthContext } from "../../../Shared/Components/context/authcontext";
 
@@ -9,6 +9,7 @@ function CardList() {
   const [cards, setCards] = useState([]);
   const [deleteCart, setdeleteCart] = useState(1);
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch cart items when component mounts
@@ -41,6 +42,8 @@ function CardList() {
         await axios.delete(`http://localhost:5000/cart/${item._id}`);
         console.log("Cart item deleted successfully:", item._id);
       }
+
+      navigate('/Products');
     } catch (error) {
       console.error("Error placing order:", error);
       // Handle error (e.g., display an error message)
