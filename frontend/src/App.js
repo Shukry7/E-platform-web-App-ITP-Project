@@ -35,6 +35,7 @@ import ViewCustomer from "./Customer/ViewCustomer";
 import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecustomer"
 import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
 import UpdateWholesalecustomer from "./Wholesalecustomer/Pages/UpdateWholesalecustomer";
+import ViewWholesalecustomer from "./Wholesalecustomer/Pages/ViewWholesalecustomer";
 import LoginPage from "./Login/LoginPage";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
@@ -85,6 +86,7 @@ const App = () => {
         <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/update/:id" exact element={<UpdateWholesalecustomer/>}/>
+        <Route path="/Wholesalecustomer/view/:id" exact element={<ViewWholesalecustomer/>}/>
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
