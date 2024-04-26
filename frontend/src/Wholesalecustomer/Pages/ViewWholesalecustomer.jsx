@@ -23,7 +23,7 @@ const ViewSupplier = () => {
     useEffect(()=> {
         setLoading(true);
         axios
-            .get(`http://localhost:5000/wholesalecustomer/${id}`)
+            .get(`http://localhost:5000/wholesalecustomer/view/${id}`)
             .then((res)=> {
                 setwholesalecustomer(res.data);
                 setLoading1(false);
