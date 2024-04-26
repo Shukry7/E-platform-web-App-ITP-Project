@@ -156,6 +156,7 @@ const EmployeeformUpdate = () => {
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
                             id="name"
+                            initialValid
                             type="text"
                             initialValue={formState.inputs.name.value}
                             placeholder="Enter employee Name"
@@ -168,6 +169,7 @@ const EmployeeformUpdate = () => {
                         </div>
                         <div class="md:col-span-2">
                           <Input
+                          initialValid
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
                             id="address"
@@ -184,6 +186,7 @@ const EmployeeformUpdate = () => {
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
+                            initialValid
                             id="telephone"
                             type="number"
                             initialValue={formState.inputs.telephone.value}
@@ -196,6 +199,7 @@ const EmployeeformUpdate = () => {
                         </div>
                         <div class="md:col-span-3">
                           <Input
+                            initialValid
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             element="Input"
                             id="mail"
@@ -218,6 +222,7 @@ const EmployeeformUpdate = () => {
                             onInput={inputHandler}
                             Display=""
                             label="Employee Type:"
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-2 ">
@@ -225,6 +230,7 @@ const EmployeeformUpdate = () => {
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 mb-5"
                             element="Input"
                             id="hourlywage"
+                            initialValid
                             type="number"
                             initialValue={formState.inputs.hourlywage.value}
                             placeholder="Enter Hourly Wage"

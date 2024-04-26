@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useEffect } from 'react';
-import "./ViewCard.css";
+import "./SupplierViewCard.css";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import { Link } from "react-router-dom";
 
-const ViewCard = (props) => {
+const SupplierViewCard = (props) => {
   return (
     props.loading1 ? (
       <center>
@@ -63,4 +63,4 @@ const ViewCard = (props) => {
     )
   );
 };
-export default ViewCard;
+export default SupplierViewCard;

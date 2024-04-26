@@ -48,6 +48,7 @@ const WholesalecustomerTable = (props) => {
                   <td class="px-6 py-4">Rs.{item.credit}</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
+                    link1={`/Wholesalecustomer/view/`+ item._id}
                     link2={`/Wholesalecustomer/update/`+ item._id}
                     deleteLink={`http://localhost:5000/Wholesalecustomer/${item._id}`}
                     dlt={props.dlt}
