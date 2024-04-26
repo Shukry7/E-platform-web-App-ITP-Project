@@ -44,7 +44,7 @@ import ProductCustomerUI from "./Product/Pages/ProductCustomerUI";
 import ViewEmployees from "./Employee/Pages/ViewEmployees";
 import { AuthProvider } from './Shared/Components/context/authcontext';
 import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
-import ViewDelivery from "./Delivery/Pages/Components/ViewDelivery";
+import ViewDelivery from "./Delivery/Pages/ViewDelivery";
 
 const App = () => {
   return (

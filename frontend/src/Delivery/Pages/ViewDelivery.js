@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import Navbar from '../../../Shared/Components/UiElements/Navbar';
-import ViewCard from '../../../Customer/Components/ViewCard';
-import Header from '../../../Shared/Components/UiElements/header';
+import Navbar from '../../Shared/Components/UiElements/Navbar';
+import ViewCard from './Components/ViewDelvery';
+import Header from '../../Shared/Components/UiElements/header';
 
 const ViewDelivery = () => {
     const { id } = useParams();
@@ -36,7 +36,7 @@ const ViewDelivery = () => {
           </div>
           <div className='flex-1 w-64 ...'>
           <ViewCard
-            customer = {delivery}
+            delivery = {delivery}
             loading1 = {loading1}
             setloading1 = {setLoading1}
           />

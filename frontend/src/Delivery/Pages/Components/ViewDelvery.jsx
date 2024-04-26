@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./ViewCard.css";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import { Link } from "react-router-dom";
 
@@ -19,30 +18,43 @@ const ViewCard = (props) => {
             <div className="e-card-header">
               <div className="e-card-header-caption center">
                 <div className="e-card-header-title name text-lg font-semibold">
-                  {props.employee.name}
+                  {props.delivery.image}
                 </div>
                 <div className="e-card-sub-title text-sm"></div>
               </div>
             </div>
+            
             <div className="e-card-content">
               <p className="avatar-content">
-                Employee ID: {props.employee.ID}
+                Delivery ID: {props.delivery.ID}
               </p>
               <p className="avatar-content">
-                Telephone: {props.employee.telephone}
+                Delivery Name: {props.delivery.name}
               </p>
               <p className="avatar-content">
-                Email: {props.employee.mail}
+                Telephone: {props.delivery.telephone}
               </p>
               <p className="avatar-content">
-                Address: {props.employee.address}
+                Email: {props.delivery.mail}
               </p>
               <p className="avatar-content">
-                Daily Wage: {props.employee.hourlywage}
+                Address: {props.delivery.address}
+              </p>
+              <p className="avatar-content">
+                License Number: {props.delivery.license}
+              </p>
+              <p className="avatar-content">
+                City: {props.delivery.city}
+              </p>
+              <p className="avatar-content">
+                Type: {props.delivery.type}
+              </p>
+              <p className="avatar-content">
+                Capacity: {props.delivery.capacity}
               </p>
             </div>
             <Link
-                to={`/Employee/`}
+                to={`/Delivery/`}
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded-full text-center"
               >
                 Back
