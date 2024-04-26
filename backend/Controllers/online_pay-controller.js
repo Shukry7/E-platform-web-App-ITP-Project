@@ -6,10 +6,9 @@ const Cryptr = require("cryptr");
 const cryptr = new Cryptr("your-secret-key");
 
 const OnlinePay = async (req, res, next) => {
-  const userId = "jdfskje";
+  
 
-  const { firstname, lastname, cvv, category, expiredate, number } = req.body;
-  const uid = userId;
+  const { uid,firstname, lastname, cvv, category, expiredate, number } = req.body;
   const latestCard = await Online.find().sort({ _id: -1 }).limit(1);
   let id;
 
@@ -48,10 +47,10 @@ const listCard = async (req, res) => {
   }
 };
 const listCardByUId = async (req, res) => {
-  const userId = "jdfskje";
+  const {uid}= req.params;
   const cryptr = new Cryptr("your-secret-key");
   try {
-    const pay = await Online.find({ uid: userId });
+    const pay = await Online.find({ uid: uid });
 
     const decryptedPay = pay.map((card) => {
       const decryptedCard = { ...card._doc }; // clone the card object

@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./CreditTable.css";
 import { Link } from "react-router-dom";
 import DeleteConfirmBox from "../../../Shared/Components/UiElements/DeleteConfirmBox";
+import { AuthContext } from "../../../Shared/Components/context/authcontext";
 
 function CardList() {
   const [cards, setCards] = useState([]);
   const [deleteCart, setdeleteCart] = useState(1);
+  const auth = useContext(AuthContext);
 
   useEffect(() => {
     // Fetch cart items when component mounts
     axios
-      .get(`http://localhost:5000/OnPay/onpay/list`)
+      .get(`http://localhost:5000/OnPay/onpay/list/${auth.cusId}`)
       .then((response) => {
         setCards(response.data);
       })
@@ -22,14 +24,23 @@ function CardList() {
 
   const handleUseCard = async () => {
     try {
-      const cartResponse = await axios.get("http://localhost:5000/Cart/cart");
+      const cartResponse = await axios.get(`http://localhost:5000/cart/list/${auth.cusId}`);
       const cartItems = cartResponse.data;
+     
 
       const response = await axios.post("http://localhost:5000/order/new", {
+        uid : auth.cusId,
         cartitem : cartItems
       });
-      console.log("Order placed successfully:");
+
+     
+      console.log("Order placed successfully:",);
       // Handle success (e.g., display a success message)
+
+      for (const item of cartItems) {
+        await axios.delete(`http://localhost:5000/cart/${item._id}`);
+        console.log("Cart item deleted successfully:", item._id);
+      }
     } catch (error) {
       console.error("Error placing order:", error);
       // Handle error (e.g., display an error message)

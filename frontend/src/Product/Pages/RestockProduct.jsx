@@ -57,7 +57,7 @@ const RestockProduct = () => {
 
   return (
     <>
-      <div>
+      <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
         <Navbar select={"Restock Products"}/>
         <Header/>
         <Card className="flex" style={{ width: "100%" }}>

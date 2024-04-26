@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
 import Search from "../../Shared/Components/UiElements/Search";
 import PurchaseTable from "./Components/PurchaseTable";
+import Header from "../../Shared/Components/UiElements/header";
 
 const ViewPurchase = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,7 +25,6 @@ const ViewPurchase = () => {
       })
       .catch((err) => {
         console.error(err);
-        
       });
   }, []);
 
@@ -34,36 +34,37 @@ const ViewPurchase = () => {
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    const filtered = purchase.filter(purchase =>
-      purchase.ID.toLowerCase().includes(e.target.value.toLowerCase())||
-      purchase.date.toLowerCase().includes(e.target.value.toLowerCase())
+    const filtered = purchase.filter(
+      (purchase) =>
+        purchase.ID.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        purchase.date.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredPurchase(filtered);
   };
 
   return (
     <>
-      <div>
+      <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
         <Navbar />
-        
-            <Card className="flex" style={{ width: "100%" }}>
-              <div className="flex justify-between items-center">
-                <h1 className="text-3xl my-8">Purchase History</h1>
-                <div className="mr-96">
-                    <Search
-                    searchTerm={searchTerm}
-                    handleSearch={handleSearch}
-                    placeholder={"Search By ID / Date"}
-                    />
-                </div>
-              </div>
-              <PurchaseTable
-                Purchase={FilteredPurchase}
-                loading={loading}
-                setloading={setLoading}
+        <Header />
+
+        <Card className="flex" style={{ width: "100%" }}>
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl my-8">Purchase History</h1>
+            <div className="mr-96">
+              <Search
+                searchTerm={searchTerm}
+                handleSearch={handleSearch}
+                placeholder={"Search By ID / Date"}
               />
-            </Card>
-          
+            </div>
+          </div>
+          <PurchaseTable
+            Purchase={FilteredPurchase}
+            loading={loading}
+            setloading={setLoading}
+          />
+        </Card>
       </div>
     </>
   );

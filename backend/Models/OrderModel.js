@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-  userId: {
+  orderId:{
     type: String, 
+    required: true
+  },
+
+  userId: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "Customer",
     required: true
   },
   CartItems:[
@@ -19,7 +25,7 @@ const orderSchema = new mongoose.Schema({
 }
 ],
   
-});//
+});
 
 const Order = mongoose.model('Order', orderSchema);
 

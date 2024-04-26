@@ -1,5 +1,5 @@
 // components/Cart.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import axios from "axios";
 import ModalComponent from "../../Payment/Pages/Components/PaymentOption";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,6 +7,8 @@ import Button from "../../Shared/Components/FormElements/Button";
 import DeleteConfirmBox from "../../Shared/Components/UiElements/DeleteConfirmBox"
 import "../../Cart/Pages/Components/Cart.css";
 import Toast from "../../Shared/Components/UiElements/Toast/Toast";
+import { AuthContext } from "../../Shared/Components/context/authcontext";
+
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
@@ -24,10 +26,13 @@ const CartPage = () => {
     setModalIsOpen(false);
   };
 
+  const auth = useContext(AuthContext);
+  console.log(auth.cusId)
+
   useEffect(() => {
     // Fetch cart items when component mounts
     axios
-      .get(`http://localhost:5000/cart/cart`)
+      .get(`http://localhost:5000/cart/list/${auth.cusId}`)
       .then((response) => {
         setCart(response.data);
       })

@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 
 import ImageUpload from "../../Shared/Components/FormElements/ImageUpload";
 import Button from "../../Shared/Components/FormElements/Button";
-import { useForm } from "../../Shared/hooks/form-hook";
+import { useForm, } from "../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Shared/Components/UiElements/Loader";
+import {AuthContext} from "../../Shared/Components/context/authcontext";
 
 const CreditForm = () => {
   const navigate = useNavigate();
-
+  const auth = useContext(AuthContext)
   const [loading, setLoading] = useState(false);
+  console.log(auth.cusId);
   const [formState, inputHandler] = useForm(
     {
-      userId: {
+      uid: {
         value: "",
         isValid: true,
       },
@@ -30,6 +32,7 @@ const CreditForm = () => {
     setLoading(true);
     console.log(formState.inputs);
     const formData = new FormData();
+    formData.append("uid", auth.cusId);
     formData.append("image", formState.inputs.image.value);
 
     axios

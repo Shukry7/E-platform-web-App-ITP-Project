@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
 import Search from "../../Shared/Components/UiElements/Search";
 import Pagination from "../../Shared/Components/FormElements/Pagination";
+import Header from "../../Shared/Components/UiElements/header";
 
 
 
@@ -63,8 +64,9 @@ const Employee = () => {
       });
   }, [deleteEmployee])
   return (
-    <><div>
-      <Navbar />
+    <><div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
+    <Navbar />
+    <Header/>
 
       <Card className="flex" style={{ width: "100%" }}>
         <div className="flex justify-between items-center">

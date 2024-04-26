@@ -6,6 +6,7 @@ const Navbar = (props) => {
   const [isDropdownOpenSupplier, setIsDropdownOpenSupplier] = useState(false);
   const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(props.select === "Product Details" || props.select === "Restock Products" ? true : false);
   const [isDropdownOpenEmployee, setIsDropdownOpenEmployee] = useState(false);
+  const [isDropdownOpenDelivery, setIsDropdownOpenDelivery] = useState(false);
   const [count, setCount] = useState();
   const [RestockCount, setRestockCount] = useState();
 
@@ -20,6 +21,11 @@ const Navbar = (props) => {
   const toggleDropdownEmployee = () => {
     setIsDropdownOpenEmployee(!isDropdownOpenEmployee);
   };
+
+  const toggleDropdownDelivery = () => {
+    setIsDropdownOpenDelivery(!isDropdownOpenDelivery);
+  };
+
 
 
   useEffect(() => {
@@ -71,10 +77,11 @@ const Navbar = (props) => {
 
       <aside
         id="logo-sidebar"
-        class="float-left top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        class="fixed top-0 left-0 z-10 w-64 h-screen overflow-y-auto border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform -translate-x-full sm:translate-x-0"
+        style={{backgroundColor: "white"}}
         aria-label="Sidebar"
       >
-        <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div class="relative px-3 py-4 flex flex-col flex-1 min-h-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
           <a href="https://flowbite.com/" class="flex items-center ps-2.5 mb-5">
             <img
               src="https://www.svgrepo.com/show/424912/valorant-logo-play-2.svg"
@@ -85,14 +92,14 @@ const Navbar = (props) => {
               DEDSEC
             </span>
           </a>
-          <ul class="space-y-2 font-medium">
+          <ul class="space-y-2 font-medium pt-5">
             <li>
               <Link
                 to={"/Dashboard"}
-                class={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white  dark:hover:bg-gray-700 group ${props.select === "Dashboard" ? 'bg-gray-400' : 'hover:bg-gray-100'}`}
+                class={`flex items-center p-2  rounded-lg dark:text-white  dark:hover:bg-gray-700 group ${props.select === "Dashboard" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
               >
                 <svg
-                  class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  class={`w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white ${props.select === "Dashboard" ? 'text-white' : 'group-hover:text-gray-900 text-gray-500'}`}
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -291,7 +298,7 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Product"}
-                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Product Details" ? 'bg-gray-400' : 'hover:bg-gray-100'}`}
+                      className={`flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Product Details" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
                     >
                       Product Details
                     </Link>
@@ -299,7 +306,7 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Product/Restock"}
-                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Restock Products" ? 'bg-gray-400' : 'hover:bg-gray-100'}`}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Restock Products" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
                     >
                       Restock Products
                       <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
@@ -414,25 +421,81 @@ const Navbar = (props) => {
                 </ul>
               )}
             </li>
+
+
             <li>
-              <Link
-                to={"/Delivery"}
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              <button
+                type="button"
+                className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                onClick={toggleDropdownDelivery}
               >
                 <svg
-                  class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  class="w-6 h-6 text-gray-800 dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  fill="none"
+                  viewBox="0 0 20 16"
                 >
-                  <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
-                  <path d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z" />
-                  <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z" />
+                  <path
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 8v1h4V8m4 7H4a1 1 0 0 1-1-1V5h14v9a1 1 0 0 1-1 1ZM2 1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1Z"
+                  ></path>
                 </svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">Delivery</span>
-              </Link>
+                <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+                  Delivery
+                </span>
+                <svg
+                  className={`w-3 h-3 ${
+                    isDropdownOpenDelivery ? "transform rotate-180" : ""
+                  }`}
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 6"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 1 4 4 4-4"
+                  />
+                </svg>
+              </button>
+              {isDropdownOpenDelivery && (
+                <ul className="py-2 space-y-2">
+                  <li>
+                    <Link
+                      to={"/Delivery"}
+                      className={`flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Product Details" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
+                    >
+                      Delivery Details
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/AssignDelivery"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Restock Products" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
+                    >
+                      Assign Delivery
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </li>
+           
+           
+           
+
+            
+           
+
+
+
+
+            
             <li>
               <Link
                 to={"/Delivery"}
