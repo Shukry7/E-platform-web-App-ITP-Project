@@ -27,6 +27,34 @@ const CreditForm = () => {
     false
   );
 
+  const handleUseCard = async () => {
+    try {
+      const cartResponse = await axios.get(`http://localhost:5000/cart/list/${auth.cusId}`);
+      const cartItems = cartResponse.data;
+     
+
+      const response = await axios.post("http://localhost:5000/order/new", {
+        uid : auth.cusId,
+        cartitem : cartItems
+      });
+
+     
+      console.log("Order placed successfully:",);
+      // Handle success (e.g., display a success message)
+
+      for (const item of cartItems) {
+        await axios.delete(`http://localhost:5000/cart/${item._id}`);
+        console.log("Cart item deleted successfully:", item._id);
+      }
+
+      navigate('/Products');
+    } catch (error) {
+      console.error("Error placing order:", error);
+      // Handle error (e.g., display an error message)
+    }
+  };
+
+
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -43,7 +71,7 @@ const CreditForm = () => {
       })
       .catch((err) => {
         console.error(err);
-        setLoading(false);
+        handleUseCard();
       });
     console.log(formState);
   };
