@@ -50,8 +50,7 @@ const SalaryCalculatorForm = () => {
   );
   
   const submitHandler = async (event) => {
-    event.preventDefault();
-    const statuss="pending";
+    const statuss="unpaid";
     setLoading(true);
     axios
       .post("http://localhost:5000/salary/new", {
