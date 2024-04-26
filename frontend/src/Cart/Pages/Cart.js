@@ -43,7 +43,7 @@ const CartPage = () => {
   const [deleteCart,setdeleteCart] = useState(1);
   let subtotal = 0;
   const shippingFee = useRef(0);
-  
+  const navigate = useNavigate();
 
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -105,6 +105,22 @@ const CartPage = () => {
          console.error("Error fetching user district", error);
        });
    }, [auth.cusId]);
+
+   const handleCardCheckout = () => {
+    // Calculate total including subtotal and shipping fee
+    const total = subtotal + shippingFee.current;
+  
+    // Navigate to card page with subtotal and shipping fee as query parameters
+    navigate(`/CC?subtotal=${subtotal}&shippingFee=${shippingFee.current}&total=${total}`);
+  };
+
+  const handleOfflineCheckout = () => {
+    // Calculate total including subtotal and shipping fee
+    const total = subtotal + shippingFee.current;
+  
+    // Navigate to card page with subtotal and shipping fee as query parameters
+    navigate(`/offpay?subtotal=${subtotal}&shippingFee=${shippingFee.current}&total=${total}`);
+  };
 
   return (
     <div class="bg-gray-100 h-screen py-8">
@@ -191,8 +207,8 @@ const CartPage = () => {
                   Choose your desired payment option !!
                 </p>
                 <div className="modal-button">
-                  <Button to="../CC/">Online</Button>
-                  <Button to="../offpay" className="modal-button">
+                  <Button onClick={handleCardCheckout}>Online</Button>
+                  <Button onClick={handleOfflineCheckout} className="modal-button">
                     Offline
                   </Button>
                 </div>

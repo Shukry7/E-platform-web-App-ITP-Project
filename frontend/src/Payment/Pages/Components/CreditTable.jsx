@@ -1,16 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./CreditTable.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import DeleteConfirmBox from "../../../Shared/Components/UiElements/DeleteConfirmBox";
 import { AuthContext } from "../../../Shared/Components/context/authcontext";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 
 function CardList() {
   const [cards, setCards] = useState([]);
   const [deleteCart, setdeleteCart] = useState(1);
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
 
+   // Extract subtotal, shipping fee, and total from query parameters
+   const subtotal = queryParams.get("subtotal");
+   const shippingFee = queryParams.get("shippingFee");
+   const total = queryParams.get("total");
   useEffect(() => {
     // Fetch cart items when component mounts
     axios
@@ -23,26 +30,32 @@ function CardList() {
       });
   }, []);
 
-  const handleUseCard = async () => {
+  const handleUseCard = async (cardId) => {
     try {
       const cartResponse = await axios.get(`http://localhost:5000/cart/list/${auth.cusId}`);
       const cartItems = cartResponse.data;
-     
-
+  
       const response = await axios.post("http://localhost:5000/order/new", {
-        uid : auth.cusId,
-        cartitem : cartItems
+        uid: auth.cusId,
+        cartitem: cartItems
       });
-
-     
-      console.log("Order placed successfully:",);
-      // Handle success (e.g., display a success message)
-
+  
+      console.log("Order placed successfully:", response.data);
+  
       for (const item of cartItems) {
         await axios.delete(`http://localhost:5000/cart/${item._id}`);
         console.log("Cart item deleted successfully:", item._id);
       }
-
+      console.log(subtotal,shippingFee,total);
+      await axios.post("http://localhost:5000/payment/submit", {
+        subtotal: subtotal,
+        shippingFee: shippingFee,
+        total: total,
+        card_id: cardId, // Pass the card_id parameter
+        user_id: auth.cusId ,// Pass the user_id parameter
+        method: "Online"// Pass the method parameter
+      });
+      Toast("Payment Completed!!" , "success")
       navigate('/Products');
     } catch (error) {
       console.error("Error placing order:", error);
@@ -99,7 +112,7 @@ function CardList() {
               <td class="px-6 py-4">{card.cvv}</td>
               <td class="px-6 py-4">
                 <button
-                  onClick={() => handleUseCard()}
+                  onClick={() => handleUseCard(card._id)}
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                 >
                   Use

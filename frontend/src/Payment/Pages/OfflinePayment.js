@@ -4,14 +4,20 @@ import axios from "axios";
 import ImageUpload from "../../Shared/Components/FormElements/ImageUpload";
 import Button from "../../Shared/Components/FormElements/Button";
 import { useForm, } from "../../Shared/hooks/form-hook";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import Loader from "../../Shared/Components/UiElements/Loader";
 import {AuthContext} from "../../Shared/Components/context/authcontext";
+import Toast from "../../Shared/Components/UiElements/Toast/Toast";
 
 const CreditForm = () => {
   const navigate = useNavigate();
   const auth = useContext(AuthContext)
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const subtotal = queryParams.get("subtotal");
+  const shippingFee = queryParams.get("shippingFee");
+  const total = queryParams.get("total");
   console.log(auth.cusId);
   const [formState, inputHandler] = useForm(
     {
@@ -47,6 +53,14 @@ const CreditForm = () => {
         console.log("Cart item deleted successfully:", item._id);
       }
 
+      await axios.post("http://localhost:5000/payment/submit", {
+        subtotal: subtotal,
+        shippingFee: shippingFee,
+        total: total,
+        user_id: auth.cusId ,// Pass the user_id parameter
+        method: "Offline"
+      });
+      Toast("Receipt uploaded!!" , "success")
       navigate('/Products');
     } catch (error) {
       console.error("Error placing order:", error);
