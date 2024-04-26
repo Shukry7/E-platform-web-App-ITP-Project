@@ -63,13 +63,11 @@ const CustomerHeader = (props) => {
               </Link>
             </li>
             <li class="h-10 w-10">
-            <a href="/Customer">
               <img
                 class="h-full w-full rounded-full mx-auto"
                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
                 alt="profile woman"
               />
-            </a>
             </li>
           </ul>
         </nav>
