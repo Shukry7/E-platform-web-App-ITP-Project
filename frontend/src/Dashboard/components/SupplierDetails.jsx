@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 
 const SupplierDetails = (props) => {
   const [SupplierProduct, setSupplierProduct] = useState([]);
-  const [isclick , setisclick] = useState(false)
+  const [isclick, setisclick] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const togglemodel = () => {
-    setisclick(!isclick)
-  }
+    setisclick(!isclick);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -27,13 +27,13 @@ const SupplierDetails = (props) => {
   }, [props.id]);
   return (
     <>
-    <Link
+      <Link
         onClick={togglemodel}
         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
       >
         View
       </Link>
-      
+
       {isclick && (
         <div
           id="crud-modal"
@@ -89,25 +89,37 @@ const SupplierDetails = (props) => {
                     </tr>
                   </thead>
                   <tbody class="text-blue-gray-900">
-                    {SupplierProduct.map((item, index) => {
-                      return (
+                    {SupplierProduct.length === 0 ? (
+                      <>
                         <tr class="border-b border-blue-gray-200">
-                          <td class="py-3 px-4">{item.supplier.name}</td>
-                          <td class="py-3 px-4 ">{item.supplier.ID}</td>
-                          <td class="py-3 px-4">{item.unitPrice}</td>
-                          <td class="py-3 px-4">
-                            <Link
-                              to={`/Supplier/view/` + item.supplier._id}
-                              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-center"
-                            >
-                              <center>
-                                <GrView />
-                              </center>
-                            </Link>
+                          <td colSpan={4} class="py-3 px-4 text-center">
+                            No Supplier Found
                           </td>
-                        </tr>
-                      );
-                    })}
+                        </tr>{" "}
+                      </>
+                    ) : (
+                      <>
+                        {SupplierProduct.map((item, index) => {
+                          return (
+                            <tr class="border-b border-blue-gray-200">
+                              <td class="py-3 px-4">{item.supplier.name}</td>
+                              <td class="py-3 px-4 ">{item.supplier.ID}</td>
+                              <td class="py-3 px-4">{item.unitPrice}</td>
+                              <td class="py-3 px-4">
+                                <Link
+                                  to={`/Supplier/view/` + item.supplier._id}
+                                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-center"
+                                >
+                                  <center>
+                                    <GrView />
+                                  </center>
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })}{" "}
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>

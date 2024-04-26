@@ -33,7 +33,7 @@ const SupplierTable = (props) => {
             props.Suppliers.map((item, index) => {
               return (
                 <TableRow>
-                  <td class="px-6 py-4">{index + 1}</td>
+                  <td class="px-6 py-4">{(props.active - 1) * props.itemsPerPage + index + 1}</td>
                   <td class="px-6 py-4">{item.ID}</td>
                   <th
                     scope="row"
@@ -55,12 +55,15 @@ const SupplierTable = (props) => {
                     deleteLink={`http://localhost:5000/supplier/${item._id}`}
                     dlt={props.dlt}
                     dltset={props.dltset}
+                    length={props.Suppliers.length}
+                    index={index + 1}
                     />
                   </td>
                 </TableRow>
               );
             })
           )}
+          {props.Suppliers.length <= 3 ? <><TableRow/><td></td><TableRow/></> : <></>}
       </Table>
     </>
   );

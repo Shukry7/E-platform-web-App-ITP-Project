@@ -14,7 +14,7 @@ const SupplierProductTable = (props) => {
   const [cart, setCart] = useState([]);
   const [loading , setLoading] = useState(false)
   const [isclick,setisclick] = useState(false)
-  const [amount, setAmount] =useState();
+  const [amount, setAmount] =useState(0);
 
   const supplier= props.id;
   let total =0;
