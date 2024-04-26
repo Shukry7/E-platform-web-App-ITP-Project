@@ -30,6 +30,13 @@ const ProductformUpdate = () => {
     { value: "Other" },
   ];
   const [loading, setLoading] = useState(false);
+  const [clickStock,setClickStock] = useState(false)
+
+  const toggleStock = () =>{
+    setClickStock(!clickStock)
+  }
+
+
   const [formState, inputHandler, setFormData] = useForm(
     {
       name: {
@@ -53,7 +60,10 @@ const ProductformUpdate = () => {
         value: "",
         isValid: false,
       },
-
+      Stock: {
+        value: "",
+        isValid: false,
+      },
       image: {
         value: null,
         isValid: true,
@@ -89,6 +99,10 @@ const ProductformUpdate = () => {
               value: res.data.Alert_quantity,
               isValid: true,
             },
+            Stock: {
+              value: res.data.Stock,
+              isValid: true,
+            },
             image: {
               value: res.data.image,
               isValid: true,
@@ -96,32 +110,31 @@ const ProductformUpdate = () => {
           },
           true
         );
-        
+
         setLoading(false);
-        
       })
       .catch((err) => {
         console.error(err);
         setLoading(false);
-      })
-      
+      });
   }, [id, setFormData]);
   console.table(formState);
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
     const formData = new FormData();
-    formData.append('name',formState.inputs.name.value);
-    formData.append('description',formState.inputs.description.value);
-    formData.append('category',formState.inputs.category.value);
-    formData.append('weight',formState.inputs.weight.value);
-    formData.append('Alert_quantity',formState.inputs.Alert_quantity.value);
-    formData.append('image',formState.inputs.image.value);
+    formData.append("name", formState.inputs.name.value);
+    formData.append("description", formState.inputs.description.value);
+    formData.append("category", formState.inputs.category.value);
+    formData.append("weight", formState.inputs.weight.value);
+    formData.append("Alert_quantity", formState.inputs.Alert_quantity.value);
+    formData.append("Stock", formState.inputs.Stock.value);
+    formData.append("image", formState.inputs.image.value);
     axios
       .put(`http://localhost:5000/product/update/${id}`, formData)
       .then((res) => {
         setLoading(false);
-        Toast("Product Updated Successfully!!","success")
+        Toast("Product Updated Successfully!!", "success");
         navigate("/Product/");
       })
       .catch((err) => {
@@ -137,7 +150,7 @@ const ProductformUpdate = () => {
         <Loader />
       ) : (
         <>
-           <div class="min-h-full px-6 py-10 bg-gray-100 flex items-center justify-center">
+          <div class="min-h-full px-6 py-10 bg-gray-100 flex items-center justify-center">
             <div class="container mx-auto">
               <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center">
@@ -149,7 +162,12 @@ const ProductformUpdate = () => {
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                   <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                     <div class="text-gray-600 flex justify-center items-center">
-                      <ImageUpload center id="image" onInput={inputHandler} initialValue={formState.inputs.image.value}/>
+                      <ImageUpload
+                        center
+                        id="image"
+                        onInput={inputHandler}
+                        initialValue={formState.inputs.image.value}
+                      />
                     </div>
                     <div class="lg:col-span-2">
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
@@ -223,7 +241,21 @@ const ProductformUpdate = () => {
                             onInput={inputHandler}
                           />
                         </div>
-
+                        
+                         <div class="md:col-span-2">
+                          <Input
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            element="Input"
+                            id="Stock"
+                            initialValue={formState.inputs.Stock.value}
+                            type="number"
+                            placeholder="Enter Stock of product"
+                            label="Stock ( Warning ⚠️):"
+                            validators={[VALIDATOR_REQUIRE(),VALIDATOR_MIN(0)]}
+                            errorText="Please Enter a Number."
+                            onInput={inputHandler}
+                          />
+                        </div>
                         <div class="md:col-span-5 text-right">
                           <div class="inline-flex items-end">
                             <Button
