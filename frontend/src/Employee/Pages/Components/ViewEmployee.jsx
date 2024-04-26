@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./ViewCard.css";
+//import "./ViewCard.css";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import { Link } from "react-router-dom";
 
