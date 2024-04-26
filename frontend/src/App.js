@@ -44,6 +44,7 @@ import ProductCustomerUI from "./Product/Pages/ProductCustomerUI";
 import ViewEmployees from "./Employee/Pages/ViewEmployees";
 import { AuthProvider } from './Shared/Components/context/authcontext';
 import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
+import ViewDelivery from "./Delivery/Pages/Components/ViewDelivery";
 
 const App = () => {
   return (
@@ -92,6 +93,7 @@ const App = () => {
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/Login" exact element={<LoginPage/>}/>  
         <Route path="/Loader" exact element={<CustomerLoader/>}/>
+        <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
       </Routes >
     </Router>
     </AuthProvider>

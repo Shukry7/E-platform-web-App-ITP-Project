@@ -77,7 +77,7 @@ const Suppliers = () => {
                 </Link>
               </div>
               <SupplierTable
-                Suppliers={FilteredSuppliers}
+                Suppliers={displaySuppliers}
                 loading={loading}
                 setloading={setLoading}
                 dlt= {deleteSupplier}
