@@ -32,7 +32,7 @@ const CustomerHeader = (props) => {
                 alt="Dedsec logo"
               />
               <span class="self-center text-xl font-semibold whitespace-nowrap text-orange-600 dark:text-white ml-2">
-                DEDSEC
+                Kandurata Glass House
               </span>
             </li>
           </ul>
