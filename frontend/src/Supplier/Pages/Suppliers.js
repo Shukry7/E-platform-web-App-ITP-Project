@@ -82,14 +82,15 @@ const Suppliers = () => {
                 setloading={setLoading}
                 dlt= {deleteSupplier}
                 dltset={setdeleteSupplier}
-                
+                active={activePage}
+                itemsPerPage={6}
               />
               <Pagination
-            active={activePage}
-            totalItems={FilteredSuppliers.length}
-            itemsPerPage={6}
-            onPageChange={handlePageChange}
-          />
+                active={activePage}
+                totalItems={FilteredSuppliers.length}
+                itemsPerPage={6}
+                onPageChange={handlePageChange}
+              />
             </Card>
           
       </div>

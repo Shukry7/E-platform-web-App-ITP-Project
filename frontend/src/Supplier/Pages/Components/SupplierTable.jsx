@@ -33,7 +33,7 @@ const SupplierTable = (props) => {
             props.Suppliers.map((item, index) => {
               return (
                 <TableRow>
-                  <td class="px-6 py-4">{index + 1}</td>
+                  <td class="px-6 py-4">{(props.active - 1) * props.itemsPerPage + index + 1}</td>
                   <td class="px-6 py-4">{item.ID}</td>
                   <th
                     scope="row"
