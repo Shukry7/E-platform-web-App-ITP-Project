@@ -39,7 +39,8 @@ import LoginPage from "./Login/LoginPage";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
 import Attendance from "./Employee/Pages/listAttendance";
-import ProductCustomerUI from "./Product/Pages/ProductCustomerUI"
+import ProductCustomerUI from "./Product/Pages/ProductCustomerUI";
+import ViewEmployees from "./Employee/Pages/ViewEmployees";
 import { AuthProvider } from './Shared/Components/context/authcontext';
 import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
 
@@ -66,6 +67,7 @@ const App = () => {
         <Route path="/Employee" exact element={<Employee/>}/>
         <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
         <Route path="/Employee/new" exact element={<CreateEmployee/>}/>
+        <Route path="/Employee/view/:id" exact element={<ViewEmployees/>}/>
         <Route path="/CC/new" exact element={<AddCC/>}/>
         <Route path="/Customer" exact element={<Customers/>}/>
         <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
