@@ -24,7 +24,7 @@ const SalaryCalculatorForm = () => {
   const [Total, setTotal] = useState(0);
   const [attendance, setattendance] = useState([]);
   const [Loading , setLoading] = useState(false)
-  const [formState, inputHandler] = useForm(
+ /* const [formState, inputHandler] = useForm(
     {
       employee: {
         value: "",
@@ -48,6 +48,7 @@ const SalaryCalculatorForm = () => {
     },
     false
   );
+  
   
   const submitHandler = async (event) => {
    
@@ -76,7 +77,7 @@ const SalaryCalculatorForm = () => {
     console.log(formState);
   };
 
-  
+  */
 
   useEffect(() => {
     // Fetch employee IDs when the component mounts
@@ -143,7 +144,7 @@ const SalaryCalculatorForm = () => {
     setTotal(totalSalary)
   };
   const handleButtonClick = () => {
-    submitHandler(); // Call submitHandler
+    //submitHandler(); // Call submitHandler
     handleCalculateSalary(); // Call handleCalculateSalary
   };
 
@@ -154,7 +155,7 @@ const SalaryCalculatorForm = () => {
     <h2 className="text-lg font-bold">Salary Calculator</h2>
     <h3 className="text-lg ">Month: {month}</h3>
   </div>
-      <form onSubmit={submitHandler} className="space-y-4">
+      <form  className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="empid" className="mb-1">Employee ID:</label>
           <select
