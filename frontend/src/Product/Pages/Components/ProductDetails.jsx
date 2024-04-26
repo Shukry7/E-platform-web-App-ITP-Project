@@ -1,16 +1,21 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import CustomerHeader from "../../../Shared/Components/UiElements/CustomerHeader";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
+import {AuthContext} from "../../../Shared/Components/context/authcontext"
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(false);
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate()
+  const auth = useContext(AuthContext)
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -23,26 +28,62 @@ const ProductDetails = () => {
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  }, [id]);
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const handleIncrement = () => {
+    if (quantity < product.Stock) {
+      setQuantity(quantity + 1);
+    }
+  };
   let Status = 1;
   if (product.Stock === 0) {
     Status = 0;
+  }
+
+  const submithandler = () =>{
+    setLoading(true)
+    axios
+      .post("http://localhost:5000/cart/cart/new", {
+        user : auth.cusId ,
+        product : product ,
+        quantity : quantity
+      })
+      .then((res) => {
+        setLoading(false);
+        Toast("Product Added To Cart !!","success")
+        navigate("/Products");
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   }
   return (
     <>
       <CustomerHeader title={product.name} />
       <main className="w-full flex flex-col lg:flex-row">
-        <section className="h-fit flex-col gap-8 mt-16 sm:flex sm:flex-row sm:gap-4 sm:h-full sm:mt-24 sm:mx-2 md:gap-8 md:mx-4 lg:flex-col lg:mx-0 lg:mt-36">
-          <picture className="relative flex items-center bg-orange sm:bg-transparent">
+        <section className="gap-8 mt-16 pl-56  pr-16 sm:flex-row sm:gap-4 sm:h-full sm:mt-24 sm:mx-2 md:gap-8 md:mx-4 lg:flex-col lg:mx-0 lg:mt-36">
+          <div className="w-96 h-96">
             <img
               src={`http://localhost:5000/${product.image}`}
               alt="Product Image"
-              className="block sm:rounded-xl xl:w-[70%] xl:rounded-xl m-auto pointer-events-none transition duration-300 lg:w-3/4 lg:pointer-events-auto lg:cursor-pointer lg:hover:shadow-xl"
+              className="block m-auto pointer-events-none transition duration-300 cursor-pointer hover:shadow-xl"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
             />
-          </picture>
+          </div>
         </section>
         <section className="w-full p-6 lg:mt-36 lg:pr-20 lg:py-10 2xl:pr-40 2xl:mt-40">
-          <h4 className="font-bold text-orange mb-2 uppercase text-xs tracking-widest">
+          <h4 className="font-bold text-orange-600 mb-2 uppercase text-xs tracking-widest">
             {product.category}
           </h4>
           <h1 class="text-very-dark mb-4 font-bold text-3xl lg:text-4xl">
@@ -58,12 +99,16 @@ const ProductDetails = () => {
               </h3>
             </div>
             <p class="text-dark-grayish w-fit decoration-dark-grayish decoration-1 my-auto">
-              {product.Stock} in stock
+              {Status === 1 ? (
+                <> {product.Stock} in Stock</>
+              ) : (
+                <>Out Of Stock</>
+              )}
             </p>
           </div>
           <div class="flex flex-col gap-5 mb-16 sm:flex-row lg:mb-0">
             <div class="w-full bg-gray-100 h-10 text-sm bg-light flex items-center justify-between rounded-lg font-bold relatives sm:w-80">
-              <div className="px-3" onClick={() => setQuantity(quantity - 1)}>
+              <div className="px-3" onClick={handleDecrement}>
                 <FaMinus
                   color="orange"
                   size={24}
@@ -73,7 +118,7 @@ const ProductDetails = () => {
               <span id="amount" class="select-none">
                 {quantity}
               </span>
-              <div className="px-3" onClick={() => setQuantity(quantity + 1)}>
+              <div className="px-3" onClick={handleIncrement}>
                 <FaPlus
                   color="Orange"
                   size={24}
@@ -82,20 +127,20 @@ const ProductDetails = () => {
               </div>
             </div>
             <button
-              class="w-full h-10 bg-orange py-2 flex items-center justify-center gap-4 text-xs rounded-lg font-bold text-light shadow-md shadow-orange hover:brightness-125 transition select-none"
+              class="w-full h-10 bg-orange-600 py-2 flex items-center justify-center gap-4 text-xs rounded-lg font-bold text-white shadow-md shadow-orange hover:brightness-125 transition select-none"
               id="add-cart"
+              onClick={submithandler}
             >
               <svg
-                width="16"
-                height="16"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 22 20"
+                class="h-6 w-6"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                <path
-                  d="M20.925 3.641H3.863L3.61.816A.896.896 0 0 0 2.717 0H.897a.896.896 0 1 0 0 1.792h1l1.031 11.483c.073.828.52 1.726 1.291 2.336C2.83 17.385 4.099 20 6.359 20c1.875 0 3.197-1.87 2.554-3.642h4.905c-.642 1.77.677 3.642 2.555 3.642a2.72 2.72 0 0 0 2.717-2.717 2.72 2.72 0 0 0-2.717-2.717H6.365c-.681 0-1.274-.41-1.53-1.009l14.321-.842a.896.896 0 0 0 .817-.677l1.821-7.283a.897.897 0 0 0-.87-1.114ZM6.358 18.208a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm10.015 0a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm2.021-7.243-13.8.81-.57-6.341h15.753l-1.383 5.53Z"
-                  fill="hsl(223, 64%, 98%)"
-                  fill-rule="nonzero"
-                ></path>
+                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
               </svg>
               Add to cart
             </button>
