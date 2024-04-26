@@ -1,5 +1,5 @@
 // components/Cart.js
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect,useContext ,useRef} from "react";
 import axios from "axios";
 import ModalComponent from "../../Payment/Pages/Components/PaymentOption";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,11 +9,41 @@ import "../../Cart/Pages/Components/Cart.css";
 import Toast from "../../Shared/Components/UiElements/Toast/Toast";
 import { AuthContext } from "../../Shared/Components/context/authcontext";
 
+const deliveryPrices = {
+  "Ampara": 500,
+  "Anuradhapura": 600,
+  "Badulla": 450,
+  "Batticaloa": 550,
+  "Colombo": 400,
+  "Galle": 550,
+  "Gampaha": 450,
+  "Hambantota": 650,
+  "Jaffna": 700,
+  "Kalutara": 500,
+  "Kandy": 500,
+  "Kegalle": 550,
+  "Kilinochchi": 750,
+  "Kurunegala": 550,
+  "Mannar": 700,
+  "Matale": 500,
+  "Matara": 600,
+  "Monaragala": 650,
+  "Mullaitivu": 750,
+  "Nuwara Eliya": 550,
+  "Polonnaruwa": 550,
+  "Puttalam": 600,
+  "Ratnapura": 600,
+  "Trincomalee": 600,
+  "Vavuniya": 700
+};
+
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
   const [deleteCart,setdeleteCart] = useState(1);
   let subtotal = 0;
+  const shippingFee = useRef(0);
+  
 
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -60,6 +90,21 @@ const CartPage = () => {
     subtotal = subtotal + (item.quantity * item.product.price)
   ))
 
+    // Fetch user's district data from the database and calculate shipping fee
+   useEffect(() => {
+     axios
+       .get(`http://localhost:5000/customer/${auth.cusId}`)
+       .then((response) => {
+         const userDistrict = response.data.city; // Assuming the district data is fetched correctly
+         // Define shipping fee based on user's district
+         console.log(userDistrict);
+         
+         shippingFee.current = deliveryPrices[userDistrict]; // Fetch the shipping fee from the deliveryPrices object
+       })
+       .catch((error) => {
+         console.error("Error fetching user district", error);
+       });
+   }, [auth.cusId]);
 
   return (
     <div class="bg-gray-100 h-screen py-8">
@@ -123,16 +168,16 @@ const CartPage = () => {
               </div>
               <div class="flex justify-between mb-2">
                 <span>Taxes</span>
-                <span>$1.99</span>
+                <span>Rs.0.00/=</span>
               </div>
               <div class="flex justify-between mb-2">
                 <span>Shipping</span>
-                <span>$0.00</span>
+                <span>Rs.{shippingFee.current}/=</span>
               </div>
               <hr class="my-2" />
               <div class="flex justify-between mb-2">
                 <span class="font-semibold">Total</span>
-                <span class="font-semibold">$21.98</span>
+                <span class="font-semibold">Rs.{subtotal+shippingFee.current}/=</span>
               </div>
               <button
                 class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full"

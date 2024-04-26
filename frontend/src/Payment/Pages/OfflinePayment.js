@@ -99,7 +99,17 @@ const CreditForm = () => {
                     <div class="lg:col-span-2">
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                         <div class="md:col-span-5">
-                          <span>Google Ceo</span>
+                        <h2 class="font-semibold text-xl text-gray-600 text-center">
+                 Terms and Conditions</h2> <br /> 
+                        <ol><span><li>Accepted File Formats: Receipts must be submitted in JPEG format (with the extension .jpg or .jpeg).</li>
+                          <li>File Size Limitations: Receipt files must not exceed 5 MB in size.</li>
+                          <li>Quality Requirements: Receipt images must be clear and legible, with all relevant details visible.</li>
+                          <li>No Manipulation: Receipt images must not be edited, altered, or digitally manipulated in any way.</li>
+                          <li>Original Receipts: Only original receipts for purchases are accepted. Screenshots, photocopies, or duplicates will not be processed.</li>
+                          <li>Date and Details: The receipt must include the date of purchase, list of items purchased, and total amount paid.</li>
+                          
+                          <li>Ownership of Receipts: By submitting a receipt, you grant permission for its use in processing and verification. You retain ownership of your receipts.</li>
+                          </span></ol>
                         </div>
                       </div>
                     </div>
