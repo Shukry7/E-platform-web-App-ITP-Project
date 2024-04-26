@@ -48,7 +48,8 @@ const CustomerTable = (props) => {
                     link1={`/Customer/view/`+ item._id}
                     link2={`/Customer/update/`+ item._id}
                     deleteLink={`http://localhost:5000/customer/${item._id}`}
-                    
+                    dlt={props.dlt}
+                    dltset={props.dltset}
                     />
                   </td>
                 </TableRow>
