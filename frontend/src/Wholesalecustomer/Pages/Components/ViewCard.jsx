@@ -33,16 +33,16 @@ const ViewCard = (props) => {
                 Telephone: {props.wholesalecustomer.telephone}
               </p>
               <p className="avatar-content">
-                Email: {props.wholesalecustomer.mail}
+                Email: {props.wholesalecustomer.email}
               </p>
               <p className="avatar-content">
                 Address: {props.wholesalecustomer.address}
               </p>
               <p className="avatar-content">
-                Credit_limit: {props.wholesalecustomer.creditlimit}
+                Credit_limit: Rs.{props.wholesalecustomer.creditlimit}
               </p>
               <p className="avatar-content">
-                Credit: {props.wholesalecustomer.credit}
+                Credit: Rs.{props.wholesalecustomer.credit}
               </p>
             </div>
             <Link
