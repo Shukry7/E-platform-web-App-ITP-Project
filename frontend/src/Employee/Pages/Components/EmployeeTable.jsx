@@ -62,7 +62,7 @@ const EmployeeTable = (props) => {
                  
                   <td className="px-6 py-4">
                     <ThreeDotDropdown
-                    link1=""
+                    link1={`/employee/view/`+ item._id}
                     link2={`/Employee/update/`+ item._id}
                     deleteLink={`http://localhost:5000/employee/${item._id}`}
                     dlt={props.dlt}
