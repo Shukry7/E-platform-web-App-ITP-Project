@@ -117,13 +117,13 @@ const WholesalecustomerForm = () => {
         <Loader />
       ) : (
         <>
-          <div class="min-h-full px-6 py-10 bg-gray-100 flex items-center justify-center">
+        <div class="min-h-full px-6 py-10 bg-gray-100 flex items-center justify-center">
             <div class="container mx-auto">
               <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center">Add Wholesalecustomer</h2>
                 <p class="text-gray-500 mb-6 text-center">Enter Wholesalecustomer details below !!</p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
-                  <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                  <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-2">
                     <div class="lg:col-span-2">
                       
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
