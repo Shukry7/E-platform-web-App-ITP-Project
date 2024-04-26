@@ -137,7 +137,7 @@ const EmployeeformUpdate = () => {
         <h1> LOADING...</h1>
       ) : (
         <>
-          <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
+        <div class="min-h-full px-6 py-10 bg-gray-100 flex items-center justify-center">
             <div class="container mx-auto">
               <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center">

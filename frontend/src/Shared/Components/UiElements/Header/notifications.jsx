@@ -6,7 +6,7 @@ const notifications = () => {
   return (
     <>
       <div
-        class=" z-50 max-w-sm my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow-lg dark:divide-gray-600 dark:bg-gray-700 block"
+        class=" z-40 max-w-sm my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow-lg dark:divide-gray-600 dark:bg-gray-700 block"
         id="notification-dropdown"
         style={{
           position: "absolute",
