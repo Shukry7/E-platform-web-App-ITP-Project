@@ -179,6 +179,7 @@ const SupplierformUpdate = () => {
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Name."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-5">
@@ -193,6 +194,7 @@ const SupplierformUpdate = () => {
                             validators={[VALIDATOR_PHONE()]}
                             errorText="Please Enter a valid Phone Number (10 numbers)"
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-3">
@@ -207,6 +209,7 @@ const SupplierformUpdate = () => {
                             validators={[VALIDATOR_EMAIL()]}
                             errorText="Please Enter a valid mail."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -221,6 +224,7 @@ const SupplierformUpdate = () => {
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter an Address."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -232,6 +236,7 @@ const SupplierformUpdate = () => {
                             onInput={inputHandler}
                             Display=""
                             label="City:"
+                            initialValid
                           />
                         </div>
 
