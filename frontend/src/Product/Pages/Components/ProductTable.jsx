@@ -3,8 +3,8 @@ import "./ProductTable.css";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
-import Popup from "./Popup";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
+import Popupp from "./Popupp";
 
 const ProductTable = (props) => {
 
@@ -73,7 +73,7 @@ const ProductTable = (props) => {
                   style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
                 >
                   <span style={{ marginRight: "auto" }}>Rs.{item.price}</span>
-                  <Popup id={item._id} />
+                  <Popupp id={item._id} />
                 </td>
                 <td class="px-2 py-4">
                   {Status === 0 && (
