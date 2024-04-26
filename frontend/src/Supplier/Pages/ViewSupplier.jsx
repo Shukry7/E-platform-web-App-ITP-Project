@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { MdOutlineAddBox } from 'react-icons/md';
 import Card from '../../Shared/Components/UiElements/Card';
 import SupplierProductTable from './Components/SupplierProductTable';
-import ViewCard from './Components/ViewCard';
+import SupplierViewCard from './Components/SupplierViewCard';
 import PopUp from './Components/PopUp';
 import Header from "../../Shared/Components/UiElements/header";
 
@@ -74,7 +74,7 @@ const ViewSupplier = () => {
             </Card>
           </div>
           <div className=" bg-gray-100 p-4 flex-initial w-96 ...">
-          <ViewCard
+          <SupplierViewCard
             supplier = {supplier}
             loading1 = {loading1}
             setloading1 = {setLoading1}
