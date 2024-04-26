@@ -4,6 +4,7 @@ import "./SupplierViewCard.css";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import { Link } from "react-router-dom";
 
+
 const SupplierViewCard = (props) => {
   return (
     props.loading1 ? (
