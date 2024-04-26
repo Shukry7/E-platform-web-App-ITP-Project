@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductList from "./Components/ProductList";
 import axios from "axios";
+import CustomerHeader from "../../Shared/Components/UiElements/CustomerHeader";
 
 const ProductCustomerUI = () => {
   const [products, setProducts] = useState([]);
@@ -116,16 +117,9 @@ const ProductCustomerUI = () => {
 
   return (
     <>
-      <main className="mx-auto pt-24 pb-24 sm:pt-24 sm:pb-24 lg:max-w-[80rem] ">
-        <div className="pb-10 border-b border-gray-200">
-          <h1 className="text-gray-900 tracking-tight font-bold text-3xl leading-10">
-            Product List
-          </h1>
-          <p className="text-gray-500 text-base leading-6 mt-4">
-            Explore our top-quality products and find the perfect addition for
-            you
-          </p>
-        </div>
+    <CustomerHeader title="Product List"/>
+      <main className="mx-auto pb-24  sm:pb-24 lg:max-w-[80rem] ">
+        
         <div className="lg:gap-8 lg:grid lg:grid-cols-3 xl:grid-cols-5 xl:pt-12">
           <aside>
             <div className="hidden lg:block">

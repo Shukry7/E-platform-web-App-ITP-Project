@@ -17,6 +17,7 @@ const CustomerRoute = require("./Routes/CustomerRoute");
 const OrderRoute = require("./Routes/OrderRoute");
 const LoginRoute = require("./Routes/LoginRoute");
 const NotificationRoute = require("./Routes/NotificationRoute");
+const WholesalecustomerRoute = require("./Routes/WholesalecustomerRoute");
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use("/OnPay", OnPay);
 app.use("/Login", LoginRoute);
 app.use("/order", OrderRoute);
 app.use("/notify", NotificationRoute);
+app.use("/wholesalecustomer", WholesalecustomerRoute);
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 // Read user ID from the cookie

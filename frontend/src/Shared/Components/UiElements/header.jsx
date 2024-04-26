@@ -11,7 +11,7 @@ const Header = () => {
 
   return (
     <>
-      <nav class="fixed z-10 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+      <nav class="fixed z-0 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
        style={{backgroundColor: "white"}}>
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
           <div class="flex items-center justify-between">

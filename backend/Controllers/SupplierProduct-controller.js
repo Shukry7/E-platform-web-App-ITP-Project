@@ -191,7 +191,7 @@ const SupplierPurchase = async (req, res, next) => {
 
 const listPurchase = async (req, res) => {
   try {
-    const purchaseList = await Purchase.find({})
+    const purchaseList = await Purchase.find({}).sort({ _id: -1 });
 
     return res.status(200).json(purchaseList);
     

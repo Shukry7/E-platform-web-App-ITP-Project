@@ -11,8 +11,8 @@ import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDrop
 const DeliveryTable = (props) => {
   const Headings = [
     "#",
-    "Delivery Person ID",
-    "Delivery Person Name",
+    "ID",
+    "Name",
     "Telephone",
     "Mail",
     "Address",
@@ -53,6 +53,7 @@ const DeliveryTable = (props) => {
                     link2={`/Delivery/update/` + item._id}
                     deleteLink={`http://localhost:5000/delivery/${item._id}`}
                     dlt={props.dlt}
+                    dltset={props.dltset}
                     />
                   </td>
                 </TableRow>

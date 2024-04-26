@@ -180,11 +180,11 @@ const SupplierProductTable = (props) => {
                       <form className="max-w-sm mx-auto pt-8">
                         <div className="flex items-center">
                             <table className="w-full">
-                                <thead>
+                                <thead className="text-xs text-gray-50 uppercase bg-red-400 dark:bg-gray-700 dark:text-gray-400 ">
                                     <tr>
-                                        <th className="px-4 py-2 bg-gray-200 font-bold">Product Name</th>
-                                        <th className="px-4 py-2 bg-gray-200 font-bold">Quantity</th>
-                                        <th className="px-4 py-2 bg-gray-200 font-bold">Price</th>
+                                        <th className="px-4 py-2 font-bold">Product Name</th>
+                                        <th className="px-4 py-2 font-bold">Quantity</th>
+                                        <th className="px-4 py-2 font-bold">Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
