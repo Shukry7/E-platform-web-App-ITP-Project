@@ -215,6 +215,7 @@ const DeliveryFormUpdate  = () => {
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Name."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-5">
@@ -229,6 +230,7 @@ const DeliveryFormUpdate  = () => {
                               validators={[VALIDATOR_PHONE()]}
                               errorText="Please Enter a valid Phone Number (10 numbers)"
                               onInput={inputHandler}
+                              initialValid
                           />
                         </div>
                         <div class="md:col-span-3">
@@ -243,6 +245,7 @@ const DeliveryFormUpdate  = () => {
                               validators={[VALIDATOR_EMAIL()]}
                               errorText="Please Enter a valid mail."
                               onInput={inputHandler}
+                              initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -257,6 +260,7 @@ const DeliveryFormUpdate  = () => {
                                 validators={[VALIDATOR_REQUIRE()]}
                                 errorText="Please Enter an Address."
                                 onInput={inputHandler}
+                                initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -283,6 +287,7 @@ const DeliveryFormUpdate  = () => {
                             validators={[VALIDATOR_LICENSE_NUMBER()]}
                             errorText="Please Enter a valid License Number"
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -297,6 +302,7 @@ const DeliveryFormUpdate  = () => {
                             validators={[VALIDATOR_NUMBER_PLATE()]}
                             errorText="Please Enter a valid Number Plate"
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -311,6 +317,7 @@ const DeliveryFormUpdate  = () => {
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a valid type of Vehicle"
                             onInput={inputHandler}
+                            initialValid
                             />
                         </div>
                         <div class="md:col-span-2">
@@ -325,6 +332,7 @@ const DeliveryFormUpdate  = () => {
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a valid capacity of the Vehicle"
                             onInput={inputHandler}
+                            initialValid
                             />
                         </div>
                         <div class="md:col-span-5 text-right">

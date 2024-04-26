@@ -17,8 +17,14 @@ const ViewCard = (props) => {
             </div>
             <div className="e-card-header">
               <div className="e-card-header-caption center">
-                <div className="e-card-header-title name text-lg font-semibold">
-                  {props.delivery.image}
+                <div className="e-card-header-title name text-lg font-semibold flex justify-center items-center"> {/* Add flex classes */}
+                  <div className="rounded-full overflow-hidden border border-gray-300" style={{ margin: "0" }}> {/* Remove padding and margin */}
+                    <img
+                      className="w-40 h-40" // Adjust width and height here
+                      src={`http://localhost:5000/${props.delivery.image}`}
+                      alt="profile_pic"
+                    />
+                  </div>
                 </div>
                 <div className="e-card-sub-title text-sm"></div>
               </div>
