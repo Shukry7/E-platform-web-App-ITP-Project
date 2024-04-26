@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Navbar from '../Shared/Components/UiElements/Navbar';
 import ViewCard from './Components/ViewCard';
+import Header from '../Shared/Components/UiElements/header';
 
 const ViewCustomer = () => {
     const { id } = useParams();
@@ -32,8 +33,9 @@ const ViewCustomer = () => {
         <div className='flex'>
           <div>
             <Navbar />
+            <Header/>
           </div>
-          <div className=" bg-gray-100 p-4 flex-initial w-96 ...">
+          <div className='flex-1 w-64 ...'>
           <ViewCard
             customer = {customer}
             loading1 = {loading1}

@@ -12,7 +12,7 @@ const ViewCard = (props) => {
       </center>
     ) : (
       <div className="max-w-screen-md mx-auto flex justify-center items-center">
-        <div className="sample_container card_sample">
+        <div className="card_sample pt-32">
           <div className="e-card e-custom-card relative mx-auto overflow-visible border rounded-lg shadow-md transition duration-200 border-gray-300 hover:border-indigo-500">
             <div className="e-card-header text-center">
               <div className="flex justify-center">
