@@ -8,6 +8,7 @@ import {
   VALIDATOR_MIN,
   VALIDATOR_REQUIRE
 } from "../../../Shared/Components/util/validate";
+import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 const Popup = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ const Popup = (props) => {
       })
       .then((res) => {
         setLoading(false);
+        Toast("Price Updated !!" , "success")
         navigate("/Product/");
       })
       .catch((err) => {
