@@ -39,10 +39,10 @@ const ViewCard = (props) => {
                 Address: {props.wholesalecustomer.address}
               </p>
               <p className="avatar-content">
-                Credit_limit: {props.wholesalecustomer.creditlimit}
+                Credit_limit: Rs.{props.wholesalecustomer.creditlimit}
               </p>
               <p className="avatar-content">
-                Credit: {props.wholesalecustomer.credit}
+                Credit: Rs.{props.wholesalecustomer.credit}
               </p>
             </div>
             <Link
