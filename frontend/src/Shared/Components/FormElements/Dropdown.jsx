@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Dropdown = (props) => {
   const { initialValue } = props;
   const [value, setValue] = useState("");
-  const [isValid, setisValid] = useState(false);
+  const [isValid, setisValid] = useState(props.initialValid || false);
 
   const changeHandler = (event) => {
     console.log(event.target.value);

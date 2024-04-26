@@ -183,6 +183,7 @@ const ProductformUpdate = () => {
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Name."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-5">
@@ -199,6 +200,7 @@ const ProductformUpdate = () => {
                             ]}
                             errorText="Please Enter a Description (5 - 250 words)"
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
 
@@ -214,6 +216,7 @@ const ProductformUpdate = () => {
                             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
                             errorText="Please Enter a Weight."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -225,6 +228,7 @@ const ProductformUpdate = () => {
                             Display=""
                             label="Category:"
                             initialValue={formState.inputs.category.value}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -239,6 +243,7 @@ const ProductformUpdate = () => {
                             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
                             errorText="Please Enter a number :"
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         
@@ -254,6 +259,7 @@ const ProductformUpdate = () => {
                             validators={[VALIDATOR_REQUIRE(),VALIDATOR_MIN(0)]}
                             errorText="Please Enter a Number."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-5 text-right">
