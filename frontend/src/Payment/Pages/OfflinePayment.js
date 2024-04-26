@@ -67,11 +67,11 @@ const CreditForm = () => {
       .post("http://localhost:5000/offpay/new", formData)
       .then((res) => {
         setLoading(false);
-        navigate("/offpay/");
+        handleUseCard();
       })
       .catch((err) => {
         console.error(err);
-        handleUseCard();
+        setLoading(false);
       });
     console.log(formState);
   };
