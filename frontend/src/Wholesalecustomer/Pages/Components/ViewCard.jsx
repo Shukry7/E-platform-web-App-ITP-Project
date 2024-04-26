@@ -11,11 +11,6 @@ const ViewCard = (props) => {
         <Loader />
       </center>
     ) : (
-        <div className="sample_container card_sample">
-          <div className="e-card e-custom-card relative mx-auto overflow-visible border rounded-lg shadow-md transition duration-200 border-gray-300 hover:border-indigo-500">
-            <div className="e-card-header text-center">
-              <div className="flex justify-center">
-                <div className="e-avatar-circle e-avatar-md flex items-center justify-center">
       <div className="max-w-screen-lg mx-auto flex justify-center items-center"> {/* Adjust width here */}
       <div className="sample_container card_sample w-full"> {/* Adjust width here */}
         <div className="e-card e-custom-card relative mx-auto overflow-visible border rounded-lg shadow-md transition duration-200 border-gray-300 hover:border-indigo-500 w-full"> {/* Adjust width here */}
