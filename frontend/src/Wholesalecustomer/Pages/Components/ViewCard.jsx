@@ -33,7 +33,7 @@ const ViewCard = (props) => {
                 Telephone: {props.wholesalecustomer.telephone}
               </p>
               <p className="avatar-content">
-                Email: {props.wholesalecustomer.mail}
+                Email: {props.wholesalecustomer.email}
               </p>
               <p className="avatar-content">
                 Address: {props.wholesalecustomer.address}
