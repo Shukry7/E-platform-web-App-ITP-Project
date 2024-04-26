@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import CustomerHeader from "../../../Shared/Components/UiElements/CustomerHeader";
 
 const ProductDetails = () => {
 
@@ -29,6 +30,7 @@ const ProductDetails = () => {
   }
   return (
     <>
+    <CustomerHeader title={product.name}/>
       <div class="bg-gray-100  py-8">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex flex-col md:flex-row -mx-4">
