@@ -11,7 +11,7 @@ import ViewCard from './Components/ViewCard';
 import PopUp from './Components/PopUp';
 import Header from "../../Shared/Components/UiElements/header";
 
-const ViewEmployee = () => {
+const ViewSupplier = () => {
     const { id } = useParams();
     const[loading, setLoading] = useState(false);
     const[loading1, setLoading1] = useState(false);
@@ -85,4 +85,4 @@ const ViewEmployee = () => {
     );
 }
 
-export default ViewEmployee;
+export default ViewSupplier;

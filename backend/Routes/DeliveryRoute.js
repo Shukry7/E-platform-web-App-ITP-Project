@@ -10,4 +10,5 @@ Router.get("/:id", DeliveryControllers.listDeliveryById);
 Router.put("/:id", fileupload.single('image') ,  DeliveryControllers.UpdateDelivery);
 
 
+
 module.exports = Router;
