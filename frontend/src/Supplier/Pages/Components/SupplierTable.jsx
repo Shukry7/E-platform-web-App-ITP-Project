@@ -55,12 +55,15 @@ const SupplierTable = (props) => {
                     deleteLink={`http://localhost:5000/supplier/${item._id}`}
                     dlt={props.dlt}
                     dltset={props.dltset}
+                    length={props.Suppliers.length}
+                    index={index + 1}
                     />
                   </td>
                 </TableRow>
               );
             })
           )}
+          {props.Suppliers.length <= 3 ? <><TableRow/><td></td><TableRow/></> : <></>}
       </Table>
     </>
   );
