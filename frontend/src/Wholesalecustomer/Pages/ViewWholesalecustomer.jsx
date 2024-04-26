@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { MdOutlineAddBox } from 'react-icons/md';
 import Card from '../../Shared/Components/UiElements/Card';
 
-import ViewCard from './Components/ViewWholesalecustomer';
+import ViewCard from './Components/ViewCard';
 
 import Header from "../../Shared/Components/UiElements/header";
 
