@@ -18,7 +18,7 @@ export const LoginPage = () => {
             if(res.data.message === "Success"){
                 auth.login(res.data.user._id);
                 console.log(res.data.user)
-                navigate("/ProductList")
+                navigate("/Products")
             }
         
         })
