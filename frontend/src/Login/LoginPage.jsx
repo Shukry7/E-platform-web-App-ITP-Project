@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import {useNavigate} from "react-router-dom";
 import { AuthContext } from '../Shared/Components/context/authcontext';
+import Toast from "../Shared/Components/UiElements/Toast/Toast"
 
 export const LoginPage = () => {
 
@@ -18,7 +19,10 @@ export const LoginPage = () => {
             if(res.data.message === "Success"){
                 auth.login(res.data.user._id);
                 console.log(res.data.user)
+                Toast("Login Successfully !!", "success")
                 navigate("/Products")
+            }else{
+                Toast("Invalid mail / Password", "error")
             }
         
         })
