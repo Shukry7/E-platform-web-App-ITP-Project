@@ -35,6 +35,7 @@ import ViewCustomer from "./Customer/ViewCustomer";
 import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecustomer"
 import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
 import UpdateWholesalecustomer from "./Wholesalecustomer/Pages/UpdateWholesalecustomer";
+import ViewWholesalecustomer from "./Wholesalecustomer/Pages/ViewWholesalecustomer";
 import LoginPage from "./Login/LoginPage";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
@@ -43,6 +44,7 @@ import ProductCustomerUI from "./Product/Pages/ProductCustomerUI";
 import ViewEmployees from "./Employee/Pages/ViewEmployees";
 import { AuthProvider } from './Shared/Components/context/authcontext';
 import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
+import ViewDelivery from "./Delivery/Pages/ViewDelivery";
 
 const App = () => {
   return (
@@ -85,11 +87,13 @@ const App = () => {
         <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/update/:id" exact element={<UpdateWholesalecustomer/>}/>
+        <Route path="/Wholesalecustomer/view/:id" exact element={<ViewWholesalecustomer/>}/>
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/Login" exact element={<LoginPage/>}/>  
         <Route path="/Loader" exact element={<CustomerLoader/>}/>
+        <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
       </Routes >
     </Router>
     </AuthProvider>

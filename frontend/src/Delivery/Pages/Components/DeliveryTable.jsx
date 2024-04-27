@@ -49,7 +49,7 @@ const DeliveryTable = (props) => {
                   <td class="px-6 py-4">{item.type}({item.capacity}kg)</td>
                   <td class="px-6 py-4">
                     <ThreeDotDropdown
-                    link1=""
+                    link1={`/Delivery/view/`+ item._id}
                     link2={`/Delivery/update/` + item._id}
                     deleteLink={`http://localhost:5000/delivery/${item._id}`}
                     dlt={props.dlt}

@@ -156,7 +156,7 @@ const WholesalecustomerformUpdate = () => {
         <Loader />
       ) : (
         <>
-          <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
+        <div class="min-h-full px-6 py-10 bg-gray-100 flex items-center justify-center">
             <div class="container mx-auto">
               <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center">
@@ -166,7 +166,7 @@ const WholesalecustomerformUpdate = () => {
                   Enter wholesalecustomer details below !!
                 </p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
-                  <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                  <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-2">
                 
                     <div class="lg:col-span-2">
                       <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
@@ -182,6 +182,7 @@ const WholesalecustomerformUpdate = () => {
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter a Name."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-5">
@@ -196,6 +197,7 @@ const WholesalecustomerformUpdate = () => {
                             validators={[VALIDATOR_PHONE()]}
                             errorText="Please Enter a valid Phone Number (10 numbers)"
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-3">
@@ -210,6 +212,7 @@ const WholesalecustomerformUpdate = () => {
                             validators={[VALIDATOR_EMAIL()]}
                             errorText="Please Enter a valid mail."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -224,6 +227,7 @@ const WholesalecustomerformUpdate = () => {
                             validators={[VALIDATOR_REQUIRE()]}
                             errorText="Please Enter an Address."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -238,6 +242,7 @@ const WholesalecustomerformUpdate = () => {
                             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
                             errorText="Please Enter a valid creditlimit (numbers)."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
                         <div class="md:col-span-2">
@@ -252,6 +257,7 @@ const WholesalecustomerformUpdate = () => {
                             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(0)]}
                             errorText="Please Enter a valid credit (numbers)."
                             onInput={inputHandler}
+                            initialValid
                           />
                         </div>
 
