@@ -40,6 +40,7 @@ const deliveryPrices = {
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [deleteCart,setdeleteCart] = useState(1);
   let subtotal = 0;
   const shippingFee = useRef(0);
@@ -105,6 +106,27 @@ const CartPage = () => {
          console.error("Error fetching user district", error);
        });
    }, [auth.cusId]);
+   
+   const handleItemSelect = (itemId) => {
+    const selectedIndex = selectedItems.indexOf(itemId);
+    if (selectedIndex === -1) {
+      setSelectedItems([...selectedItems, itemId]);
+    } else {
+      const updatedSelectedItems = [...selectedItems];
+      updatedSelectedItems.splice(selectedIndex, 1);
+      setSelectedItems(updatedSelectedItems);
+    }
+  };
+
+   const handleCheckout = () => {
+    if (selectedItems.length > 0) {
+      const total = subtotal + shippingFee.current;
+      navigate(`/confirm-order?subtotal=${subtotal}&shippingFee=${shippingFee.current}&total=${total}&selectedItems=${selectedItems.join(",")}`); // Pass selected item IDs as a comma-separated string
+    } else {
+      // Prompt user to select at least one item
+      alert("Please select at least one item before proceeding to checkout.");
+    }
+  };
 
    const handleCardCheckout = () => {
     // Calculate total including subtotal and shipping fee
@@ -132,6 +154,7 @@ const CartPage = () => {
               <table class="w-max">
                 <thead>
                   <tr>
+                    <th class="text-left font-semibold px-6 py-4">Select</th>
                     <th class="text-left font-semibold px-6 py-4">Product</th>
                     <th class="text-left font-semibold px-6 py-4">Price</th>
                     <th class="text-left font-semibold px-6 py-4">Quantity</th>
@@ -143,6 +166,12 @@ const CartPage = () => {
                 <tbody>
                   {cart.map((item) => (
                     <tr key={item._id}>
+                       <td class="px-6 py-4">
+                      <input
+                          type="checkbox"
+                          onChange={() => handleItemSelect(item._id)}
+                          checked={selectedItems.includes(item._id)}
+                        /></td>
                       <td class="py-4">
                         <div class="flex items-center">
                         <img
@@ -197,7 +226,7 @@ const CartPage = () => {
               </div>
               <button
                 class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full"
-                onClick={openModal}
+                onClick={handleCheckout}
               >
                 Checkout
               </button>

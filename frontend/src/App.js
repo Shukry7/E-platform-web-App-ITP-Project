@@ -45,6 +45,7 @@ import ViewEmployees from "./Employee/Pages/ViewEmployees";
 import { AuthProvider } from './Shared/Components/context/authcontext';
 import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
 import ViewDelivery from "./Delivery/Pages/ViewDelivery";
+import ConfirmOrderPage from "./Order/OrderConfirm";
 
 const App = () => {
   return (
@@ -94,6 +95,7 @@ const App = () => {
         <Route path="/Login" exact element={<LoginPage/>}/>  
         <Route path="/Loader" exact element={<CustomerLoader/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
+        <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
       </Routes >
     </Router>
     </AuthProvider>
