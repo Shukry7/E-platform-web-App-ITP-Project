@@ -70,7 +70,7 @@ const CustomerHeader = (props) => {
             </li>
           </ul>
 
-          <ul class="flex items-center">
+          <ul class="flex items-center pl-40">
             <li>
               <h1 class="pl-8 lg:pl-0 text-gray-700 font-bold">
                 {props.title}
