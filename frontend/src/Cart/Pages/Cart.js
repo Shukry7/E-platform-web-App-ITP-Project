@@ -128,13 +128,7 @@ const CartPage = () => {
     }
   };
 
-   const handleCardCheckout = () => {
-    // Calculate total including subtotal and shipping fee
-    const total = subtotal + shippingFee.current;
-  
-    // Navigate to card page with subtotal and shipping fee as query parameters
-    navigate(`/CC?subtotal=${subtotal}&shippingFee=${shippingFee.current}&total=${total}`);
-  };
+   
 
   const handleOfflineCheckout = () => {
     // Calculate total including subtotal and shipping fee
@@ -230,18 +224,7 @@ const CartPage = () => {
               >
                 Checkout
               </button>
-              <ModalComponent modalIsOpen={modalIsOpen} closeModal={closeModal}>
-                <h2 className="modal-title">Choose your payment options...</h2>
-                <p className="modal-text">
-                  Choose your desired payment option !!
-                </p>
-                <div className="modal-button">
-                  <Button onClick={handleCardCheckout}>Online</Button>
-                  <Button onClick={handleOfflineCheckout} className="modal-button">
-                    Offline
-                  </Button>
-                </div>
-              </ModalComponent>
+              
             </div>
           </div>
         </div>

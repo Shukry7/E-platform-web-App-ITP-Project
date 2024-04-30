@@ -1,7 +1,7 @@
 // cartController.js
 
 const Cart = require("../Models/CartModel"); // Path to your Cart model
-const axios = require('axios');
+
 // Create a new cart
 const createCart = async (req, res) => {
   const { user, product, quantity } = req.body;
