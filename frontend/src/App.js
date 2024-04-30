@@ -45,14 +45,19 @@ import ViewEmployees from "./Employee/Pages/ViewEmployees";
 import { AuthProvider } from './Shared/Components/context/authcontext';
 import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
 import ViewDelivery from "./Delivery/Pages/ViewDelivery";
+import ProtectedRouteCustomer from "./Shared/Components/context/PrivateRoute";
+import CheckLogin from "./Shared/Components/context/checkLogin";
 
 const App = () => {
   return (
     <AuthProvider >
     <Router>
       <Routes >
+        <Route element={<ProtectedRouteCustomer/>}>
+          <Route path="/products" exact element={<ProductCustomerUI/>}/>
+          <Route path="/ProductList/:id" exact element={<ProductDetails/>}/>
+        </Route>
         <Route path="/Dashboard" exact element={<Dashboard/>}/>
-        <Route path="/products" exact element={<ProductCustomerUI/>}/>
         <Route path="/Product" exact element={<Products/>}/>
         <Route path="/Product/update/:id" exact element={<Updateproduct/>}/> 
         <Route path="/Product/new" exact element={<AddProduct/>}/>
@@ -82,8 +87,6 @@ const App = () => {
         <Route path="/CC/:id" exact element={<UpdateCC/>}/>
         <Route path="/CC/new" exact element={<CCForm/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
-        <Route path="/ProductList/:id" exact element={<ProductDetails/>}/>
-        <Route path="/Login" exact element={<LoginPage/>}/>
         <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/update/:id" exact element={<UpdateWholesalecustomer/>}/>
@@ -91,7 +94,10 @@ const App = () => {
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
-        <Route path="/Login" exact element={<LoginPage/>}/>  
+        <Route path="/" exact element={
+          <CheckLogin>
+            <LoginPage/>
+          </CheckLogin>}/>  
         <Route path="/Loader" exact element={<CustomerLoader/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
       </Routes >

@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
 import axios from "axios";
 import { AuthContext } from "../../../Shared/Components/context/authcontext";
 import "./CHeader.css";
 
 const CustomerHeader = (props) => {
+  const navigate = useNavigate();
   const [count, setCount] = useState();
   const auth = useContext(AuthContext);
   const [isProfileDropdown, setIsProfileDropdown] = useState(false);
@@ -14,6 +15,10 @@ const CustomerHeader = (props) => {
 
   const toggleProfile = () => {
     setIsProfileDropdown(!isProfileDropdown);
+  };
+
+  const navigateCart = () => {
+    navigate("/Cart");
   };
 
   useEffect(() => {
@@ -46,12 +51,15 @@ const CustomerHeader = (props) => {
     } else {
       document.removeEventListener("mousedown", handleOutsideClick);
     }
-
-    // Cleanup event listener when component unmounts or state changes
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [isProfileDropdown]);
+
+  const logout = () =>{
+    auth.logout()
+    navigate('/Login')
+  }
 
   return (
     <>
@@ -79,21 +87,21 @@ const CustomerHeader = (props) => {
           </ul>
 
           <ul class="flex items-center">
-            <li class="pr-6">
-              <Link
-                to={"/Cart"}
-                class="py-4 px-1 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out"
-                aria-label="Cart"
+            <li class="pr-1">
+              <button
+                onClick={navigateCart}
+                type="button"
+                class="relative p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 z-10"
               >
                 <FaCartShopping size={25} />
                 {count !== 0 && (
-                  <span class="absolute inset-0 object-right-top top-6 p-5">
+                  <span class="absolute inset-0 object-right-top top-0 p-5">
                     <div class="inline-flex items-center px-1.5 py-0.5 border-2 pl- border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
                       {count}
                     </div>
                   </span>
                 )}
-              </Link>
+              </button>
             </li>
             <li
               ref={buttonRef}
@@ -192,7 +200,7 @@ const CustomerHeader = (props) => {
                         </a>
                       </li>
                     </ul>
-                    <button class="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-orange-500 lg:text-base">
+                    <button onClick={logout} class="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-orange-500 lg:text-base">
                       <svg
                         class="fill-current"
                         width="22"
