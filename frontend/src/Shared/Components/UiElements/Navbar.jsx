@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
   const [isDropdownOpenSupplier, setIsDropdownOpenSupplier] = useState(false);
-  const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(props.select === "Product Details" || props.select === "Restock Products" ? true : false);
+  const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(
+    props.select === "Product Details" || props.select === "Restock Products"
+      ? true
+      : false
+  );
   const [isDropdownOpenEmployee, setIsDropdownOpenEmployee] = useState(false);
   const [isDropdownOpenDelivery, setIsDropdownOpenDelivery] = useState(false);
   const [count, setCount] = useState();
@@ -25,8 +29,6 @@ const Navbar = (props) => {
   const toggleDropdownDelivery = () => {
     setIsDropdownOpenDelivery(!isDropdownOpenDelivery);
   };
-
-
 
   useEffect(() => {
     axios
@@ -78,7 +80,7 @@ const Navbar = (props) => {
       <aside
         id="logo-sidebar"
         class="fixed top-0 left-0 z-10 w-64 h-screen overflow-y-auto border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform -translate-x-full sm:translate-x-0"
-        style={{backgroundColor: "white"}}
+        style={{ backgroundColor: "white" }}
         aria-label="Sidebar"
       >
         <div class="relative px-3 py-4 flex flex-col flex-1 min-h-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -96,10 +98,18 @@ const Navbar = (props) => {
             <li>
               <Link
                 to={"/Dashboard"}
-                class={`flex items-center p-2  rounded-lg dark:text-white  dark:hover:bg-gray-700 group ${props.select === "Dashboard" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
+                class={`flex items-center p-2  rounded-lg dark:text-white  dark:hover:bg-gray-700 group ${
+                  props.select === "Dashboard"
+                    ? "bg-red-400 text-white"
+                    : "hover:bg-gray-100 text-gray-900"
+                }`}
               >
                 <svg
-                  class={`w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white ${props.select === "Dashboard" ? 'text-white' : 'group-hover:text-gray-900 text-gray-500'}`}
+                  class={`w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white ${
+                    props.select === "Dashboard"
+                      ? "text-white"
+                      : "group-hover:text-gray-900 text-gray-500"
+                  }`}
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -152,7 +162,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Employee/"}
-                      className=" mr-10  flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      className={` mr-10  flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700${
+                        props.select === "Employee Details"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       <svg
                         className="flex-shrink-0 w-6 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
@@ -174,7 +188,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Employee/attendance"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Mark Attendance"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       <svg
                         className="flex-shrink-0 w-6 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
@@ -202,7 +220,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Employee/attendancelist"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700${
+                        props.select === "Attendance List"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       <svg
                         className="flex-shrink-0 w-6 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
@@ -227,7 +249,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Salaryform"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Salary Calculation"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       <svg
                         className="flex-shrink-0 w-6 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
@@ -298,7 +324,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Product"}
-                      className={`flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Product Details" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
+                      className={`flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Product Details"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       Product Details
                     </Link>
@@ -306,7 +336,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Product/Restock"}
-                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Restock Products" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Restock Products"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       Restock Products
                       <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
@@ -394,7 +428,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Supplier/"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Supplier Details"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       Supplier Details
                     </Link>
@@ -402,7 +440,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Supplier/purchase"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Purchase History"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       Purchase History
                     </Link>
@@ -410,7 +452,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Supplier/pendingpurchase"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Pending Orders"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       Pending Orders
                       <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
@@ -421,7 +467,6 @@ const Navbar = (props) => {
                 </ul>
               )}
             </li>
-
 
             <li>
               <button
@@ -469,7 +514,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/Delivery"}
-                      className={`flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Product Details" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
+                      className={`flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Delivery Details"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       Delivery Details
                     </Link>
@@ -477,7 +526,11 @@ const Navbar = (props) => {
                   <li>
                     <Link
                       to={"/AssignDelivery"}
-                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${props.select === "Restock Products" ? 'bg-red-400 text-white' : 'hover:bg-gray-100 text-gray-900'}`}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Assign Delivery"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
                     >
                       Assign Delivery
                     </Link>
@@ -485,17 +538,7 @@ const Navbar = (props) => {
                 </ul>
               )}
             </li>
-           
-           
-           
 
-            
-           
-
-
-
-
-            
             <li>
               <Link
                 to={"/Delivery"}
