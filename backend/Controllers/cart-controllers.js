@@ -1,7 +1,7 @@
 // cartController.js
 
 const Cart = require("../Models/CartModel"); // Path to your Cart model
-
+const axios = require('axios');
 // Create a new cart
 const createCart = async (req, res) => {
   const { user, product, quantity } = req.body;
@@ -85,8 +85,38 @@ const deleteCart = async (req, res) => {
   }
 };
 
+const listCartById = async (req, res) => {
+  const {id} = req.params;
+
+  try {
+    
+    const cart = await Cart.findById({ id }).populate("product");
+n
+
+    
+
+    return res.status(200).json(cart);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+const getCartItems= async (req, res) => {
+  try {
+    const { id } = req.query; // Assuming id is passed as an array of strings
+    const items = await Cart.find({ _id: { $in: id } }).populate("user").populate("product"); // Use $in operator to find multiple IDs
+    res.json(items);
+  } catch (error) {
+    console.error("Error fetching item details:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 exports.createCart = createCart;
 exports.updateCart = updateCart;
 exports.deleteCart = deleteCart;
 exports.listCartByUId = listCartByUId;
 exports.listCart = listCart;
+exports.listCartById = listCartById;
+exports.getCartItems=getCartItems;

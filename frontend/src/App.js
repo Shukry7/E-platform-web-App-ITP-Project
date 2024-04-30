@@ -47,6 +47,7 @@ import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
 import ViewDelivery from "./Delivery/Pages/ViewDelivery";
 import ProtectedRouteCustomer from "./Shared/Components/context/PrivateRoute";
 import CheckLogin from "./Shared/Components/context/checkLogin";
+import ConfirmOrderPage from "./Order/OrderConfirm";
 
 const App = () => {
   return (
@@ -100,6 +101,7 @@ const App = () => {
           </CheckLogin>}/>  
         <Route path="/Loader" exact element={<CustomerLoader/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
+        <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
       </Routes >
     </Router>
     </AuthProvider>

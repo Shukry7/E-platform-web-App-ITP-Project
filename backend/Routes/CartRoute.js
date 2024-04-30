@@ -9,7 +9,8 @@ router.get('/', cartController.listCart);
 router.get('/list/:id', cartController.listCartByUId);
 router.put('/cart/:id', cartController.updateCart);
 router.delete('/:id', cartController.deleteCart);
-
+router.get('/carts/:id', cartController.listCartById);
+router.get('/carts', cartController.getCartItems);
 
 module.exports = router;
 
