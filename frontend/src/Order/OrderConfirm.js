@@ -123,7 +123,8 @@ const getCurrentDateTime = () => {
   return (
     
     <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
-      
+      {selectedItemDetails.map(item => (
+                <React.Fragment key={item.id}>
       <div className="flex justify-start item-start space-y-2 flex-col">
         <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Order Confirmation</h1>
         <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">{formattedDateTime}</p>
@@ -134,8 +135,7 @@ const getCurrentDateTime = () => {
           <div className="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
             <p className="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">Customer’s Order</p>
             <div className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
-              {selectedItemDetails.map(item => (
-                <React.Fragment key={item.id}>
+              
                   <div className="pb-4 md:pb-8 w-full md:w-40">
                     <img className="w-full hidden md:block" src={`http://localhost:5000/${item.product.image}`} alt="dress" />
                     {console.log(item.product)}
@@ -155,8 +155,7 @@ const getCurrentDateTime = () => {
                       <p className="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">Rs.{item.product.price * item.quantity}/=</p>
                     </div>
                   </div>
-                </React.Fragment>
-              ))}
+                
             </div>
           </div>
         </div>
@@ -211,7 +210,7 @@ const getCurrentDateTime = () => {
           <div class="flex justify-center w-full md:justify-start items-center space-x-4 py-8 border-b border-gray-200">
             <img src="https://i.ibb.co/5TSg7f6/Rectangle-18.png" alt="avatar" />
             <div class="flex justify-start items-start flex-col space-y-2">
-              <p class="text-base dark:text-white font-semibold leading-4 text-left text-gray-800">David Kent</p>
+              <p class="text-base dark:text-white font-semibold leading-4 text-left text-gray-800"></p>
               <p class="text-sm dark:text-gray-300 leading-5 text-gray-600">10 Previous Orders</p>
             </div>
           </div>
@@ -249,7 +248,8 @@ const getCurrentDateTime = () => {
       </div>
       
   </div>
-
+  </React.Fragment>
+              ))}
 </div>
 
 
