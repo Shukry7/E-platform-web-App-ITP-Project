@@ -18,6 +18,8 @@ function CardList() {
    const subtotal = queryParams.get("subtotal");
    const shippingFee = queryParams.get("shippingFee");
    const total = queryParams.get("total");
+   const selectedItemsString = queryParams.get("selectedItems");
+  const id = selectedItemsString ? selectedItemsString.split(",") : [];
   useEffect(() => {
     // Fetch cart items when component mounts
     axios
@@ -32,7 +34,9 @@ function CardList() {
 
   const handleUseCard = async (cardId) => {
     try {
-      const cartResponse = await axios.get(`http://localhost:5000/cart/list/${auth.cusId}`);
+      const cartResponse = await axios.get(`http://localhost:5000/cart/carts`, {
+        params: { id }
+      });
       const cartItems = cartResponse.data;
   
       const response = await axios.post("http://localhost:5000/order/new", {

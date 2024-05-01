@@ -148,12 +148,12 @@ const CartPage = () => {
               <table class="w-max">
                 <thead>
                   <tr>
-                    <th class="text-left font-semibold px-6 py-4">Select</th>
-                    <th class="text-left font-semibold px-6 py-4">Product</th>
-                    <th class="text-left font-semibold px-6 py-4">Price</th>
-                    <th class="text-left font-semibold px-6 py-4">Quantity</th>
-                    <th class="text-left font-semibold px-6 py-4">Total</th>
-                    <th class="text-left font-semibold px-6 py-4">Delete</th>
+                    <th class="text-left font-semibold px-6 py-4  bg-orange-600 text-white">Select</th>
+                    <th class="text-left font-semibold px-6 py-4 bg-orange-600 text-white">Product</th>
+                    <th class="text-left font-semibold px-6 py-4 bg-orange-600 text-white">Price</th>
+                    <th class="text-left font-semibold px-6 py-4 bg-orange-600 text-white">Quantity</th>
+                    <th class="text-left font-semibold px-6 py-4 bg-orange-600 text-white ">Total</th>
+                    <th class="text-left font-semibold px-6 py-4 bg-orange-600 text-white">Delete</th>
                   </tr>
                 </thead>
                 

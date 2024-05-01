@@ -1,6 +1,6 @@
 // ConfirmOrderPage.js
 import React, { useEffect, useState,useRef,useContext } from "react";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation,useNavigate,Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Shared/Components/context/authcontext";
 
@@ -120,7 +120,7 @@ const handleCardCheckout = () => {
   const total = subtotal + shippingFee.current;
 
   // Navigate to card page with subtotal and shipping fee as query parameters
-  navigate(`/CC?subtotal=${subtotal}&shippingFee=${shippingFee.current}&total=${total}`);
+  navigate(`/CC?subtotal=${subtotal}&shippingFee=${shippingFee.current}&total=${total}&selectedItems=${selectedItemsString}`);
 };
 
 
@@ -210,7 +210,7 @@ const handleCardCheckout = () => {
             <p class="text-lg font-semibold leading-6 dark:text-white text-gray-800">Rs.{shippingFee.current}/=</p>
           </div>
           <div class="w-full flex justify-center items-center">
-            <button class="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white" onClick={handleCardCheckout()}>Pay Now</button>
+            <button class="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white" onClick={handleCardCheckout}>Pay Now</button>
           </div>
         </div>
         
