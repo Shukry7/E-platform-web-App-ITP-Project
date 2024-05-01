@@ -14,6 +14,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
+    "date-fns": "^3.6.0",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,6 +22,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.21.3",
     "react-scripts": "^5.0.1",
+    "react-tailwindcss-select": "^1.8.5",
     "react-toastify": "^10.0.5",
     "reactjs-popup": "^2.0.6",
     "web-vitals": "^2.1.4"

@@ -48,6 +48,7 @@ import ViewDelivery from "./Delivery/Pages/ViewDelivery";
 import ProtectedRouteCustomer from "./Shared/Components/context/PrivateRoute";
 import CheckLogin from "./Shared/Components/context/checkLogin";
 import ConfirmOrderPage from "./Order/OrderConfirm";
+import ProductReview from "./Product/Pages/ProductReview"
 
 const App = () => {
   return (
@@ -60,6 +61,7 @@ const App = () => {
         </Route>
         <Route path="/Dashboard" exact element={<Dashboard/>}/>
         <Route path="/Product" exact element={<Products/>}/>
+        <Route path="/ProductReviews" exact element={<ProductReview/>}/>
         <Route path="/Product/update/:id" exact element={<Updateproduct/>}/> 
         <Route path="/Product/new" exact element={<AddProduct/>}/>
         <Route path="/Product/Restock" exact element={<RestockProduct/>}/>

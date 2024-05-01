@@ -20,6 +20,7 @@ const NotificationRoute = require("./Routes/NotificationRoute");
 const WholesalecustomerRoute = require("./Routes/WholesalecustomerRoute");
 const SalaryRoute = require("./Routes/SalaryRoute")
 const PaymentRoute = require('./Routes/PaymentRoute');
+const ProductReviewRoute = require("./Routes/ProductReviewRoute")
 const app = express();
 
 //MiddleWare
@@ -53,6 +54,7 @@ app.use("/notify", NotificationRoute);
 app.use("/wholesalecustomer", WholesalecustomerRoute);
 app.use("/Payment", PaymentRoute);
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
+app.use("/ProductReview", ProductReviewRoute)
 
 // Read user ID from the cookie
 

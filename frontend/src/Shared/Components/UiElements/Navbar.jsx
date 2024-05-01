@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 const Navbar = (props) => {
   const [isDropdownOpenSupplier, setIsDropdownOpenSupplier] = useState(false);
   const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(
-    props.select === "Product Details" || props.select === "Restock Products"
+    props.select === "Product Details" ||
+      props.select === "Restock Products" ||
+      props.select === "Product Reviews"
       ? true
       : false
   );
@@ -346,6 +348,18 @@ const Navbar = (props) => {
                       <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
                         {RestockCount}
                       </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/ProductReviews"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Product Reviews"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                      Product Reviews
                     </Link>
                   </li>
                 </ul>
