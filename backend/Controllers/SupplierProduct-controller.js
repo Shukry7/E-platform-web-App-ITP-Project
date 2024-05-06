@@ -5,11 +5,11 @@ const Product = require("../Models/ProductModel");
 const Purchase = require("../Models/PurchaseModel");
 const SupplierProductPurchase = require("../Models/Sup_Prod_Purchase");
 const Supplier = require("../Models/SupplierModel");
+const Cost = require("../Models/CostModel")
 
 const createSupplierProduct = async (req, res, next) => {
   const { supplier, product, unitPrice} = req.body;
 
-  console.log(typeof(supplier))
 
   const newSupplierProduct = {
     supplier: supplier,
@@ -174,7 +174,17 @@ const SupplierPurchase = async (req, res, next) => {
       Quantity: item.quantity,
     }));
 
+    const costTable = cart.map(item => ({
+      product: item.productID,
+      price: item.price,
+      quantity: item.quantity,
+      inStock: item.quantity,
+      date: date,
+    }));
+
     const addedItems = await SupplierProductPurchase.insertMany(itemsToAdd);
+
+    const costAdded = await Cost.insertMany(costTable);
 
     const supplierInfo = await Supplier.findById(supplier);
     const currentCredit = supplierInfo.credit;
