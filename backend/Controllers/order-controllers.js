@@ -1,4 +1,6 @@
 const Order = require("../Models/OrderModel");
+const Cost = require("../Models/CostModel");
+const Profit = require("../Models/ProfitModel");
 
 createOrder = async (req, res) => {
   try {
@@ -21,6 +23,39 @@ createOrder = async (req, res) => {
       };
     });
     console.log(items);
+
+    const date = new Date();
+
+    const profitTable = await Promise.all(cartitem.map(async (item) => {
+      let cost = await Cost.findOne({ product: item.product.ID, inStock: { $ne: 0 } }).limit(1);
+      
+      let buyqtytemp = item.quantity
+      let costqty = cost.quantity
+      let sellPrice = item.product.price
+      let profit = 0
+
+      while(buyqtytemp > costqty){
+        profit = profit + ((sellPrice - cost.price) * cost.quantity)
+        buyqtytemp = buyqtytemp - cost.quantity
+        const result = await Cost.findByIdAndUpdate(cost._id, { inStock: 0 })
+        cost = await Cost.findOne({ product: item.product.ID, inStock: { $ne: 0 } }).limit(1)
+        costqty = cost.quantity
+      }
+
+      profit = profit + ((sellPrice - cost.price) * buyqtytemp)
+      const result = await Cost.findByIdAndUpdate(cost._id, { $inc: { inStock: -buyqtytemp } });
+
+      return {
+          product: item.product.ID,
+          price: item.product.price,
+          quantity: item.quantity,
+          profit: profit,
+          date: date
+      };
+  }));
+
+  const profitAdded = await Profit.insertMany(profitTable);
+  
 
     const newOrder = {
       orderId: id,
