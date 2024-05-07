@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import axios from "axios";
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import CustomerHeader from "../../../Shared/Components/UiElements/CustomerHeader";
@@ -210,17 +211,16 @@ const ProductDetails = () => {
                   ))}
                 </div>
                 <p className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
-                  ({total != 0 && length != 0 ? (total / length).toFixed(1) : 0}
+                  ({total !== 0 && length !== 0 ? (total / length).toFixed(1) : 0}
                   )
                 </p>
-                <a
-                  href="#"
+                <Link
                   onClick={scrollToBottom}
                   class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white"
                 >
                   {" "}
                   {length} Reviews{" "}
-                </a>
+                </Link>
               </div>
               <div class="flex items-center justify-between mb-6 sm:flex-col sm:items-start">
                 <div class="flex items-center gap-4">

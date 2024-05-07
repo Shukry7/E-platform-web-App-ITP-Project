@@ -110,10 +110,8 @@ const checkOrder = async (req, res) => {
       },
     });
     if (orders.length > 0) {
-      console.log("Orders found:", orders);
       res.status(200).send({ check: true });
     } else {
-      console.log("No orders found with the specified user ID and product ID");
       res.status(200).send({ check: false });
     }
   } catch (error) {
