@@ -31,10 +31,7 @@ createOrder = async (req, res) => {
 
     const profitTable = await Promise.all(
       cartitem.map(async (item) => {
-        let cost = await Cost.findOne({
-          product: item.product.ID,
-          inStock: { $ne: 0 },
-        }).limit(1);
+        let cost = await Cost.findOne({product: item.product.ID, inStock: { $ne: 0 }}).limit(1);
 
         let buyqtytemp = item.quantity;
         let costStock = cost.inStock;
@@ -45,17 +42,12 @@ createOrder = async (req, res) => {
           profit = profit + (sellPrice - cost.price) * cost.inStock;
           buyqtytemp = buyqtytemp - cost.inStock;
           const result = await Cost.findByIdAndUpdate(cost._id, { inStock: 0 });
-          cost = await Cost.findOne({
-            product: item.product.ID,
-            inStock: { $ne: 0 },
-          }).limit(1);
+          cost = await Cost.findOne({product: item.product.ID, inStock: { $ne: 0 }}).limit(1);
           costStock = cost.inStock;
         }
 
         profit = profit + (sellPrice - cost.price) * buyqtytemp;
-        const result = await Cost.findByIdAndUpdate(cost._id, {
-          $inc: { inStock: -buyqtytemp },
-        });
+        const result = await Cost.findByIdAndUpdate(cost._id, {$inc: { inStock: -buyqtytemp }});
 
         return {
           order: id,
