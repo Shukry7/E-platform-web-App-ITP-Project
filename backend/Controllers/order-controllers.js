@@ -25,7 +25,7 @@ createOrder = async (req, res) => {
       };
     }));
 
-    console.log(items)
+
 
     const date = new Date();
 
@@ -63,18 +63,11 @@ createOrder = async (req, res) => {
           price: item.product.price,
           quantity: item.quantity,
           profit: profit,
-<<<<<<< Updated upstream
           date: date,
         };
       })
     );
 
-    console.log(profitTable);
-=======
-          date: date
-      };
-    }));
->>>>>>> Stashed changes
     const profitAdded = await Profit.insertMany(profitTable);
 
     const newOrder = {
