@@ -126,7 +126,7 @@ const ProductDetails = () => {
         <CustomerLoader />
       ) : (
         <>
-          <main className="w-full flex flex-col lg:flex-row">
+          <main className="w-full flex flex-col lg:flex-row pb-10">
             <section className="gap-8 mt-16 pl-56  pr-16 sm:flex-row sm:gap-4 sm:h-full sm:mt-24 sm:mx-2 md:gap-8 md:mx-4 lg:flex-col lg:mx-0 lg:mt-36">
               <div className="w-96 h-96">
                 <img
