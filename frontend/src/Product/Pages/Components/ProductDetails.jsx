@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import axios from "axios";
-import React, { useContext, useEffect, useState , useRef } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
@@ -14,36 +14,37 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(false);
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [length, setLength] = useState();
+  const [length, setLength] = useState(0);
   const [total, setTotal] = useState(0);
   const bottomRef = useRef(null);
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(
-          `http://localhost:5000/ProductReview/product/${id}`
+  const fetchReviews = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(
+        `http://localhost:5000/ProductReview/product/${id}`
+      );
+      const reviews = res.data;
+      setLength(reviews.length);
+
+      if (reviews.length > 0) {
+        const totalRating = reviews.reduce(
+          (sum, review) => sum + review.Rating,
+          0
         );
-        const reviews = res.data;
-        setLength(reviews.length);
-
-        if (reviews.length > 0) {
-          const totalRating = reviews.reduce(
-            (sum, review) => sum + review.Rating,
-            0
-          );
-          setTotal(totalRating);
-        }
-
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
+        setTotal(totalRating);
       }
-    };
+
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchReviews();
     setLoading(false);
   }, [id]);
@@ -69,8 +70,8 @@ const ProductDetails = () => {
   };
 
   const scrollToBottom = () => {
-    bottomRef.current.scrollIntoView({ behavior: 'smooth' });
-};
+    bottomRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleIncrement = () => {
     if (quantity < product.Stock) {
@@ -155,7 +156,7 @@ const ProductDetails = () => {
                   {Array.from({ length: filledStars }, (_, index) => (
                     <svg
                       key={`filled-${index}`}
-                      className="h-4 w-4 text-yellow-300"
+                      className="h-4 w-4 text-orange-600"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -169,7 +170,8 @@ const ProductDetails = () => {
                   {halfStar && (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      fill="#fff176"
+                      className="text-orange-600"
+                      fill="currentColor"
                       width="16"
                       height="16"
                       version="1.1"
@@ -193,12 +195,14 @@ const ProductDetails = () => {
                   {Array.from({ length: emptyStars }, (_, index) => (
                     <svg
                       key={`empty-${index}`}
-                      className="h-4 w-4 text-gray-300"
+                     strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="h-4 w-4 text-orange-600"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"
-                      fill="currentColor"
+                      fill="#e0e0e0"
                       viewBox="0 0 24 24"
                     >
                       <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
@@ -206,10 +210,12 @@ const ProductDetails = () => {
                   ))}
                 </div>
                 <p className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
-                  ({(total / length).toFixed(1)})
+                  ({total != 0 && length != 0 ? (total / length).toFixed(1) : 0}
+                  )
                 </p>
                 <a
-                  href="#" onClick={scrollToBottom}
+                  href="#"
+                  onClick={scrollToBottom}
                   class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white"
                 >
                   {" "}
@@ -239,9 +245,32 @@ const ProductDetails = () => {
                       className="hover:cursor-pointer"
                     />
                   </div>
-                  <span id="amount" class="select-none">
-                    {quantity}
-                  </span>
+
+                  <input
+                    type="number"
+                    className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
+                    max={product.Stock}
+                    min={1}
+                    value={quantity}
+                    onChange={(e) => {
+                      const newQuantity = parseInt(e.target.value, 10);
+                      if (
+                        !isNaN(newQuantity) &&
+                        newQuantity >= 1 &&
+                        newQuantity <= product.Stock
+                      ) {
+                        setQuantity(newQuantity);
+                      } else if (e.target.value === "") {
+                        setQuantity(""); 
+                      }
+                    }}
+                    onBlur={() => {
+                      if (quantity === "") {
+                        setQuantity(1);
+                      }
+                    }}
+                    required
+                  />
                   <div className="px-3" onClick={handleIncrement}>
                     <FaPlus
                       color="Orange"
@@ -286,7 +315,12 @@ const ProductDetails = () => {
               </div>
             </section>
           </main>
-          <ReviewCustomer reference={bottomRef} ProductID={id} Rating={(total / length).toFixed(1)}/>
+          <ReviewCustomer
+            onReviewChange={fetchReviews}
+            reference={bottomRef}
+            ProductID={id}
+            Rating={(total / length).toFixed(1)}
+          />
         </>
       )}
     </>
