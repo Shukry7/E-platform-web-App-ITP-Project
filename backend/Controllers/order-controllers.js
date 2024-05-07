@@ -6,7 +6,7 @@ createOrder = async (req, res) => {
   try {
     const { cartitem, uid } = req.body;
 
-    const latestOrder = await Order.find().sort({ _id : -1 }).limit(1);
+    const latestOrder = await Order.find().sort({ _id: -1 }).limit(1);
     let id;
     console.log(uid);
     if (latestOrder.length !== 0) {
@@ -26,38 +26,47 @@ createOrder = async (req, res) => {
 
     const date = new Date();
 
-    const profitTable = await Promise.all(cartitem.map(async (item) => {
-      let cost = await Cost.findOne({ product: item.product.ID, inStock: { $ne: 0 } }).limit(1);
-      
-      let buyqtytemp = item.quantity
-      let costStock = cost.inStock
-      let sellPrice = item.product.price
-      let profit = 0
+    const profitTable = await Promise.all(
+      cartitem.map(async (item) => {
+        let cost = await Cost.findOne({
+          product: item.product.ID,
+          inStock: { $ne: 0 },
+        }).limit(1);
 
-      while(buyqtytemp > costStock){
-        profit = profit + ((sellPrice - cost.price) * cost.inStock)
-        buyqtytemp = buyqtytemp - cost.inStock
-        const result = await Cost.findByIdAndUpdate(cost._id, { inStock: 0 })
-        cost = await Cost.findOne({ product: item.product.ID, inStock: { $ne: 0 } }).limit(1)
-        costStock = cost.inStock
-      }
+        let buyqtytemp = item.quantity;
+        let costStock = cost.inStock;
+        let sellPrice = item.product.price;
+        let profit = 0;
 
-      profit = profit + ((sellPrice - cost.price) * buyqtytemp)
-      const result = await Cost.findByIdAndUpdate(cost._id, { $inc: { inStock: -buyqtytemp } });
+        while (buyqtytemp > costStock) {
+          profit = profit + (sellPrice - cost.price) * cost.inStock;
+          buyqtytemp = buyqtytemp - cost.inStock;
+          const result = await Cost.findByIdAndUpdate(cost._id, { inStock: 0 });
+          cost = await Cost.findOne({
+            product: item.product.ID,
+            inStock: { $ne: 0 },
+          }).limit(1);
+          costStock = cost.inStock;
+        }
 
-      return {
+        profit = profit + (sellPrice - cost.price) * buyqtytemp;
+        const result = await Cost.findByIdAndUpdate(cost._id, {
+          $inc: { inStock: -buyqtytemp },
+        });
+
+        return {
           order: id,
           product: item.product.ID,
           price: item.product.price,
           quantity: item.quantity,
           profit: profit,
-          date: date
-      };
-    }));
+          date: date,
+        };
+      })
+    );
 
-    console.log(profitTable)
+    console.log(profitTable);
     const profitAdded = await Profit.insertMany(profitTable);
-  
 
     const newOrder = {
       orderId: id,
@@ -74,13 +83,13 @@ createOrder = async (req, res) => {
     console.error("Error placing order:", error);
     res.status(500).json({ message: "Internal server error" });
   }
-
 };
 
 const listOrder = async (req, res) => {
   try {
-    
-    const order = await Order.find({}).populate("userId").populate("CartItems.productId");
+    const order = await Order.find({})
+      .populate("userId")
+      .populate("CartItems.productId");
 
     return res.status(200).json(order);
   } catch (error) {
@@ -89,6 +98,30 @@ const listOrder = async (req, res) => {
   }
 };
 
+const checkOrder = async (req, res) => {
+  try {
+    const { pid, uid } = req.params;
+    const orders = await Order.find({
+      userId: uid,
+      CartItems: {
+        $elemMatch: {
+          productId: pid,
+        },
+      },
+    });
+    if (orders.length > 0) {
+      console.log("Orders found:", orders);
+      res.status(200).send({ check: true });
+    } else {
+      console.log("No orders found with the specified user ID and product ID");
+      res.status(200).send({ check: false });
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
 
 exports.createOrder = createOrder;
 exports.listOrder = listOrder;
+exports.checkOrder = checkOrder
