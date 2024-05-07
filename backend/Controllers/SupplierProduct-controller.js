@@ -241,8 +241,6 @@ const confirmDelivery = async (req, res) => {
     const { id } = req.params;
     let qty, stock, newstock, product
 
-    console.log(id)
-
     const result = await Purchase.findByIdAndUpdate(id, { status: 'Recieved' });
 
     const supplierProductPurchase = await SupplierProductPurchase.find({purchaseID : id}).populate('purchaseID').populate({

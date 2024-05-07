@@ -1,7 +1,7 @@
 const Order = require("../Models/OrderModel");
 const Cost = require("../Models/CostModel");
 const Profit = require("../Models/ProfitModel");
-
+const Product = require("../Models/ProductModel")
 createOrder = async (req, res) => {
   try {
     const { cartitem, uid } = req.body;
@@ -16,13 +16,16 @@ createOrder = async (req, res) => {
       id = "O0001";
     }
 
-    const items = cartitem.map((item) => {
+    const items = await Promise.all(cartitem.map(async (item) => {
+      await Product.findByIdAndUpdate(item.product._id, { $inc: { Stock: -item.quantity } })
+
       return {
         productId: item.product._id,
         quantity: item.quantity,
       };
-    });
-    console.log(items);
+    }));
+
+    console.log(items)
 
     const date = new Date();
 
@@ -60,12 +63,18 @@ createOrder = async (req, res) => {
           price: item.product.price,
           quantity: item.quantity,
           profit: profit,
+<<<<<<< Updated upstream
           date: date,
         };
       })
     );
 
     console.log(profitTable);
+=======
+          date: date
+      };
+    }));
+>>>>>>> Stashed changes
     const profitAdded = await Profit.insertMany(profitTable);
 
     const newOrder = {
