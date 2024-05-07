@@ -2,6 +2,10 @@ const { mongoose } = require("mongoose")
 
 const profitSchema = mongoose.Schema(
     {
+      order: {
+        type: String,
+        required: [true],
+      },
       product: {
         type: String,
         required: [true],

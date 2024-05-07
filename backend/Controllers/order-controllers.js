@@ -30,31 +30,33 @@ createOrder = async (req, res) => {
       let cost = await Cost.findOne({ product: item.product.ID, inStock: { $ne: 0 } }).limit(1);
       
       let buyqtytemp = item.quantity
-      let costqty = cost.quantity
+      let costStock = cost.inStock
       let sellPrice = item.product.price
       let profit = 0
 
-      while(buyqtytemp > costqty){
-        profit = profit + ((sellPrice - cost.price) * cost.quantity)
-        buyqtytemp = buyqtytemp - cost.quantity
+      while(buyqtytemp > costStock){
+        profit = profit + ((sellPrice - cost.price) * cost.inStock)
+        buyqtytemp = buyqtytemp - cost.inStock
         const result = await Cost.findByIdAndUpdate(cost._id, { inStock: 0 })
         cost = await Cost.findOne({ product: item.product.ID, inStock: { $ne: 0 } }).limit(1)
-        costqty = cost.quantity
+        costStock = cost.inStock
       }
 
       profit = profit + ((sellPrice - cost.price) * buyqtytemp)
       const result = await Cost.findByIdAndUpdate(cost._id, { $inc: { inStock: -buyqtytemp } });
 
       return {
+          order: id,
           product: item.product.ID,
           price: item.product.price,
           quantity: item.quantity,
           profit: profit,
           date: date
       };
-  }));
+    }));
 
-  const profitAdded = await Profit.insertMany(profitTable);
+    console.log(profitTable)
+    const profitAdded = await Profit.insertMany(profitTable);
   
 
     const newOrder = {
