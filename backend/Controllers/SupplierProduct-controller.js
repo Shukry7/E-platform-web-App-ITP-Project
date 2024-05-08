@@ -174,17 +174,9 @@ const SupplierPurchase = async (req, res, next) => {
       Quantity: item.quantity,
     }));
 
-    const costTable = cart.map(item => ({
-      product: item.productID,
-      price: item.price,
-      quantity: item.quantity,
-      inStock: item.quantity,
-      date: date,
-    }));
 
     const addedItems = await SupplierProductPurchase.insertMany(itemsToAdd);
 
-    const costAdded = await Cost.insertMany(costTable);
 
     const supplierInfo = await Supplier.findById(supplier);
     const currentCredit = supplierInfo.credit;
@@ -263,6 +255,18 @@ const confirmDelivery = async (req, res) => {
 
       await Product.findByIdAndUpdate(product, { Stock: newstock });
     }
+
+    date= new Date
+
+    const costTable = supplierProductPurchase.map(item => ({
+      product: item.supplier_product.product.ID,
+      price: item.supplier_product.unitPrice,
+      quantity: item.Quantity,
+      inStock: item.Quantity,
+      date: date,
+    }));
+
+    const costAdded = await Cost.insertMany(costTable);
     
 
     res.status(200).json({ success: true, message: "Purchase and items added successfully" });
