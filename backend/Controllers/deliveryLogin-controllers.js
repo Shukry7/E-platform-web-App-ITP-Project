@@ -5,12 +5,11 @@ const uuid = require("uuid");
 const fs = require("fs");
 
 const createDeliveryLogin = async (req, res, next) => {
-  const { username , password } = req.body;
+  const { deliveryId ,username , password } = req.body;
 
-  let id;
   
   const newDeliveryLogin = {
-    ID: id,
+    delivery: deliveryId,
     username: username,
     password: password,
   };
@@ -32,7 +31,7 @@ const listDeliveryLogin = async (req, res) => {
 const listDeliveryLoginById = async (req, res) => {
   try {
     const { id } = req.params;
-    const delivery = await DeliveryLogin.findById(id);
+    const delivery = await DeliveryLogin.find({delivery:id}).populate("delivery");
 
     return res.status(200).json(delivery);
   } catch (error) {

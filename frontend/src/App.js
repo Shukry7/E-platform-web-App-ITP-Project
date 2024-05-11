@@ -49,6 +49,8 @@ import ProtectedRouteCustomer from "./Shared/Components/context/PrivateRoute";
 import CheckLogin from "./Shared/Components/context/checkLogin";
 import ConfirmOrderPage from "./Order/OrderConfirm";
 import ProductReview from "./Product/Pages/ProductReview"
+import { DeliveryLoginPage } from "./Delivery/Pages/Components/DeliveryLogin"
+import CheckDeliveryLogin from "./Shared/Components/context/checkdeliveryLogin";
 
 const App = () => {
   return (
@@ -104,6 +106,11 @@ const App = () => {
         <Route path="/Loader" exact element={<CustomerLoader/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
+        <Route path="/deliverylogin" exact element={
+          <CheckDeliveryLogin>
+            <DeliveryLoginPage/>
+          </CheckDeliveryLogin>
+        }/>
       </Routes >
     </Router>
     </AuthProvider>

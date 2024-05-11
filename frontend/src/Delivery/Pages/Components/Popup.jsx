@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../../../Shared/hooks/form-hook";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { VALIDATOR_REQUIRE } from "../../../Shared/Components/util/validate";
 
 const Popup = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [loginDetails , setLoginDetails] = useState({})
   const navigate = useNavigate();
   const toggleModal = () => {
     setIsOpen(!isOpen);
