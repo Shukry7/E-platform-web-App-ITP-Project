@@ -1,11 +1,13 @@
+// DeliveryLoginPage.js
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Toast from '../../../Shared/Components/UiElements/Toast/Toast';
+import DeliveryPersonProfile from './DeliveryPersonProfile';
 import { DeliveryAuthContext } from '../../../Shared/Components/context/DeliveryAuthContext';
 
 export const DeliveryLoginPage = () => {
-    const auth = useContext(DeliveryAuthContext);
+    const Auth = useContext(DeliveryAuthContext)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -15,8 +17,9 @@ export const DeliveryLoginPage = () => {
         try {
             const res = await axios.post('http://localhost:5000/deliveryCheckLogin/', { username, password });
             if (res.data.message === 'Success') {
-                auth.login(res.data.deliveryPersonId);
-                navigate('/Product');
+                console.log(res.data.delivery)
+                Auth.login(res.data.delivery)
+                navigate('/deliverypersonprofile');
             } else {
                 Toast("Invalid username/password", "error"); // Show error message to user
             }

@@ -51,10 +51,13 @@ import ConfirmOrderPage from "./Order/OrderConfirm";
 import ProductReview from "./Product/Pages/ProductReview"
 import { DeliveryLoginPage } from "./Delivery/Pages/Components/DeliveryLogin"
 import CheckDeliveryLogin from "./Shared/Components/context/checkdeliveryLogin";
+import DeliveryPersonProfile from "./Delivery/Pages/Components/DeliveryPersonProfile";
+import { DeliveryAuthProvider } from "./Shared/Components/context/DeliveryAuthContext";
 
 const App = () => {
   return (
     <AuthProvider >
+    <DeliveryAuthProvider>
     <Router>
       <Routes >
         <Route element={<ProtectedRouteCustomer/>}>
@@ -107,12 +110,17 @@ const App = () => {
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/deliverylogin" exact element={
-          <CheckDeliveryLogin>
+          
             <DeliveryLoginPage/>
-          </CheckDeliveryLogin>
+        
+        }/>
+        <Route path="/deliverypersonprofile" exact element={
+          
+            <DeliveryPersonProfile/>
         }/>
       </Routes >
     </Router>
+    </DeliveryAuthProvider>
     </AuthProvider>
   );
 };
