@@ -50,7 +50,7 @@ const ViewProfit = () => {
 
         <Card className="flex" style={{ width: "100%" }}>
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl my-8">Purchase History</h1>
+            <h1 className="text-3xl my-8">Profit</h1>
             <div className="mr-96">
               <Search
                 searchTerm={searchTerm}
