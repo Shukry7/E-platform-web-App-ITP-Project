@@ -26,30 +26,33 @@ createOrder = async (req, res) => {
     }));
 
 
-    const currentDate = new Date();
+    const date = new Date();
 
+    console.log(date)
 // Get Sri Lanka time zone offset in milliseconds
-const sriLankaOffset = 5.5 * 60 * 60 * 1000;
+const sriLankaOffset = (5 * 60 * 60 * 1000) + (30 * 60 * 1000);
 
 // Calculate Sri Lanka time
-const sriLankaTime = new Date(currentDate.getTime() + sriLankaOffset);
+const sriLankaTime = new Date(date.getTime() + sriLankaOffset);
 
 // Extract time components
-const sriLankaHours = sriLankaTime.getHours();
-const sriLankaMinutes = sriLankaTime.getMinutes();
-const sriLankaSeconds = sriLankaTime.getSeconds();
+const sriLankaHours = sriLankaTime.getUTCHours();
+const sriLankaMinutes = sriLankaTime.getUTCMinutes();
+const sriLankaSeconds = sriLankaTime.getUTCSeconds();
 
 // Extract date components
-const sriLankaYear = sriLankaTime.getFullYear();
-const sriLankaMonth = sriLankaTime.getMonth() + 1; // Month is zero-indexed, so add 1
-const sriLankaDay = sriLankaTime.getDate();
+const sriLankaYear = sriLankaTime.getUTCFullYear();
+const sriLankaMonth = sriLankaTime.getUTCMonth() + 1; // Month is zero-indexed, so add 1
+const sriLankaDay = sriLankaTime.getUTCDate();
+
+// Adjust time if it's a single digit
+const adjustedSriLankaHours = sriLankaHours < 10 ? '0' + sriLankaHours : sriLankaHours;
+const adjustedSriLankaMinutes = sriLankaMinutes < 10 ? '0' + sriLankaMinutes : sriLankaMinutes;
+const adjustedSriLankaSeconds = sriLankaSeconds < 10 ? '0' + sriLankaSeconds : sriLankaSeconds;
 
 // Assign to two separate variables
-const sriLankaTimeStr = `${sriLankaHours}:${sriLankaMinutes}:${sriLankaSeconds}`;
+const sriLankaTimeStr = `${adjustedSriLankaHours}:${adjustedSriLankaMinutes}:${adjustedSriLankaSeconds}`;
 const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
-
-console.log("Sri Lanka Time:", sriLankaTimeStr);
-console.log("Sri Lanka Date:", sriLankaDateStr);
 
     const profitTable = await Promise.all(
       cartitem.map(async (item) => {
