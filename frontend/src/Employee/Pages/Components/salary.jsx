@@ -25,8 +25,9 @@ const SalaryCalculatorForm = () => {
   const [Total, setTotal] = useState(0);
   const [attendance, setattendance] = useState([]);
   const [Loading, setLoading] = useState(false);
+  const [Salarydata,setsalaryData]= useState([])
   const [formdata, setFormdata] = useState([]);
-  /* const [formState, inputHandler] = useForm(
+   const [formState, inputHandler] = useForm(
     {
       employee: {
         value: "",
@@ -55,12 +56,13 @@ const SalaryCalculatorForm = () => {
   const submitHandler = async (event) => {
    
     const statuss="unpaid";
+    const currentdate = new Date();
     setLoading(true);
     axios
       .post("http://localhost:5000/salary/new", {
         id: 1,
-       // employee: ID,
-        date: day,
+        employee: empid,
+        date: currentdate,
         status: statuss,
         net:Total,
         
@@ -69,7 +71,8 @@ const SalaryCalculatorForm = () => {
       .then((res) => {
         setLoading(false);
         Toast("Employee salary Added calculated!! 🔥","success")
-        navigate("/salary");
+        console.log("Response from server:", res.data);
+        navigate("/salaryform");
       })
       .catch((err) => {
         
@@ -79,7 +82,16 @@ const SalaryCalculatorForm = () => {
     console.log(formState);
   };
 
-  */
+  useEffect(() => {
+    setLoading(true);
+    axios.get("http://localhost:5000/salary").then((response) => {
+      setsalaryData(response.data);
+      setLoading(false);
+    }).catch((error) => {
+      console.error("Error fetching salaries:", error);
+      setLoading(false);
+    });
+  }, []);
 
   useEffect(() => {
     // Fetch employee IDs when the component mounts
@@ -151,15 +163,21 @@ const SalaryCalculatorForm = () => {
     };
     setFormdata((prevFormdata) => [...prevFormdata, newEntry]);
     setTotal(totalSalary);
+    submitHandler();
   };
   const Headings = [
     "#",
     "Employee name",
-    "Daily Wage",
-    "No of Days",
-    "Total",
+    "Month",
+    "Net Amount",
+    "Status",
     "Action",
   ];
+  const formatDateToMonth = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString("default", { month: "long" });
+  };
+  
 
   return (
     <>
@@ -259,23 +277,37 @@ const SalaryCalculatorForm = () => {
       </div>
     </div>
   </div>
-
-  {formdata.length !== 0 && (
-    <Table Headings={Headings} style={{ width: "100%" }}>
-      {formdata.map((item, index) => (
-        <TableRow key={index}>
-          <td className="px-4 py-2  text-center">{index + 1}</td>
-          <td className="px-4 py-2  text-center" >{item.empname}</td>
-          <td className="px-4 py-2  text-center">{item.dailywage}</td>
-          <td className="px-4 py-2  text-center">{item.noOfDays}</td>
-          <td className="px-4 py-2  text-center">Rs. {item.total}/-</td>
+  <Table Headings={Headings} style={{width:"100%"}} >
+          {Loading ? (
+            <center>
+              <Loader />
+            </center>
+          ) : (
+            Salarydata.map((item, index) => {
+              return (
+                <TableRow>
+                  <td className="px-6 py-4 text-center">{index + 1}</td>
+                  <td className="px-6 py-4 text-center">{item.employee.empname}</td>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
+                  >
+                    {formatDateToMonth(item.date)}
+                  </th>
+                  <td className="px-6 py-4 text-center">{item.net}</td>
+                  <td className="px-6 py-4 text-center">{item.status}</td>
+                  
           <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
             Confirm Payment
           </button>
-        </TableRow>
-      ))}
-    </Table>
-  )}
+                  
+                 
+                  
+                </TableRow>
+              );
+            })
+          )}
+      </Table>
 </>
 
   );

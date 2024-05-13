@@ -14,9 +14,7 @@ import { MdDeleteForever,MdUpdate } from "react-icons/md";
 
 
 const EmployeeTable = (props) => {
-  const {enqueueSnackbar} = useSnackbar();
-  
-
+ 
   const Headings = [
     "#",
     "Employee ID",
