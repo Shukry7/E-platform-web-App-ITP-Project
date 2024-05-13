@@ -57,6 +57,7 @@ const SalaryCalculatorForm = () => {
    
     const statuss="unpaid";
     const currentdate = new Date();
+    
     setLoading(true);
     axios
       .post("http://localhost:5000/salary/new", {
@@ -64,7 +65,7 @@ const SalaryCalculatorForm = () => {
         employee: empid,
         date: currentdate,
         status: statuss,
-        net:Total,
+        net: Total,
         
         
       })
@@ -163,7 +164,8 @@ const SalaryCalculatorForm = () => {
     };
     setFormdata((prevFormdata) => [...prevFormdata, newEntry]);
     setTotal(totalSalary);
-    submitHandler();
+   submitHandler();
+   console.log(Total)
   };
   const Headings = [
     "#",
@@ -269,7 +271,7 @@ const SalaryCalculatorForm = () => {
               id="salary"
               type="number"
               value={Total}
-              onChange={(e) => setBonus(e.target.value)}
+             // onChange={(e) => setTotal(e.target.value)}
               className="border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300"
             />
           </div>
@@ -287,7 +289,7 @@ const SalaryCalculatorForm = () => {
               return (
                 <TableRow>
                   <td className="px-6 py-4 text-center">{index + 1}</td>
-                  <td className="px-6 py-4 text-center">{item.employee.empname}</td>
+                  <td className="px-6 py-4 text-center">{item.employee.name}</td>
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
