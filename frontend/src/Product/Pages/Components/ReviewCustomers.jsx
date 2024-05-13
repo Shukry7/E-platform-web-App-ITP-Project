@@ -6,6 +6,7 @@ import { AuthContext } from "../../../Shared/Components/context/authcontext";
 import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 import CustomerLoader from "../../../Shared/Components/UiElements/CustomerLoader";
 import CheckVerify from "./checkVerify";
+import { Link } from "react-router-dom";
 
 const ReviewCustomer = ({ ProductID, reference, Rating, onReviewChange }) => {
   const Auth = useContext(AuthContext);
@@ -137,14 +138,13 @@ const ReviewCustomer = ({ ProductID, reference, Rating, onReviewChange }) => {
                       }}
                     ></div>
                   </div>
-                  <a
-                    href="#"
+                  <Link
                     onClick={()=> scrollToBottom(rating)}
                     className="w-8 shrink-0 text-right text-sm font-medium leading-none text-primary-700 hover:underline dark:text-primary-500 sm:w-auto sm:text-left"
                   >
                     {ratingCount[rating]}{" "}
                     <span className="hidden sm:inline">reviews</span>
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>

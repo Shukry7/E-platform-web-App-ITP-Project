@@ -22,5 +22,6 @@ Router.put(
   ProductControllers.UpdateProductPriceQtyndStock
 );
 Router.get("/RestockProduct/", ProductControllers.listRestockProduct);
+Router.get("/Top-products", ProductControllers.getTopOrderedProductsThisMonth)
 
 module.exports = Router;

@@ -1,6 +1,8 @@
 const fs = require("fs");
 const Product = require("../Models/ProductModel");
 const supplierproduct = require("../Models/SupplierProduct");
+const Order = require("../Models/OrderModel")
+const moment = require('moment');
 
 const createProduct = async (req, res, next) => {
   const { name, category, Alert_quantity, price, weight, description } =
@@ -148,6 +150,45 @@ const DeleteProduct = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+const getTopOrderedProductsThisMonth = async (req, res) => {
+  try {
+    const startOfMonth = moment().startOf('month');
+    const endOfMonth = moment().endOf('month');
+
+    const topProducts = await Order.aggregate([
+      { $unwind: "$CartItems" },
+      {
+        $group: {
+          _id: "$CartItems.productId",
+          totalQuantity: { $sum: "$CartItems.quantity" }
+        }
+      },
+      { $sort: { totalQuantity: -1 } },
+      { $limit: 5 }
+    ]);
+
+    // Extracting product IDs from topProducts array
+    const productIds = topProducts.map(item => item._id);
+
+    // Populate product details for each product ID
+    const populatedProducts = await Product.find({ _id: { $in: productIds } });
+
+    // Replace product ID with product details in topProducts
+    const topProductsDetails = topProducts.map(item => {
+      const productDetail = populatedProducts.find(product => product._id.toString() === item._id.toString());
+      return {
+        product: productDetail,
+        totalQuantity: item.totalQuantity
+      };
+    });
+
+    res.json(topProductsDetails);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 
 exports.createProduct = createProduct;
 exports.listProduct = listProduct;
@@ -156,3 +197,4 @@ exports.listProductById = listProductById;
 exports.DeleteProduct = DeleteProduct;
 exports.UpdateProductPriceQtyndStock = UpdateProductPriceQtyndStock;
 exports.listRestockProduct = listRestockProduct
+exports.getTopOrderedProductsThisMonth = getTopOrderedProductsThisMonth
