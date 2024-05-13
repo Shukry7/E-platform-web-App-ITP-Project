@@ -4,5 +4,6 @@ const Router = express.Router();
 
 Router.post("/new", Salarycontrollers.createSalary);
 Router.get("/salaryform",Salarycontrollers.listSalary );
+Router.get("/",Salarycontrollers.listSalary );
 
 module.exports = Router;

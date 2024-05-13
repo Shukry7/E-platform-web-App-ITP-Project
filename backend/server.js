@@ -22,6 +22,9 @@ const SalaryRoute = require("./Routes/SalaryRoute")
 const PaymentRoute = require('./Routes/PaymentRoute');
 const ProductReviewRoute = require("./Routes/ProductReviewRoute")
 const app = express();
+const DeliveryLoginRoute = require("./Routes/DeliveryLoginRoute");
+const DeliveryPersonLoginRoute = require("./Routes/DeliveryLoginpRoute")
+const ProfitRoute = require("./Routes/ProfitRoute");
 
 //MiddleWare
 app.use(express.json());
@@ -55,6 +58,9 @@ app.use("/wholesalecustomer", WholesalecustomerRoute);
 app.use("/Payment", PaymentRoute);
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 app.use("/ProductReview", ProductReviewRoute)
+app.use("/deliverylogin", DeliveryLoginRoute)
+app.use("/deliveryCheckLogin", DeliveryPersonLoginRoute)
+app.use("/profit", ProfitRoute)
 
 // Read user ID from the cookie
 

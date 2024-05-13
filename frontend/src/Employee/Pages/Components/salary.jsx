@@ -6,7 +6,8 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
-
+import Card from "../../../Shared/Components/UiElements/Card";
+import "./form.css"
 const SalaryCalculatorForm = () => {
   var now = new Date();
   var day = now.getDate();
@@ -24,8 +25,9 @@ const SalaryCalculatorForm = () => {
   const [Total, setTotal] = useState(0);
   const [attendance, setattendance] = useState([]);
   const [Loading, setLoading] = useState(false);
+  const [Salarydata,setsalaryData]= useState([])
   const [formdata, setFormdata] = useState([]);
-  /* const [formState, inputHandler] = useForm(
+   const [formState, inputHandler] = useForm(
     {
       employee: {
         value: "",
@@ -54,12 +56,13 @@ const SalaryCalculatorForm = () => {
   const submitHandler = async (event) => {
    
     const statuss="unpaid";
+    const currentdate = new Date();
     setLoading(true);
     axios
       .post("http://localhost:5000/salary/new", {
         id: 1,
-       // employee: ID,
-        date: day,
+        employee: empid,
+        date: currentdate,
         status: statuss,
         net:Total,
         
@@ -68,7 +71,8 @@ const SalaryCalculatorForm = () => {
       .then((res) => {
         setLoading(false);
         Toast("Employee salary Added calculated!! 🔥","success")
-        navigate("/salary");
+        console.log("Response from server:", res.data);
+        navigate("/salaryform");
       })
       .catch((err) => {
         
@@ -78,7 +82,16 @@ const SalaryCalculatorForm = () => {
     console.log(formState);
   };
 
-  */
+  useEffect(() => {
+    setLoading(true);
+    axios.get("http://localhost:5000/salary").then((response) => {
+      setsalaryData(response.data);
+      setLoading(false);
+    }).catch((error) => {
+      console.error("Error fetching salaries:", error);
+      setLoading(false);
+    });
+  }, []);
 
   useEffect(() => {
     // Fetch employee IDs when the component mounts
@@ -122,7 +135,8 @@ const SalaryCalculatorForm = () => {
         });
       let employeeAttendance = attendance.filter((attendance) => {
         if (attendance && attendance.employee) {
-          return attendance.employee._id === empid;
+          return attendance.employee._id === empid  &&
+          new Date(attendance.date).getMonth() === now.getMonth();
         }
         return false;
       });
@@ -149,23 +163,29 @@ const SalaryCalculatorForm = () => {
     };
     setFormdata((prevFormdata) => [...prevFormdata, newEntry]);
     setTotal(totalSalary);
+    submitHandler();
   };
   const Headings = [
     "#",
     "Employee name",
-    "Daily Wage",
-    "No of Days",
-    "Total",
+    "Month",
+    "Net Amount",
+    "Status",
     "Action",
   ];
+  const formatDateToMonth = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString("default", { month: "long" });
+  };
+  
 
   return (
     <>
-      <div className="max-w-md mx-auto my-8 p-4 bg-gray-100 rounded-md shadow-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold">Salary Calculator</h2>
-          <h3 className="text-lg ">Month: {month}</h3>
-        </div>
+  <div className="container mx-auto my-8">
+    <div className="max-w-lg mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="p-6">
+        <h2 className="text-2xl font-bold mb-4">Salary Calculator</h2>
+        <h3 className="text-lg mb-4">Month: {month}</h3>
         <form className="space-y-4">
           <div className="flex flex-col">
             <label htmlFor="empid" className="mb-1">
@@ -175,7 +195,7 @@ const SalaryCalculatorForm = () => {
               id="empid"
               value={empid}
               onChange={(e) => setEmpid(e.target.value)}
-              className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              className="border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300"
             >
               <option>Select Employee ID</option>
               {Employee.map((id) => (
@@ -194,7 +214,7 @@ const SalaryCalculatorForm = () => {
               type="text"
               value={empname}
               readOnly
-              className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              className="border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300"
             />
           </div>
           <div className="flex flex-col">
@@ -206,7 +226,7 @@ const SalaryCalculatorForm = () => {
               type="number"
               value={dailywage}
               readOnly
-              className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              className="border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300"
             />
           </div>
           <div className="flex flex-col">
@@ -218,7 +238,7 @@ const SalaryCalculatorForm = () => {
               type="number"
               value={noOfDays}
               readOnly
-              className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              className="border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300"
             />
           </div>
           <div className="flex flex-col">
@@ -230,7 +250,7 @@ const SalaryCalculatorForm = () => {
               type="number"
               value={bonus}
               onChange={(e) => setBonus(e.target.value)}
-              className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              className="border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300"
             />
           </div>
 
@@ -250,27 +270,46 @@ const SalaryCalculatorForm = () => {
               type="number"
               value={Total}
               onChange={(e) => setBonus(e.target.value)}
-              className="border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              className="border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300"
             />
           </div>
         </form>
       </div>
-      {formdata.length !== 0 &&
-      <Table Headings={Headings} style={{ width: "100%" }}>
-        {formdata.map((item, index) => (
-          <TableRow>
-            <td className="px-6 py-4">{index + 1}</td>
-            <td className="px-6 py-4">{item.empname}</td>
-            <td className="px-6 py-4">{item.dailywage}</td>
-            <td className="px-6 py-4">{item.noOfDays}</td>
-            <td className="px-6 py-4">Rs. {item.total}/-</td>
-            <td className="px-6 py-4">
-              <button>Confirm Payment</button>
-            </td>
-          </TableRow>
-        ))}
-      </Table>}
-    </>
+    </div>
+  </div>
+  <Table Headings={Headings} style={{width:"100%"}} >
+          {Loading ? (
+            <center>
+              <Loader />
+            </center>
+          ) : (
+            Salarydata.map((item, index) => {
+              return (
+                <TableRow>
+                  <td className="px-6 py-4 text-center">{index + 1}</td>
+                  <td className="px-6 py-4 text-center">{item.employee.empname}</td>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
+                  >
+                    {formatDateToMonth(item.date)}
+                  </th>
+                  <td className="px-6 py-4 text-center">{item.net}</td>
+                  <td className="px-6 py-4 text-center">{item.status}</td>
+                  
+          <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
+            Confirm Payment
+          </button>
+                  
+                 
+                  
+                </TableRow>
+              );
+            })
+          )}
+      </Table>
+</>
+
   );
 };
 

@@ -21,7 +21,9 @@ const createSalary = async (req, res, next) => {
 
  const listSalary = async (req, res) => {
     try {
-      const salary = await Salary.find({});
+      const salary = await Salary.find({})
+      .populate('employee')
+      .sort({ _id: -1 });
   
       return res.status(200).json(salary);
     } catch (error) {
