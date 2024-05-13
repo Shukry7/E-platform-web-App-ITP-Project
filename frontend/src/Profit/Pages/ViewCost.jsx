@@ -10,9 +10,10 @@ import Header from "../../Shared/Components/UiElements/header";
 
 const ViewCost = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [FilteredCost, setFilteredCost] = useState([]);
+  const [filteredCost, setFilteredCost] = useState([]);
   const [loading, setLoading] = useState(false);
   const [cost, setCost] = useState([]);
+  const [showInStockOnly, setShowInStockOnly] = useState(false); // State for checkbox
 
   useEffect(() => {
     setLoading(true);
@@ -34,11 +35,21 @@ const ViewCost = () => {
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     const filtered = cost.filter(
-      (cost) =>
-        cost.product.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        cost.date.toLowerCase().includes(e.target.value.toLowerCase())
+      (item) =>
+        item.product.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.date.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredCost(filtered);
+  };
+
+  const handleCheckboxChange = (e) => {
+    setShowInStockOnly(e.target.checked);
+    if (e.target.checked) {
+      const filtered = cost.filter((item) => item.inStock !== 0);
+      setFilteredCost(filtered);
+    } else {
+      setFilteredCost(cost);
+    }
   };
 
   return (
@@ -50,19 +61,27 @@ const ViewCost = () => {
         <Card className="flex" style={{ width: "100%" }}>
           <div className="flex justify-between items-center">
             <h1 className="text-3xl my-8">Cost History</h1>
-            <div className="mr-96">
+            <div>
               <Search
                 searchTerm={searchTerm}
                 handleSearch={handleSearch}
                 placeholder={"Search By Product / Date"}
               />
             </div>
+            <div className="mr-4">
+              <label htmlFor="instockCheckbox" className="inline-flex items-center">
+                Show In Stock Only:
+                <input
+                  id="instockCheckbox"
+                  type="checkbox"
+                  checked={showInStockOnly}
+                  onChange={handleCheckboxChange}
+                  className="ml-2"
+                />
+              </label>
+            </div>
           </div>
-          <CostTable
-            Cost={FilteredCost}
-            loading={loading}
-            setloading={setLoading}
-          />
+          <CostTable Cost={filteredCost} loading={loading} setloading={setLoading} />
         </Card>
       </div>
     </>
