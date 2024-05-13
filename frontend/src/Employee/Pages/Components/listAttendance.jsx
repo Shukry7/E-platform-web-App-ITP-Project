@@ -29,21 +29,33 @@ const AttendanceTable = (props) => {
   var month = now.toLocaleString("default", { month: "long" });
   var year = now.getFullYear();
   var dateTimeString = dayName + ", " + day + " " + month + " " + year;
-
+  const currentDate = new Date();
+  const currentDay = currentDate.getDate();
+  const currentMonth = currentDate.getMonth() + 1
   const date = new Date(dateTimeString);
   var day2 = date.getDate();
   var months2 = date.getMonth() + 1;
+  const daysInMonth = new Date(year, months2, 0).getDate();
 
   const Headings = ["#", "Employee ID", "Employee name", "Days Worked"];
-  for (let i = 4; i <= 24; i++) {
-    Headings[i] = `${day2 - (i - 4)}/${months2}`;
+  for (let i = currentDay; i >= 1; i--) {
+    Headings.push(`${i}/${currentMonth}`);
   }
 
 
   const getPresentDaysCount = (employeeAttendance) => {
-    return employeeAttendance.filter(
-      (attendance) => attendance.status === "Present"
-    ).length;
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // Months are zero-based
+    const currentYear = currentDate.getFullYear();
+  
+    return employeeAttendance.filter((attendance) => {
+      const attendanceDate = new Date(attendance.date);
+      return (
+        attendanceDate.getMonth() + 1 === currentMonth &&
+        attendanceDate.getFullYear() === currentYear &&
+        attendance.status === "Present"
+      );
+    }).length;
   };
 
   return (
