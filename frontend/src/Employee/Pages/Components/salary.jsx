@@ -6,6 +6,7 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
+import Card from "../../../Shared/Components/UiElements/Card";
 
 const SalaryCalculatorForm = () => {
   var now = new Date();
@@ -255,21 +256,27 @@ const SalaryCalculatorForm = () => {
           </div>
         </form>
       </div>
+      
+      
+
+      
       {formdata.length !== 0 &&
       <Table Headings={Headings} style={{ width: "100%" }}>
         {formdata.map((item, index) => (
           <TableRow>
-            <td className="px-6 py-4">{index + 1}</td>
-            <td className="px-6 py-4">{item.empname}</td>
-            <td className="px-6 py-4">{item.dailywage}</td>
-            <td className="px-6 py-4">{item.noOfDays}</td>
-            <td className="px-6 py-4">Rs. {item.total}/-</td>
-            <td className="px-6 py-4">
+            <td className="px-4 py-2">{index + 1}</td>
+            <td className="px-4 py-2">{item.empname}</td>
+            <td className="px-4 py-2">{item.dailywage}</td>
+            <td className="px-4 py-2">{item.noOfDays}</td>
+            <td className="px-4 py-2">Rs. {item.total}/-</td>
+            <td className="px-4 py-2">
               <button>Confirm Payment</button>
             </td>
           </TableRow>
         ))}
       </Table>}
+      
+      
     </>
   );
 };
