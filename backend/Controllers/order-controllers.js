@@ -30,20 +30,22 @@ createOrder = async (req, res) => {
 
     console.log(date)
 // Get Sri Lanka time zone offset in milliseconds
-const sriLankaOffset = (5 * 60 * 60 * 1000) + (30 * 60 * 1000);
+
 
 // Calculate Sri Lanka time
-const sriLankaTime = new Date(date.getTime() + sriLankaOffset);
+
 
 // Extract time components
-const sriLankaHours = sriLankaTime.getUTCHours();
-const sriLankaMinutes = sriLankaTime.getUTCMinutes();
-const sriLankaSeconds = sriLankaTime.getUTCSeconds();
+const sriLankaHours = date.getHours();
+const sriLankaMinutes = date.getMinutes();
+const sriLankaSeconds = date.getSeconds();
+
+console.log(sriLankaHours, sriLankaMinutes);
 
 // Extract date components
-const sriLankaYear = sriLankaTime.getUTCFullYear();
-const sriLankaMonth = sriLankaTime.getUTCMonth() + 1; // Month is zero-indexed, so add 1
-const sriLankaDay = sriLankaTime.getUTCDate();
+const sriLankaYear = date.getFullYear();
+const sriLankaMonth = date.getMonth() + 1; // Month is zero-indexed, so add 1
+const sriLankaDay = date.getDate();
 
 // Adjust time if it's a single digit
 const adjustedSriLankaHours = sriLankaHours < 10 ? '0' + sriLankaHours : sriLankaHours;
