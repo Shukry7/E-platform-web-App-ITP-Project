@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
-import Popup from "../../../Delivery/Pages/Components/Popup";
+import CheckLoginDetails from "./CheckLoginDetails";
+import axios from "axios";
 
 const DeliveryTable = (props) => {
+  const [loading, setLoading] = useState(false);
+
   const Headings = [
     "#",
     "ID",
@@ -17,14 +20,20 @@ const DeliveryTable = (props) => {
     "Number Plate",
     "Type & Capacity",
     "Action",
-    "Action",
-    "PUsername & Password",
+    "Set Username and Password",
   ];
+
+  const handleForceRefresh = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000); // Simulating a delay for the loader
+  };
 
   return (
     <>
       <Table Headings={Headings}>
-        {props.loading ? (
+        {loading ? (
           <center>
             <Loader />
           </center>
@@ -53,11 +62,13 @@ const DeliveryTable = (props) => {
                     deleteLink={`http://localhost:5000/delivery/${item._id}`}
                     dlt={props.dlt}
                     dltset={props.dltset}
+                    handleForceRefresh={handleForceRefresh}
                   />
                 </td>
-                <td className="px-6 py-4">
-                  <Popup deliveryId={item._id} />
-                </td>
+                <CheckLoginDetails
+                  deliveryId={item._id}
+                  handleForceRefresh={handleForceRefresh}
+                />
               </TableRow>
             );
           })

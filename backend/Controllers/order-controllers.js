@@ -26,14 +26,43 @@ createOrder = async (req, res) => {
           $inc: { Stock: -item.quantity },
         });
 
-        return {
-          productId: item.product._id,
-          quantity: item.quantity,
-        };
-      })
-    );
+      return {
+        productId: item.product._id,
+        quantity: item.quantity,
+      };
+    }));
+
+
 
     const date = new Date();
+
+    console.log(date)
+// Get Sri Lanka time zone offset in milliseconds
+
+
+// Calculate Sri Lanka time
+
+
+// Extract time components
+const sriLankaHours = date.getHours();
+const sriLankaMinutes = date.getMinutes();
+const sriLankaSeconds = date.getSeconds();
+
+console.log(sriLankaHours, sriLankaMinutes);
+
+// Extract date components
+const sriLankaYear = date.getFullYear();
+const sriLankaMonth = date.getMonth() + 1; // Month is zero-indexed, so add 1
+const sriLankaDay = date.getDate();
+
+// Adjust time if it's a single digit
+const adjustedSriLankaHours = sriLankaHours < 10 ? '0' + sriLankaHours : sriLankaHours;
+const adjustedSriLankaMinutes = sriLankaMinutes < 10 ? '0' + sriLankaMinutes : sriLankaMinutes;
+const adjustedSriLankaSeconds = sriLankaSeconds < 10 ? '0' + sriLankaSeconds : sriLankaSeconds;
+
+// Assign to two separate variables
+const sriLankaTimeStr = `${adjustedSriLankaHours}:${adjustedSriLankaMinutes}:${adjustedSriLankaSeconds}`;
+const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
 
     const profitTable = await Promise.all(
       cartitem.map(async (item) => {
@@ -80,6 +109,8 @@ createOrder = async (req, res) => {
       orderId: id,
       userId: uid,
       CartItems: items,
+      date:sriLankaDateStr,
+      time:sriLankaTimeStr
     };
 
     const order = await Order.create(newOrder);

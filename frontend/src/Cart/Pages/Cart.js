@@ -65,9 +65,23 @@ const CartPage = () => {
     axios
       .get(`http://localhost:5000/cart/list/${auth.cusId}`)
       .then((response) => {
-        setCart(response.data);
+        // Adjust quantity based on available stock
+        const updatedCart = response.data.map((item) => {
+          // If stock is less than or equal to 0, set quantity to 0
+          if (item.product.Stock <= 0) {
+            handleQuantityUpdate(item._id, 0, item.product.Stock);
+            item.quantity = 0;
+          } else {
+            // If quantity exceeds available stock, set quantity to available stock
+            if (item.quantity > item.product.Stock) {
+              handleQuantityUpdate(item._id, item.product.Stock, item.product.stock);
+              item.quantity = item.product.Stock;
+            }
+          }
+          return item;
+        });
+        setCart(updatedCart);
       })
-      
       .catch((error) => {
         console.error("Error fetching cart", error);
       });
@@ -75,12 +89,19 @@ const CartPage = () => {
   console.log(cart)
 
 
-  const handleQuantityUpdate = (Id, newQuantity) => {
+  const handleQuantityUpdate = (itemId, newQuantity, availableStock) => {
+    if (newQuantity > availableStock) {
+      // Notify user that the requested quantity exceeds available stock
+      Toast("Requested quantity exceeds available stock", "error");
+      newQuantity = 0;
+      return;
+    } 
+
     axios
-      .put(`http://localhost:5000/cart/cart/${Id}`, { quantity: newQuantity })
+      .put(`http://localhost:5000/cart/cart/${itemId}`, { quantity: newQuantity })
       .then((response) => {
-        setdeleteCart(deleteCart + 1)
-        Toast("Quantity updated !!" , "success")
+        setdeleteCart(deleteCart + 1);
+        Toast("Quantity updated !!", "success");
       })
       .catch((error) => {
         console.error("Error updating quantity", error);
@@ -179,11 +200,11 @@ const CartPage = () => {
                       <td class="px-6 py-4">${item.product.price}</td>
                       <td class="px-6 py-4">
                         <div class="flex items-center">
-                          <button class="border rounded-md py-2 px-4 mr-2" disabled={item.quantity===1} onClick={() => handleQuantityUpdate(item._id,item.quantity - 1)}>
+                          <button class="border rounded-md py-2 px-4 mr-2" disabled={item.quantity===0|| item.product.Stock===0} onClick={() => handleQuantityUpdate(item._id,item.quantity - 1,item.product.Stock)} >{(console.log(item.product.Stock))}
                             -
                           </button>
                           <span class="text-center w-8">{item.quantity}</span>
-                          <button class="border rounded-md py-2 px-4 ml-2"  onClick={() => handleQuantityUpdate(item._id,item.quantity + 1)} >
+                          <button class="border rounded-md py-2 px-4 ml-2" disabled={item.quantity===0|| item.product.Stock===0} onClick={() => handleQuantityUpdate(item._id,item.quantity + 1,item.product.Stock)} >
                             +
                           </button>
                         </div>
