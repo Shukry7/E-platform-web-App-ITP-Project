@@ -26,8 +26,30 @@ createOrder = async (req, res) => {
     }));
 
 
+    const currentDate = new Date();
 
-    const date = new Date();
+// Get Sri Lanka time zone offset in milliseconds
+const sriLankaOffset = 5.5 * 60 * 60 * 1000;
+
+// Calculate Sri Lanka time
+const sriLankaTime = new Date(currentDate.getTime() + sriLankaOffset);
+
+// Extract time components
+const sriLankaHours = sriLankaTime.getHours();
+const sriLankaMinutes = sriLankaTime.getMinutes();
+const sriLankaSeconds = sriLankaTime.getSeconds();
+
+// Extract date components
+const sriLankaYear = sriLankaTime.getFullYear();
+const sriLankaMonth = sriLankaTime.getMonth() + 1; // Month is zero-indexed, so add 1
+const sriLankaDay = sriLankaTime.getDate();
+
+// Assign to two separate variables
+const sriLankaTimeStr = `${sriLankaHours}:${sriLankaMinutes}:${sriLankaSeconds}`;
+const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
+
+console.log("Sri Lanka Time:", sriLankaTimeStr);
+console.log("Sri Lanka Date:", sriLankaDateStr);
 
     const profitTable = await Promise.all(
       cartitem.map(async (item) => {
@@ -66,6 +88,8 @@ createOrder = async (req, res) => {
       orderId: id,
       userId: uid,
       CartItems: items,
+      date:sriLankaDateStr,
+      time:sriLankaTimeStr
     };
 
     const order = await Order.create(newOrder);
