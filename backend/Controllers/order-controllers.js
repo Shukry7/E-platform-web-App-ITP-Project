@@ -1,10 +1,14 @@
 const Order = require("../Models/OrderModel");
 const Cost = require("../Models/CostModel");
 const Profit = require("../Models/ProfitModel");
-const Product = require("../Models/ProductModel")
+const Product = require("../Models/ProductModel");
+const Notification = require("./notification-controllers");
+
 createOrder = async (req, res) => {
   try {
     const { cartitem, uid } = req.body;
+
+    console.log(cartitem)
 
     const latestOrder = await Order.find().sort({ _id: -1 }).limit(1);
     let id;
@@ -16,22 +20,27 @@ createOrder = async (req, res) => {
       id = "O0001";
     }
 
-    const items = await Promise.all(cartitem.map(async (item) => {
-      await Product.findByIdAndUpdate(item.product._id, { $inc: { Stock: -item.quantity } })
+    const items = await Promise.all(
+      cartitem.map(async (item) => {
+        await Product.findByIdAndUpdate(item.product._id, {
+          $inc: { Stock: -item.quantity },
+        });
 
-      return {
-        productId: item.product._id,
-        quantity: item.quantity,
-      };
-    }));
-
-
+        return {
+          productId: item.product._id,
+          quantity: item.quantity,
+        };
+      })
+    );
 
     const date = new Date();
 
     const profitTable = await Promise.all(
       cartitem.map(async (item) => {
-        let cost = await Cost.findOne({product: item.product.ID, inStock: { $ne: 0 }}).limit(1);
+        let cost = await Cost.findOne({
+          product: item.product.ID,
+          inStock: { $ne: 0 },
+        }).limit(1);
 
         let buyqtytemp = item.quantity;
         let costStock = cost.inStock;
@@ -42,12 +51,17 @@ createOrder = async (req, res) => {
           profit = profit + (sellPrice - cost.price) * cost.inStock;
           buyqtytemp = buyqtytemp - cost.inStock;
           const result = await Cost.findByIdAndUpdate(cost._id, { inStock: 0 });
-          cost = await Cost.findOne({product: item.product.ID, inStock: { $ne: 0 }}).limit(1);
+          cost = await Cost.findOne({
+            product: item.product.ID,
+            inStock: { $ne: 0 },
+          }).limit(1);
           costStock = cost.inStock;
         }
 
         profit = profit + (sellPrice - cost.price) * buyqtytemp;
-        const result = await Cost.findByIdAndUpdate(cost._id, {$inc: { inStock: -buyqtytemp }});
+        const result = await Cost.findByIdAndUpdate(cost._id, {
+          $inc: { inStock: -buyqtytemp },
+        });
 
         return {
           order: id,
@@ -69,7 +83,9 @@ createOrder = async (req, res) => {
     };
 
     const order = await Order.create(newOrder);
-
+    for (let item of cartitem) {
+      await Notification.createNotification({ body: { productId: item.product._id } }, null , null);
+    }
     // Respond with a success message
     res.status(201).json({ message: "Order placed successfully" });
   } catch (error) {
@@ -116,4 +132,4 @@ const checkOrder = async (req, res) => {
 
 exports.createOrder = createOrder;
 exports.listOrder = listOrder;
-exports.checkOrder = checkOrder
+exports.checkOrder = checkOrder;
