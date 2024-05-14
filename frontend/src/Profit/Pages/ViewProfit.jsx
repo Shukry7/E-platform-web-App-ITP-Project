@@ -17,6 +17,7 @@ const ViewProfit = () => {
   const [profit, setProfit] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [orderAsc, setOrderAsc] = useState(false); // Track the order direction
 
   useEffect(() => {
     setLoading(true);
@@ -59,6 +60,12 @@ const ViewProfit = () => {
         return itemDate >= startDate && itemDate <= endDate;
       });
     }
+    // Apply sorting based on the order direction
+    if (orderAsc) {
+      filtered.sort((a, b) => new Date(a.date) - new Date(b.date)); // Newest first
+    } else {
+      filtered.sort((a, b) => new Date(b.date) - new Date(a.date)); // Oldest first
+    }
     setFinalFilteredProfit(filtered);
   };
 
@@ -77,6 +84,11 @@ const ViewProfit = () => {
     applyFilters(searchTerm, profit, startDate, date);
   };
 
+  const toggleOrder = () => {
+    setOrderAsc((prevOrderAsc) => !prevOrderAsc); // Toggle order direction
+    applyFilters(searchTerm, profit, startDate, endDate);
+  };
+
   return (
     <>
       <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
@@ -93,21 +105,33 @@ const ViewProfit = () => {
                 placeholder={"Search By ProductID / OrderID / Date"}
               />
             </div>
-            <div>
-              <label>Start Date:</label>
+            <div className="flex flex-col ...">
+              <div className="flex flex-row">
+                <div className="pr-6">
+                  <label>Start Date:</label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => handleStartDateChange(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label>End Date:</label>
+                  <input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => handleEndDateChange(e.target.value)}
+                  />
+                </div>
+              </div>
+            <div className="pt-3">
               <input
-                type="date"
-                value={startDate}
-                onChange={(e) => handleStartDateChange(e.target.value)}
+                type="checkbox"
+                checked={orderAsc}
+                onChange={toggleOrder}
               />
+              <label>Sort by Date (Newest First)</label>
             </div>
-            <div>
-              <label>End Date:</label>
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => handleEndDateChange(e.target.value)}
-              />
             </div>
           </div>
           <ProfitTable
