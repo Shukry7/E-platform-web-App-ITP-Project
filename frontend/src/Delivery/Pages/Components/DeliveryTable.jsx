@@ -5,6 +5,7 @@ import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDropdown";
 import CheckLoginDetails from "./CheckLoginDetails";
 import axios from "axios";
+import AvailabilityTable from "../Available";
 
 const DeliveryTable = (props) => {
   const [loading, setLoading] = useState(false);
@@ -21,6 +22,7 @@ const DeliveryTable = (props) => {
     "Type & Capacity",
     "Action",
     "Set Username and Password",
+    "Available"
   ];
 
   const handleForceRefresh = () => {
@@ -69,6 +71,7 @@ const DeliveryTable = (props) => {
                   deliveryId={item._id}
                   handleForceRefresh={handleForceRefresh}
                 />
+                <AvailabilityTable deliveryId={item._id} />               
               </TableRow>
             );
           })
