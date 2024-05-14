@@ -10,16 +10,20 @@ import Header from "../../Shared/Components/UiElements/header";
 
 const ViewProfit = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [FilteredProfit, setFilteredProfit] = useState([]);
+  const [searchFilteredProfit, setSearchFilteredProfit] = useState([]);
+  const [dateFilteredProfit, setDateFilteredProfit] = useState([]);
+  const [finalFilteredProfit, setFinalFilteredProfit] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [profit, setprofit] = useState([]);
+  const [profit, setProfit] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
     setLoading(true);
     axios
       .get(`http://localhost:5000/profit/profit/`)
       .then((res) => {
-        setprofit(res.data);
+        setProfit(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -28,18 +32,49 @@ const ViewProfit = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredProfit(profit);
+    setSearchFilteredProfit(profit);
+    setDateFilteredProfit(profit);
+    applyFilters(searchTerm, profit, startDate, endDate);
   }, [profit]);
+
+  useEffect(() => {
+    applyFilters(searchTerm, profit, startDate, endDate);
+  }, [searchTerm, startDate, endDate]);
+
+  const applyFilters = (searchTerm, profit, startDate, endDate) => {
+    let filtered = profit;
+    if (searchTerm) {
+      filtered = filtered.filter((item) => {
+        const itemDate = new Date(item.date).toISOString().slice(0, 10);
+        return (
+          item.order.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          itemDate.includes(searchTerm.toLowerCase())
+        );
+      });
+    }
+    if (startDate && endDate) {
+      filtered = filtered.filter((item) => {
+        const itemDate = new Date(item.date).toISOString().slice(0, 10);
+        return itemDate >= startDate && itemDate <= endDate;
+      });
+    }
+    setFinalFilteredProfit(filtered);
+  };
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    const filtered = profit.filter(
-      (profit) =>
-        profit.order.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        profit.product.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        profit.date.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setFilteredProfit(filtered);
+    applyFilters(e.target.value, profit, startDate, endDate);
+  };
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+    applyFilters(searchTerm, profit, date, endDate);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+    applyFilters(searchTerm, profit, startDate, date);
   };
 
   return (
@@ -51,16 +86,32 @@ const ViewProfit = () => {
         <Card className="flex" style={{ width: "100%" }}>
           <div className="flex justify-between items-center">
             <h1 className="text-3xl my-8">Profit</h1>
-            <div className="mr-96">
+            <div>
               <Search
                 searchTerm={searchTerm}
                 handleSearch={handleSearch}
                 placeholder={"Search By ProductID / OrderID / Date"}
               />
             </div>
+            <div>
+              <label>Start Date:</label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => handleStartDateChange(e.target.value)}
+              />
+            </div>
+            <div>
+              <label>End Date:</label>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => handleEndDateChange(e.target.value)}
+              />
+            </div>
           </div>
           <ProfitTable
-            Profit={FilteredProfit}
+            Profit={finalFilteredProfit}
             loading={loading}
             setloading={setLoading}
           />
