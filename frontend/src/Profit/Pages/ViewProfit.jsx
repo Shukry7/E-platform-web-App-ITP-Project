@@ -17,7 +17,7 @@ const ViewProfit = () => {
   const [profit, setProfit] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [orderAsc, setOrderAsc] = useState(false); // Track the order direction
+  const [orderAsc, setOrderAsc] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -60,11 +60,11 @@ const ViewProfit = () => {
         return itemDate >= startDate && itemDate <= endDate;
       });
     }
-    // Apply sorting based on the order direction
+   
     if (orderAsc) {
-      filtered.sort((a, b) => new Date(a.date) - new Date(b.date)); // Newest first
+      filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
     } else {
-      filtered.sort((a, b) => new Date(b.date) - new Date(a.date)); // Oldest first
+      filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
     }
     setFinalFilteredProfit(filtered);
   };
@@ -85,7 +85,7 @@ const ViewProfit = () => {
   };
 
   const toggleOrder = () => {
-    setOrderAsc((prevOrderAsc) => !prevOrderAsc); // Toggle order direction
+    setOrderAsc((prevOrderAsc) => !prevOrderAsc);
     applyFilters(searchTerm, profit, startDate, endDate);
   };
 
