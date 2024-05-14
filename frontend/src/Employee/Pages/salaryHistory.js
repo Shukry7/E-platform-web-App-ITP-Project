@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import EmployeeTable from "./Components/salaryHistory";
+import HistoryTable from "./Components/salaryHistory";
 import Card from "../../Shared/Components/UiElements/Card"
 import { Type } from "./Components/employeeform";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
@@ -37,9 +37,9 @@ const History = () => {
   };
 
   useEffect(() => {
-    setFilteredEmployees(history);
-    setDisplayEmployee(history)
-  }, [employee]);
+    setFilteredHistory(history);
+    setDisplayHistory(history)
+  }, [history]);
   
   const handlePageChange = (page) => {
     setActivePage(page);
@@ -77,7 +77,7 @@ const History = () => {
                   placeholder={"Search By ID / Name"}
                 />
         </div>
-        <EmployeeTable
+        <HistoryTable
         
         Employee={displayHistory} 
         loading={loading} 
