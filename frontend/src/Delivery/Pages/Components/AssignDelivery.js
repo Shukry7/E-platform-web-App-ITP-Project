@@ -33,7 +33,7 @@ const AssignDelivery = () => {
   useEffect(() => {
     // Fetch delivery persons data from the API
     axios
-      .get("http://localhost:5000/delivery")
+      .get("http://localhost:5000/available")
       .then((res) => {
         setDeliveryPersons(res.data);
       })
@@ -86,8 +86,8 @@ const AssignDelivery = () => {
 
     return deliveryPersons.filter(
       (person) =>
-        !selectedPersonIds.includes(person.ID) ||
-        person.ID === selectedPersonId
+        !selectedPersonIds.includes(person.delivery._id) ||
+      person.delivery._id === selectedPersonId
     );
   };
 
@@ -128,8 +128,8 @@ const AssignDelivery = () => {
                             Select a Delivery Person
                           </option>
                           {availablePersons.map((person) => (
-                            <option key={person.ID} value={person.ID}>
-                              {person.name}
+                            <option key={person.delivery._id} value={person.delivery._id}>
+                              {person.delivery.name}
                             </option>
                           ))}
                         </select>
@@ -149,8 +149,8 @@ const AssignDelivery = () => {
                           ? "No Delivery Person Available"
                           : selectedPersonId
                           ? deliveryPersons.find(
-                              (person) => person.ID === selectedPersonId
-                            )?.name || "Not Assigned"
+                              (person) => person.delivery._id === selectedPersonId
+                            )?.delivery.name || "Not Assigned"
                           : "Not Assigned"}
                       </td>
                       <td>

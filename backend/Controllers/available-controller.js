@@ -27,7 +27,7 @@ const createDeliveryAvailable = async (req, res, next) => {
 
 const listDeliveryAvailable = async (req, res) => {
   try {
-    const delivery = await DeliveryAvailable.find({});
+    const delivery = await DeliveryAvailable.find({available:"Yes"}).populate("delivery");
     return res.status(200).json(delivery);
   } catch (error) {
     console.log(error.message);
