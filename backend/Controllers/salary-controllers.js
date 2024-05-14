@@ -2,7 +2,7 @@ const Salary = require("../Models/SalaryModel");
 const HttpError = require("../Models/http-error");
 
 const createSalary = async (req, res, next) => {
-  const { employee, date, status, net } = req.body;
+  const { employee, date, status, bonus, days, net } = req.body;
 
   try {
     const latestSalary = await Salary.find({ employee: employee }).sort({ date: -1 }).limit(1);
@@ -12,6 +12,8 @@ const createSalary = async (req, res, next) => {
       // If there's an existing salary for the same month, update it
       salary = latestSalary[0];
       salary.status = status;
+      salary.bonus= bonus;
+      salary.days= days;
       salary.net = net;
       await salary.save();
     } else {
@@ -20,6 +22,8 @@ const createSalary = async (req, res, next) => {
         employee: employee,
         date: date,
         status: status,
+        bonus:bonus,
+        days:days,
         net: net
       });
     }
@@ -43,6 +47,23 @@ const listSalary = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+const confirmDelivery = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const salaries = await Salary.findByIdAndUpdate(id, { status: 'paid' })
+    .populate('employee')
+    .sort({ _id: -1 });
+
+    return res.status(200).json(salaries);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+
+    
+    };
 
 exports.createSalary = createSalary;
 exports.listSalary = listSalary;
+exports.confirmDelivery = confirmDelivery;

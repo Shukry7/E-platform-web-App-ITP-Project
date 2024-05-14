@@ -6,6 +6,7 @@ import Loader from "../../../Shared/Components/UiElements/Loader";
 import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
+import ConfirmDeliveryBox from "./ConfirmDeliveryBox";
 import Card from "../../../Shared/Components/UiElements/Card";
 import "./form.css";
 const SalaryCalculatorForm = () => {
@@ -42,6 +43,14 @@ const SalaryCalculatorForm = () => {
         value: "",
         isValid: false,
       },
+      days: {
+        value: "",
+        isValid: false,
+      },
+      bonus: {
+        value: "",
+        isValid: false,
+      },
       net: {
         value: "",
         isValid: false,
@@ -55,12 +64,14 @@ const SalaryCalculatorForm = () => {
     const currentdate = new Date();
 
     setLoading(true);
-    console.log(Total)
+    console.log(Total);
     axios
       .post("http://localhost:5000/salary/new", {
         id: 1,
         employee: empid,
         date: currentdate,
+        days: noOfDays,
+        bonus: bonus,
         status: statuss,
         net: Total,
       })
@@ -68,7 +79,7 @@ const SalaryCalculatorForm = () => {
         setLoading(false);
         Toast("Employee salary Added calculated!! 🔥", "success");
         console.log("Response from server:", res.data);
-        navigate("/salaryform");
+        window.location.reload();
       })
       .catch((err) => {
         console.error(err);
@@ -84,6 +95,7 @@ const SalaryCalculatorForm = () => {
       .then((response) => {
         setsalaryData(response.data);
         setLoading(false);
+       
       })
       .catch((error) => {
         console.error("Error fetching salaries:", error);
@@ -168,7 +180,6 @@ const SalaryCalculatorForm = () => {
     } catch (err) {
       console.log(err);
     } finally {
-      submitHandler();
     }
     console.log(Total);
   };
@@ -177,6 +188,9 @@ const SalaryCalculatorForm = () => {
     "#",
     "Employee name",
     "Month",
+    "days Worked",
+    "daily Wage",
+    "bonus",
     "Net Amount",
     "Status",
     "Action",
@@ -265,11 +279,11 @@ const SalaryCalculatorForm = () => {
               <button
                 type="button"
                 onClick={handleCalculateSalary}
-                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+                className="bg-blue-500 hover:bg-green-600 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
               >
                 Calculate Salary
               </button>
-              <div>
+              <div className="flex justify-between items-center">
                 <label htmlFor="bonus" className="mt-4 mb-1">
                   Net salary{" "}
                 </label>
@@ -280,6 +294,14 @@ const SalaryCalculatorForm = () => {
                   onChange={(e) => setTotal(e.target.value)}
                   className="border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300"
                 />
+                <button
+                  type="button"
+                  onClick={submitHandler}
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-blue-300 ml-4"
+                  style={{ alignSelf: "flex-end" }}
+                >
+                  Add
+                </button>
               </div>
             </form>
           </div>
@@ -292,6 +314,7 @@ const SalaryCalculatorForm = () => {
           </center>
         ) : (
           Salarydata.map((item, index) => {
+            if(item.status == 'unpaid'){
             return (
               <TableRow>
                 <td className="px-6 py-4 text-center">{index + 1}</td>
@@ -302,15 +325,23 @@ const SalaryCalculatorForm = () => {
                 >
                   {formatDateToMonth(item.date)}
                 </th>
-                <td className="px-6 py-4 text-center">{item.net}</td>
-                <td className="px-6 py-4 text-center">{item.status}</td>
 
-                <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
-                  Confirm Payment
-                </button>
+                <td className="px-6 py-4 text-center text-black">{item.days}</td>
+                <td className="px-6 py-4 text-center text-black">
+                  {item.employee.hourlywage}
+                </td>
+                <td className="px-6 py-4 text-center text-black">{item.bonus}</td>
+                <td className="px-6 py-4 text-center text-black">{item.net}</td>
+
+                <td className="px-6 py-4 text-center text-white">
+                  <div className="bg-red-400 rounded-lg p-2">{item.status}</div>
+                </td>
+                <td className="px-6 py-4 text-center ">
+                <ConfirmDeliveryBox id = {item._id}/>
+                </td>
               </TableRow>
             );
-          })
+        }})
         )}
       </Table>
     </>

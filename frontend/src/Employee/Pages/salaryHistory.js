@@ -20,7 +20,7 @@ const History = () => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredHistory, setFilteredHistory] = useState([]);
-  const [activePage, setActivePage] = useState(1);
+  
 
   useEffect(() => {
     setFilteredHistory(history);
@@ -33,7 +33,7 @@ const History = () => {
         history.employee.ID.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredHistory(filtered);
-    setActivePage(1);
+    
   };
 
   useEffect(() => {
@@ -41,19 +41,13 @@ const History = () => {
     setDisplayHistory(history)
   }, [history]);
   
-  const handlePageChange = (page) => {
-    setActivePage(page);
-  };
-  useEffect(() => {
-    const startIndex = (activePage - 1) * 6;
-    const endIndex = startIndex + 6;
-    setDisplayHistory(filteredHistory.slice(startIndex, endIndex));
-  }, [activePage, filteredHistory]);
+  
+  
 
   useEffect(() => {
     setLoading(true)
     axios
-      .get("http://localhost:5000/salaryHistory")
+      .get("http://localhost:5000/salary")
       .then(res => {
         sethistory(res.data)
         setLoading(false)
@@ -70,7 +64,7 @@ const History = () => {
 
       <Card className="flex" style={{ width: "100%" }}>
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl my-8">Employee List</h1>
+          <h1 className="text-3xl my-8">Payement History</h1>
           <Search
                   searchTerm={searchTerm}
                   handleSearch={handleSearch}
@@ -83,12 +77,7 @@ const History = () => {
         loading={loading} 
         setloading={setLoading}
         />
-         <Pagination
-            active={activePage}
-            totalItems={filteredHistory.length}
-            itemsPerPage={6}
-            onPageChange={handlePageChange}
-          />
+         
       </Card>
 
     </div>
