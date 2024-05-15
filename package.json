@@ -4,6 +4,7 @@
   },
   "scripts": {
     "start": "concurrently \"cd frontend && npm start\" \"cd backend && npm run backend\"",
+    "inst": "concurrently \"cd frontend && npm i\" \"cd backend && npm i\"",
     "start:frontend": "cd frontend && npm start",
     "start:backend": "cd backend && npm run backend"
   },

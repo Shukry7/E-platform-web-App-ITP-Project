@@ -49,10 +49,18 @@ import ProtectedRouteCustomer from "./Shared/Components/context/PrivateRoute";
 import CheckLogin from "./Shared/Components/context/checkLogin";
 import ConfirmOrderPage from "./Order/OrderConfirm";
 import ProductReview from "./Product/Pages/ProductReview"
+import { DeliveryLoginPage } from "./Delivery/Pages/Components/DeliveryLogin"
+import CheckDeliveryLogin from "./Shared/Components/context/checkdeliveryLogin";
+import DeliveryPersonProfile from "./Delivery/Pages/Components/DeliveryPersonProfile";
+import { DeliveryAuthProvider } from "./Shared/Components/context/DeliveryAuthContext";
+import ViewCost from "./Profit/Pages/ViewCost";
+import ViewProfit from "./Profit/Pages/ViewProfit";
+import HistoryTable from "./Employee/Pages/salaryHistory"
 
 const App = () => {
   return (
     <AuthProvider >
+    <DeliveryAuthProvider>
     <Router>
       <Routes >
         <Route element={<ProtectedRouteCustomer/>}>
@@ -97,6 +105,9 @@ const App = () => {
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
+        <Route path="/salaryHistory" exact element={<HistoryTable/>}/>
+        <Route path="/Profit/cost" exact element={<ViewCost/>}/>
+        <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
         <Route path="/" exact element={
           <CheckLogin>
             <LoginPage/>
@@ -104,8 +115,18 @@ const App = () => {
         <Route path="/Loader" exact element={<CustomerLoader/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
+        <Route path="/deliverylogin" exact element={
+          
+            <DeliveryLoginPage/>
+        
+        }/>
+        <Route path="/deliverypersonprofile" exact element={
+          
+            <DeliveryPersonProfile/>
+        }/>
       </Routes >
     </Router>
+    </DeliveryAuthProvider>
     </AuthProvider>
   );
 };

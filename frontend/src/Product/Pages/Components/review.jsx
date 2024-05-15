@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
 import { AuthContext } from "../../../Shared/Components/context/authcontext";
 
-const Review = ({ProductID , setTemp , temp}) => {
+const Review = ({ProductID , setTemp , temp , onReviewChange}) => {
   const auth = useContext(AuthContext);
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState("");
@@ -29,6 +29,7 @@ const Review = ({ProductID , setTemp , temp}) => {
         setTemp(temp + 1)
         setRating(0);
         setMessage("");
+        onReviewChange()
       })
       .catch((err) => {
         console.error(err);
@@ -64,7 +65,7 @@ const Review = ({ProductID , setTemp , temp}) => {
                     {[...Array(5)].map((_, index) => (
                       <svg
                         className={`w-8 h-8 ms-3 ${
-                          index < rating ? "text-yellow-300" : "text-gray-300"
+                          index < rating ? "text-orange-600" : "text-gray-300"
                         }`}
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +101,7 @@ const Review = ({ProductID , setTemp , temp}) => {
                 <div class="text-center mt-6">
                   <button
                     id="feedbackBtn"
-                    class="bg-yellow-300 text-black text-center mx-auto active:bg-yellow-400 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    class=" bg-orange-600 text-white hover:bg-orange-300 text-center mx-auto active:bg-yellow-400 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="submit"
                     style={{ transition: "all 0.15s ease 0s" }}
                   >

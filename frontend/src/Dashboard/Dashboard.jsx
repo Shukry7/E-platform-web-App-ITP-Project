@@ -159,7 +159,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-2 pt-5">
+            <div className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-2 pt-5 z-0">
               <Restock />
               <TopPandC />
             </div>

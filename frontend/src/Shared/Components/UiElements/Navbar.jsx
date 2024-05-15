@@ -81,7 +81,7 @@ const Navbar = (props) => {
 
       <aside
         id="logo-sidebar"
-        class="fixed top-0 left-0 z-10 w-64 h-screen overflow-y-auto border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform -translate-x-full sm:translate-x-0"
+        class="fixed top-0 left-0  w-64 h-screen overflow-y-auto border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform -translate-x-full sm:translate-x-0"
         style={{ backgroundColor: "white" }}
         aria-label="Sidebar"
       >
@@ -274,6 +274,35 @@ const Navbar = (props) => {
                       </svg>{" "}
                       <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
                         Salary Calculation
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/salaryHistory"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Salary Calculation"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                      <svg
+                        className="flex-shrink-0 w-6 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 18 21"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 8h6m-6 4h6m-6 4h6M6 3v18l2-2 2 2 2-2 2 2 2-2 2 2V3l-2 2-2-2-2 2-2-2-2 2-2-2Z"
+                        />{" "}
+                      </svg>{" "}
+                      <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+                        payment History
                       </span>
                     </Link>
                   </li>

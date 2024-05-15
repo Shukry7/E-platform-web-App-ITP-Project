@@ -54,9 +54,9 @@ const SupplierProductTable = (props) => {
   ];
 
   // Function to add a product to the cart
-  const addToCart = (supplierProduct, product, productName, price) => {
+  const addToCart = (supplierProduct, product, productName, productID, price) => {
     
-      setCart([...cart, {supplierProduct, supplier, product, productName, price, quantity: 1 }]);
+      setCart([...cart, {supplierProduct, supplier, product, productName, productID, price, quantity: 1 }]);
     
   };
 
@@ -121,7 +121,7 @@ const SupplierProductTable = (props) => {
                   </td>
                   <td className="px-6 py-4">
                     {check(item.product._id)?
-                    (<button onClick={() => addToCart(item._id, item.product._id, item.product.name, item.unitPrice )} className="px-2 py-1 bg-green-500 text-white">Add</button>) : 
+                    (<button onClick={() => addToCart(item._id, item.product._id, item.product.name, item.product.ID, item.unitPrice )} className="px-2 py-1 bg-green-500 text-white">Add</button>) : 
                     (<button onClick={() => removeFromCart(item.product._id)} className="px-2 py-1 bg-red-500 text-white">Remove</button>)}
                   </td>
                 </TableRow>

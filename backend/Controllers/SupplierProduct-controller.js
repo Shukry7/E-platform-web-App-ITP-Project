@@ -5,11 +5,11 @@ const Product = require("../Models/ProductModel");
 const Purchase = require("../Models/PurchaseModel");
 const SupplierProductPurchase = require("../Models/Sup_Prod_Purchase");
 const Supplier = require("../Models/SupplierModel");
+const Cost = require("../Models/CostModel")
 
 const createSupplierProduct = async (req, res, next) => {
   const { supplier, product, unitPrice} = req.body;
 
-  console.log(typeof(supplier))
 
   const newSupplierProduct = {
     supplier: supplier,
@@ -174,7 +174,9 @@ const SupplierPurchase = async (req, res, next) => {
       Quantity: item.quantity,
     }));
 
+
     const addedItems = await SupplierProductPurchase.insertMany(itemsToAdd);
+
 
     const supplierInfo = await Supplier.findById(supplier);
     const currentCredit = supplierInfo.credit;
@@ -231,8 +233,6 @@ const confirmDelivery = async (req, res) => {
     const { id } = req.params;
     let qty, stock, newstock, product
 
-    console.log(id)
-
     const result = await Purchase.findByIdAndUpdate(id, { status: 'Recieved' });
 
     const supplierProductPurchase = await SupplierProductPurchase.find({purchaseID : id}).populate('purchaseID').populate({
@@ -255,6 +255,18 @@ const confirmDelivery = async (req, res) => {
 
       await Product.findByIdAndUpdate(product, { Stock: newstock });
     }
+
+    date= new Date
+
+    const costTable = supplierProductPurchase.map(item => ({
+      product: item.supplier_product.product.ID,
+      price: item.supplier_product.unitPrice,
+      quantity: item.Quantity,
+      inStock: item.Quantity,
+      date: date,
+    }));
+
+    const costAdded = await Cost.insertMany(costTable);
     
 
     res.status(200).json({ success: true, message: "Purchase and items added successfully" });

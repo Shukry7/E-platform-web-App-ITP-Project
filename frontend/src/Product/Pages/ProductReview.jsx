@@ -3,9 +3,6 @@ import axios from "axios";
 import ProductReviewTable from "./Components/ProductReviewTable";
 import Card from "../../Shared/Components/UiElements/Card";
 import Navbar from "../../Shared/Components/UiElements/Navbar";
-import { MdOutlineAddBox } from "react-icons/md";
-import { Link } from "react-router-dom";
-import Search from "../../Shared/Components/UiElements/Search";
 import Pagination from "../../Shared/Components/FormElements/Pagination";
 import Header from "../../Shared/Components/UiElements/header";
 import Select from "react-tailwindcss-select";
@@ -14,7 +11,6 @@ const ProductReviews = () => {
   const [productReview, setProductReview] = useState([]);
   const [products, setProducts] = useState([]);
   const [displayProductReviews, setDisplayProductReview] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState([]);
   const [FilteredProductReview, setFilteredProductReview] = useState([]);
   const [text, setText] = useState("All");
@@ -22,7 +18,7 @@ const ProductReviews = () => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [activePage, setActivePage] = useState(1);
   const [val, setVal] = useState(null);
-  const dropdownButtonRef = useRef(null); 
+  const dropdownButtonRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -79,19 +75,26 @@ const ProductReviews = () => {
   useEffect(() => {
     setFilteredProductReview(productReview);
     setDisplayProductReview(productReview);
-    setSelectedProduct(productReview)
+    setSelectedProduct(productReview);
   }, [productReview]);
 
   useEffect(() => {
     const startIndex = (activePage - 1) * 6;
     const endIndex = startIndex + 6;
     setDisplayProductReview(selectedProduct.slice(startIndex, endIndex));
-  }, [activePage , selectedProduct ]);
+  }, [activePage, selectedProduct , setSelectedProduct]);
 
   const handleChange = (value) => {
     console.log(value.value);
     setVal(value);
-    setSearchTerm(value.value);
+    if(value.value ==="all"){
+      const filtered = productReview
+      setFilteredProductReview(filtered);
+      setSelectedProduct(filtered);
+      setActivePage(1);
+      setText("All");
+    }
+    else{
     const filtered = productReview.filter((product) => {
       if (product.ProductID) {
         return product.ProductID._id.includes(value.value);
@@ -100,14 +103,13 @@ const ProductReviews = () => {
       }
     });
     setFilteredProductReview(filtered);
-    setSelectedProduct(filtered)
+    setSelectedProduct(filtered);
     setActivePage(1);
-    setText("All")
+    setText("All");}
   };
 
   const handleChangeRating = (value) => {
     setText(value);
-    console.log(FilteredProductReview);
     if (value !== "All") {
       const filtered = FilteredProductReview.filter((product) => {
         if (product && product.Rating !== undefined) {
@@ -124,6 +126,7 @@ const ProductReviews = () => {
     }
   };
 
+
   return (
     <>
       <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
@@ -139,12 +142,18 @@ const ProductReviews = () => {
                 value={val}
                 primaryColor={"red"}
                 onChange={handleChange}
-                options={products.map((product) => {
-                  return {
-                    value: product._id,
-                    label: `${product.ID} ${product.name}`,
-                  };
-                })}
+                options={[
+                  {
+                    value: "all",
+                    label: "All Products",
+                  },
+                  ...products.map((product) => {
+                    return {
+                      value: product._id,
+                      label: `${product.ID} ${product.name}`,
+                    };
+                  }),
+                ]}
               />
             </div>
             <div class="flex-none p-2" ref={dropdownButtonRef}>
@@ -235,7 +244,7 @@ const ProductReviews = () => {
           />
           <Pagination
             active={activePage}
-            totalItems={FilteredProductReview.length}
+            totalItems={selectedProduct.length}
             itemsPerPage={6}
             onPageChange={handlePageChange}
           />

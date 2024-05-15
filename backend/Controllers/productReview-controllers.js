@@ -26,7 +26,6 @@ const createProductReview = async (req, res, next) => {
 
 const listProductReviewsByID = async (req, res) => {
   try {
-    
     const { pid } = req.params;
     const ProductReview = await ProductReviews.find({ ProductID: pid })
       .populate("UserID")
@@ -51,6 +50,22 @@ const listProductReviews = async (req, res) => {
   }
 };
 
+const DeleteProductReviewByUser = async (req, res) => {
+  try {
+    const {id} = req.params
+    const result = await ProductReviews.findByIdAndDelete(id);
+    if (!result) {
+      return res.status(404).send({ message: "Product Review Not Find !" });
+    }
+
+    return res.status(200).send({ message: "Product Review Deleted Successfully!" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
 exports.createProductReview = createProductReview;
 exports.listProductReviewsByID = listProductReviewsByID;
 exports.listProductReviews = listProductReviews;
+exports.DeleteProductReviewByUser = DeleteProductReviewByUser

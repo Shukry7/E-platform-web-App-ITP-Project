@@ -11,6 +11,11 @@ const NotificationSchema = mongoose.Schema(
             enum: ['Yes', 'Pending'],
             default: 'Pending',
         },
+        seen: {
+            type: String,
+            enum: ['Yes', 'Pending'],
+            default: 'Pending',
+        },
     },
     {
       timestamps: true,

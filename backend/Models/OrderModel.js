@@ -22,8 +22,19 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  
 }
 ],
+
+time: {
+  type: String,
+  required: true
+},
+
+date:{ 
+  type: String,
+  required: true
+}
   
 });
 

@@ -1,10 +1,16 @@
 const Order = require("../Models/OrderModel");
+const Cost = require("../Models/CostModel");
+const Profit = require("../Models/ProfitModel");
+const Product = require("../Models/ProductModel");
+const Notification = require("./notification-controllers");
 
 createOrder = async (req, res) => {
   try {
     const { cartitem, uid } = req.body;
 
-    const latestOrder = await Order.find().sort({ _id : -1 }).limit(1);
+    console.log(cartitem)
+
+    const latestOrder = await Order.find().sort({ _id: -1 }).limit(1);
     let id;
     console.log(uid);
     if (latestOrder.length !== 0) {
@@ -14,22 +20,103 @@ createOrder = async (req, res) => {
       id = "O0001";
     }
 
-    const items = cartitem.map((item) => {
+    const items = await Promise.all(
+      cartitem.map(async (item) => {
+        await Product.findByIdAndUpdate(item.product._id, {
+          $inc: { Stock: -item.quantity },
+        });
+
       return {
         productId: item.product._id,
         quantity: item.quantity,
       };
-    });
-    console.log(items);
+    }));
+
+
+
+    const date = new Date();
+
+    console.log(date)
+// Get Sri Lanka time zone offset in milliseconds
+
+
+// Calculate Sri Lanka time
+
+
+// Extract time components
+const sriLankaHours = date.getHours();
+const sriLankaMinutes = date.getMinutes();
+const sriLankaSeconds = date.getSeconds();
+
+console.log(sriLankaHours, sriLankaMinutes);
+
+// Extract date components
+const sriLankaYear = date.getFullYear();
+const sriLankaMonth = date.getMonth() + 1; // Month is zero-indexed, so add 1
+const sriLankaDay = date.getDate();
+
+// Adjust time if it's a single digit
+const adjustedSriLankaHours = sriLankaHours < 10 ? '0' + sriLankaHours : sriLankaHours;
+const adjustedSriLankaMinutes = sriLankaMinutes < 10 ? '0' + sriLankaMinutes : sriLankaMinutes;
+const adjustedSriLankaSeconds = sriLankaSeconds < 10 ? '0' + sriLankaSeconds : sriLankaSeconds;
+
+// Assign to two separate variables
+const sriLankaTimeStr = `${adjustedSriLankaHours}:${adjustedSriLankaMinutes}:${adjustedSriLankaSeconds}`;
+const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
+
+    const profitTable = await Promise.all(
+      cartitem.map(async (item) => {
+        let cost = await Cost.findOne({
+          product: item.product.ID,
+          inStock: { $ne: 0 },
+        }).limit(1);
+
+        let buyqtytemp = item.quantity;
+        let costStock = cost.inStock;
+        let sellPrice = item.product.price;
+        let profit = 0;
+
+        while (buyqtytemp > costStock) {
+          profit = profit + (sellPrice - cost.price) * cost.inStock;
+          buyqtytemp = buyqtytemp - cost.inStock;
+          const result = await Cost.findByIdAndUpdate(cost._id, { inStock: 0 });
+          cost = await Cost.findOne({
+            product: item.product.ID,
+            inStock: { $ne: 0 },
+          }).limit(1);
+          costStock = cost.inStock;
+        }
+
+        profit = profit + (sellPrice - cost.price) * buyqtytemp;
+        const result = await Cost.findByIdAndUpdate(cost._id, {
+          $inc: { inStock: -buyqtytemp },
+        });
+
+        return {
+          order: id,
+          product: item.product.ID,
+          price: item.product.price,
+          quantity: item.quantity,
+          profit: profit,
+          date: date,
+        };
+      })
+    );
+
+    const profitAdded = await Profit.insertMany(profitTable);
 
     const newOrder = {
       orderId: id,
       userId: uid,
       CartItems: items,
+      date:sriLankaDateStr,
+      time:sriLankaTimeStr
     };
 
     const order = await Order.create(newOrder);
-
+    for (let item of cartitem) {
+      await Notification.createNotification({ body: { productId: item.product._id } }, null , null);
+    }
     // Respond with a success message
     res.status(201).json({ message: "Order placed successfully" });
   } catch (error) {
@@ -37,13 +124,13 @@ createOrder = async (req, res) => {
     console.error("Error placing order:", error);
     res.status(500).json({ message: "Internal server error" });
   }
-
 };
 
 const listOrder = async (req, res) => {
   try {
-    
-    const order = await Order.find({}).populate("userId").populate("CartItems.productId");
+    const order = await Order.find({})
+      .populate("userId")
+      .populate("CartItems.productId");
 
     return res.status(200).json(order);
   } catch (error) {
@@ -52,6 +139,28 @@ const listOrder = async (req, res) => {
   }
 };
 
+const checkOrder = async (req, res) => {
+  try {
+    const { pid, uid } = req.params;
+    const orders = await Order.find({
+      userId: uid,
+      CartItems: {
+        $elemMatch: {
+          productId: pid,
+        },
+      },
+    });
+    if (orders.length > 0) {
+      res.status(200).send({ check: true });
+    } else {
+      res.status(200).send({ check: false });
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
 
 exports.createOrder = createOrder;
 exports.listOrder = listOrder;
+exports.checkOrder = checkOrder;
