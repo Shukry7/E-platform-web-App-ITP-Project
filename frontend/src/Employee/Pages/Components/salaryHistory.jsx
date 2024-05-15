@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useCallback, useEffect,useRef } from "react";
 import "./employeeTable.css";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import ThreeDotDropdown from "../../../Shared/Components/UiElements/ThreeDotDrop
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { Link } from "react-router-dom";
 import { MdDeleteForever, MdUpdate } from "react-icons/md";
+import { useReactToPrint } from "react-to-print";
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -17,6 +18,7 @@ const formatDate = (dateString) => {
 };
 
 const HistoryTable = (props) => {
+ 
   const Headings = [
     "#",
     "Employee ID",
@@ -26,8 +28,13 @@ const HistoryTable = (props) => {
     "status",
   ];
 
+ 
+
+ 
+
   return (
     <>
+    
       <Table Headings={Headings} style={{ width: "100%" }}>
         {props.loading ? (
           <center>
@@ -60,6 +67,7 @@ const HistoryTable = (props) => {
           })
         )}
       </Table>
+      
     </>
   );
 };

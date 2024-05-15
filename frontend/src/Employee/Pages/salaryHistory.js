@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import axios from "axios";
 import HistoryTable from "./Components/salaryHistory";
 import Card from "../../Shared/Components/UiElements/Card"
@@ -57,6 +57,11 @@ const History = () => {
         setLoading(false)
       });
   }, [])
+
+ 
+
+
+
   return (
     <><div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
     <Navbar />
@@ -71,13 +76,14 @@ const History = () => {
                   placeholder={"Search By ID / Name"}
                 />
         </div>
+        
         <HistoryTable
         
         Employee={displayHistory} 
         loading={loading} 
         setloading={setLoading}
         />
-         
+        
       </Card>
 
     </div>

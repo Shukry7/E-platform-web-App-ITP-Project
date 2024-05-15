@@ -56,7 +56,7 @@ import { DeliveryAuthProvider } from "./Shared/Components/context/DeliveryAuthCo
 import ViewCost from "./Profit/Pages/ViewCost";
 import ViewProfit from "./Profit/Pages/ViewProfit";
 import HistoryTable from "./Employee/Pages/salaryHistory"
-
+import Report from "./Employee/Pages/reportEmp";
 const App = () => {
   return (
     <AuthProvider >
@@ -106,6 +106,7 @@ const App = () => {
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/salaryHistory" exact element={<HistoryTable/>}/>
+        <Route path="/employee/report" exact element={<Report/>}/>
         <Route path="/Profit/cost" exact element={<ViewCost/>}/>
         <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
         <Route path="/" exact element={
