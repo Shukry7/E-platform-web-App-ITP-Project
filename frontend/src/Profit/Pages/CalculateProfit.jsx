@@ -42,7 +42,6 @@ const CalculateProfit = () => {
       });
   }, []);
 
-  // Define the stripTimeFromDate function
   const stripTimeFromDate = (date) => {
     const d = new Date(date);
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -131,7 +130,7 @@ const CalculateProfit = () => {
                     </option>
                     {product.map((item) => (
                       <option key={item.ID} value={item.ID}>
-                        {item.ID}
+                        {item.ID} , {item.name}
                       </option>
                     ))}
                   </select>
