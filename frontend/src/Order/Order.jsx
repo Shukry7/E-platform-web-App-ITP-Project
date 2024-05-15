@@ -76,7 +76,7 @@ const Products = () => {
             </Link>
           </div>
           <OrderTable
-            Product={displayOrders}
+            Order={displayOrders}
             loading={loading}
             setLoading={setLoading}
             active={activePage}
