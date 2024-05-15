@@ -29,20 +29,18 @@ const MonthlyReportPage = () => {
   }, [month]);
 
   useEffect(() => {
-    // Calculate total salary expense for the selected month
+    
     const totalExpense = salaries.reduce((acc, curr) => acc + curr.net, 0);
     setTotalSalaryExpense(totalExpense);
-    // Count the number of employees paid
+    
     setNumEmployeesPaid(salaries.length);
-    // Find maximum and minimum salary
+    
     if (salaries.length > 0) {
       const salariesArr = salaries.map((salary) => salary.net);
       setMaxSalary(Math.max(...salariesArr));
       setMinSalary(Math.min(...salariesArr));
     }
-  }, [salaries, month]); // Update totalSalaryExpense, numEmployeesPaid, maxSalary, and minSalary when salaries or month changes
-
-  // Get current date
+  }, [salaries, month]); 
   const currentDate = new Date().toLocaleDateString();
 
   const componentRef = useRef();
