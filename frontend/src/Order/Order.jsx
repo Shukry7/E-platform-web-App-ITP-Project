@@ -9,7 +9,7 @@ import Search from "../Shared/Components/UiElements/Search";
 import Pagination from "../Shared/Components/FormElements/Pagination";
 import Header from "../Shared/Components/UiElements/header";
 
-const Products = () => {
+const Order = () => {
   const [Orders, setOrders] = useState([]);
   const [displayOrders, setDisplayOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,7 +60,7 @@ const Products = () => {
 
   return (
     <><div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
-        <Navbar select={"Product Details"}/>
+        <Navbar select={"Order"}/>
         <Header/>
       
         <Card className="flex" style={{ width: "100%" }}>
@@ -71,9 +71,9 @@ const Products = () => {
               handleSearch={handleSearch}
               placeholder={"Search By ID / Name"}
             />
-            <Link to="/Product/new">
+            
               <MdOutlineAddBox className="text-sky-800 text-4xl" />
-            </Link>
+            
           </div>
           <OrderTable
             Order={displayOrders}
@@ -94,4 +94,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Order;

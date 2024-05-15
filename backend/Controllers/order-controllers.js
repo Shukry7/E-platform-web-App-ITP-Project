@@ -130,10 +130,12 @@ const listOrder = async (req, res) => {
   try {
     const order = await Order.find({})
       .populate("userId")
-      .populate("CartItems.productId");
+      .populate("CartItems.productId")
+      .sort({ createdAt: -1 });
 
     return res.status(200).json(order);
-  } catch (error) {
+  } 
+  catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
   }
