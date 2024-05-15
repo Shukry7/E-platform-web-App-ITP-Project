@@ -1,63 +1,97 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import OrderTable from "./Components/OrderTable";
+import Card from "../Shared/Components/UiElements/Card";
+import Navbar from "../Shared/Components/UiElements/Navbar";
+import { MdOutlineAddBox } from "react-icons/md";
+import { Link } from "react-router-dom";
+import Search from "../Shared/Components/UiElements/Search";
+import Pagination from "../Shared/Components/FormElements/Pagination";
+import Header from "../Shared/Components/UiElements/header";
 
-const CheckoutPage = () => {
-  const [cartItems, setCartItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+const Order = () => {
+  const [Orders, setOrders] = useState([]);
+  const [displayOrders, setDisplayOrders] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [FilteredOrders, setFilteredOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
-    // Fetch cart items from the server
-    const fetchCartItems = async () => {
-      try {
-        const response = await axios.get('/Cart/cart');
-        setCartItems(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching cart items:', error);
-      }
-    };
-
-    fetchCartItems();
+    setLoading(true);
+    axios
+      .get("http://localhost:5000/order")
+      .then((res) => {
+        setOrders(res.data);
+        console.log(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(true);
+      });
   }, []);
 
-  const handleCheckout = async () => {
-    try {
-      const response = await axios.post('/api/orders', {
-        userId: 'user123', // Replace with actual user ID
-        cartItems: cartItems,
-      });
-      console.log('Order placed successfully:', response.data);
-      setIsOrderPlaced(true);
-    } catch (error) {
-      console.error('Error placing order:', error);
-    }
+  const handlePageChange = (page) => {
+    setActivePage(page);
+  };
+
+  useEffect(() => {
+    setFilteredOrders(Orders);
+    setDisplayOrders(Orders)
+  }, [Orders]);
+
+  useEffect(() => {
+    const startIndex = (activePage - 1) * 6;
+    const endIndex = startIndex + 6;
+    setDisplayOrders(FilteredOrders.slice(startIndex, endIndex));
+  }, [activePage, FilteredOrders]);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    const filtered = Orders.filter(
+      (order) =>
+        order.date.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        order.ID.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredOrders(filtered);
+    setActivePage(1)
   };
 
   return (
-    <div>
-      <h1>Checkout</h1>
-      {isLoading ? (
-        <p>Loading cart items...</p>
-      ) : isOrderPlaced ? (
-        <p>Order placed successfully! Thank you for your purchase.</p>
-      ) : (
-        <div>
-          <h2>Cart Summary</h2>
-          <ul>
-            {cartItems.map((item, index) => (
-              <li key={index}>
-                <span>{item.productName}</span> {/* Assuming productName is available */}
-                <span>Quantity: {item.quantity}</span>
-                <span>Price: ${item.price}</span> {/* Assuming price is available */}
-              </li>
-            ))}
-          </ul>
-          <button onClick={handleCheckout}>Checkout</button>
-        </div>
-      )}
-    </div>
+    <><div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
+        <Navbar select={"Order"}/>
+        <Header/>
+      
+        <Card className="flex" style={{ width: "100%" }}>
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl my-8">Product List</h1>
+            <Search
+              searchTerm={searchTerm}
+              handleSearch={handleSearch}
+              placeholder={"Search By ID / Name"}
+            />
+            
+              <MdOutlineAddBox className="text-sky-800 text-4xl" />
+            
+          </div>
+          <OrderTable
+            Order={displayOrders}
+            loading={loading}
+            setLoading={setLoading}
+            active={activePage}
+            itemsPerPage={6}
+          />
+          <Pagination
+            active={activePage}
+            totalItems={FilteredOrders.length}
+            itemsPerPage={6}
+            onPageChange={handlePageChange}
+          />
+        </Card>
+      </div>
+    </>
   );
 };
 
-export default CheckoutPage;
+export default Order;
