@@ -1,7 +1,13 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios'
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { AuthContext } from '../Shared/Components/context/authcontext';
+import {
+    Input,
+    Checkbox,
+    Button,
+    Typography,
+  } from "@material-tailwind/react";
 import Toast from "../Shared/Components/UiElements/Toast/Toast"
 
 export const LoginPage = () => {
@@ -12,6 +18,7 @@ export const LoginPage = () => {
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
+      console.log(mail, password)
         e.preventDefault()
         axios.post('http://localhost:5000/login/', {mail, password})
         .then(res => {
@@ -31,41 +38,71 @@ export const LoginPage = () => {
 
   return (
     <div>
-    <section class="bg-gray-50 dark:bg-gray-900">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                        Sign in to your account
-                    </h1>
-                    <form onSubmit={handleSubmit} class="space-y-4 md:space-y-6" action="#">
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                            <input type="email" name="mail" id="mail" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" onChange={(e) => setMail(e.target.value)}/>
-                        </div>
-                        <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                            <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" onChange={(e) => setPassword(e.target.value)}/>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-start">
-                                <div class="flex items-center h-5">
-                                <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required=""></input>
-                                </div>
-                                <div class="ml-3 text-sm">
-                                <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
-                                </div>
-                            </div>
-                            <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-600">Forgot password?</a>
-                        </div>
-                        <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign in</button>
-                        <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                            Don’t have an account yet? <a href="/Customer/create" class="font-medium text-blue-600 hover:underline dark:text-blue-600">Sign up</a>
-                        </p>
-                    </form>
-                </div>
-            </div>
+    <section className="m-8 pt-14 flex gap-4">
+      <div className="w-full lg:w-3/5 mt-24">
+        <div className="text-center">
+          <Typography variant="h2" className="font-bold mb-4">Sign In</Typography>
+          <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">Enter your email and password to Sign In.</Typography>
         </div>
+        <form  onSubmit={handleSubmit} className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2" action="#" >
+          <div className="mb-1 flex flex-col gap-6">
+            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
+              Your email
+            </Typography>
+            <Input
+              size="lg"
+              type="email"
+              placeholder="name@mail.com"
+              onChange={(e) => setMail(e.target.value)}
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
+              Password
+            </Typography>
+            <Input
+              type="password"
+              size="lg"
+              placeholder="********"
+              onChange={(e) => setPassword(e.target.value)}
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+          </div>
+          
+          <Button className="mt-6" fullWidth type='submit'>
+            Sign In
+          </Button>
+
+          <div className="flex items-center justify-between gap-2 mt-6">
+            <Typography variant="small" className="font-medium text-gray-900">
+              <a href="#">
+                Forgot Password
+              </a>
+            </Typography>
+          </div>
+          <div className="space-y-4 mt-8">
+            
+            
+          </div>
+          <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
+            Not registered?
+            <Link to="/Customer/create" className="text-gray-900 ml-1">Create account</Link>
+          </Typography>
+        </form>
+
+      </div>
+      <div className="w-2/5 h-full hidden lg:block">
+        <img
+          src="/img/pattern.png"
+          className="h-full w-full object-cover rounded-3xl"
+        />
+      </div>
+
     </section>
     </div>
   )

@@ -8,6 +8,7 @@ Router.get("/", CustomerControllers.listCustomer);
 Router.delete("/:id", CustomerControllers.DeleteCustomer);
 Router.get("/:id", CustomerControllers.listCustomerById);
 Router.put("/:id", CustomerControllers.UpdateCustomer);
+Router.get("/Top/Customers", CustomerControllers.getTopCustomersThisMonth);
 
 
 module.exports = Router;

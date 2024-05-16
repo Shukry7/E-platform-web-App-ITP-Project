@@ -58,8 +58,9 @@ const CustomerHeader = (props) => {
   }, [isProfileDropdown]);
 
   const logout = () =>{
+    localStorage.clear();
     auth.logout()
-    navigate('/Login')
+    navigate('/')
   }
 
   return (
@@ -204,7 +205,7 @@ const CustomerHeader = (props) => {
                         </a>
                       </li>
                     </ul>
-                    <button onClick={logout} class="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-orange-500 lg:text-base">
+                    <button onClick={logout} to="/" class="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-orange-500 lg:text-base">
                       <svg
                         class="fill-current"
                         width="22"

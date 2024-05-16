@@ -113,14 +113,13 @@ const App = () => {
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Employeelogin" exact element={<Employeelogin />}/>
         <Route path="/Employeelogin/new" exact element={<Employeeloginform />}/>
-        <Route path="/Employeelogin/update/:id" exact element={<EmployeeloginformUpdate />}/>
+        <Route path="/Employeelogin/update" exact element={<Employeeloginform />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/salaryHistory" exact element={<HistoryTable/>}/>
         <Route path="/employee/report" exact element={<Report/>}/>
         <Route path="/Profit/cost" exact element={<ViewCost/>}/>
         <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
         <Route path="/Order" exact element={<Order/>}/>
-        <Route path="/ProductReport" exact element={<TopProduct/>}/>
         <Route path="/Profit/calculate" exact element={<CalculateProfit/>}/>
         <Route path="/" exact element={
           <CheckLogin>

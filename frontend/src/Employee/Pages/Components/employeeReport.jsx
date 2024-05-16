@@ -3,7 +3,7 @@ import axios from "axios";
 import Table from "../../../Shared/Components/UiElements/Table";
 import TableRow from "../../../Shared/Components/UiElements/TableRow";
 import Loader from "../../../Shared/Components/UiElements/Loader";
-import ReactToPrint, { useReactToPrint } from "react-to-print";
+import { useReactToPrint } from "react-to-print";
 
 const MonthlyReportPage = () => {
   const [loading, setLoading] = useState(false);

@@ -259,7 +259,8 @@ const confirmDelivery = async (req, res) => {
     date= new Date
 
     const costTable = supplierProductPurchase.map(item => ({
-      product: item.supplier_product.product.ID,
+      productID: item.supplier_product.product.ID,
+      productName: item.supplier_product.product.name,
       price: item.supplier_product.unitPrice,
       quantity: item.Quantity,
       inStock: item.Quantity,

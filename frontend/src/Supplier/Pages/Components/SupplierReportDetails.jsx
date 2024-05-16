@@ -74,7 +74,7 @@ const SupplierReportDetails = () => {
 
   return (
     <div className="container mx-auto my-8 mt-10">
-      <div className="flex items-center justify-between mt-40 mb-4">
+      <div className="flex items-center justify-between mb-4">
         <div className="mr-4">
           <label htmlFor="startDate" className="mr-2">
             Start Date:
@@ -108,7 +108,7 @@ const SupplierReportDetails = () => {
       </div>
 
       <div className="container mx-auto my-8" ref={componentRef}>
-        <h1 className="text-3xl font-bold mb-2">Supplier Report : {startDate} to {endDate}</h1>
+        <h1 className="text-3xl font-bold mb-2">Supplier Report : {startDate} - {endDate}</h1>
         <p className="mb-4">
           <strong>Business Name:</strong> Kandurata Glass and Locks
           <br />
