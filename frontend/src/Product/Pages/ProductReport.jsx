@@ -6,6 +6,7 @@ import Datepicker from "react-tailwindcss-datepicker";
 import ProductReportTable from "./Components/ProductReportTable";
 import moment from "moment";
 import { useReactToPrint } from "react-to-print";
+import Toast from "../../Shared/Components/UiElements/Toast/Toast";
 
 const ProductReport = () => {
   const currentDateTime = new Date().toLocaleString();
@@ -28,7 +29,7 @@ const ProductReport = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: `Product report ${currentDateTime}`,
-    onAfterPrint: () => alert("Product Report is successfully genrated !"),
+    onAfterPrint: () => Toast("Product Report is successfully genrated !","success"),
   });
 
   return (
