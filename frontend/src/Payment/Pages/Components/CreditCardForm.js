@@ -72,7 +72,7 @@ const CCForm = () => {
       })
       .then((res) => {
         setLoading(false);
-        navigate("CC/new");
+        navigate("CC");
       })
       .catch((err) => {
         console.error(err);

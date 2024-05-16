@@ -11,6 +11,7 @@ const CalculateProfit = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
+  const [selectedType, setSelectedType] = useState('');
   const [totalSales, setTotalSales] = useState(0);
   const [totalProfit, setTotalProfit] = useState(0);
 
@@ -62,7 +63,11 @@ const CalculateProfit = () => {
     }
 
     if (selectedProduct) {
-      filteredProfit = filteredProfit.filter((item) => item.product === selectedProduct);
+      filteredProfit = filteredProfit.filter((item) => item.productID === selectedProduct);
+    }
+
+    if (selectedType) {
+      filteredProfit = filteredProfit.filter((item) => item.type === selectedType);
     }
 
     const totalSales = filteredProfit.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -125,9 +130,7 @@ const CalculateProfit = () => {
                     value={selectedProduct}
                     onChange={(e) => setSelectedProduct(e.target.value)}
                   >
-                    <option value="" selected>
-                      All products
-                    </option>
+                    <option value="">All products</option>
                     {product.map((item) => (
                       <option key={item.ID} value={item.ID}>
                         {item.ID} , {item.name}
@@ -143,12 +146,12 @@ const CalculateProfit = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                     id="type"
                     name="type"
+                    value={selectedType}
+                    onChange={(e) => setSelectedType(e.target.value)}
                   >
-                    <option value="" selected>
-                      All
-                    </option>
-                    <option value="online">Online</option>
-                    <option value="offline">Offline</option>
+                    <option value="">All</option>
+                    <option value="Online">Online</option>
+                    <option value="Offline">Offline</option>
                   </select>
                 </div>
                 <button
