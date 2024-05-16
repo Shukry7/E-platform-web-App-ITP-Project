@@ -142,6 +142,19 @@ const listOrder = async (req, res) => {
   }
 };
 
+const listOrders = async (req, res) => {
+  try {
+    const order = await Order.find({})
+    .populate("CartItems.productId");
+
+    return res.status(200).json(order);
+  } 
+  catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
 const checkOrder = async (req, res) => {
   try {
     const { pid, uid } = req.params;
@@ -167,3 +180,4 @@ const checkOrder = async (req, res) => {
 exports.createOrder = createOrder;
 exports.listOrder = listOrder;
 exports.checkOrder = checkOrder;
+exports.listOrders = listOrders;

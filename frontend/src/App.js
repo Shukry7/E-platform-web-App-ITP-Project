@@ -61,6 +61,7 @@ import Report from "./Employee/Pages/reportEmp";
 import SupplierReport from "./Supplier/Pages/SupplierReport";
 import ProfitReport from "./Profit/Pages/ProfitReport";
 import ProductReport from "./Product/Pages/ProductReport";
+import OrderReport from "./Order/OrderReport";
 
 const App = () => {
   return (
@@ -123,6 +124,7 @@ const App = () => {
             <LoginPage/>
           </CheckLogin>}/>  
         <Route path="/ProductReport" exact element={<ProductReport/>}/>
+        <Route path="/OrderReport" exact element={<OrderReport/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/deliverylogin" exact element={
