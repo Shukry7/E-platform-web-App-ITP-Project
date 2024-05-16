@@ -17,7 +17,7 @@ const WholesalecustomerReport = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5000/wholesalecustomer/report/new?month=${month}`)
+      .get(`http://localhost:5000/wholesalecustomer?`)
       .then((response) => {
         setcredit(response.data);
         setLoading(false);
@@ -26,7 +26,7 @@ const WholesalecustomerReport = () => {
         console.error("Error fetching credit:", error);
         setLoading(false);
       });
-  }, [month]);
+  },[month]);
 
   useEffect(() => {
     
@@ -40,7 +40,7 @@ const WholesalecustomerReport = () => {
       setMaxcredit(Math.max(...creditArr));
       setMincredit(Math.min(...creditArr));
     }
-  }, [credit, month]); 
+  }, [credit]); 
   const currentDate = new Date().toLocaleDateString();
 
   const componentRef = useRef();
