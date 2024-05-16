@@ -88,15 +88,17 @@ const OrderReportTable = ({ date, componentRef }) => {
                     </span>
                     
                   ))}
+                  
                 </td>
                 <td
                   className={`py-1 px-2 sm:px-3 font-normal text-base ${
                     index === 0 ? "border-t-2 border-black" : "border-t"
                   }`}
                 >
-                  {quantity}
+                    
+                  {order.CartItems.length}
                 </td>
-                {quantity=0}
+                
                 <td
                   className={`py-1 px-2 sm:px-3 font-normal text-base ${
                     index === 0 ? "border-t-2 border-black" : "border-t"
