@@ -61,6 +61,7 @@ import Report from "./Employee/Pages/reportEmp";
 import SupplierReport from "./Supplier/Pages/SupplierReport";
 import ProfitReport from "./Profit/Pages/ProfitReport";
 import ProductReport from "./Product/Pages/ProductReport";
+import WholesalecustomerReport from "./Wholesalecustomer/Pages/reportWholesalecustomer";
 
 const App = () => {
   return (
@@ -108,6 +109,7 @@ const App = () => {
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/update/:id" exact element={<UpdateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/view/:id" exact element={<ViewWholesalecustomer/>}/>
+        <Route path="/Wholesalecustomer/report" exact element={<WholesalecustomerReport/>}/>
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
