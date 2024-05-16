@@ -1,20 +1,23 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Navbar from '../Shared/Components/UiElements/Navbar';
 import ViewCard from './Components/ViewCard';
 import Header from '../Shared/Components/UiElements/header';
+import { AuthContext } from "../Shared/Components/context/authcontext";
+
 
 const ViewCustomer = () => {
     const { id } = useParams();
     const[loading, setLoading] = useState(false);
     const[loading1, setLoading1] = useState(false);
     const [customer, setcustomer] = useState({});
+    const auth = useContext(AuthContext);
 
     useEffect(()=> {
         setLoading(true);
         axios
-            .get(`http://localhost:5000/customer/${id}`)
+            .get(`http://localhost:5000/customer/${auth.cusId}`)
             .then((res)=> {
                 setcustomer(res.data);
                 setLoading1(false);

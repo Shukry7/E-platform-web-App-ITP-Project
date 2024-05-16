@@ -203,11 +203,11 @@ const SalaryCalculatorForm = () => {
 
   return (
     <>
-      <div className="container mx-auto my-8">
-        <div className="max-w-lg mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="container mx-auto my-8 mt-60">
+        <div className=" container max-w-lg mx-auto bg-white shadow-md rounded-lg overflow-hidden">
           <div className="p-6">
-            <h2 className="text-2xl font-bold mb-4">Salary Calculator</h2>
-            <h3 className="text-lg mb-4">Month: {month}</h3>
+            <h2 className="text-2xl font-bold mb-4 text-center">Salary Calculator</h2>
+            <h3 className="text-lg mb-4 text-right">Month: {month}</h3>
             <form className="space-y-4">
               <div className="flex flex-col">
                 <label htmlFor="empid" className="mb-1">

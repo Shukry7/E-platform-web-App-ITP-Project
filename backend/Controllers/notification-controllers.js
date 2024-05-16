@@ -5,7 +5,6 @@ const Product = require("../Models/ProductModel");
 const createNotification = async (req, res, next) => {
   try {
   const { productId } = req.body;
-  console.log("hello " + productId)
 
     const product = await Product.findById(productId);
     console.log(product)

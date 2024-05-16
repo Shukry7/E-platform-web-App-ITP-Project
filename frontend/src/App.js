@@ -43,7 +43,6 @@ import Attendance from "./Employee/Pages/listAttendance";
 import ProductCustomerUI from "./Product/Pages/ProductCustomerUI";
 import ViewEmployees from "./Employee/Pages/ViewEmployees";
 import { AuthProvider } from './Shared/Components/context/authcontext';
-import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
 import ViewDelivery from "./Delivery/Pages/ViewDelivery";
 import ProtectedRouteCustomer from "./Shared/Components/context/PrivateRoute";
 import CheckLogin from "./Shared/Components/context/checkLogin";
@@ -58,6 +57,10 @@ import ViewProfit from "./Profit/Pages/ViewProfit";
 import Order from "./Order/Order";
 import CalculateProfit from "./Profit/Pages/CalculateProfit";
 import HistoryTable from "./Employee/Pages/salaryHistory"
+import Report from "./Employee/Pages/reportEmp";
+import SupplierReport from "./Supplier/Pages/SupplierReport";
+import ProfitReport from "./Profit/Pages/ProfitReport";
+import ProductReport from "./Product/Pages/ProductReport";
 
 const App = () => {
   return (
@@ -81,6 +84,7 @@ const App = () => {
         <Route path="/Supplier/view/:id" exact element={<ViewSupplier/>}/>
         <Route path="/Supplier/purchase" exact element={<ViewPurchase/>}/>
         <Route path="/Supplier/pendingpurchase" exact element={<ViewPendingPurchase/>}/>
+        <Route path="/Supplier/report" exact element={<SupplierReport/>}/>
         <Route path="/Delivery" exact element={<Delivery/>}/>
         <Route path="/Delivery/create" exact element={<CreateDelivery/>}/>
         <Route path="/Delivery/update/:id" exact element={<UpdateDelivery/>}/>
@@ -92,7 +96,7 @@ const App = () => {
         <Route path="/Customer" exact element={<Customers/>}/>
         <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
         <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
-        <Route path="/Customer/view/:id" exact element={<ViewCustomer/>}/>
+        <Route path="/Customer/view/" exact element={<ViewCustomer/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
         <Route path="/Cart" exact element={<Cart/>}/>
         <Route path="/offpay" exact element={<Offpay/>}/>
@@ -108,15 +112,17 @@ const App = () => {
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/salaryHistory" exact element={<HistoryTable/>}/>
+        <Route path="/employee/report" exact element={<Report/>}/>
         <Route path="/Profit/cost" exact element={<ViewCost/>}/>
         <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
+        <Route path="/Profit/report" exact element={<ProfitReport/>}/>
         <Route path="/Order" exact element={<Order/>}/>
         <Route path="/Profit/calculate" exact element={<CalculateProfit/>}/>
         <Route path="/" exact element={
           <CheckLogin>
             <LoginPage/>
           </CheckLogin>}/>  
-        <Route path="/Loader" exact element={<CustomerLoader/>}/>
+        <Route path="/ProductReport" exact element={<ProductReport/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/deliverylogin" exact element={
