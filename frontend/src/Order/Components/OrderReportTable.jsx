@@ -86,7 +86,7 @@ const OrderReportTable = ({ date, componentRef }) => {
                       
                       <br />
                     </span>
-                    {quantity=quantity+item.quantity}
+                    
                   ))}
                 </td>
                 <td
