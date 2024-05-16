@@ -156,6 +156,22 @@ const listOrders = async (req, res) => {
   }
 };
 
+const GetProductReportByDateRange = async (req, res) => {
+  try {
+    const startDate = new Date(req.query.startDate);
+    const endDate = new Date(req.query.endDate);
+
+    console.log(startDate,endDate)
+    const orders = await Order.find({
+      createdAt: { $gte: startDate, $lte: endDate },
+    });
+    res.json(orders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 const checkOrder = async (req, res) => {
   try {
     const { pid, uid } = req.params;
@@ -178,7 +194,9 @@ const checkOrder = async (req, res) => {
   }
 };
 
+
 exports.createOrder = createOrder;
 exports.listOrder = listOrder;
 exports.checkOrder = checkOrder;
 exports.listOrders = listOrders;
+exports.GetProductReportByDateRange = GetProductReportByDateRange;
