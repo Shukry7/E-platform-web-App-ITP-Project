@@ -67,7 +67,7 @@ const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
     const profitTable = await Promise.all(
       cartitem.map(async (item) => {
         let cost = await Cost.findOne({
-          product: item.product.ID,
+          productID: item.product.ID,
           inStock: { $ne: 0 },
         }).limit(1);
 
@@ -81,7 +81,7 @@ const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
           buyqtytemp = buyqtytemp - cost.inStock;
           const result = await Cost.findByIdAndUpdate(cost._id, { inStock: 0 });
           cost = await Cost.findOne({
-            product: item.product.ID,
+            productID: item.product.ID,
             inStock: { $ne: 0 },
           }).limit(1);
           costStock = cost.inStock;
@@ -99,6 +99,7 @@ const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
           price: item.product.price,
           quantity: item.quantity,
           profit: profit,
+          type: "Online",
           date: date,
         };
       })

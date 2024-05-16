@@ -54,7 +54,7 @@ const ProfitReportDetails = () => {
 
       const combined = filtered.reduce((acc, item) => {
         const existingProduct = acc.find(
-          (product) => product.product === item.product
+          (product) => product.productID === item.productID
         );
 
         if (existingProduct) {
@@ -79,15 +79,15 @@ const ProfitReportDetails = () => {
       const totalProfit = combined.reduce((sum, item) => sum + item.totalProfit, 0);
 
       const mostSoldProduct = combined.reduce((max, item) => 
-        item.quantity > max.quantity ? item : max, combined[0] || {product: '', quantity: 0, totalSale: 0}
+        item.quantity > max.quantity ? item : max, combined[0] || { productName: '', quantity: 0, totalSale: 0 }
       );
       
       const mostProfitableProduct = combined.reduce((max, item) => 
-        item.totalProfit > max.totalProfit ? item : max, combined[0] || {product: '', totalProfit: 0}
+        item.totalProfit > max.totalProfit ? item : max, combined[0] || { productName: '', totalProfit: 0 }
       );
 
       const mostSalesProduct = combined.reduce((max, item) => 
-        item.totalSale > max.totalSale ? item : max, combined[0] || {product: '', totalSale: 0}
+        item.totalSale > max.totalSale ? item : max, combined[0] || { productName: '', totalSale: 0 }
       );
 
       setSummary({
@@ -176,12 +176,13 @@ const ProfitReportDetails = () => {
           ) : (
             <React.Fragment>
               <Table
-                Headings={["Product", "Quantity", "Total Sale", "Total Profit"]}
+                Headings={["Product ID", "Product Name", "Quantity", "Total Sale", "Total Profit"]}
                 style={{ width: "100%" }}
               >
                 {filteredProfit.map((item, index) => (
                   <TableRow key={index}>
-                    <td className="text-center">{item.product}</td>
+                    <td className="text-center">{item.productID}</td>
+                    <td className="text-center">{item.productName}</td>
                     <td className="text-center">{item.quantity}</td>
                     <td className="text-center">{item.totalSale}</td>
                     <td className="text-center">{item.totalProfit}</td>

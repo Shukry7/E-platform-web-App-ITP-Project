@@ -16,6 +16,7 @@ const ProfitTable = (props) => {
     "Quantity",
     "Selling Price",
     "Profit",
+    "Type",
     "Date",
   ];
 
@@ -32,10 +33,11 @@ const ProfitTable = (props) => {
                 <TableRow>
                   <td class="pl-10 py-4">{index + 1}</td>
                   <td class="pl-16 py-4">{item.order}</td>
-                  <td class="pl-16 py-4">{item.product}</td>
+                  <td class="pl-16 py-4">{item.productID}</td>
                   <td class="pl-16 py-4">{item.quantity}</td>
                   <td class="pl-16 py-4">{item.price}</td>
                   <td class="pl-12 py-4">{item.profit}</td>
+                  <td class="pl-12 py-4">{item.type}</td>
                   <td class="pl-20 py-4">{item.date}</td>
                 </TableRow>
               );
