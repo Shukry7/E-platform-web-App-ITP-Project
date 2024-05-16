@@ -11,6 +11,7 @@ const ProfitReportDetails = () => {
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [filteredProfit, setFilteredProfit] = useState([]);
+  const [previousMonthProfit, setPreviousMonthProfit] = useState(0); // New state for previous month's profit
   const [summary, setSummary] = useState({
     totalQuantity: 0,
     totalSales: 0,
@@ -37,18 +38,31 @@ const ProfitReportDetails = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching purchase:", error);
+        console.error("Error fetching profit:", error);
         setLoading(false);
       });
   }, []);
 
   useEffect(() => {
     if (year && month !== '') {
+      const currentMonth = parseInt(month);
+      const currentYear = parseInt(year);
+      const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+      const previousMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
       const filtered = profit.filter(item => {
         const itemDate = new Date(item.date);
         return (
-          itemDate.getMonth() === parseInt(month) &&
-          itemDate.getFullYear() === parseInt(year)
+          itemDate.getMonth() === currentMonth &&
+          itemDate.getFullYear() === currentYear
+        );
+      });
+
+      const previousFiltered = profit.filter(item => {
+        const itemDate = new Date(item.date);
+        return (
+          itemDate.getMonth() === previousMonth &&
+          itemDate.getFullYear() === previousMonthYear
         );
       });
 
@@ -90,6 +104,8 @@ const ProfitReportDetails = () => {
         item.totalSale > max.totalSale ? item : max, combined[0] || { productName: '', totalSale: 0 }
       );
 
+      const previousMonthProfit = previousFiltered.reduce((sum, item) => sum + item.profit, 0);
+
       setSummary({
         totalQuantity,
         totalSales,
@@ -102,6 +118,7 @@ const ProfitReportDetails = () => {
         mostSalesProductAmount: mostSalesProduct.totalSale,
       });
 
+      setPreviousMonthProfit(previousMonthProfit); // Set the previous month's profit
       setFilteredProfit(combined);
     }
   }, [year, month, profit]);
@@ -199,6 +216,7 @@ const ProfitReportDetails = () => {
                 <p><b>Most sold product :</b> {summary.mostSoldProduct} with {summary.mostSoldProductQuantity} units sold</p>
                 <p><b>Most sales product :</b> {summary.mostSalesProduct} with Rs.{summary.mostSalesProductAmount}.00 in sales</p>
                 <p><b>Most profitable product :</b> {summary.mostProfitableProduct} with Rs.{summary.mostProfitableProductProfit}.00 in profit</p>
+                <p><b>Previous month total profit :</b> Rs.{previousMonthProfit}.00</p> {/* Display previous month's profit */}
               </div>
             </React.Fragment>
           )}

@@ -61,11 +61,8 @@ import Report from "./Employee/Pages/reportEmp";
 import SupplierReport from "./Supplier/Pages/SupplierReport";
 import ProfitReport from "./Profit/Pages/ProfitReport";
 import ProductReport from "./Product/Pages/ProductReport";
-<<<<<<< HEAD
 import WholesalecustomerReport from "./Wholesalecustomer/Pages/reportWholesalecustomer";
-=======
 import OrderReport from "./Order/OrderReport";
->>>>>>> ca171f03cb28aadb4aa79a536be6eed64bd4c7c0
 
 const App = () => {
   return (
