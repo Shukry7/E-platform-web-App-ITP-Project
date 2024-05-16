@@ -59,6 +59,8 @@ import Order from "./Order/Order";
 import CalculateProfit from "./Profit/Pages/CalculateProfit";
 import HistoryTable from "./Employee/Pages/salaryHistory"
 import Report from "./Employee/Pages/reportEmp";
+import SupplierReport from "./Supplier/Pages/SupplierReport";
+
 const App = () => {
   return (
     <AuthProvider >
@@ -81,6 +83,7 @@ const App = () => {
         <Route path="/Supplier/view/:id" exact element={<ViewSupplier/>}/>
         <Route path="/Supplier/purchase" exact element={<ViewPurchase/>}/>
         <Route path="/Supplier/pendingpurchase" exact element={<ViewPendingPurchase/>}/>
+        <Route path="/Supplier/report" exact element={<SupplierReport/>}/>
         <Route path="/Delivery" exact element={<Delivery/>}/>
         <Route path="/Delivery/create" exact element={<CreateDelivery/>}/>
         <Route path="/Delivery/update/:id" exact element={<UpdateDelivery/>}/>
