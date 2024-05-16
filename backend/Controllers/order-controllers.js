@@ -164,7 +164,9 @@ const GetProductReportByDateRange = async (req, res) => {
     console.log(startDate,endDate)
     const orders = await Order.find({
       createdAt: { $gte: startDate, $lte: endDate },
-    });
+    })
+    .populate("CartItems.productId");
+
     res.json(orders);
   } catch (error) {
     console.error(error);
