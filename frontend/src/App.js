@@ -94,7 +94,7 @@ const App = () => {
         <Route path="/Customer" exact element={<Customers/>}/>
         <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
         <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
-        <Route path="/Customer/view/:id" exact element={<ViewCustomer/>}/>
+        <Route path="/Customer/view/" exact element={<ViewCustomer/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
         <Route path="/Cart" exact element={<Cart/>}/>
         <Route path="/offpay" exact element={<Offpay/>}/>
