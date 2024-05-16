@@ -290,6 +290,37 @@ const pendingOrderCount = async (req, res) => {
 
 };
 
+const makeReport = async (req, res) => {
+  try {
+      const purchases = await Purchase.find({});
+      const purchaseDataPromises = purchases.map(async (purchase) => {
+          const supplierProductPurchase = await SupplierProductPurchase.findOne({ purchaseID: purchase._id }).populate({
+              path: 'supplier_product',
+              populate: {
+                  path: 'supplier'
+              }
+          });
+          if (supplierProductPurchase && supplierProductPurchase.supplier_product) {
+              const supplierName = supplierProductPurchase.supplier_product.supplier.name;
+              const supplierID = supplierProductPurchase.supplier_product.supplier.ID;
+              return {
+                  PurchaseID: purchase.ID,
+                  SupplierID: supplierID,
+                  SupplierName: supplierName,
+                  Total: purchase.total,
+                  Date: purchase.date
+              };
+          }
+      });
+      const purchaseData = await Promise.all(purchaseDataPromises);
+      return res.status(200).json(purchaseData.filter(Boolean));
+  } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 
 exports.createSupplierProduct = createSupplierProduct;
 exports.UpdateSupplierProduct = UpdateSupplierProduct;
@@ -305,3 +336,4 @@ exports.listPurchase = listPurchase;
 exports.listOnePurchasedetails = listOnePurchasedetails;
 exports.confirmDelivery = confirmDelivery;
 exports.pendingOrderCount = pendingOrderCount;
+exports.makeReport = makeReport;

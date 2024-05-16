@@ -7,14 +7,11 @@ import Header from "../../Shared/Components/UiElements/header";
 const Salaryform = () => {
   return (
     <>
-     <Navbar />
-    
-     
-     <Card className="flex" style={{ width: "100%" }}>
-    
-      
+      <Navbar />
+      <Header />
+
+      <Card className="flex" style={{ width: "100%" }}>
         <SalaryCalculatorForm />
-        
       </Card>
     </>
   );

@@ -27,6 +27,7 @@ const DeliveryPersonLoginRoute = require("./Routes/DeliveryLoginpRoute")
 const ProfitRoute = require("./Routes/ProfitRoute");
 const AvailableRoute = require("./Routes/AvailableRoute");
 const salaryHistory = require("./Routes/salaryHistoryRoute")
+const DeliveryOrderRoute = require("./Routes/AssignRoute")
 
 //MiddleWare
 app.use(express.json());
@@ -65,6 +66,8 @@ app.use("/deliveryCheckLogin", DeliveryPersonLoginRoute)
 app.use("/profit", ProfitRoute)
 app.use("/available", AvailableRoute);
 app.use("/salaryHistory",salaryHistory)
+app.use("/deliveryOrder",DeliveryOrderRoute)
+
 
 // Read user ID from the cookie
 
