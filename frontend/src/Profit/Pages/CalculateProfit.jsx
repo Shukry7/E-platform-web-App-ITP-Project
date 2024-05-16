@@ -62,7 +62,7 @@ const CalculateProfit = () => {
     }
 
     if (selectedProduct) {
-      filteredProfit = filteredProfit.filter((item) => item.product === selectedProduct);
+      filteredProfit = filteredProfit.filter((item) => item.productID === selectedProduct);
     }
 
     const totalSales = filteredProfit.reduce((acc, item) => acc + item.price * item.quantity, 0);

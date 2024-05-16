@@ -27,6 +27,11 @@ const profitSchema = mongoose.Schema(
         required: [true],
         default: 0,
       },
+      type: {
+        type: String,
+        enum: ['Online', 'Offline'],
+        default: 'Pending',
+      },
       date: {
         type: Date,
         required: [true],
