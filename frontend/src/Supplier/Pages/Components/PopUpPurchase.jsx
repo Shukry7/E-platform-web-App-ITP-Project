@@ -30,6 +30,7 @@ function PopUpPurchase(props) {
       });
   }, []);
 
+  console.log(purchase)
     const togglemodel = () => {
       setisClick(!isclick);
     };
@@ -101,8 +102,16 @@ function PopUpPurchase(props) {
                                     return (
                                         <TableRow key={item._id}>
                                         <td className="px-6 py-4">{item.purchaseID.ID}</td>
-                                        <td className="px-6 py-4">{item.supplier_product.supplier.ID}, {item.supplier_product.supplier.name}</td>
-                                        <td className="px-6 py-4">{item.supplier_product.product.ID}, {item.supplier_product.product.name}</td>
+                                        <td className="px-6 py-4">
+                                          {item.supplier_product 
+                                            ? `${item.supplier_product.supplier.ID}, ${item.supplier_product.supplier.name}` 
+                                            : 'Deleted'}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                          {item.supplier_product 
+                                            ? `${item.supplier_product.product.ID}, ${item.supplier_product.product.name}` 
+                                            : 'Deleted'}
+                                        </td>
                                         <td className="px-6 py-4">{item.Quantity}</td>
                                         </TableRow>
                                     );

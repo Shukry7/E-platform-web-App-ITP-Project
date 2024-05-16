@@ -16,6 +16,7 @@ Router.get("/purchase/list", SupplierProductControllers.listPurchase)
 Router.get("/purchase/list/:id", SupplierProductControllers.listOnePurchasedetails)
 Router.put("/confirmDelivery/:id", SupplierProductControllers.confirmDelivery)
 Router.get("/pendingCount/count", SupplierProductControllers.pendingOrderCount)
+Router.get("/report/new", SupplierProductControllers.makeReport)
 
 
 module.exports = Router;
