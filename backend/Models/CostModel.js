@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const costSchema = mongoose.Schema(
   {
-    product: {
+    productID: {
+      type: String,
+      required: [true],
+    },
+    productName: {
       type: String,
       required: [true],
     },

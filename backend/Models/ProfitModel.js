@@ -6,7 +6,11 @@ const profitSchema = mongoose.Schema(
         type: String,
         required: [true],
       },
-      product: {
+      productID: {
+        type: String,
+        required: [true],
+      },
+      productName: {
         type: String,
         required: [true],
       },

@@ -94,7 +94,8 @@ const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
 
         return {
           order: id,
-          product: item.product.ID,
+          productID: item.product.ID,
+          productName: item.product.name,
           price: item.product.price,
           quantity: item.quantity,
           profit: profit,
