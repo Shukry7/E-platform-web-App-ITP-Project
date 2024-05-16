@@ -165,49 +165,7 @@ const GetProductReportByDateRange = async (req, res) => {
     const orders = await Order.find({
       createdAt: { $gte: startDate, $lte: endDate },
     });
-    const productIds = orders.flatMap((order) =>
-      order.CartItems.map((item) => item.productId)
-    );
-    
-    const products = await Product.find({ _id: { $in: productIds } });
-    const productUnits = await Order.aggregate([
-      {
-        $match: {
-          createdAt: { $gte: startDate, $lte: endDate},
-        },
-      },
-      { $unwind: "$CartItems" },
-      {
-        $group: {
-          _id: "$CartItems.productId",
-          totalUnits: { $sum: "$CartItems.quantity" },
-        },
-      },
-    ]);
-    const reviewCounts = await ProductReviews.aggregate([
-      {
-        $match: {
-          createdAt: { $gte: startDate, $lte: endDate },
-        },
-      },
-      { $group: { _id: "$ProductID", totalReviews: { $sum: 1 }, totalRating: { $sum: "$Rating" } } },
-    ]);
-    const productDetails = products.map((product) => {
-      const productUnit = productUnits.find(unit => unit._id?.equals(product._id));
-      const reviewCount = reviewCounts.find(review => review._id?.equals(product._id));
-      const totalUnits = productUnit ? productUnit.totalUnits : 0;
-      const totalReviews = reviewCount ? reviewCount.totalReviews : 0;
-      const totalRating = reviewCount ? reviewCount.totalRating : 0;
-      const averageRating = totalReviews !== 0 ? totalRating / totalReviews : 0;
-      
-      return {
-        ...product.toObject(),
-        totalUnits,
-        totalReviews,
-        averageRating,
-      };
-    });
-    res.json(productDetails);
+    res.json(orders);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -241,3 +199,4 @@ exports.createOrder = createOrder;
 exports.listOrder = listOrder;
 exports.checkOrder = checkOrder;
 exports.listOrders = listOrders;
+exports.GetProductReportByDateRange = GetProductReportByDateRange;

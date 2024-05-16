@@ -9,7 +9,7 @@ const OrderReportTable = ({ date, componentRef }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/order/orders", {
+      .get("http://localhost:5000/order/report", {
         params: {
           startDate: date.startDate || moment().startOf("month").format("YYYY-MM-DD"),
           endDate: date.endDate || moment().endOf("month").format("YYYY-MM-DD"),
@@ -37,7 +37,7 @@ const OrderReportTable = ({ date, componentRef }) => {
       <p className="mb-4">
         <strong>Business Name:</strong> Kandurata Glass and Locks
         <br />
-        <strong>Address:</strong> kandy street matale
+        <strong>Address:</strong> Kandy Street Matale
         <br />
         <strong>Date:</strong> {currentDate}
       </p>
