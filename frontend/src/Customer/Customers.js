@@ -77,7 +77,7 @@ const Customers = () => {
               </div>
               <CustomerTable
 
-                Customers={customers}
+                Customers={displayCustomer}
                 loading={loading}
                 setloading={setLoading}
                 dlt={deleteCustomer} 

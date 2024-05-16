@@ -6,7 +6,11 @@ const profitSchema = mongoose.Schema(
         type: String,
         required: [true],
       },
-      product: {
+      productID: {
+        type: String,
+        required: [true],
+      },
+      productName: {
         type: String,
         required: [true],
       },
@@ -22,6 +26,10 @@ const profitSchema = mongoose.Schema(
         type: Number,
         required: [true],
         default: 0,
+      },
+      type: {
+        type: String,
+        enum: ['Online', 'Offline'],
       },
       date: {
         type: Date,

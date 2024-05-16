@@ -67,7 +67,7 @@ const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
     const profitTable = await Promise.all(
       cartitem.map(async (item) => {
         let cost = await Cost.findOne({
-          product: item.product.ID,
+          productID: item.product.ID,
           inStock: { $ne: 0 },
         }).limit(1);
 
@@ -81,7 +81,7 @@ const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
           buyqtytemp = buyqtytemp - cost.inStock;
           const result = await Cost.findByIdAndUpdate(cost._id, { inStock: 0 });
           cost = await Cost.findOne({
-            product: item.product.ID,
+            productID: item.product.ID,
             inStock: { $ne: 0 },
           }).limit(1);
           costStock = cost.inStock;
@@ -94,10 +94,12 @@ const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
 
         return {
           order: id,
-          product: item.product.ID,
+          productID: item.product.ID,
+          productName: item.product.name,
           price: item.product.price,
           quantity: item.quantity,
           profit: profit,
+          type: "Online",
           date: date,
         };
       })
@@ -141,6 +143,37 @@ const listOrder = async (req, res) => {
   }
 };
 
+const listOrders = async (req, res) => {
+  try {
+    const order = await Order.find({})
+    .populate("CartItems.productId");
+
+    return res.status(200).json(order);
+  } 
+  catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+const GetProductReportByDateRange = async (req, res) => {
+  try {
+    const startDate = new Date(req.query.startDate);
+    const endDate = new Date(req.query.endDate);
+
+    console.log(startDate,endDate)
+    const orders = await Order.find({
+      createdAt: { $gte: startDate, $lte: endDate },
+    })
+    .populate("CartItems.productId");
+
+    res.json(orders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 const checkOrder = async (req, res) => {
   try {
     const { pid, uid } = req.params;
@@ -163,6 +196,9 @@ const checkOrder = async (req, res) => {
   }
 };
 
+
 exports.createOrder = createOrder;
 exports.listOrder = listOrder;
 exports.checkOrder = checkOrder;
+exports.listOrders = listOrders;
+exports.GetProductReportByDateRange = GetProductReportByDateRange;
