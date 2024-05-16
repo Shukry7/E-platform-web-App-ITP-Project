@@ -11,7 +11,8 @@ const ProfitReportDetails = () => {
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [filteredProfit, setFilteredProfit] = useState([]);
-  const [previousMonthProfit, setPreviousMonthProfit] = useState(0); // New state for previous month's profit
+  const [previousMonthProfit, setPreviousMonthProfit] = useState(0);
+  const [previousMonthSales, setPreviousMonthSales] = useState(0);
   const [summary, setSummary] = useState({
     totalQuantity: 0,
     totalSales: 0,
@@ -105,6 +106,7 @@ const ProfitReportDetails = () => {
       );
 
       const previousMonthProfit = previousFiltered.reduce((sum, item) => sum + item.profit, 0);
+      const previousMonthSales = previousFiltered.reduce((sum, item) => sum + item.quantity * item.price, 0); 
 
       setSummary({
         totalQuantity,
@@ -118,7 +120,8 @@ const ProfitReportDetails = () => {
         mostSalesProductAmount: mostSalesProduct.totalSale,
       });
 
-      setPreviousMonthProfit(previousMonthProfit); // Set the previous month's profit
+      setPreviousMonthProfit(previousMonthProfit);
+      setPreviousMonthSales(previousMonthSales);
       setFilteredProfit(combined);
     }
   }, [year, month, profit]);
@@ -134,7 +137,7 @@ const ProfitReportDetails = () => {
 
   return (
     <div className="container mx-auto my-8 mt-10">
-      <div className="flex items-center justify-between mt-40 mb-4">
+      <div className="flex items-center justify-between  mb-4">
         <div className="mr-4">
           <label htmlFor="month" className="mr-2">
             Month:
@@ -216,7 +219,8 @@ const ProfitReportDetails = () => {
                 <p><b>Most sold product :</b> {summary.mostSoldProduct} with {summary.mostSoldProductQuantity} units sold</p>
                 <p><b>Most sales product :</b> {summary.mostSalesProduct} with Rs.{summary.mostSalesProductAmount}.00 in sales</p>
                 <p><b>Most profitable product :</b> {summary.mostProfitableProduct} with Rs.{summary.mostProfitableProductProfit}.00 in profit</p>
-                <p><b>Previous month total profit :</b> Rs.{previousMonthProfit}.00</p> {/* Display previous month's profit */}
+                <p><b>Previous month total profit :</b> Rs.{previousMonthProfit}.00</p>
+                <p><b>Previous month total sales :</b> Rs.{previousMonthSales}.00</p>
               </div>
             </React.Fragment>
           )}
