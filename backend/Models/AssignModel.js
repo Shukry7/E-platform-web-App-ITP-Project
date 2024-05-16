@@ -13,8 +13,7 @@ const orderDeliverySchema = mongoose.Schema({
         },
         status: {
             type: String,
-            enum: ['Assigned', 'Not Assigned'],
-            default: 'Not Assigned',
+            enum: ['Assigned', 'Complete'],
           }
     },
 );

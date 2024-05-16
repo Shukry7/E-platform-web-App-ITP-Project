@@ -6,5 +6,8 @@ Router.post("/", DeliveryOrderControllers.createOrderDelivery);
 Router.get("/", DeliveryOrderControllers.listOrderDelivery);
 Router.get("/getOrders/", DeliveryOrderControllers.listOrderDeliveryById);
 Router.put("/:id" ,  DeliveryOrderControllers.UpdateOrderDelivery);
+Router.get("/:id", DeliveryOrderControllers.listAssignedDeliveryById);
+Router.get("/complete/:id", DeliveryOrderControllers.listAssignedDeliveryByIds);
 
 module.exports = Router;
+ 

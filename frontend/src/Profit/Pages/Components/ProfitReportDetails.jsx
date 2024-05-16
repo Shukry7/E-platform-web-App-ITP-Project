@@ -11,6 +11,8 @@ const ProfitReportDetails = () => {
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [filteredProfit, setFilteredProfit] = useState([]);
+  const [previousMonthProfit, setPreviousMonthProfit] = useState(0);
+  const [previousMonthSales, setPreviousMonthSales] = useState(0);
   const [summary, setSummary] = useState({
     totalQuantity: 0,
     totalSales: 0,
@@ -37,18 +39,31 @@ const ProfitReportDetails = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching purchase:", error);
+        console.error("Error fetching profit:", error);
         setLoading(false);
       });
   }, []);
 
   useEffect(() => {
     if (year && month !== '') {
+      const currentMonth = parseInt(month);
+      const currentYear = parseInt(year);
+      const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+      const previousMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
       const filtered = profit.filter(item => {
         const itemDate = new Date(item.date);
         return (
-          itemDate.getMonth() === parseInt(month) &&
-          itemDate.getFullYear() === parseInt(year)
+          itemDate.getMonth() === currentMonth &&
+          itemDate.getFullYear() === currentYear
+        );
+      });
+
+      const previousFiltered = profit.filter(item => {
+        const itemDate = new Date(item.date);
+        return (
+          itemDate.getMonth() === previousMonth &&
+          itemDate.getFullYear() === previousMonthYear
         );
       });
 
@@ -90,6 +105,9 @@ const ProfitReportDetails = () => {
         item.totalSale > max.totalSale ? item : max, combined[0] || { productName: '', totalSale: 0 }
       );
 
+      const previousMonthProfit = previousFiltered.reduce((sum, item) => sum + item.profit, 0);
+      const previousMonthSales = previousFiltered.reduce((sum, item) => sum + item.quantity * item.price, 0); 
+
       setSummary({
         totalQuantity,
         totalSales,
@@ -102,6 +120,8 @@ const ProfitReportDetails = () => {
         mostSalesProductAmount: mostSalesProduct.totalSale,
       });
 
+      setPreviousMonthProfit(previousMonthProfit);
+      setPreviousMonthSales(previousMonthSales);
       setFilteredProfit(combined);
     }
   }, [year, month, profit]);
@@ -117,7 +137,7 @@ const ProfitReportDetails = () => {
 
   return (
     <div className="container mx-auto my-8 mt-10">
-      <div className="flex items-center justify-between mt-40 mb-4">
+      <div className="flex items-center justify-between  mb-4">
         <div className="mr-4">
           <label htmlFor="month" className="mr-2">
             Month:
@@ -196,9 +216,11 @@ const ProfitReportDetails = () => {
                 <p><b>Total Quantity sold :</b> {summary.totalQuantity}</p>
                 <p><b>Total sales :</b> Rs.{summary.totalSales}.00</p>
                 <p><b>Total profit :</b> Rs.{summary.totalProfit}.00</p>
-                <p><b>Most sold product :</b> {summary.mostSoldProduct} with {summary.mostSoldProductQuantity} units sold</p>
-                <p><b>Most sales product :</b> {summary.mostSalesProduct} with Rs.{summary.mostSalesProductAmount}.00 in sales</p>
+                <p><b>Most sold product by quantity :</b> {summary.mostSoldProduct} with {summary.mostSoldProductQuantity} units sold</p>
+                <p><b>Most sold product :</b> {summary.mostSalesProduct} with Rs.{summary.mostSalesProductAmount}.00 in sales</p>
                 <p><b>Most profitable product :</b> {summary.mostProfitableProduct} with Rs.{summary.mostProfitableProductProfit}.00 in profit</p>
+                <p><b>Previous month total profit :</b> Rs.{previousMonthProfit}.00</p>
+                <p><b>Previous month total sales :</b> Rs.{previousMonthSales}.00</p>
               </div>
             </React.Fragment>
           )}
