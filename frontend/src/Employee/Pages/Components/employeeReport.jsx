@@ -29,25 +29,27 @@ const MonthlyReportPage = () => {
   }, [month]);
 
   useEffect(() => {
-    
     const totalExpense = salaries.reduce((acc, curr) => acc + curr.net, 0);
-    setTotalSalaryExpense(totalExpense);
+    setTotalSalaryExpense(totalExpense || 0); // Set default to 0 if totalExpense is falsy
     
-    setNumEmployeesPaid(salaries.length);
+    setNumEmployeesPaid(salaries.length || 0); // Set default to 0 if salaries length is falsy
     
     if (salaries.length > 0) {
       const salariesArr = salaries.map((salary) => salary.net);
-      setMaxSalary(Math.max(...salariesArr));
-      setMinSalary(Math.min(...salariesArr));
+      setMaxSalary(Math.max(...salariesArr) || 0); // Set default to 0 if max salary is falsy
+      setMinSalary(Math.min(...salariesArr) || 0); // Set default to 0 if min salary is falsy
+    } else {
+      setMaxSalary(0); // Set default to 0 if salaries length is falsy
+      setMinSalary(0); // Set default to 0 if salaries length is falsy
     }
   }, [salaries, month]); 
   const currentDate = new Date().toLocaleDateString();
-
+  
   const componentRef = useRef();
   const handleprint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: "salary report",
-    onAfterPrint: () => alert("salary Report is successfully genrated !"),
+    onAfterPrint: () => alert("salary Report is successfully generated !"),
   });
 
   return (
@@ -133,8 +135,8 @@ const MonthlyReportPage = () => {
                 
                 <p><b>Total Salary Expense for the Month:</b> Rs.{totalSalaryExpense}.00</p>
                 
-                <p><b>Maximum Salary Paid:</b> Rs.{maxSalary}.00</p>
-                <p><b>Minimum Salary Paid :</b> Rs.{minSalary}.00</p>
+                <p><b>Maximum Salary Paid:</b> Rs.{maxSalary}.00/-</p>
+                <p><b>Minimum Salary Paid :</b> Rs.{minSalary}.00/-</p>
                 <p><b>Number of Employees Paid: </b>{numEmployeesPaid}</p>
               </div>
             </React.Fragment>

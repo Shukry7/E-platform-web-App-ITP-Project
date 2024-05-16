@@ -59,6 +59,9 @@ import CalculateProfit from "./Profit/Pages/CalculateProfit";
 import HistoryTable from "./Employee/Pages/salaryHistory"
 import Report from "./Employee/Pages/reportEmp";
 import SupplierReport from "./Supplier/Pages/SupplierReport";
+import Employeelogin from "./Employee/Pages/Employeelogin"
+import EmployeeloginformUpdate from "./Employee/Pages/Components/employeeloginformUpdate"
+import Employeeloginform from "./Employee/Pages/Components/EmployeeloginForm"
 
 const App = () => {
   return (
@@ -108,18 +111,22 @@ const App = () => {
         <Route path="/Wholesalecustomer/view/:id" exact element={<ViewWholesalecustomer/>}/>
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
+        <Route path="/Employeelogin" exact element={<Employeelogin />}/>
+        <Route path="/Employeelogin/new" exact element={<Employeeloginform />}/>
+        <Route path="/Employeelogin/update/:id" exact element={<EmployeeloginformUpdate />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/salaryHistory" exact element={<HistoryTable/>}/>
         <Route path="/employee/report" exact element={<Report/>}/>
         <Route path="/Profit/cost" exact element={<ViewCost/>}/>
         <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
         <Route path="/Order" exact element={<Order/>}/>
+        <Route path="/ProductReport" exact element={<TopProduct/>}/>
         <Route path="/Profit/calculate" exact element={<CalculateProfit/>}/>
         <Route path="/" exact element={
           <CheckLogin>
             <LoginPage/>
           </CheckLogin>}/>  
-        <Route path="/ProductReport" exact element={<TopProduct/>}/>
+        
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/deliverylogin" exact element={
