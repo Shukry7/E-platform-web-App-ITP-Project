@@ -52,8 +52,6 @@ const AssignDelivery = () => {
 
   const handleDeliveryComplete = (orderId , id) => {
     const selectedPersonId = selectedOptions[orderId];
-    console.log(orderId)
-    console.log(selectedPersonId)
     if (selectedPersonId) {
       axios.post("http://localhost:5000/deliveryOrder", {
         order: id,
@@ -99,6 +97,22 @@ const AssignDelivery = () => {
     );
   };
 
+  const ordersByCity = orders.reduce((acc, order) => {
+    const city = order.userId.city;
+    if (!acc[city]) {
+      acc[city] = [];
+    }
+    acc[city].push(order);
+    return acc;
+  }, {});
+
+  const cities = Object.keys(ordersByCity);
+
+  const tableContainerStyle = {
+    maxHeight: "500px", // Set the max height as needed
+    overflowY: "scroll",
+  };
+
   return (
     <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
       <Navbar />
@@ -108,73 +122,76 @@ const AssignDelivery = () => {
         <div className="justify-between items-center">
           <div className="p-8">
             <h1 className="text-3xl mb-8">Assign Delivery Persons</h1>
-            <div className="table-container">
-              <Table Headings={Headings}>
-                {loading ? (
-                  <tr>
-                    <td colSpan="5">
-                      <Loader />
-                    </td>
-                  </tr>
-                ) : (
-                  orders.map(({ _id , orderId, userId }) => {
-                    const selectedPersonId = selectedOptions[orderId];
-                    const availablePersons = getAvailablePersons(orderId);
+            <div className="table-container" style={tableContainerStyle}>
+              {cities.map((city) => (
+                <React.Fragment key={city}>
+                  <h2 className="text-2xl mt-4 mb-2 font-semibold">{city} Orders</h2>
+                  <Table Headings={Headings}>
+                    {loading ? (
+                      <tr>
+                        <td colSpan="5">
+                          <Loader />
+                        </td>
+                      </tr>
+                    ) : ordersByCity[city].map(({ _id , orderId, userId }) => {
+                        const selectedPersonId = selectedOptions[orderId];
+                        const availablePersons = getAvailablePersons(orderId);
 
-                    return (
-                      <TableRow key={orderId}>
-                        <td className="px-6 py-4">{orderId}</td>
-                        <td className="px-6 py-4">{userId.name}</td>
-                        <td className="px-6 py-4">
-                          <select
-                            className="border border-gray-300 rounded px-4 py-2 mr-4"
-                            value={selectedPersonId || ""}
-                            onChange={(e) => handleSelectChange(e, orderId)}
-                          >
-                            <option key="" value="">
-                              Select a Delivery Person
-                            </option>
-                            {availablePersons.map((person) => (
-                              <option key={person.delivery._id} value={person.delivery._id}>
-                                {person.delivery.name}
-                              </option>
-                            ))}
-                          </select>
-                        </td>
-                        <td
-                          className="px-6 py-4"
-                          style={{
-                            color:
-                              availablePersons.length === 0
-                                ? "red"
-                                : selectedPersonId
-                                ? "green"
-                                : "red"
-                          }}
-                        >
-                          {availablePersons.length === 0
-                            ? "No Delivery Person Available"
-                            : selectedPersonId
-                            ? deliveryPersons.find(
-                                (person) => person.delivery._id === selectedPersonId
-                              )?.delivery.name || "Not Assigned"
-                            : "Not Assigned"}
-                        </td>
-                        <td>
-                          {selectedPersonId && (
-                            <button
-                              onClick={() => handleDeliveryComplete(orderId , _id)}
-                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        return (
+                          <TableRow key={orderId}>
+                            <td className="px-6 py-4">{orderId}</td>
+                            <td className="px-6 py-4">{userId.name}</td>
+                            <td className="px-6 py-4">
+                              <select
+                                className="border border-gray-300 rounded px-4 py-2 mr-4"
+                                value={selectedPersonId || ""}
+                                onChange={(e) => handleSelectChange(e, orderId)}
+                              >
+                                <option key="" value="">
+                                  Select a Delivery Person
+                                </option>
+                                {availablePersons.map((person) => (
+                                  <option key={person.delivery._id} value={person.delivery._id}>
+                                    {person.delivery.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </td>
+                            <td
+                              className="px-6 py-4"
+                              style={{
+                                color:
+                                  availablePersons.length === 0
+                                    ? "red"
+                                    : selectedPersonId
+                                    ? "green"
+                                    : "red"
+                              }}
                             >
-                              Assign Delivery
-                            </button>
-                          )}
-                        </td>
-                      </TableRow>
-                    );
-                  })
-                )}
-              </Table>
+                              {availablePersons.length === 0
+                                ? "No Delivery Person Available"
+                                : selectedPersonId
+                                ? deliveryPersons.find(
+                                    (person) => person.delivery._id === selectedPersonId
+                                  )?.delivery.name || "Not Assigned"
+                                : "Not Assigned"}
+                            </td>
+                            <td>
+                              {selectedPersonId && (
+                                <button
+                                  onClick={() => handleDeliveryComplete(orderId , _id)}
+                                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                >
+                                  Assign Delivery
+                                </button>
+                              )}
+                            </td>
+                          </TableRow>
+                        );
+                      })}
+                  </Table>
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </div>
