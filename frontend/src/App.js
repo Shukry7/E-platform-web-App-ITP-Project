@@ -43,7 +43,6 @@ import Attendance from "./Employee/Pages/listAttendance";
 import ProductCustomerUI from "./Product/Pages/ProductCustomerUI";
 import ViewEmployees from "./Employee/Pages/ViewEmployees";
 import { AuthProvider } from './Shared/Components/context/authcontext';
-import CustomerLoader from "./Shared/Components/UiElements/CustomerLoader";
 import ViewDelivery from "./Delivery/Pages/ViewDelivery";
 import ProtectedRouteCustomer from "./Shared/Components/context/PrivateRoute";
 import CheckLogin from "./Shared/Components/context/checkLogin";
@@ -58,6 +57,7 @@ import ViewProfit from "./Profit/Pages/ViewProfit";
 import Order from "./Order/Order";
 import CalculateProfit from "./Profit/Pages/CalculateProfit";
 import HistoryTable from "./Employee/Pages/salaryHistory"
+import TopProduct from "./Product/Pages/TopProduct";
 
 const App = () => {
   return (
@@ -116,7 +116,7 @@ const App = () => {
           <CheckLogin>
             <LoginPage/>
           </CheckLogin>}/>  
-        <Route path="/Loader" exact element={<CustomerLoader/>}/>
+        <Route path="/ProductReport" exact element={<TopProduct/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/deliverylogin" exact element={
