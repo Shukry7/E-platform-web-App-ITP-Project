@@ -30,7 +30,6 @@ const profitSchema = mongoose.Schema(
       type: {
         type: String,
         enum: ['Online', 'Offline'],
-        default: 'Pending',
       },
       date: {
         type: Date,

@@ -99,6 +99,7 @@ const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
           price: item.product.price,
           quantity: item.quantity,
           profit: profit,
+          type: "Online",
           date: date,
         };
       })

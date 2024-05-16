@@ -16,6 +16,7 @@ const ProfitTable = (props) => {
     "Quantity",
     "Selling Price",
     "Profit",
+    "Type",
     "Date",
   ];
 
@@ -36,6 +37,7 @@ const ProfitTable = (props) => {
                   <td class="pl-16 py-4">{item.quantity}</td>
                   <td class="pl-16 py-4">{item.price}</td>
                   <td class="pl-12 py-4">{item.profit}</td>
+                  <td class="pl-12 py-4">{item.type}</td>
                   <td class="pl-20 py-4">{item.date}</td>
                 </TableRow>
               );
