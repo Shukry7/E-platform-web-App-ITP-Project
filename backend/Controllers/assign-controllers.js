@@ -43,18 +43,56 @@ const listOrderDeliveryById = async (req, res) => {
   }
 };
 
+const listAssignedDeliveryById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deliveryOrders = await DeliveryOrder.find({ delivery: id , status:"Assigned"})
+      .populate("delivery")
+      .populate({
+        path: "order",
+        populate: {
+          path: "userId"
+        }
+      });
+
+    return res.status(200).json(deliveryOrders);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+const listAssignedDeliveryByIds = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deliveryOrders = await DeliveryOrder.find({ delivery: id , status:"Complete"})
+      .populate("delivery")
+      .populate({
+        path: "order",
+        populate: {
+          path: "userId"
+        }
+      });
+
+    return res.status(200).json(deliveryOrders);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+
+
+
+
 const UpdateOrderDelivery = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { status } = req.body;
-
-    const UpdateOrderDelivery = {
-      status: status,
-     
-    };
-  
-    const result = await DeliveryOrder.findByIdAndUpdate(id,UpdateOrderDelivery);
+    const { status } = req.body;  
+    const result = await DeliveryOrder.findByIdAndUpdate(id,{
+      status:status
+    });
 
     if (!result) {
       return res.status(404).send({ message: "Delivery Person Not Found !" });
@@ -73,3 +111,5 @@ exports.createOrderDelivery= createOrderDelivery;
 exports.listOrderDelivery = listOrderDelivery;
 exports.listOrderDeliveryById = listOrderDeliveryById;
 exports.UpdateOrderDelivery= UpdateOrderDelivery;
+exports.listAssignedDeliveryById = listAssignedDeliveryById; 
+exports.listAssignedDeliveryByIds =  listAssignedDeliveryByIds;

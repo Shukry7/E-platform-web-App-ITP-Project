@@ -59,8 +59,7 @@ import CalculateProfit from "./Profit/Pages/CalculateProfit";
 import HistoryTable from "./Employee/Pages/salaryHistory"
 import Report from "./Employee/Pages/reportEmp";
 import SupplierReport from "./Supplier/Pages/SupplierReport";
-import ProfitReport from "./Profit/Pages/ProfitReport";
-import ProductReport from "./Product/Pages/ProductReport";
+import DeliveryPersonOrders from "./Delivery/Pages/CompleteDelivery";
 
 const App = () => {
   return (
@@ -115,14 +114,12 @@ const App = () => {
         <Route path="/employee/report" exact element={<Report/>}/>
         <Route path="/Profit/cost" exact element={<ViewCost/>}/>
         <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
-        <Route path="/Profit/report" exact element={<ProfitReport/>}/>
         <Route path="/Order" exact element={<Order/>}/>
         <Route path="/Profit/calculate" exact element={<CalculateProfit/>}/>
         <Route path="/" exact element={
           <CheckLogin>
             <LoginPage/>
-          </CheckLogin>}/>  
-        <Route path="/ProductReport" exact element={<ProductReport/>}/>
+          </CheckLogin>}/> 
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/deliverylogin" exact element={
@@ -134,6 +131,10 @@ const App = () => {
           
             <DeliveryPersonProfile/>
         }/>
+         <Route path="/deliverypersonorder" exact element={
+          
+          <DeliveryPersonOrders/>
+      }/>
       </Routes >
     </Router>
     </DeliveryAuthProvider>
