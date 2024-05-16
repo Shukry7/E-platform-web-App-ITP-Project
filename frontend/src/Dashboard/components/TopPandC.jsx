@@ -2,16 +2,31 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const TopPandC = () => {
-  const [Topproducts, setTopProducts] = useState([]);
+  const [TopProducts, setTopProducts] = useState([]);
+  const [TopCustomers, setTopCustomers] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [switchPC, setSwitchPC] = useState(true);
   useEffect(() => {
     setLoading(true);
     axios
       .get("http://localhost:5000/product/Top-products")
       .then((res) => {
         setTopProducts(res.data);
-        console.log(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(true);
+      });
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get("http://localhost:5000/customer/Top/Customers")
+      .then((res) => {
+        setTopCustomers(res.data);
+        console.log(res.data)
         setLoading(false);
       })
       .catch((err) => {
@@ -119,11 +134,16 @@ const TopPandC = () => {
             <button
               id="faq-tab"
               data-tabs-target="#faq"
+              onClick={() => setSwitchPC(true)}
               type="button"
               role="tab"
               aria-controls="faq"
               aria-selected="false"
-              class="inline-block w-full p-4 rounded-tl-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300"
+              class={`inline-block w-full p-4 rounded-tl-lg ${
+                switchPC
+                  ? "bg-red-400 text-white "
+                  : "bg-gray-50 hover:bg-gray-100"
+              } focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-transparent dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300`}
             >
               Top products
             </button>
@@ -131,12 +151,17 @@ const TopPandC = () => {
           <li class="w-full">
             <button
               id="about-tab"
+              onClick={() => setSwitchPC(false)}
               data-tabs-target="#about"
               type="button"
               role="tab"
               aria-controls="about"
               aria-selected="true"
-              class="inline-block w-full p-4 rounded-tr-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500"
+              class={`inline-block w-full p-4 rounded-tr-lg ${
+                !switchPC
+                  ? "bg-red-400 text-white "
+                  : "bg-gray-50 hover:bg-gray-100"
+              }  focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600  dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500`}
             >
               Top Customers
             </button>
@@ -147,7 +172,7 @@ const TopPandC = () => {
           class="border-t border-gray-200 dark:border-gray-600"
         >
           <div
-            class="pt-4 block"
+            class={`pt-4 ${switchPC ? "block" : "hidden"}`}
             id="faq"
             role="tabpanel"
             aria-labelledby="faq-tab"
@@ -156,7 +181,7 @@ const TopPandC = () => {
               role="list"
               class="divide-y divide-gray-200 dark:divide-gray-700"
             >
-              {Topproducts.map((product) => {
+              {TopProducts.map((product) => {
                 return (
                   <li class="py-3 sm:py-4">
                     <div class="flex items-center justify-between">
@@ -201,7 +226,7 @@ const TopPandC = () => {
             </ul>
           </div>
           <div
-            class="pt-4 hidden"
+            class={`pt-4 ${!switchPC ? "block" : "hidden"}`}
             id="about"
             role="tabpanel"
             aria-labelledby="about-tab"
@@ -210,116 +235,32 @@ const TopPandC = () => {
               role="list"
               class="divide-y divide-gray-200 dark:divide-gray-700"
             >
-              <li class="py-3 sm:py-4">
-                <div class="flex items-center space-x-4">
-                  <div class="flex-shrink-0">
-                    <img
-                      class="w-8 h-8 rounded-full"
-                      src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png"
-                      alt="Neil image"
-                    />
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="font-medium text-gray-900 truncate dark:text-white">
-                      Neil Sims
-                    </p>
-                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                      email@flowbite.com
-                    </p>
-                  </div>
-                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                    $3320
-                  </div>
-                </div>
-              </li>
-              <li class="py-3 sm:py-4">
-                <div class="flex items-center space-x-4">
-                  <div class="flex-shrink-0">
-                    <img
-                      class="w-8 h-8 rounded-full"
-                      src="https://flowbite-admin-dashboard.vercel.app/images/users/bonnie-green.png"
-                      alt="Neil image"
-                    />
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="font-medium text-gray-900 truncate dark:text-white">
-                      Bonnie Green
-                    </p>
-                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                      email@flowbite.com
-                    </p>
-                  </div>
-                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                    $2467
-                  </div>
-                </div>
-              </li>
-              <li class="py-3 sm:py-4">
-                <div class="flex items-center space-x-4">
-                  <div class="flex-shrink-0">
-                    <img
-                      class="w-8 h-8 rounded-full"
-                      src="https://flowbite-admin-dashboard.vercel.app/images/users/michael-gough.png"
-                      alt="Neil image"
-                    />
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="font-medium text-gray-900 truncate dark:text-white">
-                      Michael Gough
-                    </p>
-                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                      email@flowbite.com
-                    </p>
-                  </div>
-                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                    $2235
-                  </div>
-                </div>
-              </li>
-              <li class="py-3 sm:py-4">
-                <div class="flex items-center space-x-4">
-                  <div class="flex-shrink-0">
-                    <img
-                      class="w-8 h-8 rounded-full"
-                      src="https://flowbite-admin-dashboard.vercel.app/images/users/thomas-lean.png"
-                      alt="Neil image"
-                    />
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="font-medium text-gray-900 truncate dark:text-white">
-                      Thomes Lean
-                    </p>
-                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                      email@flowbite.com
-                    </p>
-                  </div>
-                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                    $1842
-                  </div>
-                </div>
-              </li>
-              <li class="py-3 sm:py-4">
-                <div class="flex items-center space-x-4">
-                  <div class="flex-shrink-0">
-                    <img
-                      class="w-8 h-8 rounded-full"
-                      src="https://flowbite-admin-dashboard.vercel.app/images/users/lana-byrd.png"
-                      alt="Neil image"
-                    />
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="font-medium text-gray-900 truncate dark:text-white">
-                      Lana Byrd
-                    </p>
-                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                      email@flowbite.com
-                    </p>
-                  </div>
-                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                    $1044
-                  </div>
-                </div>
-              </li>
+              {TopCustomers.map((customer) => {
+                return (
+                  <li class="py-3 sm:py-4">
+                    <div class="flex items-center space-x-4">
+                      <div class="flex-shrink-0">
+                        <img
+                          class="w-8 h-8 rounded-full"
+                          src={`http://localhost:5000/${customer.customer.image}`}
+                          alt={customer.customer.name}
+                        />
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <p class="font-medium text-gray-900 truncate dark:text-white">
+                        {customer.customer?.name}
+                        </p>
+                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                        {customer.customer?.mail}
+                        </p>
+                      </div>
+                      <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                        Rs. {customer.totalAmount}
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
