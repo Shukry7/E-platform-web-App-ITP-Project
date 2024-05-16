@@ -26,7 +26,9 @@ const WholesalecustomerReport = () => {
         console.error("Error fetching credit:", error);
         setLoading(false);
       });
-  },[month]);
+  },[]);
+
+  console.log(credit)
 
   useEffect(() => {
     
@@ -109,17 +111,12 @@ const WholesalecustomerReport = () => {
                 ]}
                 style={{ width: "100%" }}
               >
-                {credit
-                  .filter((credit) => {
-                    const creditMonth = new Date(credit.date).getMonth() + 1;
-                    return creditMonth === parseInt(month);
-                  })
-                  .map((credit, index) => (
+                {credit.map((credit, index) => (
                     <TableRow key={index}>
                       <td className="text-center">{index + 1}</td>
-                      <td className="text-center">{credit.wcustomer.ID}</td>
-                      <td className="text-center">{credit.wcustomer.name}</td>
-                      <td className="text-center">{credit.credit_limit}</td>
+                      <td className="text-center">{credit.ID}</td>
+                      <td className="text-center">{credit.name}</td>
+                      <td className="text-center">{credit.creditlimit}</td>
                       <td className="text-center">{credit.credit}</td>
                     </TableRow>
                   ))}
