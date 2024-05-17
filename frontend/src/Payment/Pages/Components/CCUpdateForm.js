@@ -12,7 +12,7 @@ import {
   VALIDATOR_DATE,
 } from "../../../Shared/Components/util/validate";
 import { useForm } from "../../../Shared/hooks/form-hook";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation} from "react-router-dom";
 import { useEffect } from "react";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
@@ -26,6 +26,14 @@ const Category = [
 const CCForm = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const subtotal = queryParams.get("subtotal");
+  const shippingFee = queryParams.get("shippingFee");
+  const total = queryParams.get("total");
+  const selectedItemsString = queryParams.get("selectedItems");
+  const selectedItems = selectedItemsString ? selectedItemsString.split(",") : [];
   const [loading, setLoading] = useState(false);
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -127,7 +135,7 @@ const CCForm = (props) => {
       .then((res) => {
         setLoading(false);
         Toast("Credit Card Updated Successfully!!", "success");
-        navigate("/CC");
+        navigate(`/CC?subtotal=${subtotal}&shippingFee=${shippingFee.current}&total=${total}&selectedItems=${selectedItems.join(",")}`);
       })
       .catch((err) => {
         console.error(err);

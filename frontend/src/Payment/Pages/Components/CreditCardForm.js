@@ -12,7 +12,7 @@ import {
   VALIDATOR_DATE
 } from "../../../Shared/Components/util/validate";
 import { useForm } from "../../../Shared/hooks/form-hook";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import {AuthContext} from "../../../Shared/Components/context/authcontext";
 
@@ -22,9 +22,19 @@ const Category = [
   { value: "Mastercard" },
 ];
 
+
+
 const CCForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
 
+  const subtotal = queryParams.get("subtotal");
+  const shippingFee = queryParams.get("shippingFee");
+  const total = queryParams.get("total");
+  const selectedItemsString = queryParams.get("selectedItems");
+  const id = selectedItemsString ? selectedItemsString.split(",") : [];
+  
   const auth=useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [formState, inputHandler] = useForm(
@@ -72,7 +82,7 @@ const CCForm = () => {
       })
       .then((res) => {
         setLoading(false);
-        navigate("CC");
+        navigate(`/CC?subtotal=${subtotal}&shippingFee=${shippingFee.current}&total=${total}&selectedItems=${id.join(",")}`);
       })
       .catch((err) => {
         console.error(err);
