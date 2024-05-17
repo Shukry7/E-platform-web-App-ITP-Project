@@ -1,7 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Select from "react-tailwindcss-select";
 import Toast from "../../Shared/Components/UiElements/Toast/Toast";
+import { useReactToPrint } from "react-to-print";
+import PrintQuotation from "./component/PrintQuotation";
 
 const BillingUI = () => {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -10,6 +12,7 @@ const BillingUI = () => {
   const [products, setProducts] = useState([]);
   const [openPaymentBox, setOpenPaymentBox] = useState(false);
   const [val, setVal] = useState(null);
+  const [checkbox, setCheckBox] = useState(false);
 
   const addItem = (item) => {
     const existingItemIndex = selectedItems.findIndex(
@@ -28,13 +31,21 @@ const BillingUI = () => {
         ...prevItems,
         { ...item, quantity: 1, total: item.price },
       ]);
+      setTotalItems((prevTotalItems) => prevTotalItems + 1);
     }
 
-    setTotalItems((prevTotalItems) => prevTotalItems + 1);
     setTotalAmount(
       (prevTotalAmount) => parseFloat(prevTotalAmount) + parseFloat(item.price)
     );
   };
+  const currentDateTime = new Date().toLocaleString();
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: `Product report ${currentDateTime}`,
+    onAfterPrint: () =>
+      Toast("Product Report is successfully genrated !", "success"),
+  });
 
   useEffect(() => {
     axios
@@ -52,8 +63,11 @@ const BillingUI = () => {
     const selectedProduct = products.find(
       (product) => product._id === value.value
     );
-    if (selectedProduct) {
+    
+    if (selectedProduct && selectedProduct.Stock > 0) { 
       addItem(selectedProduct);
+    } else {
+      Toast("This product is out of stock", "error");
     }
   };
 
@@ -83,7 +97,7 @@ const BillingUI = () => {
   };
 
   const handleEmptyQuantity = (index) => {
-    const newSelectedItems = [...selectedItems]
+    const newSelectedItems = [...selectedItems];
 
     if (
       !newSelectedItems[index].quantity ||
@@ -133,11 +147,13 @@ const BillingUI = () => {
 
   return (
     <>
-      <div className="container mx-auto p-4">
+      <PrintQuotation details={selectedItems}  componentRef={componentRef} totalAmount={totalAmount} totalItems={totalItems}/>
+      <div className="bg-white h-screen">
+      <div className="container mx-auto p-4 h-full -z-40">
         <div className="grid grid-cols-2 gap-4">
           <div>
             <h2 className="text-lg font-semibold mb-4">Add Billing Items</h2>
-            <div className="relative mb-4">
+            <div className="relative  mb-4">
               <Select
                 isSearchable
                 value={val}
@@ -149,56 +165,75 @@ const BillingUI = () => {
                 }))}
               />
             </div>
-          </div>
-          <table className="w-full border-collapse border  border-gray-300">
-            <thead>
-              <tr>
-                <th className="border border-gray-300 p-2"></th>
-                <th className="border border-gray-300 p-2">ID</th>
-                <th className="border border-gray-300 p-2">Name</th>
-                <th className="border border-gray-300 p-2">Quantity</th>
-                <th className="border border-gray-300 p-2">Price</th>
-                <th className="border border-gray-300 p-2">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedItems.map((item, index) => (
-                <tr key={index}>
-                  <td className="border border-gray-300 p-2">
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="bg-red-500 text-white p-1 rounded"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                  <td className="border border-gray-300 p-2">{item.ID}</td>
-                  <td className="border border-gray-300 p-2">{item.name}</td>
-                  <td className="border border-gray-300 p-2">
-                    <input
-                      type="number"
-                      className="w-full border border-gray-300 p-2"
-                      value={item.quantity}
-                      min="1"
-                      max={item.Stock}
-                      onChange={(e) =>
-                        handleQuantityChange(index, parseInt(e.target.value))
-                      }
-                      onBlur={() => handleEmptyQuantity(index)}
-                    />
-                  </td>
-                  <td className="border border-gray-300 p-2">
-                    Rs.{item.price}
-                  </td>
-                  <td className="border border-gray-300 p-2">
-                    Rs.{item.total}
-                  </td>
+            <table
+              className="w-full border-collapse border  border-gray-300"
+            >
+              <thead>
+                <tr>
+                  <th className="border border-gray-300 p-2"></th>
+                  <th className="border border-gray-300 p-2">ID</th>
+                  <th className="border border-gray-300 p-2">Name</th>
+                  <th className="border border-gray-300 p-2">Quantity</th>
+                  <th className="border border-gray-300 p-2">Price</th>
+                  <th className="border border-gray-300 p-2">Total</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {selectedItems.map((item, index) => (
+                  <tr key={index}>
+                    <td className="border border-gray-300 p-2">
+                      <button
+                        onClick={() => handleDelete(index)}
+                        className="bg-red-500 text-white p-1 rounded"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                    <td className="border border-gray-300 p-2">{item.ID}</td>
+                    <td className="border border-gray-300 p-2">{item.name}</td>
+                    <td className="border border-gray-300 p-2">
+                      <input
+                        type="number"
+                        className="w-full border border-gray-300 p-2"
+                        value={item.quantity}
+                        min="1"
+                        max={item.Stock}
+                        onChange={(e) =>
+                          handleQuantityChange(index, parseInt(e.target.value))
+                        }
+                        onBlur={() => handleEmptyQuantity(index)}
+                      />
+                    </td>
+                    <td className="border border-gray-300 p-2">
+                      Rs.{item.price}
+                    </td>
+                    <td className="border border-gray-300 p-2">
+                      Rs.{item.total}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <div className="flex flex-col justify-between">
+            <div className="relative flex m-16">
+              <input
+                type="checkbox"
+                onChange={() => {
+                  setCheckBox(!checkbox);
+                }}
+                id="choose-me"
+                className="absolute top-[calc(50%-theme(spacing.2))] peer w-4 h-4 left-6 accent-purple-500 rounded-full"
+              />
+
+              <label
+                htmlFor="choose-me"
+                className="p-8 font-bold  accent-purple-500 transition-colors duration-200 ease-in-out border-2 rounded select-none pl-14 peer-checked:text-fuchsia-600 peer-checked:border-fuchsia-600"
+              >
+                Quotation
+              </label>
+            </div>
             <div>
               <h2 className="text-lg font-semibold mb-4">Invoice Summary</h2>
               <div className="border p-4 rounded mb-4">
@@ -206,15 +241,25 @@ const BillingUI = () => {
                 <p>Total Amount: Rs. {totalAmount.toFixed(2)}</p>
               </div>
             </div>
-            <button
-              onClick={() => {
-                setOpenPaymentBox(!openPaymentBox);
-              }}
-              className="bg-blue-500 text-white p-2 rounded mt-4"
-            >
-              Proceed to Payment
-            </button>
+            {checkbox ? (
+              <button
+                onClick={handlePrint}
+                className="bg-red-300 text-white p-2 rounded mt-4"
+              >
+                Print Quotation
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setOpenPaymentBox(!openPaymentBox);
+                }}
+                className="bg-blue-500 text-white p-2 rounded mt-4"
+              >
+                Proceed to Payment
+              </button>
+            )}
           </div>
+        </div>
         </div>
       </div>
       {openPaymentBox && (
@@ -253,6 +298,7 @@ const BillingUI = () => {
           </div>
         </div>
       )}
+      
     </>
   );
 };
