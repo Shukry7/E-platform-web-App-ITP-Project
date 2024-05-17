@@ -60,6 +60,11 @@ const BillingUI = () => {
   const handleQuantityChange = (index, quantity) => {
     const newSelectedItems = [...selectedItems];
     const maxStock = newSelectedItems[index].Stock;
+
+    if (!quantity || quantity === "") {
+      quantity = "";
+    }
+
     if (quantity <= maxStock) {
       newSelectedItems[index].quantity = quantity;
       newSelectedItems[index].total =
@@ -74,6 +79,26 @@ const BillingUI = () => {
       setTotalAmount(newTotalAmount);
     } else {
       Toast(`Quantity cannot exceed stock of ${maxStock}`, "error");
+    }
+  };
+
+  const handleEmptyQuantity = (index) => {
+    const newSelectedItems = [...selectedItems]
+
+    if (
+      !newSelectedItems[index].quantity ||
+      newSelectedItems[index].quantity === ""
+    ) {
+      newSelectedItems[index].quantity = 1;
+      newSelectedItems[index].total =
+        parseFloat(newSelectedItems[index].price) * parseInt(1);
+      setSelectedItems(newSelectedItems);
+
+      const newTotalAmount = newSelectedItems.reduce(
+        (acc, item) => acc + parseFloat(item.total),
+        0
+      );
+      setTotalAmount(newTotalAmount);
     }
   };
 
@@ -92,14 +117,14 @@ const BillingUI = () => {
   const handlesubmit = () => {
     console.log(selectedItems);
     axios
-      .post("http://localhost:5000/Invoice/new/",{
-        cartitem: selectedItems
+      .post("http://localhost:5000/Invoice/new/", {
+        cartitem: selectedItems,
       })
       .then((res) => {
-        console.log(res.data)
-        Toast("Successfully Registered!", "success")
-        setSelectedItems([])
-        setOpenPaymentBox(!openPaymentBox)
+        console.log(res.data);
+        Toast("Successfully Registered!", "success");
+        setSelectedItems([]);
+        setOpenPaymentBox(!openPaymentBox);
       })
       .catch((err) => {
         console.error(err);
@@ -159,6 +184,7 @@ const BillingUI = () => {
                       onChange={(e) =>
                         handleQuantityChange(index, parseInt(e.target.value))
                       }
+                      onBlur={() => handleEmptyQuantity(index)}
                     />
                   </td>
                   <td className="border border-gray-300 p-2">
@@ -180,9 +206,12 @@ const BillingUI = () => {
                 <p>Total Amount: Rs. {totalAmount.toFixed(2)}</p>
               </div>
             </div>
-            <button 
-            onClick={() => {setOpenPaymentBox(!openPaymentBox)}}
-            className="bg-blue-500 text-white p-2 rounded mt-4">
+            <button
+              onClick={() => {
+                setOpenPaymentBox(!openPaymentBox);
+              }}
+              className="bg-blue-500 text-white p-2 rounded mt-4"
+            >
               Proceed to Payment
             </button>
           </div>
@@ -206,13 +235,17 @@ const BillingUI = () => {
               </div>
               <div className="text-center md:text-right mt-4 md:flex md:justify-end">
                 <button
-                onClick={handlesubmit}
-                 className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-orange-600 text-white rounded-lg font-semibold text-sm md:ml-2 md:order-2">
+                  onClick={handlesubmit}
+                  className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-orange-600 text-white rounded-lg font-semibold text-sm md:ml-2 md:order-2"
+                >
                   Yes
                 </button>
-                <button 
-                onClick={() => {setOpenPaymentBox(!openPaymentBox)}}
-                className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-gray-200 rounded-lg font-semibold text-sm mt-4 md:mt-0 md:order-1">
+                <button
+                  onClick={() => {
+                    setOpenPaymentBox(!openPaymentBox);
+                  }}
+                  className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-gray-200 rounded-lg font-semibold text-sm mt-4 md:mt-0 md:order-1"
+                >
                   Cancel
                 </button>
               </div>
