@@ -54,7 +54,7 @@ const WholesalecustomerReport = () => {
 
   return (
     <div className="container mx-auto my-8 mt-10">
-      <div className="flex items-center justify-between mt-40 mb-4">
+      <div className="flex items-center justify-between mb-4">
       
         <div className="mr-4">
         
