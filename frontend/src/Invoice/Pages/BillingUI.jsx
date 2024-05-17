@@ -59,17 +59,22 @@ const BillingUI = () => {
 
   const handleQuantityChange = (index, quantity) => {
     const newSelectedItems = [...selectedItems];
-    newSelectedItems[index].quantity = quantity;
-    newSelectedItems[index].total =
-      parseFloat(newSelectedItems[index].price) * parseInt(quantity);
+    const maxStock = newSelectedItems[index].Stock;
+    if (quantity <= maxStock) {
+      newSelectedItems[index].quantity = quantity;
+      newSelectedItems[index].total =
+        parseFloat(newSelectedItems[index].price) * parseInt(quantity);
 
-    setSelectedItems(newSelectedItems);
+      setSelectedItems(newSelectedItems);
 
-    const newTotalAmount = newSelectedItems.reduce(
-      (acc, item) => acc + parseFloat(item.total),
-      0
-    );
-    setTotalAmount(newTotalAmount);
+      const newTotalAmount = newSelectedItems.reduce(
+        (acc, item) => acc + parseFloat(item.total),
+        0
+      );
+      setTotalAmount(newTotalAmount);
+    } else {
+      Toast(`Quantity cannot exceed stock of ${maxStock}`, "error");
+    }
   };
 
   const handleDelete = (index) => {
@@ -93,13 +98,14 @@ const BillingUI = () => {
       .then((res) => {
         console.log(res.data)
         Toast("Successfully Registered!", "success")
-        setSelectedItems(null)
-        setOpenPaymentBox(!openPaymentBox)
+        setSelectedItems([])
+        setOpenPaymentBox(false)
       })
       .catch((err) => {
         console.error(err);
       });
   };
+
   return (
     <>
       <div className="container mx-auto p-4">
@@ -183,30 +189,30 @@ const BillingUI = () => {
         </div>
       </div>
       {openPaymentBox && (
-        <div class="fixed inset-0 flex items-center justify-center z-50 backdrop-blur confirm-dialog ">
-          <div class="relative px-4 min-h-screen md:flex md:items-center md:justify-center">
-            <div class=" opacity-25 w-full h-full absolute z-10 inset-0"></div>
-            <div class="bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative shadow-lg">
-              <div class="md:flex items-center">
-                <div class="rounded-full border border-gray-300 flex items-center justify-center w-16 h-16 flex-shrink-0 mx-auto">
-                  <i class="bx bx-error text-3xl">&#9888;</i>
+        <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur confirm-dialog">
+          <div className="relative px-4 min-h-screen md:flex md:items-center md:justify-center">
+            <div className="opacity-25 w-full h-full absolute z-10 inset-0"></div>
+            <div className="bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative shadow-lg">
+              <div className="md:flex items-center">
+                <div className="rounded-full border border-gray-300 flex items-center justify-center w-16 h-16 flex-shrink-0 mx-auto">
+                  <i className="bx bx-error text-3xl">&#9888;</i>
                 </div>
-                <div class="mt-4 md:mt-0 md:ml-6 text-center md:text-left">
-                  <p class="font-bold">Warning!</p>
-                  <p class="text-sm text-gray-700 mt-1">
+                <div className="mt-4 md:mt-0 md:ml-6 text-center md:text-left">
+                  <p className="font-bold">Warning!</p>
+                  <p className="text-sm text-gray-700 mt-1">
                     Are you sure? Do you want to proceed?
                   </p>
                 </div>
               </div>
-              <div class="text-center md:text-right mt-4 md:flex md:justify-end">
+              <div className="text-center md:text-right mt-4 md:flex md:justify-end">
                 <button
                 onClick={handlesubmit}
-                 class="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-orange-600 text-white rounded-lg font-semibold text-sm md:ml-2 md:order-2">
+                 className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-orange-600 text-white rounded-lg font-semibold text-sm md:ml-2 md:order-2">
                   Yes
                 </button>
                 <button 
                 onClick={() => {setOpenPaymentBox(!openPaymentBox)}}
-                class="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-gray-200 rounded-lg font-semibold text-sm mt-4 md:mt-0 md:order-1">
+                className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-gray-200 rounded-lg font-semibold text-sm mt-4 md:mt-0 md:order-1">
                   Cancel
                 </button>
               </div>
