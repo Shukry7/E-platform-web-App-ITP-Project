@@ -99,7 +99,7 @@ const BillingUI = () => {
         console.log(res.data)
         Toast("Successfully Registered!", "success")
         setSelectedItems([])
-        setOpenPaymentBox(false)
+        setOpenPaymentBox(!openPaymentBox)
       })
       .catch((err) => {
         console.error(err);
