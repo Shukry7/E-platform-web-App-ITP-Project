@@ -15,20 +15,21 @@ import TicketStatus from "./status";
 const InquiryFormUpdate = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const status = [
-        { value: "Pending" },
-        { value: "On progress" },
-        { value: "Solved" },];
+    const rating = [
+        { value: "Poor" },
+        { value: "Average" },
+        { value: "Good" },
+        { value: "Excellent" },];
         
 
         const [loading, setLoading] = useState(false);
         const [formState, inputHandler, setFormData] = useForm(
             {
-              reply: {
+              status: {
                 value: "",
                 isValid: false,
               },
-              status: {
+              rating: {
                 value: "",
                 isValid: false,
               },
@@ -43,12 +44,12 @@ const InquiryFormUpdate = () => {
               .then((res) => {
                 setFormData(
                   {
-                    reply: {
-                      value: res.data.reply,
-                      isValid: true,
-                    },
                     status: {
                       value: res.data.status,
+                      isValid: true,
+                    },
+                    rating: {
+                      value: res.data.rating,
                       isValid: true,
                     },
                   },
@@ -72,8 +73,8 @@ const InquiryFormUpdate = () => {
             .put(`http://localhost:5000/inquiry/${id}`, {
       
             
-            reply: formState.inputs.reply.value,
             status: formState.inputs.status.value,
+            rating: formState.inputs.rating.value,
             
           })
             .then((res) => {
@@ -96,28 +97,27 @@ const InquiryFormUpdate = () => {
             
             <div class="min-h-screen p-6 bg-white flex items-center justify-center">
             <div class="container mx-auto">
-                <TicketStatus status={formState.inputs.status.value}/>
                 <div>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6 max-w-4xl mr-16">
-                        
+                       <h2 style={{textAlign:"center", marginBottom:"10px"}}><b>Give your feedback</b></h2> 
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5 items-center ml-0">
                         
-                        <div class="md:col-span-3">
+                        <div class="md:col-span-8">
                             <Dropdown
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            id="status"
+                            id="rating"
                             VALIDATOR_REQUIREvalidators={[VALIDATOR_REQUIRE()]}
-                            options={status}
-                            initialValue={formState.inputs.status.value}
+                            options={rating}
+                            initialValue={formState.inputs.rating.value}
                             onInput={inputHandler}
                             Display=""
-                            label="Status:"
+                            label="Rating:"
                             />
                         </div>
                         
-                        <div class="md:col-span-3 text-right">
-                            <div class="inline-flex items-end">
-                            <Button
+                        <div class="md:col-span-3 text-right" >
+                            <div class="inline-flex items-end" >
+                            <Button 
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                 type="submit"
                                 disabled={!formState.isValid}

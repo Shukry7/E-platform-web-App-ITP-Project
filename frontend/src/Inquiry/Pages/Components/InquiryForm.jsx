@@ -61,7 +61,7 @@ const InquiryForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
-
+    
     axios
       .post("http://localhost:5000/inquiry/new",  {
       

@@ -53,7 +53,7 @@ const Inquiry = () => {
       <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
         <Navbar />
         <Header />
-        <Card className="flex" style={{ width: "100%", overflow: "hidden" ,marginTop: "50px" }}>
+        <Card className="flex" style={{ width: "100%", overflow: "hidden" }}>
           <div className="flex justify-between items-center">
             <h1 className="text-3xl my-8">Inquiry List</h1>
             <Search searchTerm={searchTerm} handleSearch={handleSearch} placeholder={"Search By subject / Name"} />

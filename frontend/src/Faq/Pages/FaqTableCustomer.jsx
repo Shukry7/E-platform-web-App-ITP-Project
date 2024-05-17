@@ -57,6 +57,7 @@ const Faq = () => {
               placeholder={"Descrie your issue"}
              />
             </div>
+           
           </div>
           <FaqTable
             faq={filteredfaq}
