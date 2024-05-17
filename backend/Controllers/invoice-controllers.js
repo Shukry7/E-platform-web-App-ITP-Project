@@ -64,7 +64,7 @@ createInvoice = async (req, res) => {
             $inc: { inStock: -buyqtytemp },
           });
 
-          //profit = profit - discount
+          profit = profit - item.discount
   
           return {
             order: id,
