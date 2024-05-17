@@ -57,8 +57,8 @@ const Inquiry = () => {
       <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900 mr-40">
           <Card className="flex" style={{ width: "100%" } }>
           <div className="flex justify-between items-center ">
-            <h1 className="text-3xl my-8 ml-72" style={{ color: 'red' }}>My Inquiries</h1>
-            <div style={{ width: "150px", marginRight: "80px" }}>
+            <h1 className="text-3xl my-8 ml4" style={{ color: 'red' }}>My Inquiries</h1>
+            <div style={{ width: "250px", marginRight: "80px" }}>
               <Select
               isSearchable
               value={statusFilter}
@@ -72,6 +72,9 @@ const Inquiry = () => {
               ]}
             />
             </div>
+            <Link to="/inquiry/create">
+              <MdOutlineAddBox className="text-sky-800 text-4xl mr-4" />
+            </Link>
           </div>
           <FaqTable
             inquiry={filteredinquiry}

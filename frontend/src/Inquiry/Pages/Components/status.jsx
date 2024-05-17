@@ -5,16 +5,20 @@ const TicketStatus = ({ status }) => {
   let pendingColor = "gray";
   let progressColor = "gray";
   let solvedColor = "gray";
-
+  var textColor ="white";
+  let text="";
   switch (status) {
     case "Pending":
       pendingColor = "orange";
+      text="Inquiry Sent";
       break;
     case "On progress":
       progressColor = "0093FF";
+      text="In progress...";   
       break;
     case "Solved":
       solvedColor = "green";
+      text="Inquiry Resolved";
       break;
     default:
       break;
@@ -35,7 +39,7 @@ const TicketStatus = ({ status }) => {
         <FaCheckCircle size={40} color={solvedColor} />
       </div>
       <div><br></br></div>
-      <span>{status}</span>
+      <span ><b>{text}</b></span>
     </div>
   );
 };
