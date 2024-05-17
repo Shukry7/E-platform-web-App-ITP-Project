@@ -48,7 +48,7 @@ const Faq = () => {
           
         <Navbar/>
         <Header/>
-        <Card className="flex" style={{ width: "100%", overflow: "hidden" }}>
+        <Card className="flex " style={{ width: "100%", overflow: "hidden" }}>
           <div className="flex justify-between items-center">
             <h1 className="text-3xl my-8">Frequently Asked Questions List</h1>
             <Search
