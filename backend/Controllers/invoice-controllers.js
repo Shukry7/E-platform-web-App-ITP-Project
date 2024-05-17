@@ -100,7 +100,7 @@ createInvoice = async (req, res) => {
 
   const listInvoice = async (req, res) => {
     try {
-      const invoice = await Invoice.find({}).sort({ _id: -1 });
+      const invoice = await Invoice.find({}).sort({ _id: -1 }).populate({path: 'CartItems.pId'});
       return res.status(200).json(invoice);
     } catch (error) {
       console.log(error.message);
