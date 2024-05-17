@@ -70,6 +70,13 @@ const Customers = () => {
                   handleSearch={handleSearch}
                   placeholder={"Search By ID / Name"}
                 />
+                <Link to="/Customer/TopCustomers">
+                <button
+                  className="bg-blue-500 hover:bg-green-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                >
+                  Top Customers
+                </button>
+                </Link>
                 <h1 className="text-3xl my-8">Customer List</h1>
                 <Link to="/Customer/create">
                   <MdOutlineAddBox className="text-sky-800 text-4xl" />
@@ -77,7 +84,7 @@ const Customers = () => {
               </div>
               <CustomerTable
 
-                Customers={customers}
+                Customers={displayCustomer}
                 loading={loading}
                 setloading={setLoading}
                 dlt={deleteCustomer} 

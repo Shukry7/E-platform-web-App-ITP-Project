@@ -25,6 +25,7 @@ import CCForm from "./Payment/Pages/Components/CreditCardForm";
 import Customers from "./Customer/Customers";
 import RegisterCustomer from "./Customer/RegisterCustomer";
 import UpdateCustomer from "./Customer/UpdateCustomer";
+import TopCustomers from "./Customer/TopCustomers";
 import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery";
 import Dashboard from "./Dashboard/Dashboard";
 import Cart from "./Cart/Pages/Cart";
@@ -59,10 +60,11 @@ import CalculateProfit from "./Profit/Pages/CalculateProfit";
 import HistoryTable from "./Employee/Pages/salaryHistory"
 import Report from "./Employee/Pages/reportEmp";
 import SupplierReport from "./Supplier/Pages/SupplierReport";
-import ProfitReport from "./Profit/Pages/ProfitReport";
-import ProductReport from "./Product/Pages/ProductReport";
-import WholesalecustomerReport from "./Wholesalecustomer/Pages/reportWholesalecustomer";
-import OrderReport from "./Order/OrderReport";
+import DeliveryPersonOrders from "./Delivery/Pages/CompleteDelivery";
+import Employeelogin from "./Employee/Pages/Employeelogin"
+import EmployeeloginformUpdate from "./Employee/Pages/Components/employeeloginformUpdate"
+import Employeeloginform from "./Employee/Pages/Components/EmployeeloginForm"
+import BillingUI from "./Invoice/Pages/BillingUI";
 
 const App = () => {
   return (
@@ -99,6 +101,7 @@ const App = () => {
         <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
         <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
         <Route path="/Customer/view/" exact element={<ViewCustomer/>}/>
+        <Route path="/Customer/TopCustomers" exact element={<TopCustomers/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
         <Route path="/Cart" exact element={<Cart/>}/>
         <Route path="/offpay" exact element={<Offpay/>}/>
@@ -110,23 +113,24 @@ const App = () => {
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/update/:id" exact element={<UpdateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/view/:id" exact element={<ViewWholesalecustomer/>}/>
-        <Route path="/Wholesalecustomer/report" exact element={<WholesalecustomerReport/>}/>
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
+        <Route path="/Employeelogin" exact element={<Employeelogin />}/>
+        <Route path="/Employeelogin/new" exact element={<Employeeloginform />}/>
+        <Route path="/Employeelogin/update" exact element={<Employeeloginform />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/salaryHistory" exact element={<HistoryTable/>}/>
         <Route path="/employee/report" exact element={<Report/>}/>
         <Route path="/Profit/cost" exact element={<ViewCost/>}/>
         <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
-        <Route path="/Profit/report" exact element={<ProfitReport/>}/>
         <Route path="/Order" exact element={<Order/>}/>
         <Route path="/Profit/calculate" exact element={<CalculateProfit/>}/>
+        <Route path="/Billing" exact element={<BillingUI/>}/>
         <Route path="/" exact element={
           <CheckLogin>
             <LoginPage/>
-          </CheckLogin>}/>  
-        <Route path="/ProductReport" exact element={<ProductReport/>}/>
-        <Route path="/OrderReport" exact element={<OrderReport/>}/>
+          </CheckLogin>}/> 
+        
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/deliverylogin" exact element={
@@ -138,6 +142,10 @@ const App = () => {
           
             <DeliveryPersonProfile/>
         }/>
+         <Route path="/deliverypersonorder" exact element={
+          
+          <DeliveryPersonOrders/>
+      }/>
       </Routes >
     </Router>
     </DeliveryAuthProvider>

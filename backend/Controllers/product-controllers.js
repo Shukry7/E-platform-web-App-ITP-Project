@@ -174,13 +174,10 @@ const getTopOrderedProductsThisMonth = async (req, res) => {
       { $limit: 5 },
     ]);
 
-    // Extracting product IDs from topProducts array
     const productIds = topProducts.map((item) => item._id);
 
-    // Populate product details for each product ID
     const populatedProducts = await Product.find({ _id: { $in: productIds } });
 
-    // Replace product ID with product details in topProducts
     const topProductsDetails = topProducts.map((item) => {
       const productDetail = populatedProducts.find(
         (product) => product._id.toString() === item._id.toString()
@@ -203,19 +200,19 @@ const GetProductReportByDateRange = async (req, res) => {
     const startDate = new Date(req.query.startDate);
     const endDate = new Date(req.query.endDate);
 
-    console.log(startDate,endDate)
+    console.log(startDate, endDate);
     const orders = await Order.find({
       createdAt: { $gte: startDate, $lte: endDate },
     });
     const productIds = orders.flatMap((order) =>
       order.CartItems.map((item) => item.productId)
     );
-    
+
     const products = await Product.find({ _id: { $in: productIds } });
     const productUnits = await Order.aggregate([
       {
         $match: {
-          createdAt: { $gte: startDate, $lte: endDate},
+          createdAt: { $gte: startDate, $lte: endDate },
         },
       },
       { $unwind: "$CartItems" },
@@ -232,16 +229,26 @@ const GetProductReportByDateRange = async (req, res) => {
           createdAt: { $gte: startDate, $lte: endDate },
         },
       },
-      { $group: { _id: "$ProductID", totalReviews: { $sum: 1 }, totalRating: { $sum: "$Rating" } } },
+      {
+        $group: {
+          _id: "$ProductID",
+          totalReviews: { $sum: 1 },
+          totalRating: { $sum: "$Rating" },
+        },
+      },
     ]);
     const productDetails = products.map((product) => {
-      const productUnit = productUnits.find(unit => unit._id?.equals(product._id));
-      const reviewCount = reviewCounts.find(review => review._id?.equals(product._id));
+      const productUnit = productUnits.find((unit) =>
+        unit._id?.equals(product._id)
+      );
+      const reviewCount = reviewCounts.find((review) =>
+        review._id?.equals(product._id)
+      );
       const totalUnits = productUnit ? productUnit.totalUnits : 0;
       const totalReviews = reviewCount ? reviewCount.totalReviews : 0;
       const totalRating = reviewCount ? reviewCount.totalRating : 0;
       const averageRating = totalReviews !== 0 ? totalRating / totalReviews : 0;
-      
+
       return {
         ...product.toObject(),
         totalUnits,
@@ -255,6 +262,51 @@ const GetProductReportByDateRange = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+const getTotalUnitsSoldPast9Months = async (req,res) => {
+  try {
+    const totalUnitsSoldByMonth = [];
+    console.log("hi")
+
+    const monthsArray = [];
+    for (let i = 0; i < 9; i++) {
+      monthsArray.push(
+        moment().subtract(i, "months").startOf("month").toDate()
+      );
+    }
+    console.log(monthsArray)
+    const result = await Order.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: monthsArray[8] },
+        },
+      },
+
+      { $unwind: "$CartItems" },
+
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+          totalUnitsSold: { $sum: "$CartItems.quantity" },
+        },
+      },
+    ]);
+    console.log(result)
+    monthsArray.forEach((month) => {
+      const formattedMonth = moment(month).format("YYYY-MM");
+      const monthData = result.find((item) => item._id === formattedMonth);
+      totalUnitsSoldByMonth.push({
+        month: formattedMonth,
+        totalUnitsSold: monthData ? monthData.totalUnitsSold : 0,
+      });
+    });
+    console.log(monthsArray)
+    console.log(totalUnitsSoldByMonth)
+    res.json(totalUnitsSoldByMonth);
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
 
 exports.createProduct = createProduct;
 exports.listProduct = listProduct;
@@ -265,3 +317,4 @@ exports.UpdateProductPriceQtyndStock = UpdateProductPriceQtyndStock;
 exports.listRestockProduct = listRestockProduct;
 exports.getTopOrderedProductsThisMonth = getTopOrderedProductsThisMonth;
 exports.GetProductReportByDateRange = GetProductReportByDateRange;
+exports.getTotalUnitsSoldPast9Months = getTotalUnitsSoldPast9Months;

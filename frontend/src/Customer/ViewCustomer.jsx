@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import Navbar from '../Shared/Components/UiElements/Navbar';
 import ViewCard from './Components/ViewCard';
 import Header from '../Shared/Components/UiElements/header';
 import { AuthContext } from "../Shared/Components/context/authcontext";
@@ -35,7 +34,6 @@ const ViewCustomer = () => {
       <>
         <div className='flex'>
           <div>
-            <Navbar />
             <Header/>
           </div>
           <div className='flex-1 w-64 ...'>

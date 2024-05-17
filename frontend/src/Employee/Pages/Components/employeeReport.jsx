@@ -29,30 +29,37 @@ const MonthlyReportPage = () => {
   }, [month]);
 
   useEffect(() => {
-    
-    const totalExpense = salaries.reduce((acc, curr) => acc + curr.net, 0);
-    setTotalSalaryExpense(totalExpense);
-    
-    setNumEmployeesPaid(salaries.length);
-    
-    if (salaries.length > 0) {
-      const salariesArr = salaries.map((salary) => salary.net);
-      setMaxSalary(Math.max(...salariesArr));
-      setMinSalary(Math.min(...salariesArr));
+    const salariesForSelectedMonth = salaries.filter(salary => {
+      const salaryMonth = new Date(salary.date).getMonth() + 1;
+      return salaryMonth === parseInt(month);
+    });
+  
+    const totalExpense = salariesForSelectedMonth.reduce((acc, curr) => acc + curr.net, 0);
+    setTotalSalaryExpense(totalExpense || 0);
+  
+    setNumEmployeesPaid(salariesForSelectedMonth.length || 0);
+  
+    if (salariesForSelectedMonth.length > 0) {
+      const salariesArr = salariesForSelectedMonth.map(salary => salary.net);
+      setMaxSalary(Math.max(...salariesArr) || 0);
+      setMinSalary(Math.min(...salariesArr) || 0);
+    } else {
+      setMaxSalary(0);
+      setMinSalary(0);
     }
-  }, [salaries, month]); 
+  }, [salaries, month]);
   const currentDate = new Date().toLocaleDateString();
-
+  
   const componentRef = useRef();
   const handleprint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: "salary report",
-    onAfterPrint: () => alert("salary Report is successfully genrated !"),
+    onAfterPrint: () => alert("salary Report is successfully generated !"),
   });
 
   return (
     <div className="container mx-auto my-8 mt-10">
-      <div className="flex items-center justify-between mt-40 mb-4">
+      <div className="flex items-center justify-between mb-4">
       
         <div className="mr-4">
         
@@ -133,8 +140,8 @@ const MonthlyReportPage = () => {
                 
                 <p><b>Total Salary Expense for the Month:</b> Rs.{totalSalaryExpense}.00</p>
                 
-                <p><b>Maximum Salary Paid:</b> Rs.{maxSalary}.00</p>
-                <p><b>Minimum Salary Paid :</b> Rs.{minSalary}.00</p>
+                <p><b>Maximum Salary Paid:</b> Rs.{maxSalary}.00/-</p>
+                <p><b>Minimum Salary Paid :</b> Rs.{minSalary}.00/-</p>
                 <p><b>Number of Employees Paid: </b>{numEmployeesPaid}</p>
               </div>
             </React.Fragment>

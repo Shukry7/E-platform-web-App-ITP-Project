@@ -26,17 +26,19 @@ const WholesalecustomerReport = () => {
         console.error("Error fetching credit:", error);
         setLoading(false);
       });
-  },[month]);
+  },[]);
+
+  console.log(credit)
 
   useEffect(() => {
     
-    const totalExpense = credit.reduce((acc, curr) => acc + curr.net, 0);
+    const totalExpense = credit.reduce((acc, curr) => acc + curr.credit, 0);
     setTotalcredit(totalExpense);
     
     setnumcustomer(credit.length);
     
     if (credit.length > 0) {
-      const creditArr = credit.map((credit) => credit.net);
+      const creditArr = credit.map((credit) => credit.credit);
       setMaxcredit(Math.max(...creditArr));
       setMincredit(Math.min(...creditArr));
     }
@@ -56,24 +58,6 @@ const WholesalecustomerReport = () => {
       
         <div className="mr-4">
         
-          <label htmlFor="monthSelect" className="mr-2">
-            Select Month:
-          </label>
-          <select
-            id="monthSelect"
-            value={month}
-            onChange={(e) => setMonth(e.target.value)}
-            className="border rounded-md py-2 px-3 focus:outline-none focus:ring focus:border-blue-300"
-          >
-            <option value="">Select</option>
-            {[...Array(12).keys()].map((month) => (
-              <option key={month + 1} value={month + 1}>
-                {new Date(0, month).toLocaleString("default", {
-                  month: "long",
-                })}
-              </option>
-            ))}
-          </select>
         </div>
         
         <button
@@ -84,7 +68,7 @@ const WholesalecustomerReport = () => {
         </button>
       </div>
       <div className="container mx-auto my-8" ref={componentRef}>
-        <h1 className="text-3xl font-bold mb-2">Wholesalecustomer Credit Report : {new Date(0, month - 1).toLocaleString("default", { month: "long" })}</h1>
+        <h1 className="text-3xl font-bold mb-2">Wholesalecustomer Credit Report</h1>
         <p className="mb-4">
           <strong>Business Name:</strong> Kandurata Glass and Locks
           <br />
@@ -109,17 +93,12 @@ const WholesalecustomerReport = () => {
                 ]}
                 style={{ width: "100%" }}
               >
-                {credit
-                  .filter((credit) => {
-                    const creditMonth = new Date(credit.date).getMonth() + 1;
-                    return creditMonth === parseInt(month);
-                  })
-                  .map((credit, index) => (
+                {credit.map((credit, index) => (
                     <TableRow key={index}>
                       <td className="text-center">{index + 1}</td>
-                      <td className="text-center">{credit.wcustomer.ID}</td>
-                      <td className="text-center">{credit.wcustomer.name}</td>
-                      <td className="text-center">{credit.credit_limit}</td>
+                      <td className="text-center">{credit.ID}</td>
+                      <td className="text-center">{credit.name}</td>
+                      <td className="text-center">{credit.creditlimit}</td>
                       <td className="text-center">{credit.credit}</td>
                     </TableRow>
                   ))}

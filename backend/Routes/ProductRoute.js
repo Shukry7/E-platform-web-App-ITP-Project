@@ -24,5 +24,6 @@ Router.put(
 Router.get("/RestockProduct/", ProductControllers.listRestockProduct);
 Router.get("/Top-products", ProductControllers.getTopOrderedProductsThisMonth)
 Router.get("/Report", ProductControllers.GetProductReportByDateRange)
+Router.get("/Months", ProductControllers.getTotalUnitsSoldPast9Months)
 
 module.exports = Router;

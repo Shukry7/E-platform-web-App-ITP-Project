@@ -28,7 +28,9 @@ const ProfitRoute = require("./Routes/ProfitRoute");
 const AvailableRoute = require("./Routes/AvailableRoute");
 const salaryHistory = require("./Routes/salaryHistoryRoute")
 const DeliveryOrderRoute = require("./Routes/AssignRoute")
-
+const EmployeeLoginRoute = require("./Routes/EmployeeLoginRoute")//database retrival
+const EmployeePersonLoginRoute = require("./Routes/EmployeeloginPersonRoute")
+const InvoiceRoute = require("./Routes/InvoiceRoute");
 //MiddleWare
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -66,7 +68,10 @@ app.use("/deliveryCheckLogin", DeliveryPersonLoginRoute)
 app.use("/profit", ProfitRoute)
 app.use("/available", AvailableRoute);
 app.use("/salaryHistory",salaryHistory)
+app.use("/EmployeeLogin",EmployeeLoginRoute)
 app.use("/deliveryOrder",DeliveryOrderRoute)
+app.use("/EmployeeChecklogin",EmployeePersonLoginRoute)
+app.use("/Invoice", InvoiceRoute);
 
 
 // Read user ID from the cookie

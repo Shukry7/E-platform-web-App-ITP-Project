@@ -216,8 +216,8 @@ const ProfitReportDetails = () => {
                 <p><b>Total Quantity sold :</b> {summary.totalQuantity}</p>
                 <p><b>Total sales :</b> Rs.{summary.totalSales}.00</p>
                 <p><b>Total profit :</b> Rs.{summary.totalProfit}.00</p>
-                <p><b>Most sold product :</b> {summary.mostSoldProduct} with {summary.mostSoldProductQuantity} units sold</p>
-                <p><b>Most sales product :</b> {summary.mostSalesProduct} with Rs.{summary.mostSalesProductAmount}.00 in sales</p>
+                <p><b>Most sold product by quantity :</b> {summary.mostSoldProduct} with {summary.mostSoldProductQuantity} units sold</p>
+                <p><b>Most sold product :</b> {summary.mostSalesProduct} with Rs.{summary.mostSalesProductAmount}.00 in sales</p>
                 <p><b>Most profitable product :</b> {summary.mostProfitableProduct} with Rs.{summary.mostProfitableProductProfit}.00 in profit</p>
                 <p><b>Previous month total profit :</b> Rs.{previousMonthProfit}.00</p>
                 <p><b>Previous month total sales :</b> Rs.{previousMonthSales}.00</p>

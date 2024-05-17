@@ -26,7 +26,6 @@ const TopPandC = () => {
       .get("http://localhost:5000/customer/Top/Customers")
       .then((res) => {
         setTopCustomers(res.data);
-        console.log(res.data)
         setLoading(false);
       })
       .catch((err) => {
@@ -36,7 +35,7 @@ const TopPandC = () => {
   }, []);
   return (
     <>
-      <div class="p-4 h-5/6 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+      <div class="p-4 min-h-5/6 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
         <h3 class="flex items-center mb-4 text-lg font-semibold text-gray-900 dark:text-white">
           Statistics this month
           <button
@@ -241,7 +240,7 @@ const TopPandC = () => {
                     <div class="flex items-center space-x-4">
                       <div class="flex-shrink-0">
                         <img
-                          class="w-8 h-8 rounded-full"
+                          class="w-8 h-8 rounded-full object-cover"
                           src={`http://localhost:5000/${customer.customer.image}`}
                           alt={customer.customer.name}
                         />
