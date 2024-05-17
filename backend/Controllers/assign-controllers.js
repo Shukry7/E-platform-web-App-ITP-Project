@@ -29,6 +29,7 @@ const listOrderDelivery = async (req, res) => {
   }
 };
 
+
 const listOrderDeliveryById = async (req, res) => {
   try {
     const assignedOrders = await DeliveryOrder.distinct('order');
@@ -82,7 +83,23 @@ const listAssignedDeliveryByIds = async (req, res) => {
 };
 
 
+const listAllCompletedDeliveries = async (req, res) => {
+  try {
+    const deliveryOrders = await DeliveryOrder.find({ status:"Complete"})
+      .populate("delivery")
+      .populate({
+        path: "order",
+        populate: {
+          path: "userId"
+        }
+      });
 
+    return res.status(200).json(deliveryOrders);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
 
 
 const UpdateOrderDelivery = async (req, res) => {
@@ -111,5 +128,6 @@ exports.createOrderDelivery= createOrderDelivery;
 exports.listOrderDelivery = listOrderDelivery;
 exports.listOrderDeliveryById = listOrderDeliveryById;
 exports.UpdateOrderDelivery= UpdateOrderDelivery;
-exports.listAssignedDeliveryById = listAssignedDeliveryById; 
+exports.listAssignedDeliveryById = listAssignedDeliveryById;
+exports.listAllCompletedDeliveries = listAllCompletedDeliveries; 
 exports.listAssignedDeliveryByIds =  listAssignedDeliveryByIds;

@@ -65,6 +65,7 @@ import Employeelogin from "./Employee/Pages/Employeelogin"
 import EmployeeloginformUpdate from "./Employee/Pages/Components/employeeloginformUpdate"
 import Employeeloginform from "./Employee/Pages/Components/EmployeeloginForm"
 import BillingUI from "./Invoice/Pages/BillingUI";
+import DeliveryReport from "./Delivery/Pages/DeliveryReport";
 
 const App = () => {
   return (
@@ -121,6 +122,7 @@ const App = () => {
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/salaryHistory" exact element={<HistoryTable/>}/>
         <Route path="/employee/report" exact element={<Report/>}/>
+        <Route path="/delivery/report" exact element={<DeliveryReport/>}/>
         <Route path="/Profit/cost" exact element={<ViewCost/>}/>
         <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
         <Route path="/Order" exact element={<Order/>}/>
