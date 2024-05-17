@@ -50,10 +50,9 @@ const MarkAttendance = () => {
         setEmployees(res.data);
 
         const initialAttendanceRecords = res.data.map((employee) => {
-
           const selected = attendance.filter((check) => {
             if (!check || !check.employee || !check.employee._id) {
-              return false; 
+              return false;
             }
             const checkDateFormatted = convertDatabaseDate(check.date);
             return (
@@ -62,7 +61,7 @@ const MarkAttendance = () => {
             );
           });
           const status = selected.length > 0 ? selected[0].status : "Absent";
-          console.log(selected)
+          console.log(selected);
           return {
             employee: employee,
             date: dateTimeString,
