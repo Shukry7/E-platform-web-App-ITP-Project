@@ -26,6 +26,7 @@ createInvoice = async (req, res) => {
           });
   
         return {
+            pId:item._id,
             productId: item.ID,
             price: item.price,
             quantity: item.quantity,

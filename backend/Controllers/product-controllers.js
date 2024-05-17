@@ -4,6 +4,7 @@ const supplierproduct = require("../Models/SupplierProduct");
 const Order = require("../Models/OrderModel");
 const ProductReviews = require("../Models/ProductReview");
 const moment = require("moment");
+const Invoice = require("../Models/InvoiceModel");
 
 const createProduct = async (req, res, next) => {
   const { name, category, Alert_quantity, price, weight, description } =
@@ -200,16 +201,28 @@ const GetProductReportByDateRange = async (req, res) => {
     const startDate = new Date(req.query.startDate);
     const endDate = new Date(req.query.endDate);
 
-    console.log(startDate, endDate);
+    
     const orders = await Order.find({
       createdAt: { $gte: startDate, $lte: endDate },
     });
-    const productIds = orders.flatMap((order) =>
-      order.CartItems.map((item) => item.productId)
-    );
+    
+    const invoices = await Invoice.find({
+      createdAt: { $gte: startDate, $lte: endDate },
+    });
+    
+    const productIds = [
+      ...new Set([
+        ...orders.flatMap((order) =>
+          order.CartItems.map((item) => item.productId)
+        ),
+        ...invoices.flatMap((invoice) =>
+          invoice.CartItems.map((item) => item.pId)
+        ),
+      ]),
+    ];
 
     const products = await Product.find({ _id: { $in: productIds } });
-    const productUnits = await Order.aggregate([
+    const orderProductUnits = await Order.aggregate([
       {
         $match: {
           createdAt: { $gte: startDate, $lte: endDate },
@@ -223,6 +236,30 @@ const GetProductReportByDateRange = async (req, res) => {
         },
       },
     ]);
+    const invoiceProductUnits = await Invoice.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: startDate, $lte: endDate },
+        },
+      },
+      { $unwind: "$CartItems" },
+      {
+        $group: {
+          _id: "$CartItems.pId",
+          totalUnits: { $sum: "$CartItems.quantity" },
+        },
+      },
+    ]);
+    console.log(invoiceProductUnits)
+
+    const combinedProductUnits = [
+      ...orderProductUnits,
+      ...invoiceProductUnits,
+    ].reduce((acc, item) => {
+      acc[item._id] = (acc[item._id] || 0) + item.totalUnits;
+      return acc;
+    }, {});
+
     const reviewCounts = await ProductReviews.aggregate([
       {
         $match: {
@@ -237,17 +274,16 @@ const GetProductReportByDateRange = async (req, res) => {
         },
       },
     ]);
+
     const productDetails = products.map((product) => {
-      const productUnit = productUnits.find((unit) =>
-        unit._id?.equals(product._id)
-      );
+      const totalUnits = combinedProductUnits[product._id] || 0;
       const reviewCount = reviewCounts.find((review) =>
         review._id?.equals(product._id)
       );
-      const totalUnits = productUnit ? productUnit.totalUnits : 0;
       const totalReviews = reviewCount ? reviewCount.totalReviews : 0;
       const totalRating = reviewCount ? reviewCount.totalRating : 0;
       const averageRating = totalReviews !== 0 ? totalRating / totalReviews : 0;
+
 
       return {
         ...product.toObject(),
@@ -262,49 +298,76 @@ const GetProductReportByDateRange = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-const getTotalUnitsSoldPast9Months = async (req,res) => {
+
+
+const getTotalUnitsSoldPast9Months = async (req, res) => {
   try {
     const totalUnitsSoldByMonth = [];
-    console.log("hi")
 
     const monthsArray = [];
     for (let i = 0; i < 9; i++) {
       monthsArray.push(
-        moment().subtract(i, "months").startOf("month").toDate()
+        moment().subtract(i, 'months').startOf('month').toDate()
       );
     }
-    console.log(monthsArray)
-    const result = await Order.aggregate([
+
+    const startMonth = monthsArray[8];
+
+    const orderAggregation = Order.aggregate([
       {
         $match: {
-          createdAt: { $gte: monthsArray[8] },
+          createdAt: { $gte: startMonth },
         },
       },
-
-      { $unwind: "$CartItems" },
-
+      { $unwind: '$CartItems' },
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
-          totalUnitsSold: { $sum: "$CartItems.quantity" },
+          _id: { $dateToString: { format: '%Y-%m', date: '$createdAt' } },
+          totalUnitsSold: { $sum: '$CartItems.quantity' },
         },
       },
     ]);
-    console.log(result)
+
+    const invoiceAggregation = Invoice.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: startMonth },
+        },
+      },
+      { $unwind: '$CartItems' },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m', date: '$createdAt' } },
+          totalUnitsSold: { $sum: '$CartItems.quantity' },
+        },
+      },
+    ]);
+
+    const [orderResults, invoiceResults] = await Promise.all([
+      orderAggregation,
+      invoiceAggregation,
+    ]);
+
+    const combinedResults = [...orderResults, ...invoiceResults].reduce((acc, item) => {
+      if (!acc[item._id]) {
+        acc[item._id] = 0;
+      }
+      acc[item._id] += item.totalUnitsSold;
+      return acc;
+    }, {});
+
     monthsArray.forEach((month) => {
-      const formattedMonth = moment(month).format("YYYY-MM");
-      const monthData = result.find((item) => item._id === formattedMonth);
+      const formattedMonth = moment(month).format('YYYY-MM');
       totalUnitsSoldByMonth.push({
         month: formattedMonth,
-        totalUnitsSold: monthData ? monthData.totalUnitsSold : 0,
+        totalUnitsSold: combinedResults[formattedMonth] || 0,
       });
     });
-    console.log(monthsArray)
-    console.log(totalUnitsSoldByMonth)
+
     res.json(totalUnitsSoldByMonth);
   } catch (error) {
-    console.error("Error:", error);
-    throw error;
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
