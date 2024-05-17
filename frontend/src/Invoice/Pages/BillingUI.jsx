@@ -145,6 +145,7 @@ const BillingUI = () => {
         setSelectedItems([]);
         setOpenPaymentBox(!openPaymentBox);
         handlePrint();
+        setTotalItems(0)
         setTotalAmount(0)
         setPaidAmount(0)
         setBalance(0)
