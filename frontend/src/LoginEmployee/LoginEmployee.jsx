@@ -39,8 +39,12 @@ export const EmployeeLoginPage = () => {
   };
 
   return (
-    <div>
-      <section className="m-8 pt-14 flex gap-4">
+    <div className="h-screen" style={{
+            backgroundImage: `url('/img/background.jpg')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}>
+      <section className="m-8 pl-5 pt-14 flex gap-4" >
         <div className="w-full lg:w-3/5 mt-24">
           <div className="text-center">
             <Typography variant="h2" className="font-bold mb-4">
@@ -100,21 +104,9 @@ export const EmployeeLoginPage = () => {
               Sign In
             </Button>
 
-            <div className="flex items-center justify-between gap-2 mt-6">
-              <Typography variant="small" className="font-medium text-gray-900">
-                <a href="#">Forgot Password</a>
-              </Typography>
-            </div>
-            <div className="space-y-4 mt-8"></div>
-            <Typography
-              variant="paragraph"
-              className="text-center text-blue-gray-500 font-medium mt-4"
-            >
-              Not registered?
-              <Link to="/Customer/create" className="text-gray-900 ml-1">
-                Create account
-              </Link>
-            </Typography>
+            
+            
+          
           </form>
         </div>
         <div className="w-2/5 h-full hidden lg:block">

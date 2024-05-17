@@ -58,7 +58,7 @@ const InvoiceTable = () => {
 
   return (
     <><div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
-        <Navbar select={"Product Details"}/>
+        <Navbar select={"Invoice"}/>
         <Header/>
       
         <Card className="flex" style={{ width: "100%" }}>

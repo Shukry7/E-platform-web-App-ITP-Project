@@ -116,9 +116,13 @@ const ProductCustomerUI = () => {
   };
 
   return (
-    <>
+    <><div className="h-full w-screen" style={{
+      backgroundImage: `url('/img/products.jpg')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}>
     <CustomerHeader title="Product List"/>
-      <main className="mx-auto pb-24  sm:pb-24 lg:max-w-[80rem] ">
+      <main className="mx-auto pb-24  sm:pb-24 lg:max-w-[80rem] "  >
         
         <div className="lg:gap-8 lg:grid lg:grid-cols-3 xl:grid-cols-5 xl:pt-12">
           <aside>
@@ -298,7 +302,7 @@ const ProductCustomerUI = () => {
             </div>
           </div>
         </div>
-      </main>
+      </main></div>
     </>
   );
 };

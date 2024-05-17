@@ -30,6 +30,7 @@ const ProductReportTable = ({ date, componentRef }) => {
       })
       .then((res) => {
         setDetails(res.data);
+        console.log(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -40,6 +41,14 @@ const ProductReportTable = ({ date, componentRef }) => {
 
   const totalUnitsSold = details.reduce(
     (total, product) => total + product.totalUnits,
+    0
+  );
+  const totalOnlineUnits = details.reduce(
+    (total, product) => total + product.totalOrderUnits,
+    0
+  );
+  const totalOfflineUnits = details.reduce(
+    (total, product) => total + product.totalInvoiceUnits,
     0
   );
   const totalReviewsReceived = details.reduce(
@@ -54,7 +63,8 @@ const ProductReportTable = ({ date, componentRef }) => {
   );
 
   return (
-    <div className="container mx-auto my-8" ref={componentRef}>
+    <div className="container mx-auto my-8" >
+    <div className="m-3" ref={componentRef}>
       <h1 className="text-3xl font-bold mb-2">
         Product Report : {date.startDate}
         {" - "}
@@ -84,7 +94,7 @@ const ProductReportTable = ({ date, componentRef }) => {
                 Category
               </th>
               <th className="py-2 px-2 sm:px-3 text-center text-[#212B36] sm:text-base font-bold whitespace-nowrap">
-                Stock
+                Online/Offline
               </th>
               <th className="py-2 px-2 sm:px-3 text-center text-[#212B36] sm:text-base font-bold whitespace-nowrap">
                 Unit Sold
@@ -99,11 +109,14 @@ const ProductReportTable = ({ date, componentRef }) => {
           </thead>
           <tbody>
             {loading ? (
-              <><tr >
-              <th colSpan={7}>
-                <center>
-                  <Loader3 />
-                </center></th></tr>
+              <>
+                <tr>
+                  <th colSpan={7}>
+                    <center>
+                      <Loader3 />
+                    </center>
+                  </th>
+                </tr>
               </>
             ) : (
               <>
@@ -143,7 +156,7 @@ const ProductReportTable = ({ date, componentRef }) => {
                           index === 0 ? "border-t-2 border-black" : "border-t"
                         }`}
                       >
-                        {data?.Stock}
+                        {data?.totalOrderUnits} / {data?.totalInvoiceUnits}
                       </td>
                       <td
                         className={`py-1 px-2 sm:px-3 font-normal text-base text-center ${
@@ -243,6 +256,12 @@ const ProductReportTable = ({ date, componentRef }) => {
           <b>Total Unit Sold :</b> {totalUnitsSold}
         </p>
         <p>
+          <b>Total Online unit Sold :</b> {totalOnlineUnits}
+        </p>
+        <p>
+          <b>Total Offline unit Sold :</b> {totalOfflineUnits}
+        </p>
+        <p>
           <b>Top Product :</b>{" "}
           {topProducts.map((product, index) => (
             <span key={index}>
@@ -265,6 +284,7 @@ const ProductReportTable = ({ date, componentRef }) => {
         <div>
           <p>Signature of Authorized Person</p>
         </div>
+      </div>
       </div>
     </div>
   );

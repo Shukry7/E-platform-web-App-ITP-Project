@@ -84,16 +84,17 @@ const CustomerHeader = (props) => {
       <div class=" flex-1 flex flex-col">
         <nav class="px-4 flex justify-between bg-white h-16 border-b-2">
           <ul class="flex items-center">
+          <Link to="/products">
             <li class="h-6 w-6 flex items-center">
               <img
                 class="h-full w-full mx-auto"
-                src="https://www.svgrepo.com/show/424912/valorant-logo-play-2.svg"
+                src="/IMG/LOGO.png"
                 alt="Dedsec logo"
               />
               <span class="self-center text-xl font-semibold whitespace-nowrap text-orange-600 dark:text-white ml-2">
                 Kandurata Glass House
               </span>
-            </li>
+            </li></Link>
           </ul>
 
           <ul class="flex items-center pl-40">

@@ -200,9 +200,16 @@ const BillingUI = () => {
         balance={balance}
         checkbox={checkbox}
       />
-      <div className="bg-white h-screen">
-        <div className="container mx-auto p-4 h-full -z-40">
-          <div className="grid grid-cols-2 gap-4">
+      <div className="bg-gray-200 h-screen" style={{
+            backgroundImage: `url('/img/Billing.png')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}>
+        <div
+          className="container mx-auto  p-4 h-full  "
+          
+        >
+          <div className="grid grid-cols-2 mt-20 gap-4 p-5 bg-white shadow-lg">
             <div>
               <h2 className="text-lg font-semibold mb-4">Add Billing Items</h2>
               <div className="relative  mb-4">

@@ -201,15 +201,14 @@ const GetProductReportByDateRange = async (req, res) => {
     const startDate = new Date(req.query.startDate);
     const endDate = new Date(req.query.endDate);
 
-    
     const orders = await Order.find({
       createdAt: { $gte: startDate, $lte: endDate },
     });
-    
+
     const invoices = await Invoice.find({
       createdAt: { $gte: startDate, $lte: endDate },
     });
-    
+
     const productIds = [
       ...new Set([
         ...orders.flatMap((order) =>
@@ -222,6 +221,7 @@ const GetProductReportByDateRange = async (req, res) => {
     ];
 
     const products = await Product.find({ _id: { $in: productIds } });
+
     const orderProductUnits = await Order.aggregate([
       {
         $match: {
@@ -232,10 +232,11 @@ const GetProductReportByDateRange = async (req, res) => {
       {
         $group: {
           _id: "$CartItems.productId",
-          totalUnits: { $sum: "$CartItems.quantity" },
+          totalOrderUnits: { $sum: "$CartItems.quantity" },
         },
       },
     ]);
+
     const invoiceProductUnits = await Invoice.aggregate([
       {
         $match: {
@@ -246,19 +247,28 @@ const GetProductReportByDateRange = async (req, res) => {
       {
         $group: {
           _id: "$CartItems.pId",
-          totalUnits: { $sum: "$CartItems.quantity" },
+          totalInvoiceUnits: { $sum: "$CartItems.quantity" },
         },
       },
     ]);
-    console.log(invoiceProductUnits)
 
-    const combinedProductUnits = [
-      ...orderProductUnits,
-      ...invoiceProductUnits,
-    ].reduce((acc, item) => {
-      acc[item._id] = (acc[item._id] || 0) + item.totalUnits;
-      return acc;
-    }, {});
+    const combinedProductUnits = {};
+    orderProductUnits.forEach(item => {
+      combinedProductUnits[item._id] = {
+        totalOrderUnits: item.totalOrderUnits,
+        totalInvoiceUnits: 0
+      };
+    });
+    invoiceProductUnits.forEach(item => {
+      if (!combinedProductUnits[item._id]) {
+        combinedProductUnits[item._id] = {
+          totalOrderUnits: 0,
+          totalInvoiceUnits: item.totalInvoiceUnits
+        };
+      } else {
+        combinedProductUnits[item._id].totalInvoiceUnits = item.totalInvoiceUnits;
+      }
+    });
 
     const reviewCounts = await ProductReviews.aggregate([
       {
@@ -276,7 +286,8 @@ const GetProductReportByDateRange = async (req, res) => {
     ]);
 
     const productDetails = products.map((product) => {
-      const totalUnits = combinedProductUnits[product._id] || 0;
+      const productUnits = combinedProductUnits[product._id] || { totalOrderUnits: 0, totalInvoiceUnits: 0 };
+      const totalUnits = productUnits.totalOrderUnits + productUnits.totalInvoiceUnits;
       const reviewCount = reviewCounts.find((review) =>
         review._id?.equals(product._id)
       );
@@ -284,21 +295,22 @@ const GetProductReportByDateRange = async (req, res) => {
       const totalRating = reviewCount ? reviewCount.totalRating : 0;
       const averageRating = totalReviews !== 0 ? totalRating / totalReviews : 0;
 
-
       return {
         ...product.toObject(),
         totalUnits,
+        totalOrderUnits: productUnits.totalOrderUnits,
+        totalInvoiceUnits: productUnits.totalInvoiceUnits,
         totalReviews,
         averageRating,
       };
     });
+
     res.json(productDetails);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
-
 
 const getTotalUnitsSoldPast9Months = async (req, res) => {
   try {

@@ -35,7 +35,7 @@ const ProductReport = () => {
   return (
     <>
       <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
-        <Navbar select={"Restock Products"} />
+        <Navbar select={"Product Report"} />
         <Header />
         <Card className="flex" style={{ width: "100%" }}>
           <div className="flex items-center justify-between mt-5 mb-4">
