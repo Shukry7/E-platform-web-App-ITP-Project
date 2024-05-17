@@ -24,15 +24,15 @@ export const EmployeeAuthProvider = ({ children }) => {
   }, [isLoggedIn, employeePersonId]);
 
   const login = (employeePersonId) => {
-    console.log('Setting deliveryPersonId:', employeePersonId);
+    console.log('Setting employeePersonId:', employeePersonId);
     console.log(employeePersonId) // Add this line for debugging
     setIsLoggedIn(true);
-    setDeliveryPersonId(employeePersonId);
+    setEmployeePersonId(employeePersonId);
   };
 
   const logout = () => {
     setIsLoggedIn(false);
-    setDeliveryPersonId(null);
+    setEmployeePersonId(null);
   };
 
   return (

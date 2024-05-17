@@ -1,49 +1,44 @@
 .sample_container.card_sample {
-    max-width: 1000px; /* Increase max-width for a wider appearance */
-    margin: auto;
-    min-height: 500px; /* Increase min-height for a taller appearance */
-  }
-  
-  /* Card Customizations */
-  
-  .sample_container.card_sample .e-custom-card {
-    position: relative;
+    max-width: 600px;
     margin-top: 80px;
+    min-height: 600px;
+}
+
+/* Card Customizations */
+
+.sample_container.card_sample .e-custom-card {
+    position: relative;
+    margin-top: -25px;
     overflow: visible;
     border-radius: 15px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     transition: 0.2s;
     border-width: 1px;
     padding: 1px;
-  }
-  
-  .sample_container.card_sample .e-custom-card .e-avatar {
-    font-size: 40px;
-    position: absolute;
-    top: calc(0% - 1.5em);
-    left: calc(50% - 1.5em);
-    box-shadow: 0 16px 28px -8px rgba(0, 0, 0, .36), 0 4px 15px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2);
-  }
-  
-  .sample_container.card_sample .e-custom-card.e-card .e-card-content {
-    overflow: visible;
-    width: auto;
-    margin: -5px 20px 0 20px;
-    word-spacing: 1px;
-  }
-  
-  .sample_container.card_sample .avatar-content {
-    color: rgba(250, 200, 130, 0.6);
-    margin: 0 auto;
-    text-align: left;
-    color: rgb(94, 94, 94);
-    border: none;
-    padding: 0;
-    font-size: 14px;
-    padding-left: 20px;
-    padding-top: 10px;
-  }
-  
+    white-space: pre-wrap;
+}
+
+body.bootstrap-dark .e-custom-card .avatar-content {
+    color: #ffffff;
+}
+
+.tailwind .e-custom-card .e-avatar,
+body.tailwind-dark .e-custom-card .e-avatar,
+.bootstrap5 .e-custom-card .e-avatar,
+.bootstrap5-dark .e-custom-card .e-avatar,
+.fluent .e-custom-card .e-avatar,
+.fluent-dark .e-custom-card .e-avatar,
+.material3 .e-custom-card .e-avatar,
+.material3-dark .e-custom-card .e-avatar {
+    height: 3em;
+    width: 3em;
+}
+
+.e-custom-card.e-card:hover {
+    border-width: 1px;
+    padding: 1px;
+}
+
 .e-custom-card :nth-child(2) .e-card-header-title.name {
     margin-top: 5px;
 }
@@ -67,12 +62,12 @@
 }
 
 .sample_container.card_sample .e-card.e-custom-card :nth-child() {
-    padding: 12px 0px 20px 0px;
-    height: 130px;
+    padding: 0px 0px 20px 0px;
+    height: 400px;
 }
 
 .sample_container.card_sample .e-custom-card.e-card .e-card-header .e-card-header-caption .e-card-header-title {
-    font-size: 24px;
+    font-size: 40px;
     font-weight: 500;
     line-height: normal;
     color: rgba(83, 101, 132, 0.65);
@@ -81,7 +76,7 @@
 }
 
 .sample_container.card_sample .e-custom-card.e-card .e-card-header .e-card-header-caption .e-card-sub-title {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 500;
     line-height: normal;
     color: rgba(86, 90, 97, 0.65);
@@ -93,20 +88,66 @@
     width: auto;
     margin: -5px 20px 0 20px;
     word-spacing: 1px;
+    white-space: pre-wrap;
 }
 
 .sample_container.card_sample .avatar-content {
-    color: rgba(250, 200, 130, 0.6);
-    margin: 0 auto;
+    color: black;
+    margin: 5px;
     text-align: left;
-    color: rgb(94, 94, 94);
+    color: black;
     border: none;
     padding: 0;
-    font-size: 14px;
+    font-size: 15px;
     padding-left: 20px;
     padding-top: 10px;
+    white-space: pre-wrap;
 }
 
+.avatar-contenth {
+    overflow-wrap: break-word;
+    color: #5e5e5c;
+    margin: 0px;
+    
+    margin-top: 10px;
+    text-align: left;
+    
+    border: none;
+    padding: 0;
+    font-size: 15px;
+    padding-left: 40px;
+    padding-top: 0  px;
+    white-space: pre-wrap;
+}
+
+.avatar-contenths {
+    overflow-wrap: break-word;
+    color: #5e5e5c;
+    margin: 10px;
+    text-align: left;
+    margin-left: 18px;
+    margin-right: 18px;
+    border: none;
+    padding: 0;
+    font-size: 18px;
+    padding-left: 40px;
+    padding-top: 0  px;
+    white-space: pre-wrap;
+}
+
+.avatar-contents {
+    overflow-wrap: break-word;
+    color: black;
+    margin: 10px;
+    text-align: center; 
+    border: none;
+    padding: 0;
+    font-size: 18px;
+    padding-left: 40px;
+    padding-top: 0  px;
+    white-space: pre-wrap;
+    text-decoration: underline;
+}
 .avatar-content {
     margin-bottom: 0;
 }

@@ -16,6 +16,9 @@ const orderDeliverySchema = mongoose.Schema({
             enum: ['Assigned', 'Complete'],
           }
     },
+    {
+        timestamps: true,
+    }
 );
 
 const orderdelivery = mongoose.model("OrderDelivery", orderDeliverySchema);

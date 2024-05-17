@@ -21,6 +21,8 @@ const WholesalecustomerRoute = require("./Routes/WholesalecustomerRoute");
 const SalaryRoute = require("./Routes/SalaryRoute")
 const PaymentRoute = require('./Routes/PaymentRoute');
 const ProductReviewRoute = require("./Routes/ProductReviewRoute")
+const FaqRoute = require("./Routes/FaqRoute");
+const InquiryRoute = require("./Routes/InquiryRoute");
 const app = express();
 const DeliveryLoginRoute = require("./Routes/DeliveryLoginRoute");
 const DeliveryPersonLoginRoute = require("./Routes/DeliveryLoginpRoute")
@@ -60,6 +62,8 @@ app.use("/order", OrderRoute);
 app.use("/salary", SalaryRoute);
 app.use("/notify", NotificationRoute);
 app.use("/wholesalecustomer", WholesalecustomerRoute);
+app.use("/faq", FaqRoute);
+app.use("/inquiry", InquiryRoute);
 app.use("/Payment", PaymentRoute);
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 app.use("/ProductReview", ProductReviewRoute)

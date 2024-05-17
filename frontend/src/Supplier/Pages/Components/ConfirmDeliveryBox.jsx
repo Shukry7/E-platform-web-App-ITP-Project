@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { Link} from "react-router-dom";
 import axios from "axios";
+import Loader from "../../../Shared/Components/UiElements/Loader";
 
 const ConfirmDeliveryBox = (props) => {
   const [isClick, setIsClick] = useState(false);
+  const [loading , setLoading] = useState(false)
   const toggleModel = () => {
     setIsClick(!isClick);
   };
 
   const submitHandler = async () => {
- 
+    setLoading(true)
     axios
       .put(`http://localhost:5000/supplierproduct/confirmDelivery/${props.id}`)
       .then((res) => {
+        setLoading(false);
         window.location.reload();
       })
       .catch((err) => {
@@ -70,6 +73,11 @@ const ConfirmDeliveryBox = (props) => {
                       clip-rule="evenodd"
                     ></path>
                   </svg>
+                  {loading && (
+                      <center>
+                        <Loader />
+                      </center>
+                    ) }
                   <p class="mb-4 text-gray-500 dark:text-gray-300">
                     Are you sure you want to confirm delivery?
                   </p>
@@ -86,6 +94,7 @@ const ConfirmDeliveryBox = (props) => {
                       onClick={submitHandler}
                       type="submit"
                       class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
+                      disabled ={loading}
                     >
                       Yes, I'm sure
                     </button>

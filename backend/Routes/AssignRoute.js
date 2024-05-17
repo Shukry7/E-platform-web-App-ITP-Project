@@ -8,6 +8,8 @@ Router.get("/getOrders/", DeliveryOrderControllers.listOrderDeliveryById);
 Router.put("/:id" ,  DeliveryOrderControllers.UpdateOrderDelivery);
 Router.get("/:id", DeliveryOrderControllers.listAssignedDeliveryById);
 Router.get("/complete/:id", DeliveryOrderControllers.listAssignedDeliveryByIds);
+Router.get("/completedCount/count", DeliveryOrderControllers.listAllCompletedDeliveries);
+
 
 module.exports = Router;
  
