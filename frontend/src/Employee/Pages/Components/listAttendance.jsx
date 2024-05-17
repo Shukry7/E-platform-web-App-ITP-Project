@@ -62,8 +62,8 @@ const AttendanceTable = (props) => {
   };
 
   return (
-    <>
-      <div className="flex items-center">
+    <> <div >
+      <div className="flex items-center  ">
   <label htmlFor="monthSelect" className="mr-2">Month:</label>
   <select
     id="monthSelect"
@@ -142,6 +142,7 @@ const AttendanceTable = (props) => {
           </>
         )}
       </Table>
+      </div>
     </>
   );
 };

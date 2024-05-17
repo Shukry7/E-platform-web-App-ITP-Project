@@ -48,8 +48,8 @@ const EmployeeloginForm = () => {
   );
   const Type = [
     { value: "...." },
-    { value: "cashier" },
-    { value: "SystemAdministrator" },
+    { value: "Cashier" },
+    { value: "System Administrator" },
   
   ];
 

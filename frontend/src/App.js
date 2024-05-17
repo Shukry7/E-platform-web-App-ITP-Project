@@ -83,6 +83,9 @@ import Inquiry from "./Inquiry/Pages/InquiryAdmin";
 import InquiryViewAdmin from "./Inquiry/Pages/ViewInquiryAdmin";
 import InquiryViewCustomer from "./Inquiry/Pages/ViewInquiryCustomer";
 import InquiryCreate from "./Inquiry/Pages/CreateInquiry";
+import ProtectedRouteEmployee from "./Shared/Components/context/PrivateEmployeeRoute";
+import ProtectedRouteCashier from "./Shared/Components/context/PrivateCashierRoute";
+
 const App = () => {
   return (
     <AuthProvider >
@@ -97,8 +100,17 @@ const App = () => {
           <Route path="/inquiries/" exact element={<InquiryCustomer/>}/>
           <Route path="/inquiry/create" exact element={<InquiryCreate/>}/>
           <Route path="/faqs/view/:id" exact element={<FaqViewCustomer/>}/>
-          <Route path="/inquiries/view/:id" exact element={<InquiryViewCustomer/>}/>           
+          <Route path="/inquiries/view/:id" exact element={<InquiryViewCustomer/>}/>
+          <Route path="/CC/new" exact element={<AddCC/>}/>
+          <Route path="/Cart" exact element={<Cart/>}/>
+          <Route path="/offpay" exact element={<Offpay/>}/>
+          <Route path="/CC" exact element={<CC/>}/>
+          <Route path="/CC/:id" exact element={<UpdateCC/>}/>
+          <Route path="/CC/new" exact element={<CCForm/>}/>         
         </Route>
+
+        <Route element={<ProtectedRouteEmployee/>}>
+
         <Route path="/Dashboard" exact element={<Dashboard/>}/>
         <Route path="/Product" exact element={<Products/>}/>
         <Route path="/ProductReviews" exact element={<ProductReview/>}/>
@@ -119,18 +131,14 @@ const App = () => {
         <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
         <Route path="/Employee/new" exact element={<CreateEmployee/>}/>
         <Route path="/Employee/view/:id" exact element={<ViewEmployees/>}/>
-        <Route path="/CC/new" exact element={<AddCC/>}/>
+        
         <Route path="/Customer" exact element={<Customers/>}/>
         <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
         <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
         <Route path="/Customer/view/" exact element={<ViewCustomer/>}/>
         <Route path="/Customer/TopCustomers" exact element={<TopCustomers/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
-        <Route path="/Cart" exact element={<Cart/>}/>
-        <Route path="/offpay" exact element={<Offpay/>}/>
-        <Route path="/CC" exact element={<CC/>}/>
-        <Route path="/CC/:id" exact element={<UpdateCC/>}/>
-        <Route path="/CC/new" exact element={<CCForm/>}/>
+       
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
         <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
@@ -151,7 +159,7 @@ const App = () => {
         <Route path="/Profit/report" exact element={<ProfitReport/>}/>
         <Route path="/Order" exact element={<Order/>}/>
         <Route path="/Profit/calculate" exact element={<CalculateProfit/>}/>
-        <Route path="/Billing" exact element={<BillingUI/>}/>
+      
         <Route path="/faq/" exact element={<Faq/>}/>
         <Route path="/faq/create" exact element={<FaqCreate/>}/>
         <Route path="/faqs/" exact element={<FaqCustomer/>}/>
@@ -159,16 +167,24 @@ const App = () => {
         <Route path="/faq/view/:id" exact element={<FaqView/>}/>
         <Route path="/inquiry_admin/" exact element={<Inquiry/>}/>
         <Route path="/inquiry_admin/view/:id" exact element={<InquiryViewAdmin/>}/>        
+        <Route path="/ProductReport" exact element={<ProductReport/>}/> 
+        </Route>
+        <Route element={<ProtectedRouteCashier/>}>
+        
+        <Route path="/Billing" exact element={<BillingUI/>}/>
+
+
+        </Route>
         <Route path="/" exact element={
           <CheckLogin>
             <LoginPage/>
           </CheckLogin>}/> 
 
           <Route path="/LoginEmployee" exact element={
-          <CheckEmployeelogin>
+          
             <LoginPageEmployee/>
-          </CheckEmployeelogin>}/> 
-        <Route path="/ProductReport" exact element={<ProductReport/>}/>
+         }/> 
+       
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/deliverylogin" exact element={

@@ -24,7 +24,7 @@ export const EmployeeLoginPage = () => {
           Toast("Login Successfully !!", "success");
           navigate("/Dashboard");
         } else if (res.data.message === "cashier") {
-          auth.login(res.data?.employeeId);
+          auth.cashierlogin(res.data?.employeeId);
           console.log(res.data.employeeId);
           Toast("Login Successfully !!", "success");
           navigate("/Billing");

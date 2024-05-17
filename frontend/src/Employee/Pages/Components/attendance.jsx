@@ -139,7 +139,7 @@ const MarkAttendance = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto mt-20">
       <h2 className="text-3xl font-semibold mb-4">Mark Employee Attendance</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

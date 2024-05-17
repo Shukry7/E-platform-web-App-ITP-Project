@@ -6,7 +6,8 @@ const EmployeeLogin = async (req, res) => {
   try {
     const employee = await EmployeeLoginModel.findOne({ username: username });
     if (employee && employee.password === password) {
-      if (employee.role === "cashier") {
+        console.log(employee.role)
+      if (employee.role === "Cashier") {
         res.json({
           message: "cashier",
           employeeId: employee._id,

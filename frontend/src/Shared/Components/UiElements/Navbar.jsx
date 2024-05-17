@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaQuestionCircle } from "react-icons/fa";
 import { RiMailOpenLine } from "react-icons/ri";
+import { EmployeeAuthContext } from "../context/EmployeeAuthContext";
 
 
 const Navbar = (props) => {
+  const Auth = useContext(EmployeeAuthContext)
   const [isDropdownOpenSupplier, setIsDropdownOpenSupplier] = useState(false);
   const [isDropdownOpenProduct, setIsDropdownOpenProduct] = useState(
     props.select === "Product Details" ||
@@ -962,7 +964,8 @@ const Navbar = (props) => {
             <li></li>
             <li>
               <Link
-                to={"/Delivery"}
+                to={"/loginemployee"}
+                onClick={()=>{Auth.logout()}}
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
