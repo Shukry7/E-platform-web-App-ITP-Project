@@ -50,7 +50,7 @@ const Faq = () => {
         <Card className="flex " style={{ width: "100%" } }>
           <div className="flex justify-between items-center ">
             <h1 className="text-3xl my-8 ml-8" style={{ color: 'red' }}>How can we help you?</h1>
-            hi
+            
             <div className="mr-8">
             <Search
               searchTerm={searchTerm}

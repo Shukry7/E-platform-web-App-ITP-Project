@@ -17,6 +17,11 @@ const inquirySchema = mongoose.Schema(
       required: [true, "Please Enter the issue"],
       trim: true,
     },
+    mail: {
+      type: String,
+      required: [true, "Please Enter the mail"],
+      trim: true,
+    },
     description: {
       type: String,
       required: [true, "Please Enter the solution"],

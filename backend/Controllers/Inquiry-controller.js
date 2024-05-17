@@ -4,7 +4,7 @@ const Inquiry = require("../Models/InquiryModel");
 
 // get details from body and assigned to variables
 const createInquiry = async (req, res, next) => {
-  const { subject, description, type, telephone, name } = req.body;
+  const { subject, description, type, telephone, name ,mail} = req.body;
 
   const latestInquiry = await Inquiry.find().sort({ _id: -1 }).limit(1);
   let id;
@@ -23,6 +23,7 @@ const createInquiry = async (req, res, next) => {
     type: type,
     telephone: telephone,
     name:name,
+    mail:mail,
   };
 
   // New FAQ is created
