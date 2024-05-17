@@ -158,13 +158,14 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-2 pt-5 z-0">
-            <Schart />
+          <div className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-2 pt-5 ">
+            <Restock />
+
             <TopPandC />
           </div>
           <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-1 pt-5">
             <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 border border-blue-gray-100 shadow-sm">
-              <Restock />
+              <Schart />
             </div>
           </div>
         </div>

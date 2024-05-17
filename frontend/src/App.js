@@ -85,6 +85,7 @@ import InquiryViewCustomer from "./Inquiry/Pages/ViewInquiryCustomer";
 import InquiryCreate from "./Inquiry/Pages/CreateInquiry";
 import ProtectedRouteEmployee from "./Shared/Components/context/PrivateEmployeeRoute";
 import ProtectedRouteCashier from "./Shared/Components/context/PrivateCashierRoute";
+import InvoiceTable from "./Invoice/Pages/invoiceTable";
 
 const App = () => {
   return (
@@ -165,6 +166,7 @@ const App = () => {
         <Route path="/inquiry_admin/" exact element={<Inquiry/>}/>
         <Route path="/inquiry_admin/view/:id" exact element={<InquiryViewAdmin/>}/>        
         <Route path="/ProductReport" exact element={<ProductReport/>}/> 
+        <Route path="/invoice" exact element={<InvoiceTable/>}/>
         </Route>
         <Route element={<ProtectedRouteCashier/>}>
         

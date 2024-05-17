@@ -1,12 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Select from "react-tailwindcss-select";
 import Toast from "../../Shared/Components/UiElements/Toast/Toast";
 import { useReactToPrint } from "react-to-print";
 import PrintQuotation from "./component/PrintQuotation";
 import Loader3 from "../../Shared/Components/UiElements/loader3";
+import { Link } from "react-router-dom";
+import { EmployeeAuthContext } from "../../Shared/Components/context/EmployeeAuthContext";
 
 const BillingUI = () => {
+  const Auth = useContext(EmployeeAuthContext);
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -177,6 +180,17 @@ const BillingUI = () => {
 
   return (
     <>
+      <Link to="/loginemployee">
+        <button
+          onClick={() => {
+            Auth.logout();
+            Toast("Log out Successfully", "success");
+          }}
+          class="fixed top-2 right-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        >
+          Log Out
+        </button>
+      </Link>
       <PrintQuotation
         details={selectedItems}
         componentRef={componentRef}
