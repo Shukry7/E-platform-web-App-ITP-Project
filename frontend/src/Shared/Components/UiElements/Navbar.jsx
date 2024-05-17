@@ -944,6 +944,18 @@ const Navbar = (props) => {
                     Profit Report
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      to={"/delivery/report"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Assign Delivery"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                    Delivery Report
+                    </Link>
+                  </li>
                 </ul>
               )}
             </li>
