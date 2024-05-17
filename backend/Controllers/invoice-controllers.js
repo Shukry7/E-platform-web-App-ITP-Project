@@ -98,4 +98,15 @@ createInvoice = async (req, res) => {
   };
 
 
+  const listInvoice = async (req, res) => {
+    try {
+      const invoice = await Invoice.find({}).sort({ _id: -1 });
+      return res.status(200).json(invoice);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send({ message: error.message });
+    }
+  };
+
   exports.createInvoice = createInvoice;
+  exports.listInvoice = listInvoice
