@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./SupplierTable.css";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import DeleteConfirmBox from "../../../Shared/Components/UiElements/DeleteConfir
 import UpdatePrice from "./UpdatePrice";
 import { MdDeleteOutline } from "react-icons/md";
 import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
+import { useReactToPrint } from 'react-to-print';
 
 const SupplierProductTable = (props) => {
   const [cart, setCart] = useState([]);
@@ -44,6 +45,13 @@ const SupplierProductTable = (props) => {
       });
   };
 
+  const componentRef = useRef();
+  const handleprint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "Purchase details",
+    onAfterPrint: () => alert("Purchase Detail is successfully generated !"),
+  });
+
   const Headings = [
     "#",
     "Product id",
@@ -53,7 +61,6 @@ const SupplierProductTable = (props) => {
     "Cart"
   ];
 
-  // Function to add a product to the cart
   const addToCart = (supplierProduct, product, productName, productID, price) => {
     
       setCart([...cart, {supplierProduct, supplier, product, productName, productID, price, quantity: 1 }]);
@@ -68,7 +75,7 @@ const SupplierProductTable = (props) => {
       return true
   }
 
-  // Function to update the quantity of a product in the cart
+
   const updateQuantity = (product, newQuantity) => {
     const updatedCart = cart.map(item =>
       item.product === product ? { ...item, quantity: newQuantity } : item
@@ -76,12 +83,10 @@ const SupplierProductTable = (props) => {
     setCart(updatedCart);
   };
 
-  // Function to remove a product from the cart
+  
   const removeFromCart = (product) => {
-    // Find the index of the item with the given product name
     const index = cart.findIndex(item => item.product === product);
     
-    // If the item is found, remove it from the cart
     if (index !== -1) {
         const newCart = [...cart.slice(0, index), ...cart.slice(index + 1)];
         setCart(newCart);
@@ -135,7 +140,7 @@ const SupplierProductTable = (props) => {
           {cart.length !== 0 ? (<button
             type="button"
             onClick={togglemodelpopup}
-            className="mx-auto text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
           >
             Purchase
           </button>) : <></>}
@@ -143,7 +148,7 @@ const SupplierProductTable = (props) => {
       </div>
 
       {isclick &&
-        <div>
+        <div ref={componentRef}>
           <div
             id="deleteModal"
             tabindex="-1"
@@ -227,7 +232,7 @@ const SupplierProductTable = (props) => {
                     </div>
                   </div>
 
-                  <div class="flex justify-center items-center space-x-4 pt-9">
+                  <div class="flex  justify-center items-center space-x-4 pt-9">
                     <button
                       onClick={submitHandler}
                       type="submit"
@@ -236,6 +241,14 @@ const SupplierProductTable = (props) => {
                     >
                       Buy Products
                     </button>
+                    <div className="flex justify-end">
+                      <button
+                        onClick={handleprint}
+                        className="flex flex-row-reverse ..."                                          
+                      >
+                        <svg class="h-8 w-8 text-black-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />  <polyline points="14 2 14 8 20 8" />  <line x1="16" y1="13" x2="8" y2="13" />  <line x1="16" y1="17" x2="8" y2="17" />  <polyline points="10 9 9 9 8 9" /></svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
