@@ -55,6 +55,8 @@ import DeliveryPersonProfile from "./Delivery/Pages/Components/DeliveryPersonPro
 import { DeliveryAuthProvider } from "./Shared/Components/context/DeliveryAuthContext";
 import ViewCost from "./Profit/Pages/ViewCost";
 import ViewProfit from "./Profit/Pages/ViewProfit";
+import ProfitReport from "./Profit/Pages/ProfitReport";
+import ProductReport from "./Product/Pages/ProductReport";
 import Order from "./Order/Order";
 import CalculateProfit from "./Profit/Pages/CalculateProfit";
 import HistoryTable from "./Employee/Pages/salaryHistory"
@@ -125,6 +127,7 @@ const App = () => {
         <Route path="/delivery/report" exact element={<DeliveryReport/>}/>
         <Route path="/Profit/cost" exact element={<ViewCost/>}/>
         <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
+        <Route path="/Profit/report" exact element={<ProfitReport/>}/>
         <Route path="/Order" exact element={<Order/>}/>
         <Route path="/Profit/calculate" exact element={<CalculateProfit/>}/>
         <Route path="/Billing" exact element={<BillingUI/>}/>
@@ -132,7 +135,7 @@ const App = () => {
           <CheckLogin>
             <LoginPage/>
           </CheckLogin>}/> 
-        
+        <Route path="/ProductReport" exact element={<ProductReport/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/deliverylogin" exact element={
