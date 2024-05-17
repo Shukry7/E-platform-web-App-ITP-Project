@@ -28,7 +28,7 @@ const WholesalecustomerReport = () => {
       });
   },[]);
 
-  console.log(credit)
+
 
   useEffect(() => {
     

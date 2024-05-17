@@ -133,9 +133,6 @@ const App = () => {
         <Route path="/Employee/view/:id" exact element={<ViewEmployees/>}/>
         
         <Route path="/Customer" exact element={<Customers/>}/>
-        <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
-        <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
-        <Route path="/Customer/view/" exact element={<ViewCustomer/>}/>
         <Route path="/Customer/TopCustomers" exact element={<TopCustomers/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
        
@@ -185,6 +182,9 @@ const App = () => {
             <LoginPageEmployee/>
          }/> 
        
+        <Route path="/Customer/view/" exact element={<ViewCustomer/>}/>
+        <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
+        <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/deliverylogin" exact element={

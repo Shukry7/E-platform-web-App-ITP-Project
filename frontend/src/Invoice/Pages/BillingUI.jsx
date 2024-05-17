@@ -17,7 +17,7 @@ const BillingUI = () => {
   const [paidAmount, setPaidAmount] = useState(0);
   const [balance, setBalance] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [temp,setTemp] = useState(1)
+  const [temp, setTemp] = useState(1);
 
   const addItem = (item) => {
     const existingItemIndex = selectedItems.findIndex(
@@ -145,11 +145,11 @@ const BillingUI = () => {
         setSelectedItems([]);
         setOpenPaymentBox(!openPaymentBox);
         handlePrint();
-        setTotalItems(0)
-        setTotalAmount(0)
-        setPaidAmount(0)
-        setBalance(0)
-        setTemp(temp + 1)
+        setTotalItems(0);
+        setTotalAmount(0);
+        setPaidAmount(0);
+        setBalance(0);
+        setTemp(temp + 1);
         setLoading(false);
       })
       .catch((err) => {

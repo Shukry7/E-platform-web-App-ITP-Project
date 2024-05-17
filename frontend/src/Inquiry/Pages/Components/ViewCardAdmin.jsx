@@ -12,7 +12,7 @@ const ViewCard = (props) => {
       </center>
     ) : (
       
-        <div className="sample_container card_sample ml-60" style={{ width: "50%", height:"80%"}}>
+        <div className="sample_container card_sample ml-60" style={{ width: "50%", height:"80%", marginTop: "0px"}}>
           <div className="e-card e-custom-card relative mx-auto bg-white border rounded-lg shadow-md transition duration-200 border-gray-300 hover:border-indigo-500 ml-40 mb-20" style={{ width: "100%", height:"100%"}}>
             
             <div className="e-card-content">
