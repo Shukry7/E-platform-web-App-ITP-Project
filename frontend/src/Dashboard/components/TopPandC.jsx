@@ -240,7 +240,7 @@ const TopPandC = () => {
                     <div class="flex items-center space-x-4">
                       <div class="flex-shrink-0">
                         <img
-                          class="w-8 h-8 rounded-full"
+                          class="w-8 h-8 rounded-full object-cover"
                           src={`http://localhost:5000/${customer.customer.image}`}
                           alt={customer.customer.name}
                         />

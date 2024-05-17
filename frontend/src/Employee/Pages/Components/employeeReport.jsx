@@ -29,20 +29,25 @@ const MonthlyReportPage = () => {
   }, [month]);
 
   useEffect(() => {
-    const totalExpense = salaries.reduce((acc, curr) => acc + curr.net, 0);
-    setTotalSalaryExpense(totalExpense || 0); // Set default to 0 if totalExpense is falsy
-    
-    setNumEmployeesPaid(salaries.length || 0); // Set default to 0 if salaries length is falsy
-    
-    if (salaries.length > 0) {
-      const salariesArr = salaries.map((salary) => salary.net);
-      setMaxSalary(Math.max(...salariesArr) || 0); // Set default to 0 if max salary is falsy
-      setMinSalary(Math.min(...salariesArr) || 0); // Set default to 0 if min salary is falsy
+    const salariesForSelectedMonth = salaries.filter(salary => {
+      const salaryMonth = new Date(salary.date).getMonth() + 1;
+      return salaryMonth === parseInt(month);
+    });
+  
+    const totalExpense = salariesForSelectedMonth.reduce((acc, curr) => acc + curr.net, 0);
+    setTotalSalaryExpense(totalExpense || 0);
+  
+    setNumEmployeesPaid(salariesForSelectedMonth.length || 0);
+  
+    if (salariesForSelectedMonth.length > 0) {
+      const salariesArr = salariesForSelectedMonth.map(salary => salary.net);
+      setMaxSalary(Math.max(...salariesArr) || 0);
+      setMinSalary(Math.min(...salariesArr) || 0);
     } else {
-      setMaxSalary(0); // Set default to 0 if salaries length is falsy
-      setMinSalary(0); // Set default to 0 if salaries length is falsy
+      setMaxSalary(0);
+      setMinSalary(0);
     }
-  }, [salaries, month]); 
+  }, [salaries, month]);
   const currentDate = new Date().toLocaleDateString();
   
   const componentRef = useRef();
@@ -54,7 +59,7 @@ const MonthlyReportPage = () => {
 
   return (
     <div className="container mx-auto my-8 mt-10">
-      <div className="flex items-center justify-between mt-40 mb-4">
+      <div className="flex items-center justify-between mb-4">
       
         <div className="mr-4">
         
