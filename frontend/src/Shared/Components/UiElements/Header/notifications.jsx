@@ -41,7 +41,7 @@ const Notifications = ({ notify }) => {
         id="notification-dropdown"
         style={{
           position: "absolute",
-          inset: "4px auto auto -350px",
+          inset: "4px auto auto -500px",
           margin: "0px",
           transform: "translate3d(1348.8px, 64.8px, 0px)",
         }}
