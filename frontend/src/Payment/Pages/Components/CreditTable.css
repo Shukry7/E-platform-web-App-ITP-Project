@@ -16,12 +16,13 @@
 .card-list {
   width: 500px;
   height: 300px;
+  cursor: pointer;
+  perspective: 1000px;
 }
 .card {
     width: 500px;
     height: auto;
-    cursor: pointer;
-    perspective: 1000px;
+    
 }
 
 .card-inner {
@@ -119,7 +120,7 @@
     transform: rotateY(180deg);
 }
 
-.card:hover .card-inner {
+.card-list:hover .card-inner {
     transform: rotateY(-180deg);
 }
 
