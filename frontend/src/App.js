@@ -37,6 +37,7 @@ import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecu
 import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
 import UpdateWholesalecustomer from "./Wholesalecustomer/Pages/UpdateWholesalecustomer";
 import ViewWholesalecustomer from "./Wholesalecustomer/Pages/ViewWholesalecustomer";
+import WholesalecustomerReport from "./Wholesalecustomer/Pages/reportWholesalecustomer";
 import LoginPage from "./Login/LoginPage";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
@@ -71,6 +72,17 @@ import DeliveryReport from "./Delivery/Pages/DeliveryReport";
 import LoginPageEmployee from "./LoginEmployee/LoginEmployee";
 import CheckEmployeelogin from "./Shared/Components/context/checkemployeeLogin"
 import EmployeeAuthProvider from "./Shared/Components/context/EmployeeAuthContext";
+import Faq from "./Faq/Pages/Faq";
+import FaqCreate from "./Faq/Pages/CreateFaq";
+import FaqUpdate from "./Faq/Pages/UpdateFaq";
+import FaqView from "./Faq/Pages/Viewfaq";
+import FaqViewCustomer from "./Faq/Pages/CustomerFaqView";
+import FaqCustomer from "./Faq/Pages/FaqTableCustomer";
+import InquiryCustomer from "./Inquiry/Pages/InquiryTableCustomer";
+import Inquiry from "./Inquiry/Pages/InquiryAdmin";
+import InquiryViewAdmin from "./Inquiry/Pages/ViewInquiryAdmin";
+import InquiryViewCustomer from "./Inquiry/Pages/ViewInquiryCustomer";
+import InquiryCreate from "./Inquiry/Pages/CreateInquiry";
 const App = () => {
   return (
     <AuthProvider >
@@ -81,6 +93,11 @@ const App = () => {
         <Route element={<ProtectedRouteCustomer/>}>
           <Route path="/products" exact element={<ProductCustomerUI/>}/>
           <Route path="/ProductList/:id" exact element={<ProductDetails/>}/>
+          <Route path="/faqs/" exact element={<FaqCustomer/>}/>
+          <Route path="/inquiries/" exact element={<InquiryCustomer/>}/>
+          <Route path="/inquiry/create" exact element={<InquiryCreate/>}/>
+          <Route path="/faqs/view/:id" exact element={<FaqViewCustomer/>}/>
+          <Route path="/inquiries/view/:id" exact element={<InquiryViewCustomer/>}/>           
         </Route>
         <Route path="/Dashboard" exact element={<Dashboard/>}/>
         <Route path="/Product" exact element={<Products/>}/>
@@ -119,6 +136,7 @@ const App = () => {
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/update/:id" exact element={<UpdateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/view/:id" exact element={<ViewWholesalecustomer/>}/>
+        <Route path="/Wholesalecustomer/report" exact element={<WholesalecustomerReport/>}/>
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Employeelogin" exact element={<Employeelogin />}/>
@@ -134,6 +152,13 @@ const App = () => {
         <Route path="/Order" exact element={<Order/>}/>
         <Route path="/Profit/calculate" exact element={<CalculateProfit/>}/>
         <Route path="/Billing" exact element={<BillingUI/>}/>
+        <Route path="/faq/" exact element={<Faq/>}/>
+        <Route path="/faq/create" exact element={<FaqCreate/>}/>
+        <Route path="/faqs/" exact element={<FaqCustomer/>}/>
+        <Route path="/faq/update/:id" exact element={<FaqUpdate/>}/>
+        <Route path="/faq/view/:id" exact element={<FaqView/>}/>
+        <Route path="/inquiry_admin/" exact element={<Inquiry/>}/>
+        <Route path="/inquiry_admin/view/:id" exact element={<InquiryViewAdmin/>}/>        
         <Route path="/" exact element={
           <CheckLogin>
             <LoginPage/>
