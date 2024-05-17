@@ -1,14 +1,21 @@
 import React from "react";
 
-const PrintQuotation = ({ details, componentRef, totalAmount ,totalItems}) => {
-
-  const currentDate = new Date().toLocaleDateString()
-  const currentTime = new Date().toLocaleTimeString()
+const PrintQuotation = ({
+  details,
+  componentRef,
+  totalAmount,
+  totalItems,
+  checkbox,
+  paidAmount,
+  balance,
+}) => {
+  const currentDate = new Date().toLocaleDateString();
+  const currentTime = new Date().toLocaleTimeString();
   return (
     <>
       <div className="container fixed mx-10 my-8 -z-10" ref={componentRef}>
         <h1 className="text-3xl font-bold mb-2">
-        Quotation : 
+          {checkbox ? "Quotation" : "Payment Successful"}
           {}
         </h1>
         <p className="mb-4">
@@ -100,7 +107,9 @@ const PrintQuotation = ({ details, componentRef, totalAmount ,totalItems}) => {
                 );
               })}
               <tr
-                className={`${0 % 2 === 0 ? "bg-white" : "bg-[#222E3A]/[6%]"} text-center`}
+                className={`${
+                  0 % 2 === 0 ? "bg-white" : "bg-[#222E3A]/[6%]"
+                } text-center`}
               >
                 <td
                   className={`py-1 px-2 sm:px-3 font-normal text-base ${
@@ -118,14 +127,57 @@ const PrintQuotation = ({ details, componentRef, totalAmount ,totalItems}) => {
                   {totalAmount}
                 </td>
               </tr>
+              {!checkbox && (
+                <>
+                  <tr
+                    className={`${
+                      0 % 2 === 0 ? "bg-white" : "bg-[#222E3A]/[6%]"
+                    } text-center`}
+                  >
+                    <td
+                      className={`py-1 px-2 sm:px-3 font-normal text-base ${
+                        1 === 0 ? "border-t-2 border-black" : "border-t"
+                      }`}
+                      colSpan={5}
+                    >
+                      Payed Amount
+                    </td>
+                    <td
+                      className={`py-1 px-2 sm:px-3 font-normal text-base ${
+                        1 === 0 ? "border-t-2 border-black" : "border-t"
+                      }`}
+                    >
+                      {paidAmount}
+                    </td>
+                  </tr>
+                  <tr
+                    className={`${
+                      0 % 2 === 0 ? "bg-white" : "bg-[#222E3A]/[6%]"
+                    } text-center`}
+                  >
+                    <td
+                      className={`py-1 px-2 sm:px-3 font-normal text-base ${
+                        1 === 0 ? "border-t-2 border-black" : "border-t"
+                      }`}
+                      colSpan={5}
+                    >
+                      Balance
+                    </td>
+                    <td
+                      className={`py-1 px-2 sm:px-3 font-normal text-base ${
+                        1 === 0 ? "border-t-2 border-black" : "border-t"
+                      }`}
+                    >
+                      {balance}
+                    </td>
+                  </tr>
+                </>
+              )}
             </tbody>
           </table>
         </div>
         <div className="mt-4">
-          <h1 className="text-lg ">
-            <b>Summary Information:</b>
-          </h1>
-
+          
           <p>
             <b>Total Items : </b>
             {totalItems}
@@ -133,11 +185,12 @@ const PrintQuotation = ({ details, componentRef, totalAmount ,totalItems}) => {
           <p>
             <b>Total Amount :</b> {totalAmount}
           </p>
-          
         </div>
         <div className="mt-8 flex justify-between">
           <div className="text-left ">
-            <p>Date of Approval: {currentDate} {currentTime}</p>
+            <p>
+              Date of Approval: {currentDate} {currentTime}
+            </p>
           </div>
           <div>
             <p>Signature of Authorized Person</p>
