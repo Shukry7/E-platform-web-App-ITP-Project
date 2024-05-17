@@ -78,7 +78,7 @@ const CustomerReport = () => {
         <p className="mb-4">
           <strong>Business Name:</strong> Kandurata Glass and Locks
           <br />
-          <strong>Address:</strong> kandy street matale
+          <strong>Address:</strong> Kandy Street Matale
           <br />
           <strong>Date:</strong> {currentDate}
         </p>
