@@ -13,6 +13,7 @@ const CustomerHeader = (props) => {
   const [isProfileDropdown, setIsProfileDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
+  const [customer, setCustomer] = useState();
 
   const toggleProfile = () => {
     setIsProfileDropdown(!isProfileDropdown);
@@ -34,6 +35,21 @@ const CustomerHeader = (props) => {
         console.error("Error fetching cart", error);
       });
   }, [auth.cusId]);
+
+  useEffect(() => {
+    
+    axios
+      .get(`http://localhost:5000/customer/${auth.cusId}`)
+      .then((response) => {
+        setCustomer(response.data);
+      })
+
+      .catch((error) => {
+        console.error("Error fetching cart", error);
+      });
+  }, [auth.cusId]);
+
+  console.log(customer)
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -113,13 +129,13 @@ const CustomerHeader = (props) => {
               <div className="flex items-center gap-4 hover:cursor-pointer">
                 <span class="hidden text-right lg:block">
                   <span class="block text-sm font-medium text-black hover:text-blue-gray-800">
-                    DeDsec
+                    {customer?.name}
                   </span>
                 </span>
 
                 <span>
                   <img
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                    src={`http://localhost:5000/${customer?.image}`}
                     alt="User"
                     className="h-12 w-12 rounded-full object-cover"
                   />
