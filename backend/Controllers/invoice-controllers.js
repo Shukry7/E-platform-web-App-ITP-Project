@@ -13,7 +13,7 @@ createInvoice = async (req, res) => {
       const latestOrder = await Invoice.find().sort({ _id: -1 }).limit(1);
       let id;
       if (latestOrder.length !== 0) {
-        const latestId = parseInt(latestOrder[0].orderId.slice(1));
+        const latestId = parseInt(latestOrder[0].invoiceId.slice(1));
         id = "I" + String(latestId + 1).padStart(4, "0");
       } else {
         id = "I0001";
