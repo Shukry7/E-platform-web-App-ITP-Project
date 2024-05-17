@@ -81,7 +81,7 @@ createInvoice = async (req, res) => {
       const profitAdded = await Profit.insertMany(profitTable);
   
       const newInvoice = {
-        orderId: id,
+        invoiceId: id,
         userId: uid ? uid : 'null',
         CartItems: items,
         date: date,
