@@ -45,7 +45,8 @@ createInvoice = async (req, res) => {
   
           let buyqtytemp = item.quantity;
           let costStock = cost.inStock;
-          let sellPrice = item.product.price;
+          let discount = item.discount || 0;
+          let sellPrice = item.product.price - discount;
           let profit = 0;
   
           while (buyqtytemp > costStock) {
@@ -63,14 +64,12 @@ createInvoice = async (req, res) => {
           const result = await Cost.findByIdAndUpdate(cost._id, {
             $inc: { inStock: -buyqtytemp },
           });
-
-          //profit = profit - discount
   
           return {
             order: id,
             productID: item.product.ID,
             productName: item.product.name,
-            price: item.product.price,
+            price: sellPrice,
             quantity: item.quantity,
             profit: profit,
             type: "Offline",
@@ -88,7 +87,7 @@ createInvoice = async (req, res) => {
         date: date,
       };
   
-      const invoice = await Invoice.create(newOrder);
+      const invoice = await Invoice.create(newInvoice);
       
       res.status(201).json({ message: "Order placed successfully" });
     } catch (error) {
