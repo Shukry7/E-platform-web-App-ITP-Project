@@ -15,6 +15,7 @@ const Navbar = (props) => {
       : false
   );
   const [isDropdownOpenEmployee, setIsDropdownOpenEmployee] = useState(false);
+  const [isDropdownOpenReport, setIsDropdownOpenReport] = useState(false);
   const [isDropdownOpenDelivery, setIsDropdownOpenDelivery] = useState(false);
   const [isDropdownOpenProfit, setIsDropdownOpenProfit] = useState(false);
   const [count, setCount] = useState();
@@ -38,6 +39,10 @@ const Navbar = (props) => {
 
   const toggleDropdownDelivery = () => {
     setIsDropdownOpenDelivery(!isDropdownOpenDelivery);
+  };
+
+  const toggleDropdownReport = () => {
+    setIsDropdownOpenReport(!isDropdownOpenReport);
   };
 
   useEffect(() => {
@@ -805,7 +810,7 @@ const Navbar = (props) => {
                     d="M4 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4Zm10 5a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-8-5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm1.942 4a3 3 0 0 0-2.847 2.051l-.044.133-.004.012c-.042.126-.055.167-.042.195.006.013.02.023.038.039.032.025.08.064.146.155A1 1 0 0 0 6 17h6a1 1 0 0 0 .811-.415.713.713 0 0 1 .146-.155c.019-.016.031-.026.038-.04.014-.027 0-.068-.042-.194l-.004-.012-.044-.133A3 3 0 0 0 10.059 14H7.942Z"
                   />
                 </svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">login credentials</span>
+                <span class="flex-1 ms-3 whitespace-nowrap">Login Credentials</span>
               </Link>
             </li>
 
@@ -829,6 +834,120 @@ const Navbar = (props) => {
               <span className="flex-1 ms-3 whitespace-nowrap">Inquiries</span>
             </Link>
             </li>
+
+            <li>
+              <button
+                type="button"
+                className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                onClick={toggleDropdownReport}
+              >
+                <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 18 21">
+                          <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
+                          <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+                </svg>
+                <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+                  Reports
+                </span>
+                <svg
+                  className={`w-3 h-3 ${
+                    isDropdownOpenReport ? "transform rotate-180" : ""
+                  }`}
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 6"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 1 4 4 4-4"
+                  />
+                </svg>
+              </button>
+              {isDropdownOpenReport && (
+                <ul className="py-2 space-y-2">
+                  <li>
+                    <Link
+                      to={"/ProductReport"}
+                      className={`flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Delivery Details"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                       Product Report
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/Supplier/report"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Assign Delivery"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                      Supplier Report
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/employee/report"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Assign Delivery"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                      Employee Report
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/Customer/TopCustomers"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Assign Delivery"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                    Customer Report
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/Wholesalecustomer/report"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Assign Delivery"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                    Wholesale Customer Report
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/Profit/report"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Assign Delivery"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                    Profit Report
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+            <li></li>
             <li>
               <Link
                 to={"/Delivery"}

@@ -27,7 +27,6 @@ const SupplierViewCard = (props) => {
                     <p class="text-gray-800 text-sm mt-2"><span className="font-bold">Email : </span>{props.supplier.mail}</p>
                     <p class="text-gray-800 text-sm mt-2"><span className="font-bold">Address : </span>{props.supplier.address}</p>
                     <p class="text-gray-800 text-sm mt-2"><span className="font-bold">Credit : </span>Rs.{props.supplier.credit}.00</p>
-                    
                 </div>
                 <Link
                 to={`/Supplier/update/`+ props.supplier._id}
