@@ -25,6 +25,7 @@ import CCForm from "./Payment/Pages/Components/CreditCardForm";
 import Customers from "./Customer/Customers";
 import RegisterCustomer from "./Customer/RegisterCustomer";
 import UpdateCustomer from "./Customer/UpdateCustomer";
+import TopCustomers from "./Customer/TopCustomers";
 import AssignmentDelivery from "./Delivery/Pages/AssignmentDelivery";
 import Dashboard from "./Dashboard/Dashboard";
 import Cart from "./Cart/Pages/Cart";
@@ -99,6 +100,7 @@ const App = () => {
         <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
         <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
         <Route path="/Customer/view/" exact element={<ViewCustomer/>}/>
+        <Route path="/Customer/TopCustomers" exact element={<TopCustomers/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
         <Route path="/Cart" exact element={<Cart/>}/>
         <Route path="/offpay" exact element={<Offpay/>}/>
