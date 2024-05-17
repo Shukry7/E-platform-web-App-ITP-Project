@@ -135,7 +135,7 @@ const CCForm = (props) => {
       .then((res) => {
         setLoading(false);
         Toast("Credit Card Updated Successfully!!", "success");
-        navigate(`/CC?subtotal=${subtotal}&shippingFee=${shippingFee.current}&total=${total}&selectedItems=${selectedItems.join(",")}`);
+        navigate(`/CC?subtotal=${subtotal}&shippingFee=${shippingFee}&total=${total}&selectedItems=${selectedItems.join(",")}`);
       })
       .catch((err) => {
         console.error(err);

@@ -140,7 +140,7 @@ function CardList() {
             </div>
           </div>
           <div className="custom-card-actions">
-            <Link to={`/CC/${card._id}`} className="custom-card-button">Update</Link>
+            <Link to={`/CC/${card._id}?subtotal=${subtotal}&shippingFee=${shippingFee}&total=${total}&selectedItems=${id.join(",")}`} className="custom-card-button">Update</Link>
             <DeleteConfirmBox 
               deleteLink={`http://localhost:5000/OnPay/${card._id}`}
               dlt={deleteCart}
