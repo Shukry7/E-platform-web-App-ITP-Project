@@ -64,6 +64,7 @@ import DeliveryPersonOrders from "./Delivery/Pages/CompleteDelivery";
 import Employeelogin from "./Employee/Pages/Employeelogin"
 import EmployeeloginformUpdate from "./Employee/Pages/Components/employeeloginformUpdate"
 import Employeeloginform from "./Employee/Pages/Components/EmployeeloginForm"
+import BillingUI from "./Invoice/Pages/BillingUI";
 
 const App = () => {
   return (
@@ -124,6 +125,7 @@ const App = () => {
         <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
         <Route path="/Order" exact element={<Order/>}/>
         <Route path="/Profit/calculate" exact element={<CalculateProfit/>}/>
+        <Route path="/Billing" exact element={<BillingUI/>}/>
         <Route path="/" exact element={
           <CheckLogin>
             <LoginPage/>
