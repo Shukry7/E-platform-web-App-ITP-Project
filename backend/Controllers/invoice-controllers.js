@@ -21,13 +21,13 @@ createInvoice = async (req, res) => {
   
       const items = await Promise.all(
         cartitem.map(async (item) => {
-          await Product.findByIdAndUpdate(item.product._id, {
+          await Product.findByIdAndUpdate(item._id, {
             $inc: { Stock: -item.quantity },
           });
   
         return {
-            productId: item.product.ID,
-            price: item.product.price,
+            productId: item.ID,
+            price: item.price,
             quantity: item.quantity,
             discount: item.discount ?? 0,
         };
@@ -39,14 +39,14 @@ createInvoice = async (req, res) => {
       const profitTable = await Promise.all(
         cartitem.map(async (item) => {
           let cost = await Cost.findOne({
-            productID: item.product.ID,
+            productID: item.ID,
             inStock: { $ne: 0 },
           }).limit(1);
   
           let buyqtytemp = item.quantity;
           let costStock = cost.inStock;
           let discount = item.discount || 0;
-          let sellPrice = item.product.price - discount;
+          let sellPrice = item.price - discount;
           let profit = 0;
   
           while (buyqtytemp > costStock) {
@@ -54,7 +54,7 @@ createInvoice = async (req, res) => {
             buyqtytemp = buyqtytemp - cost.inStock;
             const result = await Cost.findByIdAndUpdate(cost._id, { inStock: 0 });
             cost = await Cost.findOne({
-              productID: item.product.ID,
+              productID: item.ID,
               inStock: { $ne: 0 },
             }).limit(1);
             costStock = cost.inStock;
@@ -67,8 +67,8 @@ createInvoice = async (req, res) => {
   
           return {
             order: id,
-            productID: item.product.ID,
-            productName: item.product.name,
+            productID: item.ID,
+            productName: item.name,
             price: sellPrice,
             quantity: item.quantity,
             profit: profit,
