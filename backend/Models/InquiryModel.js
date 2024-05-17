@@ -7,11 +7,6 @@ const inquirySchema = mongoose.Schema(
       required: [true, "Please Enter faq ID"],
       trim: true,
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Customer",
-      required: true,
-    },
     name: {
       type: String,
       required: [true, ""],

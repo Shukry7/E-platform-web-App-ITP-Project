@@ -1,4 +1,5 @@
-import React, { useState} from "react";
+import React, { useContext, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import axios from "axios";
 import Input from "../../../Shared/Components/FormElements/input";
 import TextInput from "../../../Shared/Components/FormElements/Textinput";
@@ -13,6 +14,7 @@ import { useForm } from "../../../Shared/hooks/form-hook";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../Shared/Components/UiElements/Loader";
 import Toast from "../../../Shared/Components/UiElements/Toast/Toast";
+import { AuthContext } from "../../../Shared/Components/context/authcontext";
 
 const type = [
   { value: "...." },
@@ -56,6 +58,24 @@ const InquiryForm = () => {
     false
   );
 
+  const { id } = useParams();
+  const [customer, setcustomer] = useState({});
+  const auth = useContext(AuthContext);
+
+  useEffect(()=> {
+      setLoading(true);
+      axios
+          .get(`http://localhost:5000/customer/${auth.cusId}`)
+          .then((res)=> {
+              setcustomer(res.data);
+              setLoading(false);
+          })
+          .catch((err)=> {
+              console.log(err);
+              setLoading(false);
+          });
+  }, [id] );
+
   console.log(formState)
 
   const submitHandler = async (event) => {
@@ -94,7 +114,7 @@ const InquiryForm = () => {
           <div class="min-h-screen p-6 bg-white flex items-center justify-center ml-20">
             <div class="container mx-auto">
               <div>
-                <h2 class="font-semibold text-xl text-gray-600 text-center">Make an Inquiry</h2>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">Make an Inquiry{customer.name}</h2>
                 <p class="text-gray-500 mb-6 text-center">Enter Inquiry details below !!</p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:px-8 mt-6 max-w-4xl ml-36">
 
