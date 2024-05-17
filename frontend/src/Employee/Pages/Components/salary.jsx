@@ -203,7 +203,7 @@ const SalaryCalculatorForm = () => {
 
   return (
     <>
-      <div className="container mx-auto my-8 mt-60">
+      <div className="container mx-auto my-8 mt-20">
         <div className=" container max-w-lg mx-auto bg-white shadow-md rounded-lg overflow-hidden">
           <div className="p-6">
             <h2 className="text-2xl font-bold mb-4 text-center">Salary Calculator</h2>

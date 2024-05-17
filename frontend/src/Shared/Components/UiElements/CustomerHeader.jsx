@@ -184,9 +184,9 @@ const CustomerHeader = (props) => {
                         </Link>
                       </li>
                       <li>
-                        <a
-                          href="profile.html"
-                          class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-orange-500 lg:text-base"
+                      <Link
+                          to={"/inquiries"}
+                          class={"flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-orange-500 lg:text-base"}
                         >
                           <svg
                             class="fill-current"
@@ -202,7 +202,7 @@ const CustomerHeader = (props) => {
                             ></path>
                           </svg>
                           My Inquiries
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                     <button onClick={logout} to="/" class="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-orange-500 lg:text-base">

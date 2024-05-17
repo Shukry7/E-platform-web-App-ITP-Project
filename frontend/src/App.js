@@ -68,11 +68,14 @@ import EmployeeloginformUpdate from "./Employee/Pages/Components/employeeloginfo
 import Employeeloginform from "./Employee/Pages/Components/EmployeeloginForm"
 import BillingUI from "./Invoice/Pages/BillingUI";
 import DeliveryReport from "./Delivery/Pages/DeliveryReport";
-
+import LoginPageEmployee from "./LoginEmployee/LoginEmployee";
+import CheckEmployeelogin from "./Shared/Components/context/checkemployeeLogin"
+import EmployeeAuthProvider from "./Shared/Components/context/EmployeeAuthContext";
 const App = () => {
   return (
     <AuthProvider >
     <DeliveryAuthProvider>
+    <EmployeeAuthProvider>
     <Router>
       <Routes >
         <Route element={<ProtectedRouteCustomer/>}>
@@ -120,7 +123,7 @@ const App = () => {
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Employeelogin" exact element={<Employeelogin />}/>
         <Route path="/Employeelogin/new" exact element={<Employeeloginform />}/>
-        <Route path="/Employeelogin/update" exact element={<Employeeloginform />}/>
+        <Route path="/Employeelogin/update/:id" exact element={<EmployeeloginformUpdate />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/salaryHistory" exact element={<HistoryTable/>}/>
         <Route path="/employee/report" exact element={<Report/>}/>
@@ -135,6 +138,11 @@ const App = () => {
           <CheckLogin>
             <LoginPage/>
           </CheckLogin>}/> 
+
+          <Route path="/LoginEmployee" exact element={
+          <CheckEmployeelogin>
+            <LoginPageEmployee/>
+          </CheckEmployeelogin>}/> 
         <Route path="/ProductReport" exact element={<ProductReport/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
@@ -151,8 +159,9 @@ const App = () => {
           
           <DeliveryPersonOrders/>
       }/>
-      </Routes >
+      </Routes>
     </Router>
+   </EmployeeAuthProvider>
     </DeliveryAuthProvider>
     </AuthProvider>
   );

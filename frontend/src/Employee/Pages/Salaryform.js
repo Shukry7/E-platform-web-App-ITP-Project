@@ -6,13 +6,14 @@ import SalaryCalculatorForm from "./Components/salary";
 import Header from "../../Shared/Components/UiElements/header";
 const Salaryform = () => {
   return (
-    <>
+    <><div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
       <Navbar />
       <Header />
 
       <Card className="flex" style={{ width: "100%" }}>
         <SalaryCalculatorForm />
       </Card>
+      </div>
     </>
   );
 };

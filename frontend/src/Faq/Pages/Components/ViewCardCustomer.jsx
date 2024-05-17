@@ -13,7 +13,7 @@ const ViewCard = (props) => {
       </center>
     ) : (
       
-        <div className="sample_container card_sample" style={{ width: "50%", height:"80%"}}>
+        <div className="sample_container card_sample" style={{ width: "50%", height:"80%" , marginTop:"100px"}}>
           <div className="e-card e-custom-card relative mx-auto bg-gray-100 border rounded-lg shadow-md transition duration-200 border-gray-300 hover:border-indigo-500" style={{ width: "100%", height:"100%"}}>
             
             <div className="e-card-content">
@@ -22,10 +22,10 @@ const ViewCard = (props) => {
                 <b>{props.faq.category}</b>
             </p>
             <br></br>
-              <p className="avatar-contenth" style={{color:"black",fontSize:"22px"}}>
+              <p className="avatar-contenth" style={{color:"black",fontSize:"25px"}}>
                 {props.faq.issue}
               </p>
-              <p className="avatar-contenths">
+              <p className="avatar-contenths" style={{fontSize:"19px"}}>
                 {props.faq.solution}
               </p>
               

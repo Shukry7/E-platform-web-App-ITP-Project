@@ -23,6 +23,12 @@ const ProfitReportDetails = () => {
     mostProfitableProductProfit: 0,
     mostSalesProduct: '',
     mostSalesProductAmount: 0,
+    totalOnlineSales: 0,
+    totalOfflineSales: 0,
+    totalOnlineProfit: 0,
+    totalOfflineProfit: 0,
+    percentageSalesIncrease: 0,
+    percentageProfitIncrease: 0,
   });
 
   const monthNames = [
@@ -83,6 +89,7 @@ const ProfitReportDetails = () => {
             quantity: item.quantity,
             totalSale: item.quantity * item.price,
             totalProfit: item.profit,
+            type: item.type
           });
         }
 
@@ -105,8 +112,16 @@ const ProfitReportDetails = () => {
         item.totalSale > max.totalSale ? item : max, combined[0] || { productName: '', totalSale: 0 }
       );
 
+      const totalOnlineSales = combined.reduce((sum, item) => item.type === 'Online' ? sum + item.totalSale : sum, 0);
+      const totalOfflineSales = combined.reduce((sum, item) => item.type === 'Offline' ? sum + item.totalSale : sum, 0);
+      const totalOnlineProfit = combined.reduce((sum, item) => item.type === 'Online' ? sum + item.totalProfit : sum, 0);
+      const totalOfflineProfit = combined.reduce((sum, item) => item.type === 'Offline' ? sum + item.totalProfit : sum, 0);
+
       const previousMonthProfit = previousFiltered.reduce((sum, item) => sum + item.profit, 0);
       const previousMonthSales = previousFiltered.reduce((sum, item) => sum + item.quantity * item.price, 0); 
+
+      const percentageSalesIncrease = ((totalSales - previousMonthSales) / previousMonthSales) * 100;
+      const percentageProfitIncrease = ((totalProfit - previousMonthProfit) / previousMonthProfit) * 100;
 
       setSummary({
         totalQuantity,
@@ -118,6 +133,12 @@ const ProfitReportDetails = () => {
         mostProfitableProductProfit: mostProfitableProduct.totalProfit,
         mostSalesProduct: mostSalesProduct.productName,
         mostSalesProductAmount: mostSalesProduct.totalSale,
+        totalOnlineSales,
+        totalOfflineSales,
+        totalOnlineProfit,
+        totalOfflineProfit,
+        percentageSalesIncrease,
+        percentageProfitIncrease,
       });
 
       setPreviousMonthProfit(previousMonthProfit);
@@ -219,8 +240,14 @@ const ProfitReportDetails = () => {
                 <p><b>Most sold product by quantity :</b> {summary.mostSoldProduct} with {summary.mostSoldProductQuantity} units sold</p>
                 <p><b>Most sold product :</b> {summary.mostSalesProduct} with Rs.{summary.mostSalesProductAmount}.00 in sales</p>
                 <p><b>Most profitable product :</b> {summary.mostProfitableProduct} with Rs.{summary.mostProfitableProductProfit}.00 in profit</p>
-                <p><b>Previous month total profit :</b> Rs.{previousMonthProfit}.00</p>
+                <p><b>Total online sales :</b> Rs.{summary.totalOnlineSales}.00</p>
+                <p><b>Total online profit :</b> Rs.{summary.totalOnlineProfit}.00</p>
+                <p><b>Total offline sales :</b> Rs.{summary.totalOfflineSales}.00</p>
+                <p><b>Total offline profit :</b> Rs.{summary.totalOfflineProfit}.00</p>
                 <p><b>Previous month total sales :</b> Rs.{previousMonthSales}.00</p>
+                <p><b>Previous month total profit :</b> Rs.{previousMonthProfit}.00</p>
+                <p><b>Percentage increase in sales from last month :</b> {summary.percentageSalesIncrease.toFixed(2)}%</p>
+                <p><b>Percentage increase in profit from last month :</b> {summary.percentageProfitIncrease.toFixed(2)}%</p>
               </div>
             </React.Fragment>
           )}
@@ -239,3 +266,4 @@ const ProfitReportDetails = () => {
 };
 
 export default ProfitReportDetails;
+
