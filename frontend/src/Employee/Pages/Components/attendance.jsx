@@ -153,23 +153,23 @@ const MarkAttendance = () => {
         </div>
         <div className="overflow-x-auto mb-4">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-green-400">
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                 >
                   Employee ID
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 text-black py-3 text-left text-xs font-medium  uppercase tracking-wider"
                 >
                   Name
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-black  text-left text-xs font-medium  uppercase tracking-wider"
                 >
                   Status
                 </th>
@@ -215,7 +215,7 @@ const MarkAttendance = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
         >
           {loading ? "Submitting..." : "Submit Attendance"}
         </button>
