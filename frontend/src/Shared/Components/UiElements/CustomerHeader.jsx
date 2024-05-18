@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
+import { FaQuestionCircle } from "react-icons/fa";
 import axios from "axios";
 import { AuthContext } from "../../../Shared/Components/context/authcontext";
 import "./CHeader.css";
@@ -22,7 +23,9 @@ const CustomerHeader = (props) => {
   const navigateCart = () => {
     navigate("/Cart");
   };
-
+  const navigateFaq = () => {
+    navigate("/faqs");
+  };
   useEffect(() => {
     // Fetch cart items when component mounts
     axios
@@ -113,6 +116,22 @@ const CustomerHeader = (props) => {
                 class="relative p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 z-10"
               >
                 <FaCartShopping size={25} />
+                {count !== 0 && (
+                  <span class="absolute inset-0 object-right-top top-0 p-5">
+                    <div class="inline-flex items-center px-1.5 py-0.5 border-2 pl- border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
+                      {count}
+                    </div>
+                  </span>
+                )}
+              </button>
+            </li>
+            <li class="pr-1">
+              <button
+                onClick={navigateFaq}
+                type="button"
+                class="relative p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 z-10"
+              >
+                <FaQuestionCircle size={25} />
                 {count !== 0 && (
                   <span class="absolute inset-0 object-right-top top-0 p-5">
                     <div class="inline-flex items-center px-1.5 py-0.5 border-2 pl- border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">

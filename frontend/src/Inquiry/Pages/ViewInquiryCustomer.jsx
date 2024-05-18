@@ -33,7 +33,7 @@ const ViewInquiry = () => {
 
     return (
       <>
-        <CustomerHeader title="Frequently Asked Questions"/>      
+        <CustomerHeader title="Inquiry"/>      
         <div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
           
           <ViewCard

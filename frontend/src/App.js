@@ -63,6 +63,7 @@ import CalculateProfit from "./Profit/Pages/CalculateProfit";
 import HistoryTable from "./Employee/Pages/salaryHistory"
 import Report from "./Employee/Pages/reportEmp";
 import SupplierReport from "./Supplier/Pages/SupplierReport";
+import InquiryReport from "./Inquiry/Pages/InquiryReport";
 import DeliveryPersonOrders from "./Delivery/Pages/CompleteDelivery";
 import Employeelogin from "./Employee/Pages/Employeelogin"
 import EmployeeloginformUpdate from "./Employee/Pages/Components/employeeloginformUpdate"
@@ -164,7 +165,8 @@ const App = () => {
         <Route path="/faq/update/:id" exact element={<FaqUpdate/>}/>
         <Route path="/faq/view/:id" exact element={<FaqView/>}/>
         <Route path="/inquiry_admin/" exact element={<Inquiry/>}/>
-        <Route path="/inquiry_admin/view/:id" exact element={<InquiryViewAdmin/>}/>        
+        <Route path="/inquiry_admin/view/:id" exact element={<InquiryViewAdmin/>}/>
+        <Route path="/inquiry_admin/report" exact element={<InquiryReport/>}/>        
         <Route path="/ProductReport" exact element={<ProductReport/>}/> 
         <Route path="/invoice" exact element={<InvoiceTable/>}/>
         </Route>

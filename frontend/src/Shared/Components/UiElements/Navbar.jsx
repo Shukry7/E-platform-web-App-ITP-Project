@@ -70,6 +70,8 @@ const Navbar = (props) => {
       });
   }, []);
 
+
+
   return (
     <>
       <aside
@@ -1111,6 +1113,18 @@ const Navbar = (props) => {
                       }`}
                     >
                       Delivery Report
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/inquiry_admin/report"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Assign Delivery"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                      Inquiry Report
                     </Link>
                   </li>
                 </ul>

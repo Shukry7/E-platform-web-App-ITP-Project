@@ -41,7 +41,7 @@ const inquirySchema = mongoose.Schema(
     },
     rating: {
       type: String,
-      default: null,
+      default: "-",
     },
     telephone: {
       type: Number,
