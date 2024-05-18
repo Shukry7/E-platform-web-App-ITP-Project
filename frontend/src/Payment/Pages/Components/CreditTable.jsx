@@ -48,21 +48,11 @@ function CardList() {
         uid: auth.cusId,
         cartitem: cartItems
       });
-      
-      const latestOrderResponse = await axios.get(`http://localhost:5000/order/latest/${auth.cusId}`, {
-       
-      });
       // Extract the order ID from the response
-      const orderId = latestOrderResponse.data._id;
+      
   
       // Log the order response to debug
-      console.log("Order response:", orderResponse.data);
-      console.log("Order ID:", orderId);
-  
-      // Check if orderId is undefined or null
-      if (!orderId) {
-        throw new Error("Order ID is missing from the order creation response");
-      }
+     
   
       // Submit the payment using the captured order ID
       const paymentResponse = await axios.post("http://localhost:5000/payment/submit", {
@@ -71,8 +61,7 @@ function CardList() {
         total: total,
         card_id: cardId,
         user_id: auth.cusId,
-        method: "Online",
-        Order_id: orderId // Use the captured order ID here
+        method: "Online"
       });
   
       // Log the payment response to debug

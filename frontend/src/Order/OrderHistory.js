@@ -4,7 +4,6 @@ import { AuthContext } from "../Shared/Components/context/authcontext";
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
-  const [payments, setPayments] = useState({});
   const auth = useContext(AuthContext);
   const Shipping = 500;
 
@@ -14,16 +13,8 @@ const OrderHistory = () => {
         const response = await axios.get(`http://localhost:5000/order/${auth.cusId}`);
         const fetchedOrders = response.data;
         setOrders(fetchedOrders);
-
-        // Fetch payment details for each order
-        const paymentDetails = {};
-        for (const order of fetchedOrders) {
-          const paymentResponse = await axios.get(`http://localhost:5000/payment/${order._id}`);
-          paymentDetails[order._id] = paymentResponse.data;
-        }
-        setPayments(paymentDetails);
       } catch (error) {
-        console.error('Error fetching orders or payments:', error);
+        console.error('Error fetching orders:', error);
       }
     };
 
@@ -36,10 +27,9 @@ const OrderHistory = () => {
         <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Order History</h1>
       </div>
       {orders.map((order) => {
-        const payment = payments[order._id] || {};
-        const subtotal = payment.subtotal || 0;
-        const shippingFee = payment.shippingFee || Shipping;
-        const total = payment.total || (subtotal + shippingFee);
+        const subtotal = order.productId.price*order.quantity || 0;
+        const shippingFee = 500
+        const total = (subtotal + shippingFee);
 
         return (
           <div key={order._id} className="mt-10 flex flex-col xl:flex-row justify-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">

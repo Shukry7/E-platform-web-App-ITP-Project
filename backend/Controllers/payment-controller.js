@@ -13,7 +13,7 @@ exports.submitPayment = async (req, res, next) => {
       user_id: user_id,
       submissionDate: localTime,
       Method: method,
-      Order_id: Order_id
+      
     });
     const savedPayment = await payment.save();
     res.json(savedPayment);
