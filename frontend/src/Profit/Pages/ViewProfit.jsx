@@ -32,6 +32,7 @@ const ViewProfit = () => {
       });
   }, []);
 
+  console.log(profit)
   useEffect(() => {
     setSearchFilteredProfit(profit);
     setDateFilteredProfit(profit);
@@ -49,7 +50,7 @@ const ViewProfit = () => {
         const itemDate = new Date(item.date).toISOString().slice(0, 10);
         return (
           item.order.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.productID.toLowerCase().includes(searchTerm.toLowerCase()) ||
           itemDate.includes(searchTerm.toLowerCase())
         );
       });
