@@ -574,118 +574,7 @@ const Navbar = (props) => {
                 </ul>
               )}
             </li>
-            <li>
-              <button
-                type="button"
-                className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                onClick={toggleDropdownOrder}
-              >
-              
-                <svg
-                  class={`w-5 h-5  transition duration-75 dark:text-gray-400  dark:group-hover:text-white ${
-                    props.select === "Order"
-                      ? "text-white"
-                      : "group-hover:text-gray-900 text-gray-500"
-                  }`}
-                  xmlns="http://www.w3.org/2000/svg"
-                  x="0px"
-                  y="0px"
-                  viewBox="13.75 14.4089994430542 36.67958068847656 34.52299880981445"
-                  enable-background="new 0 0 64 64"
-                  width="25"
-                  height="25"
-                >
-                  <g>
-                    <path
-                      fill="none"
-                      stroke="#000000"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-miterlimit="10"
-                      d="   M21.09,24.548l-1.34-6.315c-0.397-1.815-1.978-3.074-3.858-3.074H14.5"
-                    />
-
-                    <circle
-                      fill="#E6E9EC"
-                      stroke="#000000"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-miterlimit="10"
-                      cx="28.319"
-                      cy="46"
-                      r="2.182"
-                    />
-
-                    <circle
-                      fill="#E6E9EC"
-                      stroke="#000000"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-miterlimit="10"
-                      cx="42.319"
-                      cy="46"
-                      r="2.182"
-                    />
-                  </g>
-                  <g>
-                    <g></g>
-
-                    <path
-                      fill="#FFFFFF"
-                      stroke="#536DFE"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-miterlimit="10"
-                      d="   M40.346,16.25h-9.691c-1.19,0-2.154,0.965-2.154,2.154V21.5h14v-3.096C42.5,17.215,41.535,16.25,40.346,16.25z"
-                    />
-                  </g>
-                  <g>
-                    <path
-                      fill="#FFFFFF"
-                      stroke="#000000"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-miterlimit="10"
-                      d="   M41.507,39H29.131c-2.891,0-5.38-1.92-5.947-4.587l-2.18-10.254c-0.292-1.376,0.826-2.659,2.317-2.659h23.995   c1.491,0,2.609,1.283,2.317,2.659l-2.18,10.254C46.887,37.08,44.398,39,41.507,39z"
-                    />
-                  </g>
-                  <g>
-                    <line
-                      fill="none"
-                      stroke="#536DFE"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-miterlimit="10"
-                      x1="40.569"
-                      y1="33.127"
-                      x2="40.569"
-                      y2="28.068"
-                    />
-
-                    <line
-                      fill="none"
-                      stroke="#536DFE"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-miterlimit="10"
-                      x1="30.069"
-                      y1="33.127"
-                      x2="30.069"
-                      y2="28.068"
-                    />
-                  </g>
-                </svg>
-
-                <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Order</span>
-              </Link>
-            </li>
+            
             <li>
               <Link
                 to={"/invoice"}
@@ -737,60 +626,22 @@ const Navbar = (props) => {
                   </g>
                 </svg>
                 <span class="flex-1 ms-3 whitespace-nowrap">Invoice</span>
-                <svg
-                  className={`w-3 h-3 ${
-                    isDropdownOpenOrder ? "transform rotate-180" : ""
-                  }`}
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 10 6"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>
-                </button>
-                {isDropdownOpenOrder && (
-                <ul className="py-2 space-y-2">
-                  <li>
-                    <Link
-                      to={"/Order/"}
-                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
-                        props.select === "Order Details"
-                          ? "bg-red-400 text-white"
-                          : "hover:bg-gray-100 text-gray-900"
-                      }`}
-                    >
-                  <svg width="20px" height="20px" viewBox="0 0 1024 1024" fill="#000000" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M53.6 1023.2c-6.4 0-12.8-2.4-17.6-8-4.8-4.8-7.2-11.2-6.4-18.4L80 222.4c0.8-12.8 11.2-22.4 24-22.4h211.2v-3.2c0-52.8 20.8-101.6 57.6-139.2C410.4 21.6 459.2 0.8 512 0.8c108 0 196.8 88 196.8 196.8 0 0.8-0.8 1.6-0.8 2.4v0.8H920c12.8 0 23.2 9.6 24 22.4l49.6 768.8c0.8 2.4 0.8 4 0.8 6.4-0.8 13.6-11.2 24.8-24.8 24.8H53.6z m25.6-48H944l-46.4-726.4H708v57.6h0.8c12.8 8.8 20 21.6 20 36 0 24.8-20 44.8-44.8 44.8s-44.8-20-44.8-44.8c0-14.4 7.2-27.2 20-36h0.8v-57.6H363.2v57.6h0.8c12.8 8.8 20 21.6 20 36 0 24.8-20 44.8-44.8 44.8-24.8 0-44.8-20-44.8-44.8 0-14.4 7.2-27.2 20-36h0.8v-57.6H125.6l-46.4 726.4zM512 49.6c-81.6 0-148.8 66.4-148.8 148.8v3.2h298.4l-0.8-1.6v-1.6c0-82.4-67.2-148.8-148.8-148.8z" fill="" /></svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">
-                  Order Details
-                </span>
-                </Link>
-                </li>
-                <li>
-                    <Link
-                      to={"/OrderReport/"}
-                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
-                        props.select === "Order Report"
-                          ? "bg-red-400 text-white"
-                          : "hover:bg-gray-100 text-gray-900"
-                      }`}
-                    >
-                 <svg width="30px" height="30px" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M655.5 279.8c-19 0-34.4 15.4-34.4 34.4v52.5l-362.3 0.3v-52.5c0-19 15.4-34.4 34.4-34.4l1.8-0.3h360.5z" fill="#CDE9E3" /><path d="M365.7 758.2c-19 0-34.4-15.4-34.4-34.4V314.3c0-19-15.4-34.4-34.4-34.4h362.3c19 0 34.4 15.4 34.4 34.4v357" fill="#CDE9E3" /><path d="M369.3 758.2c19 0 34.4-15.4 34.4-34.4v-52.5H766v52.5c0 19-15.4 34.4-34.4 34.4H369.3z" fill="#CDE9E3" /><path d="M613.9 366.8H411c-4 0-7.2 3.2-7.2 7.2s3.2 7.2 7.2 7.2h202.9c4 0 7.2-3.2 7.2-7.2s-3.2-7.2-7.2-7.2zM613.9 410.3H411c-4 0-7.2 3.2-7.2 7.2s3.2 7.2 7.2 7.2h202.9c4 0 7.2-3.2 7.2-7.2s-3.2-7.2-7.2-7.2zM613.9 453.8H411c-4 0-7.2 3.2-7.2 7.2s3.2 7.2 7.2 7.2h202.9c4 0 7.2-3.2 7.2-7.2s-3.2-7.2-7.2-7.2zM613.9 497.2H411c-4 0-7.2 3.2-7.2 7.2s3.2 7.2 7.2 7.2h202.9c4 0 7.2-3.2 7.2-7.2 0-3.9-3.2-7.2-7.2-7.2zM613.9 540.7H411c-4 0-7.2 3.2-7.2 7.2s3.2 7.2 7.2 7.2h202.9c4 0 7.2-3.2 7.2-7.2 0-3.9-3.2-7.2-7.2-7.2zM613.9 584.2H411c-4 0-7.2 3.2-7.2 7.2s3.2 7.2 7.2 7.2h202.9c4 0 7.2-3.2 7.2-7.2s-3.2-7.2-7.2-7.2z" fill="#211F1E" /><path d="M766 656.7h-58V314.3c0-27-21.9-48.9-48.9-48.9H291.6c-26.4 0.7-47.4 22.7-47.4 49.2v52.5c0 3.8 1.5 7.5 4.2 10.3 2.7 2.7 6.4 4.2 10.2 4.2h58v342.2c0 27 21.9 48.9 48.9 48.9 0.6 0 1.2-0.1 1.8-0.2 0.6 0.1 1.2 0.2 1.8 0.2h362.4c27 0 48.9-21.9 48.9-48.9v-52.5c0.1-8.1-6.3-14.6-14.4-14.6zM273.3 352.6v-38c0-21.8 22.9-20.2 22.9-20.2h0.7c11 0 19.9 8.9 19.9 19.9v38.3h-43.5z m115.9 318.6v52.5c0 11-8.9 19.9-19.9 19.9-0.6 0-1.2 0.1-1.8 0.2-0.6-0.1-1.2-0.2-1.8-0.2-11 0-19.9-8.9-19.9-19.9V314.3c0-7.1-1.5-13.8-4.2-19.9h317.6c11 0 19.9 8.9 19.9 19.9v342.5H403.7c-8-0.1-14.5 6.4-14.5 14.4z m362.3 52.6c0 11-8.9 19.9-19.9 19.9H413.9c2.7-6.1 4.2-12.8 4.2-19.9v-38h333.4v38z" fill="#211F1E" /></svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">
-                  Order Report
-                </span>
-                </Link>
-                </li>
-                </ul>
-            )}
+              </Link>
             </li>
-
+            <li>
+              <Link
+                to={"/order"}
+                class={`flex items-center p-2  rounded-lg dark:text-white  dark:hover:bg-gray-700 group ${
+                  props.select === "Order Details"
+                    ? "bg-red-400 text-white"
+                    : "hover:bg-gray-100 text-gray-900"
+                }`}
+              >
+                <svg width="20px" height="20px" viewBox="0 0 1024 1024" fill="#000000" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M53.6 1023.2c-6.4 0-12.8-2.4-17.6-8-4.8-4.8-7.2-11.2-6.4-18.4L80 222.4c0.8-12.8 11.2-22.4 24-22.4h211.2v-3.2c0-52.8 20.8-101.6 57.6-139.2C410.4 21.6 459.2 0.8 512 0.8c108 0 196.8 88 196.8 196.8 0 0.8-0.8 1.6-0.8 2.4v0.8H920c12.8 0 23.2 9.6 24 22.4l49.6 768.8c0.8 2.4 0.8 4 0.8 6.4-0.8 13.6-11.2 24.8-24.8 24.8H53.6z m25.6-48H944l-46.4-726.4H708v57.6h0.8c12.8 8.8 20 21.6 20 36 0 24.8-20 44.8-44.8 44.8s-44.8-20-44.8-44.8c0-14.4 7.2-27.2 20-36h0.8v-57.6H363.2v57.6h0.8c12.8 8.8 20 21.6 20 36 0 24.8-20 44.8-44.8 44.8-24.8 0-44.8-20-44.8-44.8 0-14.4 7.2-27.2 20-36h0.8v-57.6H125.6l-46.4 726.4zM512 49.6c-81.6 0-148.8 66.4-148.8 148.8v3.2h298.4l-0.8-1.6v-1.6c0-82.4-67.2-148.8-148.8-148.8z" fill="" /></svg>
+                <span class="flex-1 ms-3 whitespace-nowrap">Order details</span>
+              </Link>
+            </li>
+            
             <li>
               <button
                 type="button"
@@ -1162,6 +1013,18 @@ const Navbar = (props) => {
                       }`}
                     >
                       Profit Report
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/OrderReport"}
+                      className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-white dark:hover:bg-gray-700 ${
+                        props.select === "Assign Delivery"
+                          ? "bg-red-400 text-white"
+                          : "hover:bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                      Order Report
                     </Link>
                   </li>
                   <li>
