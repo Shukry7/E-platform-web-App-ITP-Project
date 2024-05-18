@@ -50,10 +50,9 @@ const MarkAttendance = () => {
         setEmployees(res.data);
 
         const initialAttendanceRecords = res.data.map((employee) => {
-
           const selected = attendance.filter((check) => {
             if (!check || !check.employee || !check.employee._id) {
-              return false; 
+              return false;
             }
             const checkDateFormatted = convertDatabaseDate(check.date);
             return (
@@ -62,7 +61,7 @@ const MarkAttendance = () => {
             );
           });
           const status = selected.length > 0 ? selected[0].status : "Absent";
-          console.log(selected)
+          console.log(selected);
           return {
             employee: employee,
             date: dateTimeString,
@@ -139,7 +138,7 @@ const MarkAttendance = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto mt-20">
       <h2 className="text-3xl font-semibold mb-4">Mark Employee Attendance</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -153,23 +152,23 @@ const MarkAttendance = () => {
         </div>
         <div className="overflow-x-auto mb-4">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-green-400">
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                 >
                   Employee ID
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 text-black py-3 text-left text-xs font-medium  uppercase tracking-wider"
                 >
                   Name
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-black  text-left text-xs font-medium  uppercase tracking-wider"
                 >
                   Status
                 </th>
@@ -215,7 +214,7 @@ const MarkAttendance = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
         >
           {loading ? "Submitting..." : "Submit Attendance"}
         </button>

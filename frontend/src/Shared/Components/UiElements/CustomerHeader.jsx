@@ -13,6 +13,7 @@ const CustomerHeader = (props) => {
   const [isProfileDropdown, setIsProfileDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
+  const [customer, setCustomer] = useState();
 
   const toggleProfile = () => {
     setIsProfileDropdown(!isProfileDropdown);
@@ -34,6 +35,21 @@ const CustomerHeader = (props) => {
         console.error("Error fetching cart", error);
       });
   }, [auth.cusId]);
+
+  useEffect(() => {
+    
+    axios
+      .get(`http://localhost:5000/customer/${auth.cusId}`)
+      .then((response) => {
+        setCustomer(response.data);
+      })
+
+      .catch((error) => {
+        console.error("Error fetching cart", error);
+      });
+  }, [auth.cusId]);
+
+  console.log(customer)
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -68,16 +84,17 @@ const CustomerHeader = (props) => {
       <div class=" flex-1 flex flex-col">
         <nav class="px-4 flex justify-between bg-white h-16 border-b-2">
           <ul class="flex items-center">
+          <Link to="/products">
             <li class="h-6 w-6 flex items-center">
               <img
                 class="h-full w-full mx-auto"
-                src="https://www.svgrepo.com/show/424912/valorant-logo-play-2.svg"
+                src="/IMG/LOGO.png"
                 alt="Dedsec logo"
               />
               <span class="self-center text-xl font-semibold whitespace-nowrap text-orange-600 dark:text-white ml-2">
                 Kandurata Glass House
               </span>
-            </li>
+            </li></Link>
           </ul>
 
           <ul class="flex items-center pl-40">
@@ -113,13 +130,13 @@ const CustomerHeader = (props) => {
               <div className="flex items-center gap-4 hover:cursor-pointer">
                 <span class="hidden text-right lg:block">
                   <span class="block text-sm font-medium text-black hover:text-blue-gray-800">
-                    DeDsec
+                    {customer?.name}
                   </span>
                 </span>
 
                 <span>
                   <img
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                    src={`http://localhost:5000/${customer?.image}`}
                     alt="User"
                     className="h-12 w-12 rounded-full object-cover"
                   />
@@ -184,9 +201,9 @@ const CustomerHeader = (props) => {
                         </Link>
                       </li>
                       <li>
-                        <a
-                          href="profile.html"
-                          class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-orange-500 lg:text-base"
+                      <Link
+                          to={"/inquiries"}
+                          class={"flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-orange-500 lg:text-base"}
                         >
                           <svg
                             class="fill-current"
@@ -202,7 +219,7 @@ const CustomerHeader = (props) => {
                             ></path>
                           </svg>
                           My Inquiries
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                     <button onClick={logout} to="/" class="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-orange-500 lg:text-base">

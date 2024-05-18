@@ -285,7 +285,7 @@ const ReviewCustomer = ({ ProductID, reference, Rating, onReviewChange }) => {
                     </div>
 
                     <div class="mt-4 min-w-0 flex-1 space-y-4 sm:mt-0">
-                      <p class="text-base font-normal text-gray-500 dark:text-gray-400">
+                      <p class="text-base font-normal text-gray-800 dark:text-gray-400">
                         {ProductR.Message}
                       </p>
                     </div>

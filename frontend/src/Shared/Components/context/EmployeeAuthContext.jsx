@@ -1,15 +1,22 @@
 import { createContext, useEffect, useState } from 'react';
 
 export const EmployeeAuthContext = createContext({
-  isLoggedIn: false,
+  isLoggedInEmployee: false,
+  isCashierLoggedIn: false,
   employeePersonId: null,
+  cashierlogin:()=>{},
   login: () => {},
   logout: () => {}
 });
 
 export const EmployeeAuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+  const [isLoggedInEmployee, setisLoggedInEmployee] = useState(() => {
     const savedIsLoggedIn = localStorage.getItem('isLoggedInEmployee');
+    return savedIsLoggedIn ? JSON.parse(savedIsLoggedIn) : false;
+  });
+
+  const [isCashierLoggedIn, setIsCashierLoggedIn] = useState(() => {
+    const savedIsLoggedIn = localStorage.getItem('isCashierLoggedIn');
     return savedIsLoggedIn ? JSON.parse(savedIsLoggedIn) : false;
   });
 
@@ -19,24 +26,33 @@ export const EmployeeAuthProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem('isLoggedEmployee', JSON.stringify(isLoggedIn));
+    localStorage.setItem('isLoggedInEmployee', JSON.stringify(isLoggedInEmployee));
+    localStorage.setItem('isCashierLoggedIn', JSON.stringify(isCashierLoggedIn));
     localStorage.setItem('employeePersonId', JSON.stringify(employeePersonId));
-  }, [isLoggedIn, employeePersonId]);
+  }, [isLoggedInEmployee,isCashierLoggedIn, employeePersonId]);//
 
   const login = (employeePersonId) => {
-    console.log('Setting deliveryPersonId:', employeePersonId);
+    console.log('Setting employeePersonId:', employeePersonId);
     console.log(employeePersonId) // Add this line for debugging
-    setIsLoggedIn(true);
-    setDeliveryPersonId(employeePersonId);
+    setisLoggedInEmployee(true);
+    setEmployeePersonId(employeePersonId);
+  };
+
+  const cashierlogin = (employeePersonId) => {
+    console.log('Setting employeePersonId:', employeePersonId);
+    console.log(employeePersonId) // Add this line for debugging
+    setIsCashierLoggedIn(true);
+    setEmployeePersonId(employeePersonId);
   };
 
   const logout = () => {
-    setIsLoggedIn(false);
-    setDeliveryPersonId(null);
+    setIsCashierLoggedIn(false)
+    setisLoggedInEmployee(false);
+    setEmployeePersonId(null);
   };
 
   return (
-    <EmployeeAuthContext.Provider value={{ isLoggedIn, employeePersonId, login, logout }}>
+    <EmployeeAuthContext.Provider value={{ isLoggedInEmployee,isCashierLoggedIn, employeePersonId, cashierlogin,login, logout }}>
       {children}
     </EmployeeAuthContext.Provider>
   );

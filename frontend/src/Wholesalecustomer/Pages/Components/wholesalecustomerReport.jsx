@@ -8,6 +8,10 @@ import { useReactToPrint } from "react-to-print";
 const WholesalecustomerReport = () => {
   const [loading, setLoading] = useState(false);
   const [credit, setcredit] = useState([]);
+  const [topCustomer, setTopCustomer] = useState('');
+  const [topCustomeramount, setTopCustomeramount] = useState(0);
+  const [leastCustomer, setLeastCustomer] = useState('');
+  const [leastCustomeramount, setLeastCustomeramount] = useState(0);
   const [month, setMonth] = useState(""); // Initialize month state
   const [totalcredit, setTotalcredit] = useState(0); // Total credit state
   const [numcustomer, setnumcustomer] = useState(0); // Number of customer
@@ -28,7 +32,7 @@ const WholesalecustomerReport = () => {
       });
   },[]);
 
-  console.log(credit)
+
 
   useEffect(() => {
     
@@ -41,6 +45,19 @@ const WholesalecustomerReport = () => {
       const creditArr = credit.map((credit) => credit.credit);
       setMaxcredit(Math.max(...creditArr));
       setMincredit(Math.min(...creditArr));
+
+      const topCustomer = credit.reduce((max, credit) => 
+        credit.credit > max.credit ? credit : max, credit[0] || {}
+      );
+      setTopCustomer(topCustomer.name);
+      setTopCustomeramount(topCustomer.credit);
+
+      const leastCustomer = credit.reduce((min, credit) => 
+        credit.credit < min.credit ? credit : min, credit[0] || {}
+      );
+      setLeastCustomer(leastCustomer.name);
+      setLeastCustomeramount(leastCustomer.credit);
+
     }
   }, [credit]); 
   const currentDate = new Date().toLocaleDateString();
@@ -54,7 +71,7 @@ const WholesalecustomerReport = () => {
 
   return (
     <div className="container mx-auto my-8 mt-10">
-      <div className="flex items-center justify-between mt-40 mb-4">
+      <div className="flex items-center justify-between mb-4">
       
         <div className="mr-4">
         
@@ -110,8 +127,8 @@ const WholesalecustomerReport = () => {
                 
                 <p><b>Total credit for the Month:</b> Rs.{totalcredit}.00</p>
                 
-                <p><b>Maximum Credit:</b> Rs.{maxcredit}.00</p>
-                <p><b>Minimum Credit :</b> Rs.{mincredit}.00</p>
+                <p><b>Maximum Credit:</b> {topCustomer} with Rs.{topCustomeramount}.00</p>
+                <p><b>Minimum Credit :</b> {leastCustomer} with Rs.{leastCustomeramount}.00</p>
                 <p><b>Number of wholesalecustomer: </b>{numcustomer}</p>
               </div>
             </React.Fragment>

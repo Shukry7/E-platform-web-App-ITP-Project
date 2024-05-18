@@ -37,6 +37,7 @@ import CreateWholesalecustomer from "./Wholesalecustomer/Pages/CreateWholesalecu
 import Wholesalecustomer from "./Wholesalecustomer/Pages/Wholesalecustomer";
 import UpdateWholesalecustomer from "./Wholesalecustomer/Pages/UpdateWholesalecustomer";
 import ViewWholesalecustomer from "./Wholesalecustomer/Pages/ViewWholesalecustomer";
+import WholesalecustomerReport from "./Wholesalecustomer/Pages/reportWholesalecustomer";
 import LoginPage from "./Login/LoginPage";
 import ProductDetails from "./Product/Pages/Components/ProductDetails";
 import SalaryCalculatorForm from "./Employee/Pages/Salaryform";
@@ -55,6 +56,8 @@ import DeliveryPersonProfile from "./Delivery/Pages/Components/DeliveryPersonPro
 import { DeliveryAuthProvider } from "./Shared/Components/context/DeliveryAuthContext";
 import ViewCost from "./Profit/Pages/ViewCost";
 import ViewProfit from "./Profit/Pages/ViewProfit";
+import ProfitReport from "./Profit/Pages/ProfitReport";
+import ProductReport from "./Product/Pages/ProductReport";
 import Order from "./Order/Order";
 import CalculateProfit from "./Profit/Pages/CalculateProfit";
 import HistoryTable from "./Employee/Pages/salaryHistory"
@@ -68,17 +71,49 @@ import BillingUI from "./Invoice/Pages/BillingUI";
 import DeliveryReport from "./Delivery/Pages/DeliveryReport";
 import OrderReport from "./Order/OrderReport"
 import OrderHistory from "./Order/OrderHistory"
+import LoginPageEmployee from "./LoginEmployee/LoginEmployee";
+import CheckEmployeelogin from "./Shared/Components/context/checkemployeeLogin"
+import EmployeeAuthProvider from "./Shared/Components/context/EmployeeAuthContext";
+import Faq from "./Faq/Pages/Faq";
+import FaqCreate from "./Faq/Pages/CreateFaq";
+import FaqUpdate from "./Faq/Pages/UpdateFaq";
+import FaqView from "./Faq/Pages/Viewfaq";
+import FaqViewCustomer from "./Faq/Pages/CustomerFaqView";
+import FaqCustomer from "./Faq/Pages/FaqTableCustomer";
+import InquiryCustomer from "./Inquiry/Pages/InquiryTableCustomer";
+import Inquiry from "./Inquiry/Pages/InquiryAdmin";
+import InquiryViewAdmin from "./Inquiry/Pages/ViewInquiryAdmin";
+import InquiryViewCustomer from "./Inquiry/Pages/ViewInquiryCustomer";
+import InquiryCreate from "./Inquiry/Pages/CreateInquiry";
+import ProtectedRouteEmployee from "./Shared/Components/context/PrivateEmployeeRoute";
+import ProtectedRouteCashier from "./Shared/Components/context/PrivateCashierRoute";
+import InvoiceTable from "./Invoice/Pages/invoiceTable";
 
 const App = () => {
   return (
     <AuthProvider >
     <DeliveryAuthProvider>
+    <EmployeeAuthProvider>
     <Router>
       <Routes >
         <Route element={<ProtectedRouteCustomer/>}>
           <Route path="/products" exact element={<ProductCustomerUI/>}/>
           <Route path="/ProductList/:id" exact element={<ProductDetails/>}/>
+          <Route path="/faqs/" exact element={<FaqCustomer/>}/>
+          <Route path="/inquiries/" exact element={<InquiryCustomer/>}/>
+          <Route path="/inquiry/create" exact element={<InquiryCreate/>}/>
+          <Route path="/faqs/view/:id" exact element={<FaqViewCustomer/>}/>
+          <Route path="/inquiries/view/:id" exact element={<InquiryViewCustomer/>}/>
+          <Route path="/CC/new" exact element={<AddCC/>}/>
+          <Route path="/Cart" exact element={<Cart/>}/>
+          <Route path="/offpay" exact element={<Offpay/>}/>
+          <Route path="/CC" exact element={<CC/>}/>
+          <Route path="/CC/:id" exact element={<UpdateCC/>}/>
+          <Route path="/CC/new" exact element={<CCForm/>}/>         
         </Route>
+
+        <Route element={<ProtectedRouteEmployee/>}>
+
         <Route path="/Dashboard" exact element={<Dashboard/>}/>
         <Route path="/Product" exact element={<Products/>}/>
         <Route path="/ProductReviews" exact element={<ProductReview/>}/>
@@ -99,42 +134,61 @@ const App = () => {
         <Route path="/Employee/update/:id" exact element={<Updateemployee/>}/> 
         <Route path="/Employee/new" exact element={<CreateEmployee/>}/>
         <Route path="/Employee/view/:id" exact element={<ViewEmployees/>}/>
-        <Route path="/CC/new" exact element={<AddCC/>}/>
+        
         <Route path="/Customer" exact element={<Customers/>}/>
-        <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
-        <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
-        <Route path="/Customer/view/" exact element={<ViewCustomer/>}/>
         <Route path="/Customer/TopCustomers" exact element={<TopCustomers/>}/>
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
-        <Route path="/Cart" exact element={<Cart/>}/>
-        <Route path="/offpay" exact element={<Offpay/>}/>
-        <Route path="/CC" exact element={<CC/>}/>
-        <Route path="/CC/:id" exact element={<UpdateCC/>}/>
-        <Route path="/CC/new" exact element={<CCForm/>}/>
+       
         <Route path="/AssignDelivery" exact element={<AssignmentDelivery/>}/>
         <Route path="/Wholesalecustomer/create" exact element={<CreateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer" exact element={<Wholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/update/:id" exact element={<UpdateWholesalecustomer/>}/>
         <Route path="/Wholesalecustomer/view/:id" exact element={<ViewWholesalecustomer/>}/>
+        <Route path="/Wholesalecustomer/report" exact element={<WholesalecustomerReport/>}/>
         <Route path="/Employee/attendance" exact element={<MarkAttendance />}/>
         <Route path="/Employee/attendancelist" exact element={<Attendance />}/>
         <Route path="/Employeelogin" exact element={<Employeelogin />}/>
         <Route path="/Employeelogin/new" exact element={<Employeeloginform />}/>
-        <Route path="/Employeelogin/update" exact element={<Employeeloginform />}/>
+        <Route path="/Employeelogin/update/:id" exact element={<EmployeeloginformUpdate />}/>
         <Route path="/Salaryform" exact element={<SalaryCalculatorForm />}/>
         <Route path="/salaryHistory" exact element={<HistoryTable/>}/>
         <Route path="/employee/report" exact element={<Report/>}/>
         <Route path="/delivery/report" exact element={<DeliveryReport/>}/>
         <Route path="/Profit/cost" exact element={<ViewCost/>}/>
         <Route path="/Profit/profit" exact element={<ViewProfit/>}/>
+        <Route path="/Profit/report" exact element={<ProfitReport/>}/>
         <Route path="/Order" exact element={<Order/>}/>
         <Route path="/Profit/calculate" exact element={<CalculateProfit/>}/>
+      
+        <Route path="/faq/" exact element={<Faq/>}/>
+        <Route path="/faq/create" exact element={<FaqCreate/>}/>
+        <Route path="/faqs/" exact element={<FaqCustomer/>}/>
+        <Route path="/faq/update/:id" exact element={<FaqUpdate/>}/>
+        <Route path="/faq/view/:id" exact element={<FaqView/>}/>
+        <Route path="/inquiry_admin/" exact element={<Inquiry/>}/>
+        <Route path="/inquiry_admin/view/:id" exact element={<InquiryViewAdmin/>}/>        
+        <Route path="/ProductReport" exact element={<ProductReport/>}/> 
+        <Route path="/invoice" exact element={<InvoiceTable/>}/>
+        </Route>
+        <Route element={<ProtectedRouteCashier/>}>
+        
         <Route path="/Billing" exact element={<BillingUI/>}/>
+
+
+        </Route>
         <Route path="/" exact element={
           <CheckLogin>
             <LoginPage/>
           </CheckLogin>}/> 
-        
+
+          <Route path="/LoginEmployee" exact element={
+          
+            <LoginPageEmployee/>
+         }/> 
+       
+        <Route path="/Customer/view/" exact element={<ViewCustomer/>}/>
+        <Route path="/Customer/update/:id" exact element={<UpdateCustomer/>}/>
+        <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
         <Route path="/OrderReport"exact element={<OrderReport/>} />
@@ -152,8 +206,9 @@ const App = () => {
           
           <DeliveryPersonOrders/>
       }/>
-      </Routes >
+      </Routes>
     </Router>
+   </EmployeeAuthProvider>
     </DeliveryAuthProvider>
     </AuthProvider>
   );
