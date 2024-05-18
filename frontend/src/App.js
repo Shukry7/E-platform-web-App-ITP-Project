@@ -70,6 +70,8 @@ import EmployeeloginformUpdate from "./Employee/Pages/Components/employeeloginfo
 import Employeeloginform from "./Employee/Pages/Components/EmployeeloginForm"
 import BillingUI from "./Invoice/Pages/BillingUI";
 import DeliveryReport from "./Delivery/Pages/DeliveryReport";
+import OrderReport from "./Order/OrderReport"
+import OrderHistory from "./Order/OrderHistory"
 import LoginPageEmployee from "./LoginEmployee/LoginEmployee";
 import CheckEmployeelogin from "./Shared/Components/context/checkemployeeLogin"
 import EmployeeAuthProvider from "./Shared/Components/context/EmployeeAuthContext";
@@ -191,6 +193,8 @@ const App = () => {
         <Route path="/Customer/create" exact element={<RegisterCustomer/>}/>
         <Route path="/Delivery/view/:id" exact element={<ViewDelivery/>}/>
         <Route path="/confirm-order"exact element={<ConfirmOrderPage/>} />
+        <Route path="/OrderReport"exact element={<OrderReport/>} />
+        <Route path="/OrderHistory"exact element={<OrderHistory/>} />
         <Route path="/deliverylogin" exact element={
           
             <DeliveryLoginPage/>

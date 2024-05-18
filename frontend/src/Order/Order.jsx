@@ -49,27 +49,33 @@ const Order = () => {
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    const filtered = Orders.filter(
-      (order) =>
-        order.date.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        order.ID.toLowerCase().includes(e.target.value.toLowerCase())
-    );
+    const filtered = Orders.filter((order) => {
+      const lowercaseDate = order.date ? order.date.toLowerCase() : '';
+      const lowercaseID = order.ID ? order.ID.toLowerCase() : '';
+      const lowercaseemail = order.userId.mail ? order.userId.mail.toLowerCase() : '';
+      return (
+        lowercaseDate.includes(e.target.value.toLowerCase()) ||
+        lowercaseID.includes(e.target.value.toLowerCase())||
+        lowercaseemail.includes(e.target.value.toLowerCase())
+      );
+    });
     setFilteredOrders(filtered);
-    setActivePage(1)
+    setActivePage(1);
   };
+  
 
   return (
     <><div className="flex overflow-hidden bg-gray-50 dark:bg-gray-900">
-        <Navbar select={"Order"}/>
+        <Navbar select={"Order Details"}/>
         <Header/>
       
         <Card className="flex" style={{ width: "100%" }}>
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl my-8">Product List</h1>
+            <h1 className="text-3xl my-8">Order List</h1>
             <Search
               searchTerm={searchTerm}
               handleSearch={handleSearch}
-              placeholder={"Search By ID / Name"}
+              placeholder={"Search By ID / Date / Email"}
             />
             
               <MdOutlineAddBox className="text-sky-800 text-4xl" />
