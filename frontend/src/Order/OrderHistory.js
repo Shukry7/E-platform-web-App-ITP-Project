@@ -5,7 +5,8 @@ import { AuthContext } from "../Shared/Components/context/authcontext";
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const auth = useContext(AuthContext);
-  const Shipping = 500;
+  const shippingFee = 500;
+  const total = 0;
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -27,10 +28,7 @@ const OrderHistory = () => {
         <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Order History</h1>
       </div>
       {orders.map((order) => {
-        const subtotal = order.productId.price*order.quantity || 0;
-        const shippingFee = 500
-        const total = (subtotal + shippingFee);
-
+        let subtotal = 0; // Initialize subtotal for each order
         return (
           <div key={order._id} className="mt-10 flex flex-col xl:flex-row justify-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
             <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
@@ -42,30 +40,33 @@ const OrderHistory = () => {
                   </div>
                 </div>
                 <div className="mt-4 md:mt-6 flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-                  {order.CartItems.map((item) => (
-                    <div key={item.productId._id} className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-                      <div className="flex flex-col md:flex-row justify-start items-start w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
-                        <div className="w-full md:w-40">
-                          <img className="w-full" src={`http://localhost:5000/${item.productId.image}`} alt={item.productId.name} />
-                        </div>
-                        <div className="border-b border-gray-200 flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
-                          <div className="w-full flex flex-col justify-start items-start space-y-2">
-                            <h3 className="text-xl dark:text-white font-semibold leading-6 text-gray-800">{item.productId.name}</h3>
-                            <div className="flex justify-start items-start flex-col space-y-2">
-                              <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Style: </span>{item.productId.style}</p>
-                              <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Size: </span>{item.productId.size}</p>
-                              <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Color: </span>{item.productId.color}</p>
-                            </div>
+                  {order.CartItems.map((item) => {
+                    subtotal += item.quantity * item.productId.price; // Update subtotal for each item
+                    return (
+                      <div key={item.productId._id} className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
+                        <div className="flex flex-col md:flex-row justify-start items-start w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
+                          <div className="w-full md:w-40">
+                            <img className="w-full" src={`http://localhost:5000/${item.productId.image}`} alt={item.productId.name} />
                           </div>
-                          <div className="flex justify-between space-x-8 items-start w-full">
-                            <p className="text-base dark:text-white xl:text-lg leading-6">${item.productId.price}</p>
-                            <p className="text-base dark:text-white xl:text-lg leading-6 text-gray-800">{item.quantity}</p>
-                            <p className="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">${item.quantity * item.productId.price}</p>
+                          <div className="border-b border-gray-200 flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
+                            <div className="w-full flex flex-col justify-start items-start space-y-2">
+                              <h3 className="text-xl dark:text-white font-semibold leading-6 text-gray-800">{item.productId.name}</h3>
+                              <div className="flex justify-start items-start flex-col space-y-2">
+                                <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Style: </span>{item.productId.style}</p>
+                                <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Size: </span>{item.productId.size}</p>
+                                <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-300">Color: </span>{item.productId.color}</p>
+                              </div>
+                            </div>
+                            <div className="flex justify-between space-x-8 items-start w-full">
+                              <p className="text-base dark:text-white xl:text-lg leading-6">Rs.{item.productId.price}</p>
+                              <p className="text-base dark:text-white xl:text-lg leading-6 text-gray-800">{item.quantity}</p>
+                              <p className="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">Rs.{item.quantity * item.productId.price}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
               <div className="flex flex-col justify-center items-stretch w-full space-y-4 md:space-y-6 xl:space-y-8">
@@ -90,7 +91,7 @@ const OrderHistory = () => {
                   <div className="flex justify-between items-center w-full">
                     <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">Total</p>
                     <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">
-                      Rs.{total}
+                      Rs.{subtotal + shippingFee}
                     </p>
                   </div>
                 </div>
@@ -104,3 +105,4 @@ const OrderHistory = () => {
 };
 
 export default OrderHistory;
+
