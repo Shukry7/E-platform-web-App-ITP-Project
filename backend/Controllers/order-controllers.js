@@ -128,6 +128,17 @@ const sriLankaDateStr = `${sriLankaYear}-${sriLankaMonth}-${sriLankaDay}`;
   }
 };
 
+const latestOrder = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const latestOrder = await Order.find({ userId: userId }).sort({ createdAt: -1 }).limit(1);
+    res.status(200).json(latestOrder);
+  } catch (error) {
+    console.error("Error fetching latest order:", error);
+    res.status(500).json({ message: 'Failed to fetch latest order', error });
+  }
+};
+
 const listOrder = async (req, res) => {
   try {
     const order = await Order.find({})
@@ -147,6 +158,21 @@ const listOrders = async (req, res) => {
   try {
     const order = await Order.find({})
     .populate("CartItems.productId");
+
+    return res.status(200).json(order);
+  } 
+  catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+const listOrderById = async (req, res) => {
+  try {
+    const {uid}= req.params;
+    const order = await Order.find({userId:uid})
+    .populate("CartItems.productId")
+    .sort({ createdAt: -1 });
 
     return res.status(200).json(order);
   } 
@@ -202,3 +228,5 @@ exports.listOrder = listOrder;
 exports.checkOrder = checkOrder;
 exports.listOrders = listOrders;
 exports.GetProductReportByDateRange = GetProductReportByDateRange;
+exports.listOrderById = listOrderById;
+exports.latestOrder=latestOrder;

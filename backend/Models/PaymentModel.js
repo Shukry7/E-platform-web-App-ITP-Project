@@ -31,6 +31,11 @@ const paymentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now // Set default value to current date and time
   },
+  Order_id:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Order',
+    required: true
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Payment', paymentSchema);
