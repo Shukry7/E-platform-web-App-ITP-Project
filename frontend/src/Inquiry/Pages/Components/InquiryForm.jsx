@@ -54,6 +54,10 @@ const InquiryForm = () => {
         value: "",
         isValid: false,
       },
+      mail: {
+        value: "",
+        isValid: false,
+      },
     },
     false
   );
@@ -90,12 +94,12 @@ const InquiryForm = () => {
       type: formState.inputs.type.value,
       telephone: formState.inputs.telephone.value,
       name: formState.inputs.name.value,
-      
+      mail: customer.mail,
     })
       .then((res) => {
         setLoading(false);
         Toast("Inquiry sent Successfully!! 🔥","success")
-        navigate("/inquiry_admin/");
+        navigate("/inquiries/");
       })
       .catch((err) => {
         console.error(err);
@@ -103,7 +107,6 @@ const InquiryForm = () => {
       });
   };
 
-  
 
   return (
     <form onSubmit={submitHandler}>
@@ -114,7 +117,7 @@ const InquiryForm = () => {
           <div class="min-h-screen p-6 bg-white flex items-center justify-center ml-20">
             <div class="container mx-auto">
               <div>
-                <h2 class="font-semibold text-xl text-gray-600 text-center">Make an Inquiry{customer.name}</h2>
+                <h2 class="font-semibold text-xl text-gray-600 text-center">Make an Inquiry</h2>
                 <p class="text-gray-500 mb-6 text-center">Enter Inquiry details below !!</p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:px-8 mt-6 max-w-4xl ml-36">
 
@@ -126,11 +129,13 @@ const InquiryForm = () => {
                             element="Input"
                             id="name"
                             type="text"
+                            initialValue={customer.name}
                             placeholder="Enter the name" 
                             label="Inquirer Name :"
                             validators={[VALIDATOR_REQUIRE()] }
                             errorText="Please fill the field."
                             onInput={inputHandler}
+                            readOnly={true}
                           />
                           <Input
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
@@ -186,7 +191,6 @@ const InquiryForm = () => {
                             <Button
                               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                               type="submit"
-                              disabled={!formState.isValid}
                             >
                               SUBMIT
                             </Button>

@@ -36,7 +36,7 @@ const ViewCost = () => {
     setSearchTerm(e.target.value);
     const filtered = cost.filter(
       (item) =>
-        item.product.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.productID.toLowerCase().includes(e.target.value.toLowerCase()) ||
         item.date.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredCost(filtered);

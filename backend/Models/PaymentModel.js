@@ -31,6 +31,7 @@ const paymentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now // Set default value to current date and time
   },
+  
 }, { timestamps: true });
 
 module.exports = mongoose.model('Payment', paymentSchema);

@@ -96,7 +96,7 @@ const InquiryFormUpdate = () => {
             <div class="container mx-auto">
                 <div>
                 <h2 class="font-semibold text-xl text-gray-600 text-center"></h2>
-                <p class="text-gray-500 mb-6 text-center">Enter FAQ details below !!</p>
+                <p class="text-gray-500 mb-6 text-center"></p>
                 <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6 max-w-4xl mr-16">
 
 

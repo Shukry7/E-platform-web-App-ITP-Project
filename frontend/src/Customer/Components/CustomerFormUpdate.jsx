@@ -132,7 +132,7 @@ const CustomerFormUpdate = () => {
       })
       .then((res) => {
         setLoading(false);
-        navigate("/Customer/");
+        navigate("/Customer/view/");
       })
       .catch((err) => {
         console.error(err);

@@ -6,7 +6,7 @@ import Navbar from '../../Shared/Components/UiElements/Navbar';
 import { Link } from 'react-router-dom';
 import { MdOutlineAddBox } from 'react-icons/md';
 import Card from '../../Shared/Components/UiElements/Card';
-import ViewCard from './Components/ViewCardCustomer';
+import ViewCard from './Components/ViewCardAdmin';
 import Header from '../../Shared/Components/UiElements/header';
 import InquiryFormUpdate from "./Components/FormUpdateAdmin";
 

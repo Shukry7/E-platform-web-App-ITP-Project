@@ -21,10 +21,14 @@ function CardList() {
   const id = selectedItemsString ? selectedItemsString.split(",") : [];
 
   useEffect(() => {
+
+    alert("Click on a card to use it for your payment")
     axios
       .get(`http://localhost:5000/OnPay/onpay/list/${auth.cusId}`)
+      
       .then((response) => {
         setCards(response.data);
+       
       })
       .catch((error) => {
         console.error("Error fetching cart", error);
@@ -33,24 +37,25 @@ function CardList() {
 
   const handleUseCard = async (cardId) => {
     try {
+      // Fetch the cart items based on the selected item IDs
       const cartResponse = await axios.get(`http://localhost:5000/cart/carts`, {
         params: { id }
       });
       const cartItems = cartResponse.data;
-
-      const response = await axios.post("http://localhost:5000/order/new", {
+  
+      // Create a new order and immediately use the response to submit the payment
+      const orderResponse = await axios.post("http://localhost:5000/order/new", {
         uid: auth.cusId,
         cartitem: cartItems
       });
-
-      console.log("Order placed successfully:", response.data);
-
-      for (const item of cartItems) {
-        await axios.delete(`http://localhost:5000/cart/${item._id}`);
-        console.log("Cart item deleted successfully:", item._id);
-      }
-      console.log(subtotal, shippingFee, total);
-      await axios.post("http://localhost:5000/payment/submit", {
+      // Extract the order ID from the response
+      
+  
+      // Log the order response to debug
+     
+  
+      // Submit the payment using the captured order ID
+      const paymentResponse = await axios.post("http://localhost:5000/payment/submit", {
         subtotal: subtotal,
         shippingFee: shippingFee,
         total: total,
@@ -58,16 +63,28 @@ function CardList() {
         user_id: auth.cusId,
         method: "Online"
       });
+  
+      // Log the payment response to debug
+      console.log("Payment response:", paymentResponse.data);
+  
+      // Delete each cart item after the order is placed
+      for (const item of cartItems) {
+        await axios.delete(`http://localhost:5000/cart/${item._id}`);
+        console.log("Cart item deleted successfully:", item._id);
+      }
+  
       Toast("Payment Completed!!", "success");
       navigate('/Products');
     } catch (error) {
-      console.error("Error placing order:", error);
+      console.error("Error placing order:", error.message || error);
       // Handle error (e.g., display an error message)
     }
   };
+  
 
   return (
     <div className="custom-cards-container">
+       
       {cards.map((card) => (
         <div key={card._id} className="custom-card-container">
           <div className="card-list" onClick={() => handleUseCard(card._id)}>
