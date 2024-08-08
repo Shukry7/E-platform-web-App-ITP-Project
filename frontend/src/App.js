@@ -110,7 +110,7 @@ const App = () => {
           <Route path="/CC/new" exact element={<CCForm/>}/>         
         </Route>
 
-        <Route element={<ProtectedRouteEmployee/>}>
+        {/* <Route element={<ProtectedRouteEmployee/>}> */}
 
         <Route path="/Dashboard" exact element={<Dashboard/>}/>
         <Route path="/Product" exact element={<Products/>}/>
@@ -167,7 +167,7 @@ const App = () => {
         <Route path="/inquiry_admin/view/:id" exact element={<InquiryViewAdmin/>}/>        
         <Route path="/ProductReport" exact element={<ProductReport/>}/> 
         <Route path="/invoice" exact element={<InvoiceTable/>}/>
-        </Route>
+        {/* </Route> */}
         <Route element={<ProtectedRouteCashier/>}>
         
         <Route path="/Billing" exact element={<BillingUI/>}/>
