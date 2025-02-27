@@ -18,34 +18,32 @@ const OrderRoute = require("./Routes/OrderRoute");
 const LoginRoute = require("./Routes/LoginRoute");
 const NotificationRoute = require("./Routes/NotificationRoute");
 const WholesalecustomerRoute = require("./Routes/WholesalecustomerRoute");
-const SalaryRoute = require("./Routes/SalaryRoute")
-const PaymentRoute = require('./Routes/PaymentRoute');
-const ProductReviewRoute = require("./Routes/ProductReviewRoute")
+const SalaryRoute = require("./Routes/SalaryRoute");
+const PaymentRoute = require("./Routes/PaymentRoute");
+const ProductReviewRoute = require("./Routes/ProductReviewRoute");
 const FaqRoute = require("./Routes/FaqRoute");
 const InquiryRoute = require("./Routes/InquiryRoute");
 const app = express();
 const DeliveryLoginRoute = require("./Routes/DeliveryLoginRoute");
-const DeliveryPersonLoginRoute = require("./Routes/DeliveryLoginpRoute")
+const DeliveryPersonLoginRoute = require("./Routes/DeliveryLoginpRoute");
 const ProfitRoute = require("./Routes/ProfitRoute");
 const AvailableRoute = require("./Routes/AvailableRoute");
-const salaryHistory = require("./Routes/salaryHistoryRoute")
-const DeliveryOrderRoute = require("./Routes/AssignRoute")
-const EmployeeLoginRoute = require("./Routes/EmployeeLoginRoute")//database retrival
-const EmployeePersonLoginRoute = require("./Routes/EmployeeloginPersonRoute")
+const salaryHistory = require("./Routes/salaryHistoryRoute");
+const DeliveryOrderRoute = require("./Routes/AssignRoute");
+const EmployeeLoginRoute = require("./Routes/EmployeeLoginRoute");
+const EmployeePersonLoginRoute = require("./Routes/EmployeeloginPersonRoute");
 const InvoiceRoute = require("./Routes/InvoiceRoute");
-//MiddleWare
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type"],
   })
 );
-
-//Routes
 
 app.use("/product", ProductRoute);
 app.use("/customer", CustomerRoute);
@@ -66,19 +64,16 @@ app.use("/faq", FaqRoute);
 app.use("/inquiry", InquiryRoute);
 app.use("/Payment", PaymentRoute);
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
-app.use("/ProductReview", ProductReviewRoute)
-app.use("/deliverylogin", DeliveryLoginRoute)
-app.use("/deliveryCheckLogin", DeliveryPersonLoginRoute)
-app.use("/profit", ProfitRoute)
+app.use("/ProductReview", ProductReviewRoute);
+app.use("/deliverylogin", DeliveryLoginRoute);
+app.use("/deliveryCheckLogin", DeliveryPersonLoginRoute);
+app.use("/profit", ProfitRoute);
 app.use("/available", AvailableRoute);
-app.use("/salaryHistory",salaryHistory)
-app.use("/EmployeeLogin",EmployeeLoginRoute)
-app.use("/deliveryOrder",DeliveryOrderRoute)
-app.use("/EmployeeChecklogin",EmployeePersonLoginRoute)
+app.use("/salaryHistory", salaryHistory);
+app.use("/EmployeeLogin", EmployeeLoginRoute);
+app.use("/deliveryOrder", DeliveryOrderRoute);
+app.use("/EmployeeChecklogin", EmployeePersonLoginRoute);
 app.use("/Invoice", InvoiceRoute);
-
-
-// Read user ID from the cookie
 
 const PORT = process.env.PORT || 5000;
 mongoose
