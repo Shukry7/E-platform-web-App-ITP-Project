@@ -125,7 +125,7 @@ Contributions are welcome! Follow these steps:
     <td style="vertical-align: middle;">
       <img src="https://github.com/Faizal2017.png" width="60px" style="border-radius: 50%;"/></td>
     <td style="vertical-align: middle;">
-      <a href="https://github.com/Faizal2017"><b>FAIZAL MF</b></a> - Implemented an inventory management system.
+      <a href="https://github.com/Faizal2017"><b>FAIZAL MF</b></a> - Implemented an employee management system.
     </td>
   </tr>
   <tr>
