@@ -146,7 +146,7 @@ Contributions are welcome! Follow these steps:
     <td style="vertical-align: middle;">
       <img src="https://github.com/husnynajeeb.png" width="60px" style="border-radius: 50%;"/></td>
     <td style="vertical-align: middle;">
-      <a href="https://github.com/husnynajeeb"><b>HUSNY N</b></a> - Implemented a delivery management system.
+      <a href="https://github.com/husnynajeeb"><b>HUSNY ANM</b></a> - Implemented a delivery management system.
     </td>
   </tr>
    <tr>
