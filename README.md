@@ -111,58 +111,56 @@ Contributions are welcome! Follow these steps:
     <td style="vertical-align: middle;">
       <img src="https://github.com/IT22052124.png" width="60px" style="border-radius: 50%;"/></td>
     <td style="vertical-align: middle;">
-      <a href="https://github.com/IT22052124"><b>SHUKRY FA</b></a> - Implemented an inventory management system.
-    </td>
-  </tr>
-   <!---
-  <tr>
-    <td style="vertical-align: middle;">
-      <img src="https://github.com/IT22052124.png" width="60px" style="border-radius: 50%;"/></td>
-    <td style="vertical-align: middle;">
-      <a href="https://github.com/IT22052124"><b>MUFEEZ MMM</b></a> - Implemented an inventory management system.
+      <a href="https://github.com/IT22052124"><b>SHUKRY FA</b></a> - Implemented an Product management system.
     </td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">
-      <img src="https://github.com/IT22052124.png" width="60px" style="border-radius: 50%;"/></td>
+      <img src="https://github.com/IT22320896.png" width="60px" style="border-radius: 50%;"/></td>
     <td style="vertical-align: middle;">
-      <a href="https://github.com/IT22052124"><b>FAIZAL FA</b></a> - Implemented an inventory management system.
+      <a href="https://github.com/IT22320896"><b>MUFEEZ MMM</b></a> - Implemented a Supplier management system.
     </td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">
-      <img src="https://github.com/IT22052124.png" width="60px" style="border-radius: 50%;"/></td>
+      <img src="https://github.com/Faizal2017.png" width="60px" style="border-radius: 50%;"/></td>
     <td style="vertical-align: middle;">
-      <a href="https://github.com/IT22052124"><b>HUSNY</b></a> - Implemented an inventory management system.
+      <a href="https://github.com/Faizal2017"><b>FAIZAL MF</b></a> - Implemented an inventory management system.
     </td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">
-      <img src="https://github.com/IT22052124.png" width="60px" style="border-radius: 50%;"/></td>
+      <img src="https://github.com/aadhilmhmd.png" width="60px" style="border-radius: 50%;"/></td>
     <td style="vertical-align: middle;">
-      <a href="https://github.com/IT22052124"><b>AADHIL</b></a> - Implemented an inventory management system.
+      <a href="https://github.com/aadhilmhmd"><b>Aadhil MM</b></a> - Implemented a wholesale customer management system.
     </td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">
-      <img src="https://github.com/IT22052124.png" width="60px" style="border-radius: 50%;"/></td>
+      <img src="https://github.com/TheFirender.png" width="60px" style="border-radius: 50%;"/></td>
     <td style="vertical-align: middle;">
-      <a href="https://github.com/IT22052124"><b>AAFHAM</b></a> - Implemented an inventory management system.
+      <a href="https://github.com/TheFirender"><b>AFHAM MNM</b></a> - Implemented an order management system.
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: middle;">
+      <img src="https://github.com/husnynajeeb.png" width="60px" style="border-radius: 50%;"/></td>
+    <td style="vertical-align: middle;">
+      <a href="https://github.com/husnynajeeb"><b>HUSNY N</b></a> - Implemented a delivery management system.
     </td>
   </tr>
    <tr>
     <td style="vertical-align: middle;">
-      <img src="https://github.com/IT22052124.png" width="60px" style="border-radius: 50%;"/></td>
+      <img src="https://github.com/lukemaxwell01.png" width="60px" style="border-radius: 50%;"/></td>
     <td style="vertical-align: middle;">
-      <a href="https://github.com/IT22052124"><b>LUKE</b></a> - Implemented an inventory management system.
+      <a href="https://github.com/lukemaxwell01"><b>LUKE M</b></a> - Implemented an user management system.
     </td>
   </tr>
    <tr>
     <td style="vertical-align: middle;">
-      <img src="https://github.com/IT22052124.png" width="60px" style="border-radius: 50%;"/></td>
+      <img src="https://github.com/devmj99.png" width="60px" style="border-radius: 50%;"/></td>
     <td style="vertical-align: middle;">
-      <a href="https://github.com/IT22052124"><b>ABDHULLAH</b></a> - Implemented an inventory management system.
+      <a href="https://github.com/devmj99"><b>ABDHULLAH MJ</b></a> - Implemented a faq and inquiry management system.
     </td>
   </tr>
-   -->
 </table>
