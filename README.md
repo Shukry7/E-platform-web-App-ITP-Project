@@ -114,6 +114,7 @@ Contributions are welcome! Follow these steps:
       <a href="https://github.com/IT22052124"><b>SHUKRY FA</b></a> - Implemented an inventory management system.
     </td>
   </tr>
+   <!---
   <tr>
     <td style="vertical-align: middle;">
       <img src="https://github.com/IT22052124.png" width="60px" style="border-radius: 50%;"/></td>
@@ -163,4 +164,5 @@ Contributions are welcome! Follow these steps:
       <a href="https://github.com/IT22052124"><b>ABDHULLAH</b></a> - Implemented an inventory management system.
     </td>
   </tr>
+   -->
 </table>
