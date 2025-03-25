@@ -104,9 +104,7 @@ Contributions are welcome! Follow these steps:
    ```
 6. **Create a Pull Request** on GitHub
 
-### 🎭 Contributions
-
-
+### 🎭 Contributors
 
 <table>
   <tr>
